@@ -1,0 +1,695 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="view_dgapplication_tree">
+      <field name="name">inseta.dgapplication.tree</field>
+      <field name="model">inseta.dgapplication</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="organisation_id"/>
+          <field name="financial_year_id"/>
+          <field name="dgtype_id"/>
+          <field name="due_date" />
+          <field name="submitted_date" />
+          <field name="approved_date" />
+          <field name="rejected_date" />
+					<field name="create_date" />
+					<field name="create_uid" />
+          <field name="state" />
+        </tree>
+      </field>
+    </record>
+
+	    <record id="view_dgapplication_filter" model="ir.ui.view">
+			<field name="name">inseta.dgapplication.filter</field>
+			<field name="model">inseta.dgapplication</field>
+			<field name="arch" type="xml">
+				<search string="DG Application">
+          <field name="name"/>
+          <field name="organisation_id"/>
+          <field name="financial_year_id"/>
+          <field name="dgtype_id"/>
+					<field name="sic_code_desc" />
+					<field name="state" />
+
+					<group expand="0" string="Group By">
+						<filter string="State" name="group_state" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Organisation" name="group_organisation" domain="[]" context="{'group_by':'organisation_id'}"/>
+						<filter string="Financial Year" name="group_financial_year" domain="[]" context="{'group_by':'financial_year_id'}"/>
+						<filter string="Programme" name="group_programme" domain="[]" context="{'group_by':'dgtype_id'}"/>
+						<filter string="Sic Code" name="group_sic_code" domain="[]" context="{'group_by': 'sic_code_desc'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+    <record model="ir.ui.view" id="view_dgapplication_form">
+      <field name="name">inseta.dgapplication.form</field>
+      <field name="model">inseta.dgapplication</field>
+      <field name="arch" type="xml">
+        <form string="DG Application">
+          <header>
+            <button name="action_set_to_draft" string="Set to Draft" type="object" groups="base.group_system" />
+
+            <button name="action_submit" 
+              string="Submit" 
+              type="object" 
+              class="oe_highlight" 
+              states="draft,rework" 
+              confirm="Are you sure you want to submit this Application? You will not be able to modify after submission" 
+              groups="inseta_skills.group_sdf_user,inseta_dg.group_hei_representative" />
+          
+
+            <!-- <button type="object" 
+							class="oe_highlight"
+              states="submit" 
+              string="Desktop Evaluation"
+              name="action_open_evaluation" 
+              icon="fa-desktop"
+              groups="inseta_dg.group_desktop_evaluation">
+
+            </button> -->
+
+            <button name="%(inseta_dg.dgapplication_recommend_wizard_action)d"
+							context='{"default_stage": "recommend"}'
+							states="pending_approval,rework_eval_committee" 
+							string="Recommend" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_dg.group_evaluation_committee" />
+
+            <button name="%(inseta_dg.dgapplication_recommend_wizard_action)d"
+							context='{"default_stage": "adjudication"}'
+							states="pending_adjudication" 
+							string="Recommend" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_dg.group_adjudication_committee" />
+
+           <button name="%(inseta_dg.dgapplication_approve_wizard_action)d"
+							context='{"default_stage": "approval", "default_option": "Reject"}'
+							states="pending_approval2" 
+							string="Reject" 
+							type="action"
+							groups="inseta_dg.group_ceo" />
+
+            <button name="%(inseta_dg.dgapplication_approve_wizard_action)d"
+							context='{"default_stage": "approval",  "default_option": "Approve"}'
+							states="pending_approval2" 
+							string="Approve" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_dg.group_ceo" />
+
+
+            <field name="state" widget="statusbar" clickable="True" statusbar_visible="draft,submit,pending_approval,pending_adjudication,pending_approval2,approve,reject" statusbar_colors='{"draft":"blue","approve":"green","reject":"red"}'/>
+          </header>
+          <sheet>
+              <!-- <div class="oe_button_box" name="button_box">
+                  <button type="action" 
+                    class="oe_stat_button" 
+                      name="%(inseta_dg.dgevaluation_act_window)d" 
+                      context="{'search_default_dgapplication_id':active_id, 'default_dgapplication_id':active_id}" icon="fa-book"
+                      groups="inseta_dg.group_desktop_evaluation">
+                      <field string="Evaluations" name="evaluation_count" widget="statinfo"/>
+                  </button>
+              </div> -->
+            <div class="oe_title">
+              <h1>
+                <field name="name" readonly="1"/>
+              </h1>
+            </div>
+
+            <group>
+              <field name="is_dgec_recommended" string="Do you want to recommend?" attrs="{'invisible':[('state','!=','pending_approval')]}"/>
+              <field name="is_dgac_recommended" string="Do you want to recommend?" attrs="{'invisible':[('state','!=','pending_adjudication')]}"/>
+              <field name="is_ceo_approved" string="Do you want to approve?" attrs="{'invisible':[('state','!=','pending_approval2')]}"/>
+
+              <field name="dgec_comment" string="DGEC Comment" attrs="{'required':[('is_dgec_recommended','=',False)],'invisible':['|',('is_dgec_recommended','=',True),('state','!=','pending_approval')]}"/>
+              <field name="dgac_comment" string="DGAC Comment" attrs="{'required':[('is_dgac_recommended','=',False)],'invisible':['|',('is_dgac_recommended','=',True),('state','!=','pending_adjudication')]}"/>
+
+              <field name="decline_comment" string="Reason(s) for Rejection" attrs="{'required':[('is_ceo_approved','=',False)],'invisible':['|',('is_ceo_approved','=',True),('state','!=','pending_approval2')]}" />
+
+            </group>
+            <group>
+              <group>
+                <field name="hei_rep_id" invisible="1" />
+                <field name="is_hei" invisible="1"/>
+                <field name="allowed_dgtype_ids" invisible="1"/>
+                <field name="dgtype_id" 
+                  domain="[('id','in', allowed_dgtype_ids)]" 
+                  options="{'no_open':True, 'no_create':True}" 
+                  required="1" 
+                  attrs="{'readonly': [('state','not in',('draft',))]}"
+                  />
+                <field name="dgtype_code" invisible="1" />
+              </group>
+              <group/>
+
+              <group>
+								<field name="sdf_allowed_organisation_ids" invisible="1" />
+                <field name="organisation_id" 
+                  attrs="{'readonly': [('state','not in',('draft',))]}" 
+                  domain="[('id','in', sdf_allowed_organisation_ids)]" 
+                  options="{'no_open':True, 'no_create':True}" required="1"/>
+                <field name="sdl_no" />
+                <field name="financial_year_id" options="{'no_open':True, 'no_create':True}" readonly="1" force_save="1"/>
+                <field name="is_learnership" invisible="1"/>
+                <field name="dgfundingwindow_id" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',))]}"/>
+                <field name="due_date" string="Due Date" readonly="1" force_save="1" />
+              </group>
+              <group>
+                <field name="currency_id" invisible="1" />
+                <separator string="Applied"/>
+                <field name="no_learners" />
+                <field name="disabled" attrs="{'invisible':[('is_learnership','=',False)]}"/>
+                <field name="total_learners" attrs="{'invisible':[('is_learnership','=',False)]}"/>
+                <field name="amount_learners_applied" attrs="{'invisible':[('is_learnership','=',False)]}"/>
+                <field name="amount_disabled_applied" attrs="{'invisible':[('is_learnership','=',False)]}"/>
+                <field name="amount_total_applied" />
+
+                <separator string="Approved"/>
+                <field name="no_learners_approved" />
+                <field name="disabled_approved" attrs="{'invisible':[('is_learnership','=',False)]}"/>
+                <field name="total_learners_approved" attrs="{'invisible':[('is_learnership','=',False)]}"/>
+                <field name="amount_learners_approved" attrs="{'invisible':[('is_learnership','=',False)]}"/>
+                <field name="amount_disabled_approved" attrs="{'invisible':[('is_learnership','=',False)]}"/>
+                <field name="amount_total_approved" />
+              </group>
+            </group>
+            <notebook class="dolphin">
+							<page string="Organisation">
+								<group>
+									<group>
+										<button  name="action_update_organisation_details" type="object" string="Update Organisation Details" class="oe_highlight" />
+									</group>
+									<group/>
+								</group>
+							</page>
+              <page  string="Learnership Details" attrs="{'invisible':[('dgtype_code','not in',('LRN', 'LRN-Y','LRN-W','LRN-D','LRN-R'))]}">
+								<field name="learnershipdetails_ids" 
+                  context="{'default_dgapplication_id':active_id,'default_dgtype_id':dgtype_id,'default_financial_year_id': financial_year_id, 'default_organisation_id': organisation_id}">
+									<tree>
+                    <field name="dgapplication_id" invisible="1"/>
+                    <field name="dgtype_id" invisible="1" />
+										<field name="learnership_id"/>
+										<field name="fundingtype_id"/>
+                    <field name="socio_economic_status_id"/>
+                    <field name="province_id" />
+                    <field name="cost_per_student"/> 
+                    <field name="total_learners"/>
+                    <field name="amount_applied" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+									</tree>
+									<form>
+										<sheet>
+											<group>
+                        <div />
+                          <field name="organisation_id" invisible="1"/>
+                          <field name="financial_year_id" invisible="1" />
+                          <field name="dgapplication_id" invisible="1" />
+                          <field name="dgtype_id" />
+                          <field name="dgtype_code" invisible="1"/>
+                          <field name="state" invisible="1" />
+                          <field name="display_learnership_other" invisible="1" />
+                          <field name="fundingtype_id" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                          <field name="learnership_id" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                          <field name="learnership_other" attrs="{'invisible': [('display_learnership_other','=',False)],'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}" />
+                          <field name="learnership_code" attrs="{'invisible': [('display_learnership_other','=',True)],'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}" required="1" />
+                          <field name="socio_economic_status_id" readonly="1" force_save="1" />
+                          <field name="province_id" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}" required="1" />
+                          <field name="cost_per_student" />
+                          <field name="cost_per_disabled"  attrs="{'invisible':[('dgtype_code','not in',('LRN-Y','LRN-D','LRN-R'))]}"/>
+
+                          <field name="no_learners" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                          <field name="disabled" attrs="{'required':[('dgtype_code','in',('LRN-Y','LRN-D','LRN-R'))],'invisible':[('dgtype_code','not in',('LRN-Y','LRN-D','LRN-R'))], 'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/> <!--not required/needed for workers -->
+                          <field name="total_learners" />
+                          <field name="amount_applied" />
+                          <field name="start_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                          <field name="end_date" force_save="1" attrs="{'readonly': ['|',('state','not in',('draft',)),('dgtype_code','in',('LRN-Y','LRN-D','LRN-R','LRN-W'))]}"/>
+                          <field name="org_contacts_ids" invisible="1"/>
+                          <field name="contact_person_id"  string="Employer Contact Person" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                          <field name="contact_person_name" string="Contact Name" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                          <field name="contact_person_surname" string="Contact Surname" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                          <field name="contact_person_email" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+
+              <page  string="Internship Programme Details" attrs="{'invisible':[('dgtype_code','not in',('IT-MATRIC','IT-DEGREE','INT'))]}">
+								<field name="internshipdetails_ids" 
+                  context="{'default_dgapplication_id':active_id,'default_dgtype_id':dgtype_id,'default_financial_year_id': financial_year_id, 'default_organisation_id': organisation_id}">
+									<tree>
+                    <field name="dgapplication_id" invisible="1"/>
+                    <field name="dgtype_id" invisible="1" />
+										<field name="programme_name"/>
+										<field name="internship_type"/>
+                    <field name="scarcecritical_id"/>
+                    <field name="cost_per_student" />
+                    <field name="no_learners" string="No of Interns"/>
+                    <field name="amount_applied" />
+                    <field name="duration" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+                            <field name="organisation_id" invisible="1"/>
+                            <field name="dgtype_id" invisible="1" />
+                            <field name="dgtype_code" invisible="1" />
+                            <field name="financial_year_id" invisible="1" />
+                            <field name="dgapplication_id" invisible="1" />
+                            <field name="state" invisible="1" />
+										        <field name="programme_name" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+										        <field name="internship_type" />
+										        <field name="scarcecritical_id" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="start_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="duration" readonly="1" force_save="1" />
+
+                            <field name="cost_per_student" />
+                            <field name="cost_per_month" readonly="1" force_save="1"/>
+                            
+                            <field name="no_learners" string="No of Interns" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="amount_applied" />
+                            <field name="firsttime_applicant" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="org_contacts_ids" invisible="1"/>
+                            <field name="contact_person_id" string="Employer Contact Person" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="contact_person_name" string="Contact Name" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="contact_person_surname" string="Contact Surname" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="contact_person_email" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                        </group>
+                        <group/>
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+
+              <page  string="Learner Details" attrs="{'invisible':[('dgtype_code','not in',('SP',))]}"> <!--Skills Programme workers-->
+                <field name="splearnerdetails_ids" 
+                  context="{'default_dgapplication_id':active_id,'default_dgtype_id':dgtype_id,'default_financial_year_id': financial_year_id, 'default_organisation_id': organisation_id}">
+									<tree>
+                    <field name="dgapplication_id" invisible="1"/>
+                    <field name="dgtype_id" invisible="1" />
+										<field name="no_learners"/>
+										<field name="cost_per_student"/>
+                    <field name="funding_amount_required" />
+                    <field name="amount_applied" />
+                    <field name="provider_id" />
+                    <field name="provider_other" />
+                    <field name="fullqualification_title" />
+                    <field name="year_of_study" />
+                    <field name="qualification_saqaid" />
+                    <field name="scarcecritical_id"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+                            <field name="organisation_id" invisible="1"/>
+                            <field name="financial_year_id" invisible="1" />
+                            <field name="dgapplication_id" invisible="1" />
+                            <field name="dgtype_code" invisible="1"/>
+                            <field name="state" invisible="1" />
+                            <field name="cost_per_student"/>
+                            <field name="no_learners" string="No. Learners Applied For" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="funding_amount_required" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="amount_applied" />
+                            <field name="provider_id" string="Full Name of Provider" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="provider_name" invisible="1" />
+                            <field name="provider_other" string="Full Name other Provider" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)], 'invisible': [('provider_name','!=','Other')], 'required': [('provider_name','=','Other')]}"/>
+                            <field name="fullqualification_title" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="year_of_study" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="qualification_saqaid" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="scarcecritical_id" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+										        <field name="nqflevel_id" domain="[('saqacode','not in', ('0',))]" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="start_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="fullname_education" invisible="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+
+                        </group>
+                        <group/>
+                      
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+
+              <page  string="Learner Details" attrs="{'invisible':[('dgtype_code','not in',('BUR',))]}"> <!--Bursary For Workers-->
+								<field name="burlearnerdetails_ids" 
+                  context="{'default_dgapplication_id':active_id,'default_dgtype_id':dgtype_id,'default_financial_year_id': financial_year_id, 'default_organisation_id': organisation_id}">
+									<tree>
+                    <field name="dgapplication_id" invisible="1"/>
+                    <field name="dgtype_id" invisible="1" />
+										<field name="no_learners"/>
+										<field name="cost_per_student"/>
+                    <field name="funding_amount_required" />
+                    <field name="amount_applied" />
+                    <field name="publicprovider_id" />
+                    <field name="publicproviderother" />
+                    <field name="fullqualification_title" />
+                    <field name="year_of_study" />
+                    <field name="qualification_saqaid" />
+                    <field name="scarcecritical_id"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+                            <field name="organisation_id" invisible="1"/>
+                            <field name="financial_year_id" invisible="1" />
+                            <field name="dgapplication_id" invisible="1" />
+                            <field name="dgtype_code" invisible="1"/>
+                            <field name="state" invisible="1" />
+                            <field name="cost_per_student"/>
+                            <field name="no_learners" string="No. Learners Applied For" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="funding_amount_required" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="amount_applied" />
+                            <field name="publicprovider_id" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                             <field name="publicprovider_name" invisible="1" />
+                            <field name="publicproviderother" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)], 'invisible': [('publicprovider_name','!=','Other')], 'required': [('publicprovider_name','=','Other')]}"/>
+                            <field name="fullqualification_title" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="year_of_study" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="qualification_saqaid" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="scarcecritical_id" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+										        <field name="nqflevel_id" domain="[('saqacode','not in', ('1','2','3','0'))]" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="start_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                        </group>
+                        <group/>
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+              <!--HEI-->
+              <page  string="Learner Details" attrs="{'invisible':[('dgtype_code','not in',('BUR-Y',))]}"> <!--Skills Programme Youth - HEI-->
+                <field name="burlearnerdetails_youth_ids" 
+                  context="{'default_dgapplication_id':active_id,'default_dgtype_id':dgtype_id,'default_financial_year_id': financial_year_id, 'default_organisation_id': organisation_id}">
+									<tree>
+                    <field name="dgapplication_id" invisible="1"/>
+                    <field name="dgtype_id" invisible="1" />
+										<field name="no_learners"/>
+										<field name="cost_per_student"/>
+                    <field name="amount_applied" />
+                    <field name="publicprovider_name"/>
+                    <field name="qualification_ids"/>
+                    <field name="scarcecritical_id" />
+                    <field name="nqflevel_id" />
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+                            <field name="is_hei" invisible="1" />
+                            <field name="organisation_id" invisible="1"/>
+                            <field name="financial_year_id" invisible="1" />
+                            <field name="dgapplication_id" invisible="1" />
+                            <field name="dgtype_code" invisible="1"/>
+                            <field name="state" invisible="1" />
+                            <field name="cost_per_student"/>
+                            <field name="no_learners" string="No. Students Applied For" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="amount_applied" />
+                            <field name="publicprovider_name" 
+                              readonly="1"
+                              force_save="1"
+                              attrs="{'invisible':[('is_hei','=',False)]}"/>
+                            <field name="qualification_ids"  widget="many2many_tags"  attrs="{'required':[('is_hei','=',True)],'invisible':[('is_hei','=',False)]}" />
+                            <field name="qualification_saqaid" invisible="1" />
+                            <field name="scarcecritical_id" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+										        <field name="nqflevel_id" domain="[('saqacode','not in', ('1','2','3','0'))]" options="{'no_open':True, 'no_create':True}" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="year_of_study"  attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="start_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                        </group>
+                        <group/>
+                      
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+              <page  string="Learner Details" attrs="{'invisible':[('dgtype_code','not in',('SP-Y',))]}"> <!--Skills Programme Youth - HEI-->
+                <field name="splearnerdetails_hei_ids" 
+                  context="{'default_dgapplication_id':active_id,'default_dgtype_id':dgtype_id,'default_financial_year_id': financial_year_id, 'default_organisation_id': organisation_id}">
+									<tree>
+                    <field name="dgapplication_id" invisible="1"/>
+                    <field name="dgtype_id" invisible="1" />
+										<field name="no_learners"/>
+										<field name="cost_per_student"/>
+                    <field name="amount_applied" />
+                    <field name="publicprovider_name" string="Provider Name" />
+                    <field name="skillsprogramme_category"   />
+                    <field name="skillsprogramme_id" />
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+                            <field name="is_hei" invisible="1" />
+                            <field name="organisation_id" invisible="1"/>
+                            <field name="financial_year_id" invisible="1" />
+                            <field name="dgapplication_id" invisible="1" />
+                            <field name="dgtype_code" invisible="1"/>
+                            <field name="state" invisible="1" />
+                            <field name="cost_per_student"/>
+                            <field name="no_learners" string="No. Students Applied For" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="amount_applied" />
+                            <field name="publicprovider_name" 
+                              readonly="1"
+                              force_save="1"
+                              attrs="{'invisible':[('is_hei','=',False)]}"/>
+                            <field name="skillsprogramme_category" attrs="{'required':[('is_hei','=',True)],'invisible':[('is_hei','=',False)]}"  />
+                            <field name="skillsprogramme_id" options="{'no_create':True}" attrs="{'required':[('is_hei','=',True)],'invisible':[('is_hei','=',False)]}"  />
+                            <field name="tvet_accreditation" attrs="{'required':[('is_hei','=',True)],'invisible':[('is_hei','=',False)]}" />
+                            <field name="no_learners_per_programme" required="1"  attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}" />
+
+                            <field name="start_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+
+                        </group>
+                        <group/>
+                      
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+              <page  string="Work Integrated Learning" attrs="{'invisible':[('dgtype_code','not in',('WIL',))]}"> <!--Skills Programme Youth - HEI-->
+                <field name="willearnerdetails_ids" 
+                  context="{'default_dgapplication_id':active_id,'default_dgtype_id':dgtype_id,'default_financial_year_id': financial_year_id, 'default_organisation_id': organisation_id}">
+									<tree>
+                    <field name="dgapplication_id" invisible="1"/>
+                    <field name="dgtype_id" invisible="1" />
+										<field name="no_learners"/>
+										<field name="cost_per_student"/>
+                    <field name="amount_applied" />
+                    <field name="publicprovider_name"/>
+                    <field name="qualification_ids"   />
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+                            <field name="is_hei" invisible="1" />
+                            <field name="organisation_id" invisible="1"/>
+                            <field name="financial_year_id" invisible="1" />
+                            <field name="dgapplication_id" invisible="1" />
+                            <field name="dgtype_code" invisible="1"/>
+                            <field name="state" invisible="1" />
+                            <field name="cost_per_student"/>
+                            <field name="no_learners" string="No. Students Applied For" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="amount_applied" />
+                            <field name="publicprovider_name" 
+                              readonly="1"
+                              force_save="1"
+                              attrs="{'invisible':[('is_hei','=',False)]}"/>
+                            <field name="qualification_ids"  widget="many2many_tags"  attrs="{'required':[('is_hei','=',True)],'invisible':[('is_hei','=',False)]}" />
+                            <field name="no_learners_per_programme" string="Number of Learners per Qualification" required="1"  attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}" />
+
+                            <field name="start_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+                            <field name="end_date" required="1" attrs="{'readonly': [('state','not in',('draft',)),('dgapplication_id','!=',False)]}"/>
+
+                        </group>
+                        <group/>
+                      
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+							<page string="DG Organisation Contacts" invisible="1">
+                <field name="contact_ids"  nolabel="1" context="{'default_dgapplication_id':active_id,}">
+                    <tree>
+                      <field name="dgapplication_id" invisible="1"/>
+                      <field name="title"/>
+                      <field name="first_name" />
+                      <field name="last_name" />
+                      <field name="id_no" />
+                      <field name="email" />
+                      <field name="mobile" />
+                      <field name="phone" />
+                    </tree>
+                    <form>
+                      <group>
+                        <group>
+                          <field name="dgapplication_id" invisible="1"/>
+                          <field name="title"  options="{'no_create': True, 'no_open': True}" required="1"/>
+                          <field name="first_name" required="1"/>
+                          <field name="last_name" required="1"/>
+                          <field name="id_no" required="1"/>
+                          <field name="email" required="1"/>
+                          <field name="mobile" string="Cell Phone" required="1"/>
+                          <field name="phone" string="Telephone"/>
+                        </group>
+                        <group/>
+                      </group>
+                    </form>
+                </field>
+              </page>
+							<page string="Documents Uploads" invisible="1">
+								<field name="upload_ids" nolabel="1" context="{'default_dgapplication_id':active_id, 'default_financial_year_id': financial_year_id, 'default_organisation_id': organisation_id}">
+									<tree>
+                    <field name="organisation_id" invisible="1"/>
+										<field name="dgdocumenttype_id"/>
+										<field name="financial_year_id" />
+										<field name="file_name" />
+									</tree>
+									<form>
+										<group>
+											<group>
+                        <field name="dgapplication_id" invisible="1"/>
+                        <field name="organisation_id" readonly="1" force_save="1"/>
+												<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" required="1" />
+												<field name="dgdocumenttype_id" string="Document Type" options="{'no_create': True, 'no_open': True}" required="1"/>
+												<field name="file" filename="file_name"/>
+												<field name="file_name" readonly="1" force_save="1"/> 
+											</group>
+											<group/>
+										</group>
+                    <group colspan='4'>
+                    		<field name="comment" />
+                    </group>
+									</form>
+								</field>
+							</page>
+							<page string="DG Evaluation" name="dg_evaluation" groups="inseta_dg.group_desktop_evaluation,
+                inseta_dg.group_pmo_admin,
+                inseta_dg.group_coo,
+                inseta_dg.group_pmo_manager">
+
+                <button string='Complete Evaluation' states="submit,rework" 
+                  confirm="Are you sure u want to complete this evaluation?" 
+                  name="dgapplication_evaluate" 
+                  type="object" 
+                  class="oe_highlight"
+                  style="margin-bottom:8px"/>
+
+                <button name="action_send_to_programme_mgr" 
+                    string="Send Letter to Manager" 
+                    type="object" 
+                    class="oe_highlight" 
+                    states="awaiting_sign1"
+                    confirm="Are you sure you want to manager for signature?" 
+                    groups="inseta_dg.group_pmo_admin,inseta_dg.group_desktop_evaluation" 
+                    style="margin-bottom:8px"/>
+
+                <button name="action_send_to_coo" 
+                    string="Send Letter to COO" 
+                    type="object" 
+                    class="oe_highlight" 
+                    states="awaiting_sign2"
+                    confirm="Are you sure you want to COO for signature?" 
+                    groups="inseta_dg.group_pmo_admin,inseta_dg.group_desktop_evaluation" 
+                    style="margin-bottom:8px"/>
+
+                <button name="action_send_letter_employer" 
+                    string="Send Letter to Employer" 
+                    confirm="Are you sure u want to email this letter to the Employer?"
+                    type="object" 
+                    class="oe_highlight" 
+                    states="signed"
+                    groups="inseta_dg.group_pmo_admin,inseta_dg.group_desktop_evaluation" 
+                    style="margin-bottom:8px"/>
+
+                <button name="action_print_letter" 
+                    string="print Letter(s)" 
+                    confirm="Are you sure u want to print the letter(s)?"
+                    type="object" 
+                    states="signed"
+                    groups="inseta_dg.group_pmo_admin,inseta_dg.group_desktop_evaluation" 
+                    style="margin-bottom:8px"/>
+                    
+								<field name="evaluation_ids" nolabel="1" 
+                  context="{'default_dgapplication_id': active_id, 
+                  'form_view_ref':'inseta_dg.dgevaluation_view_form', 
+                  'tree_view_ref':'inseta_dg.dgevaluation_view_tree'}" />
+                
+							</page>
+            </notebook>
+          </sheet>
+
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="activity_ids" widget="mail_activity"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="act_window_dgapplication">
+      <field name="name">DG Dashboard</field>
+      <field name="res_model">inseta.dgapplication</field>
+        <field name="domain">[('is_hei','=',False)]</field>
+      <field name="view_id" ref="view_dgapplication_tree" />
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="inseta_dg.action_server">
+      <field name="name">inseta_dg server</field>
+      <field name="model_id" ref="model_inseta_dg_inseta_dg"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+
+    <menuitem name="DG" 
+      id="inseta_dg.menu_root" 
+      groups="inseta_dg.group_hei_representative,inseta_dg.group_desktop_evaluation,inseta_dg.group_dg_view_only,inseta_dg.group_adjudication_committee,inseta_dg.group_pmo_cordinator,inseta_dg.group_spo_manager,inseta_dg.group_pmo_manager,inseta_dg.group_coo,inseta_dg.group_ceo,inseta_dg.group_pmo_admin"/>    
+    <!-- actions -->
+    <menuitem name="DG Applications" sequence="0" id="menu_dgapplication" parent="inseta_dg.menu_root" action="act_window_dgapplication"
+     groups="inseta_dg.group_desktop_evaluation,inseta_dg.group_dg_view_only,inseta_dg.group_adjudication_committee,inseta_dg.group_pmo_cordinator,inseta_dg.group_spo_manager,inseta_dg.group_pmo_manager,inseta_dg.group_coo,inseta_dg.group_ceo,inseta_dg.group_pmo_admin"/>
+
+  </data>
+</odoo>

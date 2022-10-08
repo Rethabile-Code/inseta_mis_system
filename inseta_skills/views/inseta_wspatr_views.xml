@@ -1,0 +1,2889 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <!-- WSP /ATR Form-->
+		<record id="view_wsp_atr_form" model="ir.ui.view">
+			<field name="name">inseta.wspatr.form</field>
+			<field name="model">inseta.wspatr</field>
+			<field name="arch" type="xml">
+				<form string="WSP/ATR Submission" create="0">
+					<header>
+                        <button name="action_set_to_draft" 
+							string="Set to Draft" 
+							type="object"
+							confirm="Are you sure you want to reset? This action will delete any existing evaluation record for the WSP"
+							groups="base.group_system" />
+
+						<button name="action_submit" string="Submit" type="object"
+							class="oe_highlight"
+							states="draft,rework"
+							confirm="Are you sure you want to submit this WSP?"
+                            groups="inseta_skills.group_sdf_user" />
+                    	<!-- <button name="%(inseta_skills.wspatr_validate_wizard_action)d"
+							context='{"default_stage": "validation"}'
+							states="pending_validation,rework_skill_admin" 
+							string="Validate" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_admin" />
+
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d" 
+							context='{"default_stage": "assessment"}'
+							states="pending_assessment,rework_skill_spec" 
+							string="WSP Assessment" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_specialist" />
+
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d" 
+							context='{"default_stage": "evaluation"}'
+							states="pending_evaluation" 
+							string="Evaluate" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_manager" /> -->
+
+						<!-- <button name="action_weekday" string="Weekday" type="object"
+							class="oe_highlight"
+							states="pending_validation"
+                            groups="inseta_skills.group_skills_admin" />
+
+						<button name="action_recommend" string="Rcommend" type="object"
+							class="oe_highlight"
+							states="pending_validation"
+                            groups="inseta_skills.group_skills_admin" /> -->
+
+						<!-- <button name="action_print_report" 
+							string="Print WSP Report" 
+							type="object"/> 
+						<button name="action_print_report" 
+							string="Print ATR Report" 
+							type="object"/> 
+						<button name="action_print_report" 
+							string="Print WSP/ATR Report" 
+							type="object"/> 
+						<button name="action_print_report" 
+							string="Print Authorization Page" 
+							type="object"/>  -->
+
+						<button name="action_print_approval_letter" string="Print Approval Letter" type="object"
+							states="approve"
+							groups="inseta_skills.group_skills_admin,inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager"
+							/>
+
+						<button name="action_print_rejection_letter" string="Print Rejection Letter" type="object"
+							states="reject"
+							groups="inseta_skills.group_skills_admin,inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager"
+							/> 
+
+						<field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="draft,pending_validation,pending_assessment,pending_evaluation,approve,reject"
+							statusbar_colors='{"pending_validation":"blue","approve":"green","reject":"red"}'
+							/>
+                    </header>
+                    <sheet>
+
+                        <div class="oe_button_box" name="button_box">
+
+                        </div>
+
+						<field name="is_wsp_open" invisible="1" />
+                        <!-- <div class="alert alert-info col-12" aria-label="Alert Message" role="alert" attrs="{'invisible':[('is_wsp_open','=',True)]}">The WSP/ATR Period has not been opened. Kindly contact the system administrator</div> -->
+						<div class="oe_title" >
+							<h1>
+								<field name="name" readonly="1"/>
+							</h1>
+							<field name="report_title" invisible="1"/>
+						</div>
+
+						<group>
+							<group attrs="{'readonly':[('state','in',('approve', 'reject'))]}">
+								<!-- <field name="user_group_ids" invisible="1"/>
+								<field name="user_group_id" invisible="1" domain="[('id','in', user_group_ids)]"  options="{'no_create': True, 'no_open': True}"/> -->
+							</group>
+							<group/>
+						</group>
+						<group>
+							<group attrs="{'readonly':[('state','in',('approve', 'reject'))]}">
+								<field name="is_small_firm" invisible="1" />
+								<field name="sdf_allowed_organisation_ids" invisible="1" />
+                                <!-- <field name="organisation_id" domain="[('id','in', sdf_allowed_organisation_ids)]"  options="{'no_create': True}"/> -->
+                                <field name="organisation_id" options="{'no_create': True}"/>
+								<field name="sdl_no" />
+								<field name="sdf_id" string="SDF" readonly="1" force_save="1" />
+								<field name="financial_year_id" options="{'no_create': True, 'no_open': True}"/>
+								<field name="no_employees" string="No. Employees"/>
+								<field name="organisation_size_id" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}"/>
+								<field name="organisation_size_desc" invisible="1" />
+								<field name="form_type" readonly="1" force_save="1"/>
+                                <field name="submission_type" invisible="1" />
+								<field name="no_employees_emp_profile" invisible="1"/>
+							</group>
+							<group>
+								<field name="wspatr_period_id" readonly="1" force_save="1" string="WSP Period" />
+
+								<field name="start_date"  readonly="1"  force_save="1"  />
+								<field name="due_date"  readonly="1" force_save="1" />
+								<field name="submitted_date" readonly="1" force_save="1"/>
+								<field name="rework_date" invisible="1" />
+								<field name="rework_expiration_date" string="Query due date" readonly="1" force_save="1" attrs="{'invisible':[('rework_date','=',False)]}"/>
+								<field name="reworked_date" string="Query submission date" readonly="1" force_save="1" attrs="{'invisible':[('rework_date','=',False)]}"/>
+							</group>
+							<!-- <button  name="action_generate_wsp_error" type="object" string="Generate WSP Error Log"  icon="fa-cloud-download"/>
+							<button  name="action_generate_atr_error" type="object" string="Generate ATR Error Log"  icon="fa-cloud-download"/> -->
+						</group>
+
+                        <notebook class="dolphin">
+							<!--ATR starts Here-->
+							<page name="implementation_report" string="ATR 1: Implementation report"  attrs="{'invisible':[('form_type','not in',('Small',))]}"> <!--[Implementation Report] small firms-->
+								<group>
+									<field name="due_date" string="Due Date" readonly="1" force_save="1"/>
+								</group>
+								
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to report on all training interventions that took place in their company in the previous financial year. The employer must report both credit and non-credit bearing interventions.								
+								</div>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_is_small_firm': True, 'default_submission_type': 'ATR', 'default_template': 'Implementation Report'}"
+								/>
+
+								<button 
+									name="%(inseta_skills.wspatr_movetopivotal_wizard_action)d" 
+									type="action" 
+									icon="fa-plus" 
+									string="Move To Pivotal" 
+									context="{'is_implementation_report':True}" 
+									style="margin-bottom:8px; margin-left:8px"
+								/>  
+								<field name="implementation_report_ids" context="{'wspatr_id': active_id}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="is_pivotal" string="Move To Pivotal" />
+										<field name="ofo_majorgroup_id" string="Major Group" />
+										<field name="ofo_submajorgroup_id" string="Sub Major Group" />
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="formsp_id" />
+										<field name="intervention_id" />
+										<field name="formspl_id" />
+										<field name="formspl_notes" />
+										<field name="other_country"/>
+										<field name="inseta_funding" sum="Inseta Funding"/>
+										<field name="other_funding" sum="Other Funding"/>
+										<field name="company_funding" sum="Company Funding"/>
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Female"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<field name="is_pivotal" string="Move to Pivotal?"/>
+											</group>
+											<group>
+												<group>
+													<field name="ofo_occupation_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="formsp_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="intervention_id" options="{'no_open':True, 'no_create':True}" required="1" />
+													<field name="formspl_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="require_other_nqf_level" invisible="1"/>
+													<field name="formspl_notes" attrs="{'required':[('require_other_nqf_level','=',True)]}" />
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+													<field name="inseta_funding" required="1" />
+													<field name="other_funding" required="1"/>
+													<field name="company_funding" required="1"/>
+													<field name="other_country" invisible="1" force_save="1" />
+													<field name="other_country_id" string="Foreign Country" options="{'no_create':True}"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+													<field name="african_female" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+													<field name="african_disabled" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+													<field name="colored_female" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+													<field name="colored_disabled" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+													<field name="indian_female" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+													<field name="indian_disabled" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+												</group>
+												<group>
+													<field name="white_male" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+													<field name="white_female" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+													<field name="white_disabled" required="1" force_save="1" attrs="{'readonly':[('other_country_id','!=',False)]}"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1" force_save="1" attrs="{'readonly':[('other_country_id','=',False)]}"/>
+													<field name="other_female" required="1" force_save="1" attrs="{'readonly':[('other_country_id','=',False)]}"/>
+													<field name="other_disabled" required="1" force_save="1" attrs="{'readonly':[('other_country_id','=',False)]}"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_impl_report" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_impl_report" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+								
+							</page>
+
+
+							<page name="pivotal_trained_beneficiaries" string="ATR 2: Pivotal trained beneficiaries"  attrs="{'invisible':[('form_type','not in',('Small',))],}" > <!--small firm-->
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to only report training interventions that are listed on the South African Qualifications Authority’s (SAQA) list and are aligned to the National Qualifications Framework (NQF).							
+								</div>
+
+								<group>
+									<div>
+										<field name="not_hosted_pivotalprogrammes" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="not_hosted_pivotalprogrammes" string="We did not host any PIVOTAL programmes" class="oe_inline"/>
+									</div>
+								</group>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_is_small_firm': True, 'default_submission_type': 'ATR', 'default_template': 'Pivotal Trained Beneficiaries'}"
+									 attrs="{'invisible':[('not_hosted_pivotalprogrammes','=',True)]}"
+								/>
+
+								
+								<field name="pivotal_trained_beneficiaries_ids" context="{'wspatr_id': active_id}" attrs="{'invisible':[('not_hosted_pivotalprogrammes','=',True)]}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id" string="Sub major Group"/>
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="programme_level" />
+										<field name="training_provider" />
+										<field name="municipality_id" />
+										<field name="pivotal_programme_id" />
+										<field name="socio_economic_status"/>
+										<field name="start_date"  />
+										<field name="end_date" />
+										<field name="completion_status" />
+
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="is_small_firm" invisible="1"/>
+													<field name="ofo_occupation_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="programme_level" required="1" />
+													<field name="municipality_id" required="1"  options="{'no_open':True, 'no_create':True}" />
+													<field name="pivotal_programme_id" required="1" options="{'no_open':True, 'no_create':True}" />
+													<field name="start_date" required="1"/>
+													<field name="completion_status" required="1"/>
+													<field name="nqf_level_id" options="{'no_open':True, 'no_create':True}" required="1" />
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+													<field name="training_provider" />
+													<field name="socio_economic_status" required="1"/>
+													<field name="other_pivotal_programme" />
+													<field name="end_date" required="1" />
+													<field name="other_country"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_pivotaltrained" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_pivotaltrained" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+							</page>
+
+							<page string="ATR 3: Hard to fill vacancies"  attrs="{'invisible':[('form_type','not in',('Small',))]}"> <!--small firms-->
+							   
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to report on all the occupations that took your organisation longer than six (6) months to find a suitably experienced and qualified replacement.								
+								</div>
+								<group>
+									<div>
+										<field name="not_hosted_hardtofillvacancies" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="not_hosted_hardtofillvacancies" string="We did not have any Hard to Fill Vacancies" class="oe_inline"/>
+									</div>
+								</group>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_is_small_firm': True, 'default_submission_type': 'ATR', 'default_template': 'Hard To Fill Vacancies'}"
+									attrs="{'invisible':[('not_hosted_hardtofillvacancies','=',True)]}"
+								/>
+
+								<field name="hardtofillvacancies_ids" context="{'wspatr_id': active_id}" attrs="{'invisible':[('not_hosted_hardtofillvacancies','=',True)]}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id"  string="Sub Major Group" />
+										<field name="ofo_occupation_id"/>
+										<field name="province_id" />
+										<field name="vacancyreason_ids" string="Reasons"/>
+									</tree>
+									<form>
+										<sheet>
+											<group colspan="2">
+												<field name="wspatr_id" invisible="1"/>
+												<field name="ofo_occupation_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+												<field name="province_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+												<field name="vacancyreason_ids" string="Reasons" widget="many2many_tags" required="1"/>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_hardtofillvacancies" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_hardtofillvacancies" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+
+
+							<page string="ATR 4: Skills Gaps"  attrs="{'invisible':[('form_type','not in',('Small',))]}"> <!--small firms-->
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to report all the skills that are needed by an employee to carry out job tasks competently. It is also referred to as “Top-up Skills”.								
+								</div>
+<!-- 
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'ATR', 'default_template': 'Skills Gap'}"
+								/> -->
+								<group>
+									<div>
+										<field name="not_hosted_hardtofillvacancies" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="not_hosted_hardtofillvacancies" string="We did not have any Hard to Fill Vacancies" class="oe_inline"/>
+									</div>
+								</group>
+								<field name="vacanciesskillsgap_ids" context="{'wspatr_id': active_id}" attrs="{'invisible':[('not_hosted_hardtofillvacancies','=',True)]}">
+									<tree>
+										<field name="managersgap1" string="Manager Gap 1" />
+										<field name="managersgap2" string="Manager Gap 2" />
+										<field name="managersgap3" string="Manager Gap 3" />
+										<field name="professionalsgap1" string="Professionals Gap 1"/> 
+										<field name="professionalsgap2" string="Professionals Gap 2"/> 
+										<field name="professionalsgap3" string="Professionals Gap 3" />
+									</tree>
+									<form>
+										<sheet>
+											<group colspan="4">
+												<field name="wspatr_id" invisible="1"/>
+												<table class="table" colspan="4">
+													<thead>
+														<tr>
+															<th>Major Occupation</th>
+															<th>No</th>
+															<th>List the top 3 common Skills Gaps</th>
+															<th>Identify up to maximum of 3 reasons per skills page</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Manager</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="managersgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="managersgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="managersgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="managersreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="managersreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="managersreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Professionals</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="professionalsgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="professionalsgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="professionalsgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="professionalsreasons1" options="{'no_create': True, 'no_open': True}"  nolabel="1"/> <br/>
+																<field name="professionalsreasons2" options="{'no_create': True, 'no_open': True}"  nolabel="1"/> <br/>
+																<field name="professionalsreasons3"  options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Technicians and Associate Professionals</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="techniciansgap1" options="{'no_create': True, 'no_open': True}"  nolabel="1"/> <br/>
+																<field name="techniciansgap2" options="{'no_create': True, 'no_open': True}"  nolabel="1"/> <br/>
+																<field name="techniciansgap3" options="{'no_create': True, 'no_open': True}"  nolabel="1"/>
+															</td>
+															<td>
+																<field name="techniciansreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="techniciansreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="techniciansreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Clerical Support</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="clericalsupportworkergap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="clericalsupportworkergap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="clericalsupportworkergap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="clericalsupportworkerreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="clericalsupportworkerreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="clericalsupportworkerreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Service and Sales Workers</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="servicesalesworkersgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="servicesalesworkersgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="servicesalesworkersgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="servicesalesworkersreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="servicesalesworkersreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="servicesalesworkersreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Skilled Agriculture, Forestry, Fishery, Craft and Related Trades Workers</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="skilledtradesworkersgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="skilledtradesworkersgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="skilledtradesworkersgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="skilledtradesworkersreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="skilledtradesworkersreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="skilledtradesworkersreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Plant and Machine Operators and Assemblers</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="plantmachineoperatorsgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="plantmachineoperatorsgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="plantmachineoperatorsgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="plantmachineoperatorsreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="plantmachineoperatorsreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="plantmachineoperatorsreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Elementary Occupations</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="elementaryoccupationsgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="elementaryoccupationsgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="elementaryoccupationsgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="elementaryoccupationsreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="elementaryoccupationsreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="elementaryoccupationsreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="" colspan="4"> <field name="confirm" required="1" nolabel="1"/> I hereby confirm that the following information submitted is complete, accurate and not missleading </td>
+														</tr>
+												
+													</tbody>
+												
+												</table>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_skillsgap" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_skillsgap" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+
+							<page name="trained_beneficiaries_report" string="ATR 1: Trained Beneficiaries Report"  attrs="{'invisible':[('form_type','not in',('Large',))]}"> <!--[Trained Beneficiaries] Medium/Large Firms-->
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+								This form require employers to report on the number of employees that were trained in your company in the previous financial year. Report both credit and non-credit bearing interventions.
+								</div>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'ATR', 'default_template': 'Trained Beneficiaries Report'}"
+								/>
+								
+								<button 
+									name="%(inseta_skills.wspatr_movetopivotal_wizard_action)d" 
+									type="action" 
+									icon="fa-plus" 
+									string="Move To Pivotal" 
+									context="{'is_trained_beneficiaries':True}" 
+									style="margin-bottom:8px; margin-left:8px"
+								/>  
+								<field name="trained_beneficiaries_report_ids" context="{'wspatr_id': active_id}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="is_pivotal" string="Move to Pivotal"/>
+										<field name="ofo_majorgroup_id" string="Major Group" />
+										<field name="ofo_submajorgroup_id" string="Sub Major Group" />
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="municipality_id" string="Municipality"/>
+										<field name="programme_level" string="Programme Level"/>
+										<field name="training_provider" />
+										<field name="completion_status" />
+										<field name="other_country"/>
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<field name="is_pivotal" string="Move to Pivotal?" />
+											</group>
+											<group>
+												<group>
+													<field name="ofo_occupation_id" required="1" options="{'no_create':True}"/>
+													<field name="municipality_id" options="{'no_create':True}" required="1" />
+													<field name="training_provider" />
+													<field name="completion_status"  required="1"/>
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1"/>
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+													<field name="programme_level" required="1" />
+													<field name="other_country"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_trained_beneficiaries" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_trained_beneficiaries" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+							</page>
+
+							<!--[Learning Programmes] medium/large firms-->
+							<page name="learning_programmes" string="ATR 2: Learning Programmes"  attrs="{'invisible':[('form_type','not in',('Large',))]}" >
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+								This form require employers to report on the name of programmes that your employees were trained on in the previous financial year. Report both credit and non-credit bearing programmes.
+								</div>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'ATR', 'default_template': 'Learning Programmes'}"
+								/>
+								<field name="learning_programmes_ids" context="{'wspatr_id': active_id}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="formoccupation_id"/>
+										<field name="learning_programme"/>
+										<field name='formsp_id' />
+										<field name="inseta_funding" sum="INSETA funding"/>
+										<field name="other_funding" sum="Othe Funding. eg. Government"/>
+										<field name="company_funding" sum="Company funding"/>
+										<field name="training_provider"/>
+										<field name="form_cred_id"/>
+										<field name="nqf_level_id"/>
+										<field name="no_of_employees" sum="No of Employees"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="formoccupation_id" options="{'no_open':True, 'no_create':True}"  required="1"/>
+													<field name="learning_programme" required="1" />
+													<field name="formsp_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="inseta_funding" required="1" />
+													<field name="other_funding" required="1" />
+													<field name="company_funding" required="1" />
+												</group>
+												<group>
+													<field name="training_provider" required="1"/>
+													<field name="form_cred_id" options="{'no_open':True, 'no_create':True}"   required="1"/>
+													<field name="nqf_level_id" options="{'no_open':True, 'no_create':True}"   required="1"/>
+													<field name="no_of_employees" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_learning_programmes" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_learning_programmes" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+
+							<page name="variance" string="ATR 3: Variance Report"  attrs="{'invisible':[('form_type','not in',('Large',))]}" >
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form compare the planned beneficiaries plan for the previous year’s submission against the trained beneficiaries report for the current year’s submission. Employers are only required to state reasons provided they have trained less than what was planned for. <br/>
+									<ul>
+										<li> A Negative variance means that <strong>planned beneficiaries is greater than trained beneficiaries</strong></li>
+										<li> A positive Variance means that <strong> planned beneficiaries is less than trained beneficiaries</strong></li>
+									</ul> 
+								</div>
+								<field name="variance_ids" context="{'wspatr_id': active_id}" readonly="0">
+									<tree create="0" delete="0" editable="bottom">
+										<field name="wspatr_id" invisible="1"/>
+										<field name="requires_reason" invisible="1"/>
+										<field name="ofo_majorgroup_id" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}" />
+										<field name="totalplanned" readonly="1" force_save="1"  string="Planned" />
+										<field name="totaltrained" readonly="1" force_save="1"  string="Trained" />
+										<field name="variance_perc" readonly="1" force_save="1" />
+										<field name="variancereason_id" string="Reason" options="{'no_create': True, 'no_open': True}" attrs="{'required':[('requires_reason','=',True)]}" />
+										<field name="variancereason_other" string="other Reason"/>
+									</tree>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_variance" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_variance" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+							
+							<!--[Trained AET] medium/large firms-->
+							<page name="trained_aet" string="ATR 4: AET Report"  attrs="{'invisible':[('form_type','not in',('Large',))]}" >
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require the employer to report on the training interventions conducted to assist employees who hold a qualification that is below NQF level 4 (Grade 12) to attain a qualification that is at NQF level 4.  
+								</div>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'ATR', 'default_template': 'Trained AET'}"
+								/>
+								<field name="trained_aet_ids" context="{'wspatr_id': active_id}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id" string="Sub major Group"/>
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="municipality_id"/>
+										<field name="first_name" />
+										<field name="last_name" />
+										<field name="id_no" />
+										<field name="equity_id" />
+										<field name="gender_id" />
+										<field name="disability_id" />
+										<field name="aet_start_date"/>
+										<field name="aet_end_date" />
+										<field name="training_provider"/>
+										<field name="aet_level_id" />
+										<field name="aet_subject_id" />
+										<field name="learner_programme_status" />
+										<field name="is_inseta_funded" />
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="ofo_occupation_id" required="1"/>
+													<field name="first_name" required="1" />
+													<field name="last_name" required="1" />
+													<field name="id_no" required="1" />
+													<field name="equity_id" options="{'no_open':True, 'no_create':True}"  required="1" />
+													<field name="gender_id" options="{'no_open':True, 'no_create':True}"   required="1" />
+													<field name="disability_id" options="{'no_open':True, 'no_create':True}"   required="1"/>
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+													<field name="municipality_id" options="{'no_open':True, 'no_create':True}" required="1" />
+													<field name="aet_start_date" required="1" />
+													<field name="aet_end_date" required="1" />
+													<field name="training_provider" required="1" />
+													<field name="aet_level_id" options="{'no_open':True, 'no_create':True}" required="1" />
+													<field name="aet_subject_id" options="{'no_open':True, 'no_create':True}" required="1" />
+													<field name="learner_programme_status" required="1" />
+													<field name="is_inseta_funded" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_trained_aet" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_trained_aet" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+
+							<page  string="ATR 5A: Hard to Fill Vacancies"  attrs="{'invisible':[('form_type','not in',('Large',))]}"> <!--large firms-->
+							   
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to report on all the occupations that took your organisation longer than six (6) months to find a suitably experienced and qualified replacement.								
+								</div>
+								<group>
+									<div>
+										<field name="not_hosted_hardtofillvacancies" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="not_hosted_hardtofillvacancies" string="We did not have any Hard to Fill Vacancies" class="oe_inline"/>
+									</div>
+								</group>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'ATR', 'default_template': 'Hard To Fill Vacancies'}"
+									 attrs="{'invisible':[('not_hosted_hardtofillvacancies','=',True)]}"
+								/>
+
+								<field name="hardtofillvacancies_ids" context="{'wspatr_id': active_id}" attrs="{'invisible':[('not_hosted_hardtofillvacancies','=',True)]}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id"  string="Sub Major Group" />
+										<field name="ofo_occupation_id"/>
+										<field name="province_id" />
+										<field name="vacancyreason_ids" string="Reasons"/>
+									</tree>
+									<form>
+										<sheet>
+											<group colspan="2">
+												<field name="wspatr_id" invisible="1"/>
+												<field name="ofo_occupation_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+												<field name="province_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+												<field name="vacancyreason_ids" string="Reasons" widget="many2many_tags" required="1"/>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_hardtofillvacancies" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_hardtofillvacancies" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+
+
+							<page string="ATR 5B: Skills Gaps"  attrs="{'invisible':[('form_type','not in',('Large',))]}"> <!--small firms-->
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to report all the skills that are needed by an employee to carry out job tasks competently. It is also referred to as “Top-up Skills”.								
+								</div>
+							    <!-- <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'ATR', 'default_template': 'Skills Gap'}"
+								/> -->
+								<group>
+									<div>
+										<field name="not_hosted_hardtofillvacancies" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="not_hosted_hardtofillvacancies" string="We did not have any Hard to Fill Vacancies" class="oe_inline"/>
+									</div>
+								</group>
+								<field name="vacanciesskillsgap_ids" context="{'wspatr_id': active_id}" attrs="{'invisible':[('not_hosted_hardtofillvacancies','=',True)]}">
+									<tree>
+										<field name="managersgap1" string="Manager Gap 1" />
+										<field name="managersgap2" string="Manager Gap 2" />
+										<field name="managersgap3" string="Manager Gap 3" />
+										<field name="professionalsgap1" string="Professionals Gap 1"/> 
+										<field name="professionalsgap2" string="Professionals Gap 2"/> 
+										<field name="professionalsgap3" string="Professionals Gap 3" />
+									</tree>
+									<form>
+										<sheet>
+											<group colspan="4">
+												<field name="wspatr_id" invisible="1"/>
+												<table class="table" colspan="4">
+													<thead>
+														<tr>
+															<th>Major Occupation</th>
+															<th>No</th>
+															<th>List the top 3 common Skills Gaps</th>
+															<th>Identify up to maximum of 3 reasons per skills page</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Manager</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="managersgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="managersgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="managersgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="managersreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="managersreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="managersreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Professionals</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="professionalsgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="professionalsgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="professionalsgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="professionalsreasons1" options="{'no_create': True, 'no_open': True}"  nolabel="1"/> <br/>
+																<field name="professionalsreasons2" options="{'no_create': True, 'no_open': True}"  nolabel="1"/> <br/>
+																<field name="professionalsreasons3"  options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Technicians and Associate Professionals</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="techniciansgap1" options="{'no_create': True, 'no_open': True}"  nolabel="1"/> <br/>
+																<field name="techniciansgap2" options="{'no_create': True, 'no_open': True}"  nolabel="1"/> <br/>
+																<field name="techniciansgap3" options="{'no_create': True, 'no_open': True}"  nolabel="1"/>
+															</td>
+															<td>
+																<field name="techniciansreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="techniciansreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="techniciansreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Clerical Support</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="clericalsupportworkergap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="clericalsupportworkergap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="clericalsupportworkergap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="clericalsupportworkerreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="clericalsupportworkerreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="clericalsupportworkerreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Service and Sales Workers</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="servicesalesworkersgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="servicesalesworkersgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="servicesalesworkersgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="servicesalesworkersreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="servicesalesworkersreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="servicesalesworkersreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Skilled Agriculture, Forestry, Fishery, Craft and Related Trades Workers</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="skilledtradesworkersgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="skilledtradesworkersgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="skilledtradesworkersgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="skilledtradesworkersreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="skilledtradesworkersreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="skilledtradesworkersreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Plant and Machine Operators and Assemblers</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="plantmachineoperatorsgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="plantmachineoperatorsgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="plantmachineoperatorsgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="plantmachineoperatorsreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="plantmachineoperatorsreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="plantmachineoperatorsreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">Elementary Occupations</td>
+															<td>1<br/>
+																2<br/>
+																3
+															</td>
+															<td>
+																<field name="elementaryoccupationsgap1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="elementaryoccupationsgap2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="elementaryoccupationsgap3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+															<td>
+																<field name="elementaryoccupationsreasons1" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="elementaryoccupationsreasons2" options="{'no_create': True, 'no_open': True}" nolabel="1"/> <br/>
+																<field name="elementaryoccupationsreasons3" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+													</tbody>
+												
+												</table>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_skillsgap" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_skillsgap" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+
+							<page name="pivotal_trained_beneficiaries" string="ATR 6: PIVOTAL Trained Beneficiaries."  attrs="{'invisible':[('form_type','not in',('Large',))]}" > <!--small firm-->
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to only report training interventions that are listed on the South African Qualifications Authority’s (SAQA) list and are aligned to the National Qualifications Framework (NQF).							
+								</div>
+								<group>
+									<div>
+										<field name="not_hosted_pivotalprogrammes" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="not_hosted_pivotalprogrammes" string="We did not host any PIVOTAL programmes" class="oe_inline"/>
+									</div>
+								</group>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_is_small_firm': True, 'default_submission_type': 'ATR', 'default_template': 'Pivotal Trained Beneficiaries'}"
+								/>
+								
+								<field name="pivotal_trained_beneficiaries_ids" context="{'wspatr_id': active_id}" attrs="{'invisible':[('not_hosted_pivotalprogrammes','=',True)]}">
+									<tree>
+										<!-- <field name="is_small_firm" invisible="1"/> -->
+										<field name="wspatr_id" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id" string="Sub major Group"/>
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="programme_level" />
+										<field name="training_provider" />
+										<field name="pivotal_programme_id" />
+										<field name="socio_economic_status"/>
+										<field name="start_date" />
+										<field name="end_date" />
+										<field name="nqf_level_id" />
+										<field name="municipality_id" />
+										<field name="socio_economic_status" />
+										<field name="pivotal_programme_id" />
+										<field name="other_pivotal_programme" optional="show"/>
+										<field name="other_country" optional="show"/>
+										<field name="completion_status"  />
+
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="is_small_firm" invisible="1"/>
+													<field name="ofo_occupation_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="programme_level" required="1" />
+													<field name="municipality_id" required="1"  options="{'no_open':True, 'no_create':True}" />
+													<field name="pivotal_programme_id" required="1" options="{'no_open':True, 'no_create':True}" />
+													<field name="start_date" required="1" />
+													<field name="completion_status" required="1"/>
+													<field name="nqf_level_id" options="{'no_open':True, 'no_create':True}" attrs="{'required': [('is_small_firm','=',False)]}" />
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+													<field name="training_provider"/>
+													<field name="socio_economic_status" required="1"/>
+													<field name="other_pivotal_programme" />
+													<field name="end_date" required="1" />
+													<field name="other_country"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_pivotaltrained" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_pivotaltrained" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+							</page>
+							<!--WSP Starts here -->
+							<page string="WSP 1: Skills Development &amp; Consultation"  attrs="{'invisible':[('form_type','not in',('Small','Large'))]}">
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+								This form require employer to answer the following questions about their companies: <br/>
+								· The process that was followed to develop the workplace skills plan and annual training report.<br/>
+								· Changes in roles, competences, staff compliments and productivity.<br/>
+								· Training spend and core of your business.							
+								</div>
+
+								<field name="skillsdevconsultplanning_ids" attrs="{'readonly':[('state','in',('approve','reject'))]}" context="{'wspatr_id': active_id}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="workplacespid"/>
+										<field name="comment1" />
+									</tree>
+									<form>
+										<sheet>
+											<group colspan="4">
+												<field name="wspatr_id" invisible="1"/>
+												<table class="table" colspan="4">
+													<thead>
+														<tr>
+															<th>Questions</th>
+															<th>Responses</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold; width:60%">1.1. What process was used to develop the Workplace Skills Plan?</td>
+															<td>
+																<field name="workplacespid" required="1" options="{'no_create': True, 'no_open': True}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.1.1. Please add additional comments if applicable</td>
+															<td>
+																<field name="require_1_1_1" invisible="1"/>
+																<field name="comment1" attrs="{'required':[('require_1_1_1','=',True)]}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.2. Provide a brief summary of the impact of the legislation on the organization i.e. FAIS regulatory exams</td>
+															<td>
+																<field name="comment2" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2" style="background-color:#143e90; color:#ffffff"> 1.3. Note: Question must be posed and completed by people in the following occupational areas and not completed by SDF: How much has your job changed in the last 12 months and in the last 3 years?</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.3.1. Underwriter</td>
+															<td>
+																<field name="underwriter" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.3.2. Insurance Broker</td>
+															<td>
+																<field name="insurancebroker" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.3.3. Software Developer / Programmer / IT related occupations</td>
+															<td>
+																<field name="itoccupations" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.3.4. Claims Clerks / Manager / Assessor</td>
+															<td>
+																<field name="claims" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.3.5. Sales Managers</td>
+															<td>
+																<field name="salesmanager" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.3.6. Accountant</td>
+															<td>
+																<field name="accountant" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.3.7. Actuary</td>
+															<td>
+																<field name="actuary" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.4. Has your Organisation gone through any restructuringin the past 12 months due to merger/acquisition?</td>
+															<td>
+																<field name="merged" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2" style="background-color:#143e90; color:#ffffff">1.5. Number of people retrenched/dismissed/resigned for the period 1 January 2019 to 31 December 2019</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.5.1. Retrenched</td>
+															<td>
+																<field name="retrenched" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.5.2. Dismissed - Misconduct</td>
+															<td>
+																<field name="dismissedmisconduct" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.5.3. Resigned</td>
+															<td>
+																<field name="resigned" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.5.4. Deceased</td>
+															<td>
+																<field name="deceased" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.5.5. Retired</td>
+															<td>
+																<field name="retired" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.5.6. Non- Renewal of Contract</td>
+															<td>
+																<field name="nonrenewal" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.5.7. Dismissed - Incapacity</td>
+															<td>
+																<field name="dismissedincapacity" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.5.8. Dismissed – Non-compliance ( RE )</td>
+															<td>
+																<field name="dismissednoncompliance" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2" style="background-color:#143e90; color:#ffffff">1.6. In order to measure the impact of training in your Organisation kindly state:</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.6.1. Has productivity increased or decreased in the Organisation?</td>
+															<td>
+																<field name="productivity" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.6.2. What are your findings based on?</td>
+															<td>
+																<field name="comment4" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2" style="background-color:#143e90; color:#ffffff">1.7. Class of Business for the Organisation</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.1. Are you a product provider?</td>
+															<td>
+																<field name="productprovider" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<!--1.7.1 if No option is selected then 1.7.1.1 to 1.7.1.4 must not be mandatory. 
+														if the Yes option is selected then 1.7.1.1 to 1.7.1.4 must be mandatory.-->
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.1.1. What is your Core business?</td>
+															<td>
+																<field name="providercorebusiness_id" attrs="{'required':[('productprovider','=','Yes')]}" nolabel="1" options="{'no_open':True, 'no_create':True}"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.1.2. Comment</td>
+															<td>
+																<field name="comments5"  attrs="{'required':[('productprovider','=','Yes')]}"  nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.1.3. What is your Secondary business?</td>
+															<td>
+																<field name="providersecondary_id"  attrs="{'required':[('productprovider','=','Yes')]}" nolabel="1" options="{'no_open':True, 'no_create':True}"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.1.4. Comment</td>
+															<td>
+																<field name="comments6"  attrs="{'required':[('productprovider','=','Yes')]}" nolabel="1"/>
+															</td>
+														</tr>
+
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.2. Are you a Broker?</td>
+															<td>
+																<field name="broker" required="1" nolabel="1"/>
+															</td>
+														</tr>
+														<!--1.7.2 if No option is selected then 1.7.2.1 to 1.7.2.4 must not be mandatory. 
+														if Yes option is seleted then 1.7.2.1 to 1.7.2.4 must be mandatory-->
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.2.1. What is your Core business?</td>
+															<td>
+																<field name="brokercorebusiness_id" attrs="{'required':[('broker','=','Yes')]}" nolabel="1" options="{'no_open':True, 'no_create':True}"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.2.2. Comment</td>
+															<td>
+																<field name="comments7" attrs="{'required':[('broker','=','Yes')]}"  nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.2.3. What is your Secondary business?</td>
+															<td>
+																<field name="brokersecondary_id" attrs="{'required':[('broker','=','Yes')]}" nolabel="1" options="{'no_open':True, 'no_create':True}"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.7.2.4. Comment</td>
+															<td>
+																<field name="comments8" attrs="{'required':[('broker','=','Yes')]}" nolabel="1"/>
+															</td>
+														</tr>
+														<tr>
+															<td style="vertical-align:center; font-weight:bold">1.8. What is the percentage of payroll spent on training?</td>
+															<td>
+																<field name="payroll" nolabel="1" required="1"/>
+															</td>
+														</tr>
+													</tbody>
+												
+												</table>
+											</group>
+										</sheet>
+									</form>
+
+								</field>
+								<group>
+									<div>
+										<field name="confirm_skillsdevconsult" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_skillsdevconsult" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+                            <page name="current_employment_profile" string="WSP 2: Current Employment Profile " attrs="{'invisible':[('form_type','not in',('Small','Large'))]}">
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to provide INSETA with the number of employees who are currently employed by employers as at the time they are submitting their workplace skill plan and annual training report.						
+								</div>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'WSP', 'default_template': 'Current Employment Profile'}"
+								/>
+
+								<field name="employement_profile_ids" context="{'wspatr_id': active_id}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id" string="Sub major Group"/>
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="other_country"/>
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="ofo_occupation_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="other_country"/>
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_currentemploymentprofile" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_currentemploymentprofile" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+                            </page>
+
+							<page name="highest_edu_profile" string="WSP 3: Highest Edu. Profile" attrs="{'invisible':[('form_type','not in',('Small','Large'))]}"> <!--small n large-->
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to provide INSETA with the number of the highest qualifications held by employees at the time the employer is submitting their workplace skill plan and annual training report.
+								</div>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'WSP', 'default_template': 'Highest Educational Profile'}"
+								/>
+								<field name="highest_educational_profile_ids"  context="{'wspatr_id': active_id}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="formspl_id"/>
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="formspl_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+												</group>
+												<group>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_highesteduprofile" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_highesteduprofile" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+							</page>
+
+							<page name="provincialbreakdown" string=" WSP 4: Provincial Breakdown" attrs="{'invisible':[('form_type','not in',('Small','Large'))]}" >
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to indicate the location of their employees in relation to provinces.								
+								</div>
+
+							    <!-- <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_is_small_firm': True, 'default_submission_type': 'WSP', 'default_template': 'Provincial Breakdown'}"
+								/> -->
+								<field name="provincialbreakdown_ids" attrs="{'readonly':[('state','in',('approve','reject'))]}" context="{'wspatr_id': active_id}" >
+									<tree >
+										<field name="wspatr_id" invisible="1"/>
+										<field name="sdl_no"/>
+										<!-- <field name="parent_sdl_no" /> -->
+										<field name="sic_code_id"/>
+										<field name="company_size" />
+										<field name="levy_status" />
+										<field name="noemployees" sum="No. Employees" string="No. Employees"/>
+										<field name="easterncape" sum="Easten Cape"/>
+										<field name="freestate" sum="Free State"/>
+										<field name="gauteng" sum="Guateng"/>
+										<field name="kwazulunatal" sum="KwaZulu Natal"/>
+										<field name="limpopo" sum="Limpopo"/>
+										<field name="northwest" sum="North West"/>
+										<field name="northerncape" sum="Northen Cape"/>
+										<field name="mpumalanga" sum="Mpumalanga"/>
+										<field name="westerncape" sum="Western Cape"/>
+										<field name="total" sum="Total"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="sdl_no" required="1"/>
+													<!-- <field name="parent_sdl_no" /> -->
+													<field name="sic_code_id" options="{'no_create':True,'no_open':True}" required="1"/>
+													<field name="easterncape" required="1"/>
+													<field name="freestate" required="1"/>
+													<field name="gauteng" required="1"/>
+													<field name="kwazulunatal" required="1"/>
+													<field name="limpopo" required="1"/>
+													<field name="northwest" required="1"/>
+													<field name="northerncape" required="1" />
+													<field name="mpumalanga" required="1" />
+													<field name="westerncape" required="1"/>
+												</group>
+												<group>
+													<field name="levy_status" required="1"/>
+													<field name="noemployees" string="No. Of Employees" required="1"/>
+													<field name="company_size" readonly="1" force_save="1"/>
+													<field name="reasons" />
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_provincialbreakdown" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_provincialbreakdown" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+
+							<page name="pivotal_planned_beneficiaries" string="WSP 5: Pivotal planned" attrs="{'invisible':[('form_type','not in',('Small',))]}" > <!--small n large-->
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to provide INSETA with a plan on all planned training interventions that are listed on the South African Qualifications Authority (SAQA) list and are aligned to the National Qualification Framework (NQF)for the current financial year.
+								</div>
+
+								<group>
+									<div>
+										<field name="not_hosted_plannedpivotalprogrammes" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="not_hosted_plannedpivotalprogrammes" string="We did not host any PIVOTAL programmes" class="oe_inline"/>
+									</div>
+								</group>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_is_small_firm': True, 'default_submission_type': 'WSP', 'default_template':'Pivotal_Planned_Beneficiaries_Small'}"
+									attrs="{'invisible':[('not_hosted_plannedpivotalprogrammes','=',True)]}"
+								/>
+								<field name="is_small_firm" invisible="1" />
+								<field name="pivotal_planned_beneficiaries_ids" context="{'wspatr_id': active_id, 'is_small_firm':is_small_firm}" attrs="{'invisible':[('not_hosted_plannedpivotalprogrammes','=',True)]}">
+									<tree>
+										<field name="is_small_firm" invisible="1"/>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id" string="Sub major Group"/>
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="programme_level"  attrs="{'column_invisible': [('parent.form_type','=','Small')]}" />
+										<field name="training_provider"  attrs="{'column_invisible': [('parent.form_type','=','Small')]}" />
+										<field name="municipality_id" />
+										<field name="pivotal_programme_id" />
+										<field name="socio_economic_status"/>
+										<field name="start_date" attrs="{'column_invisible': [('parent.form_type','=','Small')]}" />
+										<field name="end_date" attrs="{'column_invisible': [('parent.form_type','=','Small')]}" />
+										<field name="other_country"/>
+										
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="is_small_firm" invisible="1"/>
+													<field name="ofo_occupation_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="programme_level" attrs="{'invisible':[('is_small_firm','=',True)], 'required':[('is_small_firm','=',False)]}"/>
+													<field name="municipality_id" required="1" options="{'no_open':True, 'no_create':True}" />
+													<field name="pivotal_programme_id" required="1" options="{'no_open':True, 'no_create':True}" />
+													<field name="start_date" attrs="{'invisible':[('is_small_firm','=',True)], 'required':[('is_small_firm','=',False)]}" />
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+													<field name="training_provider" attrs="{'invisible':[('is_small_firm','=',True)], 'required':[('is_small_firm','=',False)] }"/>
+													<field name="socio_economic_status" required="1"/>
+													<field name="other_pivotal_programme" />
+													<field name="end_date" attrs="{'invisible':[('is_small_firm','=',True)], 'required':[('is_small_firm','=',False)] }" />
+													<field name="other_country"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_pivotal_planned_beneficiaries" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_pivotal_planned_beneficiaries" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+							</page>
+
+							<page string="WSP 6: Planned Beneficiaries of Training"  attrs="{'invisible':[('form_type','not in',('Small',))]}">
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to provide INSETA with a plan on all the training interventions that the employers intend undertaking for the current financial year. this plan must include both interventions that are credit and non-credit bearing.						
+								</div>
+
+								<!--Workplace Skills Plan is small form equivalent of Planned Beneficiaries of Training for large form -->
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_is_small_firm': True, 'default_submission_type': 'WSP', 'default_template': 'Planned_Beneficiaries_Small'}"
+								/>
+								<button 
+									name="%(inseta_skills.wspatr_movetopivotal_wizard_action)d" 
+									type="action" 
+									icon="fa-plus" 
+									string="Move To Pivotal" 
+									context="{'is_workplaceskillsplan':True}" 
+									style="margin-bottom:8px; margin-left:8px"
+								/>  
+								<field name="workplaceskillsplan_ids" context="{'wspatr_id': active_id}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="is_pivotal" string="Move To Pivotal?" />
+										<field name="ofo_occupation_id"/>
+										<field name="ofo_specialization_id"/>
+										<field name="programme_level" />
+										<field name="formsp_id" />
+										<field name="formspl_id" />
+										<field name="formspl_notes" />
+										<field name="other_country"/>
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<field name="is_pivotal" string="Move To Pivotal?" />
+											</group>
+											<group>
+												<group>
+													<field name="ofo_occupation_id" required="1"/>
+													<field name="formsp_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="formspl_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="require_other_nqf_level" invisible="1"/>
+													<field name="formspl_notes" attrs="{'required':[('require_other_nqf_level','=',True)]}" />
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+													<field name="programme_level" required="1" />
+													<field name="other_country"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_wpskillplan" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_wpskillplan" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+							</page>
+
+							<page name="planned_aet_training" string="WSP 5: Planned AET"  attrs="{'invisible':[('form_type','not in',('Large',))]}" >  <!--Large/medium firms-->
+                             
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to provide INSETA with a plan on the number of employees with a qualification that is below the NQF level 4 to assist those employees to attain a qualification at NQF level 4 (Grade 12).  
+								</div>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'WSP', 'default_template': 'Planned AET Training'}"
+								/>
+
+								<field name="is_small_firm" invisible="1" />
+								<field name="planned_aet_training_ids" context="{'wspatr_id': active_id, 'is_small_firm': is_small_firm}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id" string="Sub major Group"/>
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="other_country"/>
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="is_small_firm" invisible="1"/>
+													<field name="ofo_occupation_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="other_country"/>
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_plannedaet" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_plannedaet" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+							</page>
+							<page name="planned_beneficiaries" string="WSP 6: Planned Beneficiaries of Training"  attrs="{'invisible':[('form_type','not in',('Large',))]}"> <!--Large/medium firms-->
+                               
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to provide INSETA with a plan on the number of employees that will be trained for the current financial year. The plan should include both credit and non-credit bearing programmes.
+								</div>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'WSP', 'default_template': 'Planned_Beneficiaries_Large'}"
+								/>
+								<button 
+									name="%(inseta_skills.wspatr_movetopivotal_wizard_action)d" 
+									type="action" 
+									icon="fa-plus" 
+									string="Move To Pivotal" 
+									context="{'is_planned_beneficiaries':True}" 
+									style="margin-bottom:8px; margin-left:8px"
+								/>  
+								<field name="planned_beneficiaries_ids" context="{'wspatr_id': active_id}">
+									<tree>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="is_pivotal" string="Move to Pivotal?" />
+										<field name="socio_economic_status" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id" string="Sub major Group"/>
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="programme_level" />
+										<field name="municipality_id" />
+										<field name="formsp_id" />
+										<field name="other_country"/>
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<field name="is_pivotal" string="Move to Pivotal?" />
+											</group>
+											<group>
+												<group>
+													<field name="ofo_occupation_id" required="1"/>
+													<field name="municipality_id" options="{'no_open':True, 'no_create':True}" />
+													<field name="formsp_id" options="{'no_open':True, 'no_create':True}" />
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+													<field name="programme_level" required="1" />
+													<field name="socio_economic_status" invisible="1"/>
+													<field name="other_country"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								
+								<group>
+									<div>
+										<field name="confirm_planned_beneficiaries" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_planned_beneficiaries" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+							</page>
+
+							<page name="pivotal_planned_beneficiaries" string="WSP 7: PIVOTAL Planned beneficiaries" attrs="{'invisible':[('form_type','not in',('Large',))]}" > <!--large-->
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									This form require employers to provide INSETA with a plan on all planned training interventions that are listed on the South African Qualifications Authority (SAQA) list and are aligned to the National Qualification Framework (NQF)for the current financial year.
+								</div>
+
+								<group>
+									<div>
+										<field name="not_hosted_plannedpivotalprogrammes" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="not_hosted_plannedpivotalprogrammes" string="We did not host any PIVOTAL programmes" class="oe_inline"/>
+									</div>
+								</group>
+
+							    <button  name="%(inseta_skills.act_window_wspatr_import_risk)d" 
+									type="action" string="Import From Template" 
+									class="oe_highlight" 
+									style="margin-bottom:8px"
+									context="{'default_submission_type': 'WSP', 'default_template':'Pivotal_Planned_Beneficiaries_Large'}"
+									attrs="{'invisible':[('not_hosted_plannedpivotalprogrammes','=',True)]}"
+								/>
+								<field name="is_small_firm" invisible="1" />
+								<field name="pivotal_planned_beneficiaries_ids" context="{'wspatr_id': active_id,}" attrs="{'invisible':[('not_hosted_plannedpivotalprogrammes','=',True)]}">
+									<tree>
+										<field name="is_small_firm" invisible="1"/>
+										<field name="wspatr_id" invisible="1"/>
+										<field name="ofo_majorgroup_id" string="Major Group"/>
+										<field name="ofo_submajorgroup_id" string="Sub major Group"/>
+										<field name="ofo_occupation_id" string="Occupation"/>
+										<field name="ofo_specialization_id" string="Specialization"/>
+										<field name="programme_level"  attrs="{'column_invisible': [('parent.form_type','=','Small')]}" />
+										<field name="training_provider"  attrs="{'column_invisible': [('parent.form_type','=','Small')]}" />
+										<field name="municipality_id" />
+										<field name="pivotal_programme_id" />
+										<field name="socio_economic_status"/>
+
+										<field name="start_date" attrs="{'column_invisible': [('parent.form_type','=','Small')]}" />
+										<field name="end_date" attrs="{'column_invisible': [('parent.form_type','=','Small')]}" />
+										<field name="other_country"/>
+										<field name="african_male" string="AM" sum="Total African Male" />
+										<field name="african_female" string="AF" sum="Total African Female"/>
+										<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+										<field name="colored_male" string="CM" sum="Total Colored Male" />
+										<field name="colored_female" string="CF" sum="Total Colored Male"/>
+										<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+										
+										<field name="indian_male" string="IM" sum="Total Indian Male"/>
+										<field name="indian_female" string="IF" sum="Total Indian Female"/>
+										<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+								
+										<field name="white_male" string="WM" sum="Total White Male"/>
+										<field name="white_female" string="WF" sum="Total White Female"/>
+										<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+										<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+										<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+										<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+										<field name="age1" sum="Age Grp 1"/>
+										<field name="age2"  sum="Age Grp 2"/>
+										<field name="age3"  sum="Age Grp 3"/>
+										<field name="age4"  sum="Age Grp 4"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="is_small_firm" invisible="1"/>
+													<field name="ofo_occupation_id" options="{'no_open':True, 'no_create':True}" required="1"/>
+													<field name="programme_level" attrs="{'invisible':[('is_small_firm','=',True)], 'required':[('is_small_firm','=',False)]}"/>
+													<field name="municipality_id" required="1" options="{'no_open':True, 'no_create':True}" />
+													<field name="pivotal_programme_id" required="1" options="{'no_open':True, 'no_create':True}" />
+													<field name="start_date" attrs="{'invisible':[('is_small_firm','=',True)], 'required':[('is_small_firm','=',False)]}" />
+												</group>
+												<group>
+													<field name="require_ofo_specialization" invisible="1" />
+													<field name="ofo_specialization_id" attrs="{'required': [('require_ofo_specialization','=',True)]}" options="{'no_create':True}"/>
+													<field name="training_provider" attrs="{'invisible':[('is_small_firm','=',True)], 'required':[('is_small_firm','=',False)] }"/>
+													<field name="socio_economic_status" required="1"/>
+													<field name="other_pivotal_programme" />
+													<field name="end_date" attrs="{'invisible':[('is_small_firm','=',True)], 'required':[('is_small_firm','=',False)] }" />
+													<field name="other_country"/>
+												</group>
+											</group>
+											<group>
+												<group>
+													<field name="african_male" required="1"/>
+													<field name="african_female" required="1"/>
+													<field name="african_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="colored_male" required="1"/>
+													<field name="colored_female" required="1"/>
+													<field name="colored_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="indian_male" required="1"/>
+													<field name="indian_female" required="1"/>
+													<field name="indian_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="white_male" required="1"/>
+													<field name="white_female" required="1"/>
+													<field name="white_disabled" required="1"/>
+												</group>
+
+												<group>
+													<field name="other_male" required="1"/>
+													<field name="other_female" required="1"/>
+													<field name="other_disabled" required="1"/>
+												</group>
+												<group>
+													<field name="age1" required="1"/>
+													<field name="age2" required="1"/>
+													<field name="age3" required="1"/>
+													<field name="age4" required="1"/>
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_pivotal_planned_beneficiaries" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_pivotal_planned_beneficiaries" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+
+								<p>
+									<ul>
+									Note:
+										<li> Other in the form refers to non- South African citizens.</li>
+										<li>Your disability ratio must be included in your male and female ratio. For example: 5 males + 5 females = 10 employees of the 10 employees 2 are disabled.</li>
+										<li> Other option allows you to report on foreign nationals included in Race gender break down. For Example: 5 males + 5 females = 10 employees of the 10 employees 2 of the males are foreign nationals, out of the total of 4 foreign nationals 1 is disabled.</li>
+									</ul>
+									
+								</p>
+							</page>						
+
+							<page string="Documents Uploads">
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+									The following documents are mandatory and MUST be uploaded: <br/>
+									<ul>
+										<li>Authorisation Page</li>
+										<li>Banking Details</li>
+										<li>FSP License</li>
+									</ul>
+
+								</div>
+								<field name="upload_ids" nolabel="1" context="{'default_wspatr_id':active_id, 'default_financial_year_id': financial_year_id}">
+									<tree>
+										<field name="documentrelates_id"/>
+										<field name="financial_year_id" />
+										<field name="file_name" />
+									</tree>
+									<form>
+										<group>
+											<group>
+												<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" required="1" />
+												<field name="documentrelates_id" string="Document Type" options="{'no_create': True, 'no_open': True}" required="1"/>
+												<field name="file" filename="file_name"/>
+												<field name="file_name" readonly="1" force_save="1"/> 
+												<field name="comment" />
+											</group>
+											<group/>
+											
+										</group>
+									</form>
+								</field>
+							</page>
+							
+							<page string="WSP Evaluation">
+								<field name="evaluation_ids" nolabel="1" readonly="1">
+									<tree>
+										<field name="state" />
+										<field name="create_uid"/>
+										<field name="create_date"/>
+									</tree>
+								</field>
+							</page>
+
+							<page string="Update Employer Contact Details">
+								<group>
+									<group>
+										<button  name="action_update_organisation_details" type="object" string="Update Employer Details" class="oe_highlight" />
+									</group>
+									<group/>
+								</group>
+							</page>
+
+                        </notebook>
+					
+                    </sheet>
+	
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+                </form>
+            </field>
+        </record>
+
+        <!--tree-->
+		<record id="view_wsp_atr_tree" model="ir.ui.view">
+			<field name="name">inseta.wspatr.tree</field>
+			<field name="model">inseta.wspatr</field>
+			<field name="arch" type="xml">
+				<tree string="WSP/ATR">
+					<field name="name" />
+					<field name="organisation_id" />
+					<field name="sdl_no" />
+					<field name="form_type" />
+					<field name="financial_year_id"/>
+					<field name="wspatr_period_id" />
+					<field name="due_date" />
+					<field name="submitted_date"/>
+					<field name="approved_date" />
+					<field name="rejected_date" />
+					<field name="create_date" />
+					<field name="create_uid" />
+					<field name="state" string="Status" />
+				</tree>
+			</field>
+		</record>
+
+		<!--list view useed when confirming when user wants to move the line to pivotal-->
+		<record id="view_implementationreport_tree" model="ir.ui.view">
+			<field name="name">inseta.wspatr.implementation.report.tree</field>
+			<field name="model">inseta.wspatr.implementation.report</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="wspatr_id" invisible="1"/>
+					<field name="is_pivotal" />
+					<field name="ofo_majorgroup_id" string="Major Group" />
+					<field name="ofo_submajorgroup_id" string="Sub Major Group" />
+					<field name="ofo_occupation_id" string="Occupation"/>
+					<field name="ofo_specialization_id" string="Specialization"/>
+					<field name="formsp_id" />
+					<field name="intervention_id" />
+					<field name="formspl_id" />
+					<field name="formspl_notes" />
+					<field name="other_country"/>
+					<field name="inseta_funding" sum="Inseta Funding"/>
+					<field name="other_funding" sum="Other Funding"/>
+					<field name="company_funding" sum="Company Funding"/>
+					<field name="african_male" string="AM" sum="Total African Male" />
+					<field name="african_female" string="AF" sum="Total African Female"/>
+					<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+					<field name="colored_male" string="CM" sum="Total Colored Male" />
+					<field name="colored_female" string="CF" sum="Total Colored Male"/>
+					<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+					
+					<field name="indian_male" string="IM" sum="Total Indian Male"/>
+					<field name="indian_female" string="IF" sum="Total Indian Female"/>
+					<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+			
+					<field name="white_male" string="WM" sum="Total White Male"/>
+					<field name="white_female" string="WF" sum="Total White Female"/>
+					<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+					<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+					<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+					<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+					<field name="age1" sum="Age Grp 1"/>
+					<field name="age2"  sum="Age Grp 2"/>
+					<field name="age3"  sum="Age Grp 3"/>
+					<field name="age4"  sum="Age Grp 4"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_trainedbeneficiaries_tree" model="ir.ui.view">
+			<field name="name">inseta.wspatr.trained.beneficiaries.report.tree</field>
+			<field name="model">inseta.wspatr.trained.beneficiaries.report</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="wspatr_id" invisible="1"/>
+					<field name="is_pivotal" string="Move to Pivotal"/>
+					<field name="ofo_majorgroup_id" string="Major Group" />
+					<field name="ofo_submajorgroup_id" string="Sub Major Group" />
+					<field name="ofo_occupation_id" string="Occupation"/>
+					<field name="ofo_specialization_id" string="Specialization"/>
+					<field name="municipality_id" string="Municipality"/>
+					<field name="programme_level" string="Programme Level"/>
+					<field name="training_provider" />
+					<field name="completion_status" />
+					<field name="other_country"/>
+					<field name="african_male" string="AM" sum="Total African Male" />
+					<field name="african_female" string="AF" sum="Total African Female"/>
+					<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+					<field name="colored_male" string="CM" sum="Total Colored Male" />
+					<field name="colored_female" string="CF" sum="Total Colored Male"/>
+					<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+					
+					<field name="indian_male" string="IM" sum="Total Indian Male"/>
+					<field name="indian_female" string="IF" sum="Total Indian Female"/>
+					<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+			
+					<field name="white_male" string="WM" sum="Total White Male"/>
+					<field name="white_female" string="WF" sum="Total White Female"/>
+					<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+					<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+					<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+					<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+					<field name="age1" sum="Age Grp 1"/>
+					<field name="age2"  sum="Age Grp 2"/>
+					<field name="age3"  sum="Age Grp 3"/>
+					<field name="age4"  sum="Age Grp 4"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_plannedbeneficiaries_tree" model="ir.ui.view">
+			<field name="name">inseta.wspatr.planned.beneficiaries.tree</field>
+			<field name="model">inseta.wspatr.planned.beneficiaries</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="wspatr_id" invisible="1"/>
+					<field name="is_pivotal" string="Move to Pivotal?" />
+					<field name="socio_economic_status" invisible="1"/>
+					<field name="ofo_majorgroup_id" string="Major Group"/>
+					<field name="ofo_submajorgroup_id" string="Sub major Group"/>
+					<field name="ofo_occupation_id" string="Occupation"/>
+					<field name="ofo_specialization_id" string="Specialization"/>
+					<field name="programme_level" />
+					<field name="municipality_id" />
+					<field name="formsp_id" />
+					<field name="other_country"/>
+					<field name="african_male" string="AM" sum="Total African Male" />
+					<field name="african_female" string="AF" sum="Total African Female"/>
+					<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+					<field name="colored_male" string="CM" sum="Total Colored Male" />
+					<field name="colored_female" string="CF" sum="Total Colored Male"/>
+					<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+					
+					<field name="indian_male" string="IM" sum="Total Indian Male"/>
+					<field name="indian_female" string="IF" sum="Total Indian Female"/>
+					<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+			
+					<field name="white_male" string="WM" sum="Total White Male"/>
+					<field name="white_female" string="WF" sum="Total White Female"/>
+					<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+
+					<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+					<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+					<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+
+					<field name="age1" sum="Age Grp 1"/>
+					<field name="age2"  sum="Age Grp 2"/>
+					<field name="age3"  sum="Age Grp 3"/>
+					<field name="age4"  sum="Age Grp 4"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_workplaceskillsplan_tree" model="ir.ui.view">
+			<field name="name">inseta.wspatr.workplaceskillsplan.tree</field>
+			<field name="model">inseta.wspatr.workplaceskillsplan</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="wspatr_id" invisible="1"/>
+					<field name="ofo_occupation_id"/>
+					<field name="ofo_specialization_id"/>
+					<field name="programme_level" />
+					<field name="formsp_id" />
+					<field name="formspl_id" />
+					<field name="formspl_notes" />
+					<field name="other_country"/>
+					<field name="african_male" string="AM" sum="Total African Male" />
+					<field name="african_female" string="AF" sum="Total African Female"/>
+					<field name="african_disabled" string="AD" sum="Total Afican Disabled"/>
+					<field name="colored_male" string="CM" sum="Total Colored Male" />
+					<field name="colored_female" string="CF" sum="Total Colored Male"/>
+					<field name="colored_disabled" string="CD" sum="Total Colored Disabled"/>
+					<field name="indian_male" string="IM" sum="Total Indian Male"/>
+					<field name="indian_female" string="IF" sum="Total Indian Female"/>
+					<field name="indian_disabled" string="ID" sum="Total Indian Disabled" />
+					<field name="white_male" string="WM" sum="Total White Male"/>
+					<field name="white_female" string="WF" sum="Total White Female"/>
+					<field name="white_disabled" string="WD" sum="Total White Disabled"/>
+					<field name="other_male" string="OM" sum="Total Foreign National Male"/>
+					<field name="other_female" string="OF" sum="Total Foreign National Female"/>
+					<field name="other_disabled" string="OD" sum="Total Foreign National Disabled"/>
+					<field name="age1" sum="Age Grp 1"/>
+					<field name="age2"  sum="Age Grp 2"/>
+					<field name="age3"  sum="Age Grp 3"/>
+					<field name="age4"  sum="Age Grp 4"/>
+				</tree>
+			</field>
+		</record>
+
+	    <record id="view_wsp_atr_filter" model="ir.ui.view">
+			<field name="name">inseta.wspatr.filter</field>
+			<field name="model">inseta.wspatr</field>
+			<field name="arch" type="xml">
+				<search string="WSP/ATR">
+					<field name="name" />
+					<field name="sdf_id" />
+					<field name="organisation_id" />
+					<field name="sdl_no" />
+					<field name="financial_year_id"/>
+					<field name="wspatr_period_id" />
+					<field name="sic_code_desc" />
+					<field name="state" />
+
+					<group expand="0" string="Group By">
+						<filter string="State" name="group_state" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Organisation" name="group_organisation" domain="[]" context="{'group_by':'organisation_id'}"/>
+						<filter string="Financial Year" name="group_financial_year" domain="[]" context="{'group_by':'financial_year_id'}"/>
+						<filter string="WSP period" name="group_wspatr_period" domain="[]" context="{'group_by':'wspatr_period_id'}"/>
+						<filter string="Sic Code" name="group_sic_code" domain="[]" context="{'group_by': 'sic_code_desc'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="view_wsp_atr_period_tree" model="ir.ui.view">
+			<field name="name">inseta.wspatr.period.tree</field>
+			<field name="model">inseta.wspatr.period</field>
+			<field name="arch" type="xml">
+				<tree string="WSP/ATR Period">
+					<field name="name" />
+					<field name="financial_year_id"/>
+					<field name="start_date"/>
+					<field name="end_date"/>
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_wsp_atr_period_form" model="ir.ui.view">
+			<field name="name">inseta.wspatr.period.form</field>
+			<field name="model">inseta.wspatr.period</field>
+			<field name="arch" type="xml">
+				<form string="WSP/ATR Period">
+					<header>
+						<field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="open,close"
+							statusbar_colors='{"open":"green","close":"red"}'
+							/>
+                    </header>
+                    <sheet>
+						<div class="oe_title" >
+							<h1>
+								<field name="name" readonly="1"/>
+							</h1>
+						</div>
+
+						<group>
+							<group>
+								<field name="financial_year_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="start_date" required="1" />
+                                <field name="end_date" required="1" />
+							</group>
+							<group/>
+						</group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+		<record id="act_window_wsp_atr" model="ir.actions.act_window">
+			<field name="name">WSP/ATR Submissions</field>
+			<field name="res_model">inseta.wspatr</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create WSP/ATR Submission. 
+				</p>
+			</field>
+		</record>
+
+		<record id="act_window_wsp_period" model="ir.actions.act_window">
+			<field name="name">WSP/ATR Period</field>
+			<field name="res_model">inseta.wspatr.period</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create WSP/ATR Period. 
+				</p>
+			</field>
+		</record>
+
+        <menuitem id="menu_parent_wsp_atr" 
+			name="WSP/ATR" sequence="7" 
+			parent="inseta_skills.skills_sdf_menu"/>
+
+		<menuitem id="menu_wsp_atr" 
+			name="WSP &amp; ATR Submission"
+			sequence="1" 
+			parent="menu_parent_wsp_atr" 
+			action="act_window_wsp_atr"/>
+        
+		<menuitem id="menu_wsp_config"
+			name="WSP" 
+			sequence="2" 
+			parent="inseta_skills.skills_configuration_menu"
+			groups="inseta_skills.group_skills_manager"/>
+
+		<menuitem id="menu_wsp_period" 
+			name="WSP/ATR Period" 
+			sequence="2" 
+			parent="menu_wsp_config" 
+			action="act_window_wsp_period"/>
+
+
+    </odoo>

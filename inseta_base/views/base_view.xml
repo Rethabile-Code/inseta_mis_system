@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+
+		<record id="view_inseta_bank_form" model="ir.ui.view">
+			<field name="name">inseta.bank.form</field>
+			<field name="model">inseta.bank</field>
+			<field name="arch" type="xml">
+				<form string="Bank"> 
+					<sheet>
+						<field name="name"/>
+                        <field name="saqacode"/>
+                        <field name="active"/>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_inseta_bank_tree" model="ir.ui.view">
+			<field name="name">inseta.bank.tree</field>
+			<field name="model">inseta.bank</field>
+			<field name="arch" type="xml">
+				<tree string="Bank"> 
+                    <field name="name"/>
+                    <field name="saqacode"/>
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_inseta_bank_search" model="ir.ui.view">
+			<field name="name">Banks</field>
+			<field name="model">inseta.bank</field>
+			<field name="arch" type="xml">
+				<search string="Banks">
+					<field name="name"/>
+                    <field name="saqacode"/>
+				</search>
+			</field>
+		</record>
+
+		<!--Res Lang-->
+		<record model="ir.ui.view" id="res_lang_form" >
+			<field name="name">res.lang.form</field>
+			<field name="model">res.lang</field>
+			<field name="inherit_id" ref="base.res_lang_form" />
+			<field name="arch" type="xml">
+				<field name="url_code" position="after">
+					<field name="saqacode" />
+					<field name="country_id" options="{'no_create': True}" />
+				</field>
+			</field> 
+		</record>
+
+
+		<record id="view_employertype_form" model="ir.ui.view">
+			<field name="name">res.employer.type.form</field>
+			<field name="model">res.employer.type</field>
+			<field name="arch" type="xml">
+				<form string="Employer Type"> 
+					<sheet>
+						<field name="name"/>
+                        <field name="description"/>
+                        <field name="active"/>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_employertype_tree" model="ir.ui.view">
+			<field name="name">res.employer.type.tree</field>
+			<field name="model">res.employer.type</field>
+			<field name="arch" type="xml">
+				<tree string="Employer Type"> 
+                    <field name="name"/>
+                    <field name="description"/>
+					<field name="legacy_system_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_highest_edu_form" model="ir.ui.view">
+			<field name="name">res.education.level.form</field>
+			<field name="model">res.education.level</field>
+			<field name="arch" type="xml">
+				<form string="Highest Education Level"> 
+					<sheet>
+						<field name="name"/>
+                        <field name="description"/>
+                        <field name="active"/>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_highest_edu_tree" model="ir.ui.view">
+			<field name="name">res.education.level.tree</field>
+			<field name="model">res.education.level</field>
+			<field name="arch" type="xml">
+				<tree string="Higest Education Level"> 
+                    <field name="name"/>
+                    <field name="description"/>
+					<field name="legacy_system_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_disability_form" model="ir.ui.view">
+			<field name="name">view.res.disability.form</field>
+			<field name="model">res.disability</field>
+			<field name="arch" type="xml">
+				<form string="Disability"> 
+					<sheet>
+						<field name="name"/>
+                        <field name="saqacode"/>
+                        <field name="active"/>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_disability_tree" model="ir.ui.view">
+			<field name="name">view.res.disability.tree</field>
+			<field name="model">res.disability</field>
+			<field name="arch" type="xml">
+				<tree string="Disability"> 
+                    <field name="name"/>
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_disability_filter" model="ir.ui.view">
+			<field name="name">res.disability</field>
+			<field name="model">res.disability</field>
+			<field name="arch" type="xml">
+				<search string="Disability">
+					<field name="name"/>
+				</search>
+			</field>
+		</record>
+
+        <record id="action_disability_register" model="ir.actions.act_window">
+			<field name="name">Disability Status</field>
+			<field name="res_model">res.disability</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_disability_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+				</p>
+			</field>
+		</record>
+
+        <record id="view_nationality_form" model="ir.ui.view">
+			<field name="name">view.res.nationality.form</field>
+			<field name="model">res.nationality</field>
+			<field name="arch" type="xml">
+				<form string="nationality"> 
+					<sheet>
+						<field name="name"/>
+                        <field name="saqacode"/>
+                        <field name="active"/>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_nationality_tree" model="ir.ui.view">
+			<field name="name">view.res.nationality.tree</field>
+			<field name="model">res.nationality</field>
+			<field name="arch" type="xml">
+				<tree string="nationality"> 
+                    <field name="name"/>
+                    <field name="saqacode"/>
+					<field name="legacy_system_id" />
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_nationality_filter" model="ir.ui.view">
+			<field name="name">res.nationality</field>
+			<field name="model">res.nationality</field>
+			<field name="arch" type="xml">
+				<search string="nationality">
+					<field name="name"/>
+					<field name="saqacode" />
+					<field name="legacy_system_id" />
+                    <field name="active"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_nationality_register" model="ir.actions.act_window">
+			<field name="name">Nationality</field>
+			<field name="res_model">res.nationality</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_nationality_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="view_citizen_status_form" model="ir.ui.view">
+			<field name="name">view.res.citizen.status.form</field>
+			<field name="model">res.citizen.status</field>
+			<field name="arch" type="xml">
+				<form string="nationality"> 
+					<sheet>
+						<field name="name"/>
+                        <field name="saqacode"/>
+                        <field name="active"/>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_citizenstatus_tree" model="ir.ui.view">
+			<field name="name">view.res.citizen.status.form</field>
+			<field name="model">res.citizen.status</field>
+			<field name="arch" type="xml">
+				<tree string="res.citizen.status"> 
+                    <field name="name"/>
+                    <field name="saqacode"/>
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_res_citizen_status_filter" model="ir.ui.view">
+			<field name="name">res.citizen.status</field>
+			<field name="model">res.citizen.status</field>
+			<field name="arch" type="xml">
+				<search string="res.citizen.status">
+					<field name="name"/>
+                    <field name="saqacode"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_citizen_status_register" model="ir.actions.act_window">
+			<field name="name">Citizen status</field>
+			<field name="res_model">res.citizen.status</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_res_citizen_status_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="view_district_tree" model="ir.ui.view">
+			<field name="name">res.district.tree</field>
+			<field name="model">res.district</field>
+			<field name="arch" type="xml">
+				<tree string="District"> 
+					<field name="country_id" invisible="1"/>
+                    <field name="name"/>
+					<field name="province_id"/>
+					<field name="legacy_system_id" />
+				</tree>
+			</field>
+		</record>
+
+        <record id="view_district_form" model="ir.ui.view">
+			<field name="name">res.district.form</field>
+			<field name="model">res.district</field>
+			<field name="arch" type="xml">
+				<form string="District"> 
+					<sheet>
+						<group>
+							<group>
+								<field name="country_id" invisible="1"/>
+								<field name="name"/>
+								<field name="province_id" domain="[('country_id','=', country_id)]"/>
+								<field name="legacy_system_id" readonly="1"/>
+							</group>
+							<group/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		 
+		<record id="view_res_district_filter" model="ir.ui.view">
+			<field name="name">res.district</field>
+			<field name="model">res.district</field>
+			<field name="arch" type="xml">
+				<search string="District">
+					<field name="name"/>
+					<field name="province_id" />
+				</search>
+			</field>
+		</record>
+
+		<record id="action_district_register" model="ir.actions.act_window">
+			<field name="name">District</field>
+			<field name="res_model">res.district</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="view_municipality_tree" model="ir.ui.view">
+			<field name="name">res.municipality.tree</field>
+			<field name="model">res.municipality</field>
+			<field name="arch" type="xml">
+				<tree string="municipality"> 
+					<field name="country_id" invisible="1"/>
+                    <field name="name"/>
+					<field name="district_id"/>
+					<field name="urban_rural" />
+					<field name="legacy_system_id" />
+				</tree>
+			</field>
+		</record>
+
+        <record id="view_municipality_form" model="ir.ui.view">
+			<field name="name">res.municipality.form</field>
+			<field name="model">res.municipality</field>
+			<field name="arch" type="xml">
+				<form string="Municipality"> 
+					<sheet>
+						<group>
+							<group>
+								<field name="country_id" invisible="1"/>
+								<field name="name"/>
+								<field name="district_id" domain="[('country_id','=', country_id)]"/>
+								<field name="urban_rural"/>
+								<field name="legacy_system_id" readonly="1"/>
+							</group>
+							<group/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="action_municipal_register" model="ir.actions.act_window">
+			<field name="name">Municipality</field>
+			<field name="res_model">res.municipality</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="view_id" eval="view_res_citizen_status_filter" /> -->
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+       <record id="view_city_tree" model="ir.ui.view">
+			<field name="name">res.city.tree</field>
+			<field name="model">res.city</field>
+			<field name="arch" type="xml">
+				<tree string="city"> 
+					<field name="country_id" invisible="1"/>
+                    <field name="name"/>
+					<field name="municipality_id"/>
+					<field name="district_id"/>
+					<field name="legacy_system_id" />
+				</tree>
+			</field>
+		</record>
+
+       <record id="view_city_form" model="ir.ui.view">
+			<field name="name">res.city.form</field>
+			<field name="model">res.city</field>
+			<field name="arch" type="xml">
+				<form string="city"> 
+					<sheet>
+						<group>
+							<group>
+								<field name="country_id" invisible="1"/>
+								<field name="name"/>
+								<field name="municipality_id" domain="[('country_id','=', country_id)]"/>
+								<field name="district_id" domain="[('country_id','=', country_id)]"/>
+								<field name="legacy_system_id" readonly="1"/>
+							</group>
+							<group/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+        <record id="action_city_register" model="ir.actions.act_window">
+			<field name="name">City</field>
+			<field name="res_model">res.city</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+       <record id="view_suburb_tree" model="ir.ui.view">
+			<field name="name">res.suburb.tree</field>
+			<field name="model">res.suburb</field>
+			<field name="arch" type="xml">
+				<tree string="suburb"> 
+					<field name="country_id" invisible="1"/>
+                    <field name="name"/>
+					<field name="postal_code"/>
+					<field name="city_id"/>
+					<field name="municipality_id"/>
+					<field name="district_id"/>
+					<field name="legacy_system_id" />
+				</tree>
+			</field>
+		</record>
+
+       <record id="view_suburb_form" model="ir.ui.view">
+			<field name="name">res.suburb.form</field>
+			<field name="model">res.suburb</field>
+			<field name="arch" type="xml">
+				<form string="city"> 
+					<sheet>
+						<group>
+							<group>
+								<field name="country_id" invisible="1"/>
+								<field name="name"/>
+								<field name="postal_code"/>
+								<field name="city_id" domain="[('country_id','=', country_id)]"/>
+								<field name="municipality_id" domain="[('country_id','=', country_id)]"/>
+								<field name="district_id" domain="[('country_id','=', country_id)]"/>
+								<field name="legacy_system_id" readonly="1"/>
+							</group>
+							<group/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_res_ofo_majorgroup_form" model="ir.ui.view">
+			<field name="name">view.res.ofo.majorgroup.form</field>
+			<field name="model">res.ofo.majorgroup</field>
+			<field name="arch" type="xml">
+				<form string=""> 
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="code"/>
+							</group>
+							<group>
+								<field name="active"/>
+							</group>
+						</group>
+							
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_res_ofo_majorgroup_tree" model="ir.ui.view">
+			<field name="name">view.res.ofo.majorgroup.form</field>
+			<field name="model">res.ofo.majorgroup</field>
+			<field name="arch" type="xml">
+				<tree string="res.ofo.majorgroup"> 
+                    <field name="name"/>
+                    <field name="code"/>
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_res_res_ofo_majorgroup_filter" model="ir.ui.view">
+			<field name="name">res.ofo.majorgroup</field>
+			<field name="model">res.ofo.majorgroup</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="name"/>
+                    <field name="code"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="view_res_ofo_submajorgroup_form" model="ir.ui.view">
+			<field name="name">view.res.ofo.submajorgroup.form</field>
+			<field name="model">res.ofo.submajorgroup</field>
+			<field name="arch" type="xml">
+				<form string=""> 
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="code"/>
+
+								 
+							</group>
+							<group>
+								<field name="major_group_id"/>
+								<field name="active"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_res_ofo_submajorgroup_tree" model="ir.ui.view">
+			<field name="name">view.res.ofo.submajorgroup.form</field>
+			<field name="model">res.ofo.submajorgroup</field>
+			<field name="arch" type="xml">
+				<tree string="res.ofo.submajorgroup"> 
+                    <field name="name"/>
+                    <field name="code"/>
+					<field name="ofoyear" />
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_res_res_ofo_submajorgroup_filter" model="ir.ui.view">
+			<field name="name">res.ofo.submajorgroup</field>
+			<field name="model">res.ofo.submajorgroup</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="name"/>
+                    <field name="code"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="view_res_ofo_occupation_form" model="ir.ui.view">
+			<field name="name">view.res.ofo.occupation.form</field>
+			<field name="model">res.ofo.occupation</field>
+			<field name="arch" type="xml">
+				<form string=""> 
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="code"/>
+								
+							</group>
+							<group>
+								<field name="unit_group_id"/>
+								<field name="active"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_res_ofo_occupation_tree" model="ir.ui.view">
+			<field name="name">view.res.ofo.occupation.form</field>
+			<field name="model">res.ofo.occupation</field>
+			<field name="arch" type="xml">
+				<tree string="-Occupation"> 
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="unit_group_id"/>
+					<field name="ofoyear" />
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_res_ofo_occupation_filter" model="ir.ui.view">
+			<field name="name">res.ofo.occupation</field>
+			<field name="model">res.ofo.occupation</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="name"/>
+                    <field name="code"/>
+				</search>
+			</field>
+		</record>
+		 
+        <record id="act_window_res_designation" model="ir.actions.act_window">
+			<field name="name">Designation</field>
+			<field name="res_model">res.designation</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="act_window_res_bee_status" model="ir.actions.act_window">
+			<field name="name">Bee Status</field>
+			<field name="res_model">res.bee.status</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="action_suburb_register" model="ir.actions.act_window">
+			<field name="name">Suburb</field>
+			<field name="res_model">res.suburb</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="view_id" eval="view_res_citizen_status_filter" /> -->
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="action_means_ident_register" model="ir.actions.act_window">
+			<field name="name">Alternate ID Type</field>
+			<field name="res_model">res.alternate.id.type</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="view_id" eval="view_res_citizen_status_filter" /> -->
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="action_equity_register" model="ir.actions.act_window">
+			<field name="name">Equity</field>
+			<field name="res_model">res.equity</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="view_id" eval="view_res_citizen_status_filter" /> -->
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+		<record id="act_window_employer_type" model="ir.actions.act_window">
+			<field name="name">Employer Type</field>
+			<field name="res_model">res.employer.type</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+		<record id="act_window_highest_edu_level" model="ir.actions.act_window">
+			<field name="name">Higest Education Level</field>
+			<field name="res_model">res.education.level</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+		<record id="action_window_ofo_occupation" model="ir.actions.act_window">
+			<field name="name">OFO occupation</field>
+			<field name="res_model">res.ofo.occupation</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+		<record id="act_window_ofo_unit_group" model="ir.actions.act_window">
+			<field name="name">OFO unitgroup</field>
+			<field name="res_model">res.ofo.unitgroup</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+		<record id="act_window_submajorgroup" model="ir.actions.act_window">
+			<field name="name">OFO Submajor Group</field>
+			<field name="res_model">res.ofo.submajorgroup</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+		<record id="act_window_majorgroup" model="ir.actions.act_window">
+			<field name="name">OFO Major Group</field>
+			<field name="res_model">res.ofo.majorgroup</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <menuitem id="base_sdf_menu" name="INESTA Configuration" sequence="7" parent="contacts.res_partner_menu_config"/>
+			<menuitem id="menu_res_lang" name="Languages" sequence="0" action="base.res_lang_act_window" parent="base_sdf_menu"/>
+            <menuitem id="muni_org_menu" name="Municipality" sequence="4" action="action_municipal_register" parent="base_sdf_menu"/>
+            <menuitem id="city_org_menu" name="City" sequence="3" action="action_city_register" parent="base_sdf_menu"/>
+            <menuitem id="suburb_org_menu" name="Suburb" sequence="5" action="action_suburb_register" parent="base_sdf_menu"/>
+            <menuitem id="district_org_menu" name="District" sequence="2" action="action_district_register" parent="base_sdf_menu"/>
+            <menuitem id="action_equity_register_menu" name="Equity" sequence="22" action="action_equity_register" parent="base_sdf_menu"/>
+            <menuitem id="citizen_status_org_menu" name="Citizen Status" sequence="6" action="action_citizen_status_register" parent="base_sdf_menu"/>
+            <menuitem id="ident_org_menu" name="Means of ID" sequence="7" action="action_means_ident_register" parent="base_sdf_menu"/>
+            <menuitem id="action_nationality_register_equity_register" name="Nationality" sequence="1" action="action_nationality_register" parent="base_sdf_menu"/>
+            <menuitem id="view_disability_filter_menu" name="Disability" sequence="10" action="action_disability_register" parent="base_sdf_menu"/>
+
+            <menuitem id="menu_employer_type" name="Employer Type" sequence="11" action="act_window_employer_type" parent="base_sdf_menu"/>
+            <menuitem id="menu_highest_edu_level" name="Highest Edu. Level" sequence="12" action="act_window_highest_edu_level" parent="base_sdf_menu"/>
+            <menuitem id="menu_ofo_major_group" name="OFO Major Group" sequence="13" action="act_window_majorgroup" parent="base_sdf_menu"/>
+            <menuitem id="menu_ofo_submajor_group" name="OFO Sub Major Group" sequence="14" action="act_window_submajorgroup" parent="base_sdf_menu"/>
+            <menuitem id="menu_ofo_unit_group" name="OFO Unit group" sequence="15" action="act_window_ofo_unit_group" parent="base_sdf_menu"/>
+			<menuitem id="menu_ofo_occupation" name="OFO Occupation" sequence="16" action="action_window_ofo_occupation" parent="base_sdf_menu"/>
+            <menuitem id="menu_designation" name="Designation" sequence="13" action="act_window_res_designation" parent="base_sdf_menu"/>
+            <menuitem id="menu_bee_status" name="Bee Status" sequence="14" action="act_window_res_bee_status" parent="base_sdf_menu"/>
+
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dgapplication_recommend_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.dgapplication.recommend.wizard.form</field>
+        <field name="model">inseta.dgapplication.recommend.wizard</field>
+        <field name="arch" type="xml">
+            <form string="DG Recommendation">
+                <field name="stage" invisible="1" />
+                <group>
+                    <group >
+                        <field name="dgapplication_id" invisible="1"/>
+                        <field name="dgtype_id" invisible="1" />
+                        <field name="dgtype_code" invisible="1" />
+                        <field name="option" string="Option" attrs="{'required':[('stage','in',('recommend','adjudication'))]}"/>
+                        <!-- <field name="no_learners" readonly="1" force_save="1" />
+                        <field name="cost_per_student" attrs="{'invisible':[('dgtype_code', 'not in', ('BUR','SP'))], 'readonly':[('dgtype_code', 'in', ('BUR','SP'))]}" />
+                        <field name="amount_recommended_perlearner"  attrs="{'invisible':[('dgtype_code', 'not in', ('BUR','SP'))], 'readonly':[('dgtype_code', 'in', ('BUR','SP'))] }"/>
+                        <field name="no_learners_recommended" string="Total Recommended"  readonly="1" force_save="1" />
+                        <field name="amount_total_recommended" readonly="1" force_save="1"/> -->
+                    </group>
+                    <group/>
+                </group>
+                <group colspan="4">
+                    <field string="Comment" name="comment" attrs="{'required':[('option','in', ('Query',)),]}"/>
+                </group>
+
+                <footer>
+                    <button string='Submit' name="dgapplication_recommend" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="dgapplication_recommend_wizard_action" model="ir.actions.act_window">
+        <field name="name">Recommend DG Application</field>
+        <field name="res_model">inseta.dgapplication.recommend.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="dgapplication_recommend_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

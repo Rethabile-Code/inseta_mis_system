@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_sdf_skill" model="ir.module.category">
+        <field name="name">SDP</field>
+        <field name="description">Skills Development Programme</field>
+        <field name="sequence">33</field>
+    </record>
+
+    <record id="group_sdf_user" model="res.groups">
+        <field name="name">Primary SDF</field>
+        <field name="comment">The Primary SDF in addtion can create WSP/ATR submission.</field>
+        <field name="category_id" ref="inseta_skills.module_category_sdf_skill"/>
+    </record>
+
+    <record id="group_sdf_pending" model="res.groups">
+        <field name="name">Pending SDF</field>
+        <field name="comment">Pending SDF - legacy system group</field>
+        <field name="category_id" ref="inseta_skills.module_category_sdf_skill"/>
+    </record>
+
+    <record id="group_sdf_pending_wspopen" model="res.groups">
+        <field name="name">Primary SDF - WSP Open</field>
+        <field name="comment">Primary SDF - WSP Open - legacy system group</field>
+        <field name="category_id" ref="inseta_skills.module_category_sdf_skill"/>
+    </record>
+
+    <record id="group_sdf_secondary" model="res.groups">
+        <field name="name">Secondary SDF</field>
+        <field name="comment">The Secondary SDF Can Register</field>
+        <field name="category_id" ref="inseta_skills.module_category_sdf_skill"/>
+    </record>
+
+    <record id="group_employer" model="res.groups">
+        <field name="name">Employer</field>
+        <field name="comment">Employer</field>
+        <field name="category_id" ref="inseta_skills.module_category_sdf_skill"/>
+        <!-- <field name="implied_ids" eval="[(4, ref('group_sdf_user')),(4, ref('group_sdf_secondary'))]"/> -->
+        <field name="legacy_system_id">37</field>
+    </record>
+
+    <record id="group_skills_view_only" model="res.groups">
+        <field name="name">Skills View Only</field>
+        <field name="comment">Skills View Only</field>
+        <field name="category_id" ref="inseta_skills.module_category_sdf_skill"/>
+        <field name="legacy_system_id">8</field>
+    </record>
+
+
+    <record id="group_skills_specialist" model="res.groups">
+        <field name="name">Skills Specialist</field>
+        <field name="category_id" ref="inseta_skills.module_category_sdf_skill"/>
+        <!-- <field name="implied_ids" eval="[(4, ref('group_sdf_user'))]"/> -->
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="group_skills_admin" model="res.groups">
+        <field name="name">Skills Development Administrator</field> 
+        <field name="category_id" ref="inseta_skills.module_category_sdf_skill"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="group_skills_manager" model="res.groups">
+        <field name="name">Skills Manager</field> 
+        <!-- <field name="implied_ids" eval="[(4, ref('group_sdf_user')), (4, ref('group_skills_specialist'))]"/> -->
+        <field name="implied_ids" eval="[(4, ref('group_skills_specialist'))]"/>
+        <field name="category_id" ref="inseta_skills.module_category_sdf_skill"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+     
+</odoo>

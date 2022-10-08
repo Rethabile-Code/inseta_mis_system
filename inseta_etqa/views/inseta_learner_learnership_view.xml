@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+		<record id="view_inseta_learner_learnership_form" model="ir.ui.view">
+            <field name="name">view.inseta.learner.learnership.form</field>
+            <field name="model">inseta.learner.learnership</field>
+            <field name="arch" type="xml">
+                <form string="Inseta Learner learnership" create="false">
+                    <header>
+                        <button name="action_print_all_certficate" string="Print Certificates" type="object" class="oe_highlight"
+							groups="inseta_etqa.group_etqa_assessment_specialist,base.group_system,inseta_etqa.group_it_admin"
+							/>
+
+                        <button name="action_print_result_statement" string="Print Result Statements" type="object" class="oe_highlight"/>
+                            <!-- groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_approved_provider,inseta_etqa.group_provider_access_user,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_admin_audit_access_user,inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_it_admin"
+                        /> -->
+                        <button name="set_to_edit" string="Toggle Edit Mode" class="btn-primary" type="object" groups="inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="learner_id" required="0" readonly="0" force_save="1" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="provider_id" required="1" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="organisation_id" required="0" string="Employer" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="secondary_provider_id" invisible="1" required="0" string="Secondary Provider" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="secondary_organisation_id" invisible="1" required="0" string="Secondary Employer" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="learner_programme_id" attrs="{'readonly': [('edit_mode', '=', False)]}" string="Programme" required="1" readonly="0" options="{'no_open':True, 'no_create':True}"/>
+                                <field name="qualification_code" attrs="{'readonly': [('edit_mode', '=', False)]}" string="Programme code" readonly="0"/>
+                                <field name="student_number" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="socio_economic_status_id" attrs="{'readonly': [('edit_mode', '=', False)]}" required="1" readonly="0" options="{'no_open':True, 'no_create':True}"/>
+                                <!-- <field name="certificate_number"/>
+                                <field name="certificate_created_date" readonly="0"/> -->
+                                <field name="financial_year_id" attrs="{'readonly': [('edit_mode', '=', False)]}" readonly="0" options="{'no_open':True, 'no_create':True}"/>
+                                <field name="commencement_date" attrs="{'readonly': [('edit_mode', '=', False)]}" required="1" readonly="0"/>
+                                <field name="completion_date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="achievement_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <!-- <field name="verified" readonly="0"/>
+                                <field name="is_successful" readonly="0"/>
+                                <field name="endorsed" readonly="0"/>
+                                <field name="project_type_id" invisible="1"/> -->
+                                <field name="effective_date" string="Status Effective Date" required="0" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="lga_number" required="0" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="funding_type" string="Sponsor" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="programme_status_id" string="Programme Status" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="most_recent_registration_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+					            <field name="edit_mode" groups="inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+								<!-- <button name="action_print_result_statement" string="Print Statement" class="oe_highlight btn-sm" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/>
+                                <button name="action_print_certficate" string="Print Certificate" class="oe_highlight btn-sm" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/> -->
+
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="learnership_unit_standard_ids" string="Learnership Unit Standard line">
+								<field name="learnership_unit_standard_ids" nolabel="1" readonly="1" force_save="1">
+									<tree string="Learnership Unit Standard line">
+										<field name="learnership_id" string="Learnership" required="0" invisible="1"/>
+										<field name="unit_standard_id" required="1"/>
+										<field name="unit_standard_type" required="1" invisible="0"/> 
+										<field name="credits" required="1"/>
+									</tree>
+								</field>
+							</page>
+                            <page name="learnership assessment_ids" string="Assessement">
+                                <separator string="Learnership Assessment"/>
+                                <field name="learnership_assessment_ids" options="{'no_create':True}">
+                                    <form string="-">
+                                        <group>
+                                            <group>
+                                                <field name="learner_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="code" readonly="1"/>
+                                                <field name="credits" readonly="1"/>
+                                                <field name="verification_date" readonly="1"/>
+                                            </group>
+                                            <group>
+                                                <field name="assessor_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="assessment_date" readonly="1"/>
+                                                <field name="moderator_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="assessment_status_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="" delete="0" create="0">
+                                        <field name="learner_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="code" readonly="1"/>
+                                        <field name="credits" readonly="1"/>
+                                        <field name="verification_date" readonly="1"/>
+                                        <field name="assessor_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="assessment_date" readonly="1"/>
+                                        <field name="moderator_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="assessment_status_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="partial_assessment_ids" string="Partial Assessement">
+                                <separator string="Learnership Partial Assessment"/>
+                                <field name="learner_learnership_partial_assessment_ids" options="{'no_create':True}">
+                                    <form string="-">
+                                        <group>
+                                            <group>
+                                                <field name="inseta_assessment_detail_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="learner_id"/>
+                                            </group>
+                                            <group>
+                                                <field name="learner_learnership_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="code"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="" delete="0" create="0">
+                                        <field name="inseta_assessment_detail_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="learner_id"/>
+                                        <field name="learner_learnership_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="code"/>
+                                        <field name="learner_learnership_assessment_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        
+                                    </tree>
+                                </field>
+
+                            </page>
+                            <!-- <page name="attachment_ids" string="Documents &amp; Attachments">
+                                <separator string="Add documents"/>
+                                <field name="attachment_ids" required="0"/>
+                            </page> -->
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_inseta_learner_learnership_tree" model="ir.ui.view">
+            <field name="name">Inseta Learner learnership</field>
+            <field name="model">inseta.learner.learnership</field>
+            <field name="arch" type="xml">
+                <tree string="Inseta learner learnership" sample="1" multi_edit="1" create="false" edit="false">
+                    <field name="learner_id" required="0" /> 
+                    <field name="provider_id" required="0" />
+                    <field name="learner_programme_id" required="0" /> 
+                    <field name="agreement_number" required="0" /> 
+                    <field name="financial_year_id" required="0" />
+                    <field name="enrollment_date" readonly="1"/>
+                    <field name="programme_status_id" required="0" />
+                    <field name="certificate_issued" required="0"/>
+                    <field name="certificate_created_date" readonly="1"/>
+                    <field name="achievement_date" readonly="0"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_inseta_learner_learnership_filter" model="ir.ui.view">
+            <field name="name">Inseta Learner learnership</field>
+            <field name="model">inseta.learner.learnership</field>
+            <field name="arch" type="xml">
+                <search string="Inseta learner learnership">
+                    <field name="learner_programme_id" required="0" /> 
+                    <field name="agreement_number" required="0" /> 
+                    <field name="financial_year_id" required="0" />
+                    <!-- <field name="project_id" required="0" /> -->
+                    <field name="verified" required="0" />
+                    <filter name="learnership_grp" string="Learnership"
+                    domain="[('learner_programme_id', '!=', False)]"/>
+                    <group  expand='0' string='Group by...'>
+                        <filter name ="rec_learnership_grp" string='Learnership' domain="[]" context="{'group_by' : 'learner_programme_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="view_inseta_learner_learnership_pivot" model="ir.ui.view">
+            <field name="name">inseta learner learnership pivot</field>
+            <field name="model">inseta.learner.learnership</field>
+            <field name="arch" type="xml">
+                <pivot string="Learnership">
+                    <field name="organisation_id" type="col"/>
+                    <field name="learner_programme_id" type="row"/>
+                    <field name="learner_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_inseta_learner_learnership_graph" model="ir.ui.view">
+            <field name="name">inseta learner learnership graph</field>
+            <field name="model">inseta.learner.learnership</field>
+            <field name="arch" type="xml">
+                <graph string="Learnership">
+                    <!-- <field name="qualification_id" type="row"/> -->
+                    <field name="learner_programme_id" type="row"/>
+                    <field name="financial_year_id" type="measure"/>
+                    <field name="learner_id" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_inseta_learner_learnership_id" model="ir.actions.act_window">
+            <field name="name">Learnership Report</field>
+            <field name="res_model">inseta.learner.learnership</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="context">{'search_default_rec_learnership_grp': 1}</field>
+            <field name="view_id" eval="view_inseta_learner_learnership_filter" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record>
+
+        <record id="view_inseta_skill_learnership_form" model="ir.ui.view">
+            <field name="name">view.inseta.skill.learnership.form</field>
+            <field name="model">inseta.skill.learnership</field>
+            <field name="arch" type="xml">
+                <form string="" create="false">
+                    <header>
+                        <button name="action_print_all_certficate" string="Print Certificates" type="object" class="oe_highlight"
+							groups="inseta_etqa.group_etqa_assessment_specialist,base.group_system,inseta_etqa.group_it_admin"/>
+
+                        <button name="action_print_result_statement" string="Print Result Statements" type="object" class="oe_highlight"
+                        />
+                        <!-- groups="inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_approved_provider,inseta_etqa.group_provider_access_user,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_admin_audit_access_user,inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_it_admin"
+                        />  -->
+                        <button name="set_to_edit" string="Toggle Edit Mode" class="btn-primary" type="object" groups="inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="learner_id" required="0" readonly="0" force_save="1" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="provider_id" required="1" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="organisation_id" required="0" string="Employer" readonly="1" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="secondary_provider_id" invisible="1" required="0" string="Secondary Provider" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="secondary_organisation_id" invisible="1" required="0" string="Secondary Employer" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+
+                                <field name="skill_programme_id" required="1" string="Programme ID" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="qualification_code" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="student_number" readonly="0" invisible="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="socio_economic_status_id" required="1" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="lga_number" required="0" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <!-- <field name="certificate_number"/>
+                                <field name="certificate_created_date" readonly="0"/> -->
+                                
+                            </group>
+                            <group>
+                                <field name="financial_year_id" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="funding_type" string="Sponsor" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+
+                                <!-- <field name="verified" readonly="0"/>
+                                <field name="is_successful" readonly="0"/>
+                                <field name="endorsed" readonly="0"/>
+                                <field name="project_type_id" invisible="1"/> -->
+                                <field name="commencement_date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="completion_date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="programme_status_id" string="Programme Status" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                
+                                <field name="effective_date" string="Status Effective Date" required="0" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="most_recent_registration_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="achievement_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <!-- <button name="action_print_result_statement" string="Print Statement" class="oe_highlight btn-sm" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/>
+                                <button name="action_print_certficate" string="Print Certificate" class="oe_highlight btn-sm" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/> -->
+					            <field name="edit_mode" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="unitstandards" string="Skill Unit Standards line">
+                                <separator string="Programme Unit standards"/>
+                                <field name="skills_unit_standard_ids" nolabel="1" readonly="1" required="0" context="{'default_programme_id': skill_programme_id}">
+                                    <tree string="Skill Unit standards" editable="bottom" delete="0" create="0">
+                                        <field name="select"/>
+                                        <field name="skill_learnership_id" required="1" invisible="1"/>
+                                        <field name="programme_id" required="0" invisible="1"/>
+                                        <field name="unit_standard_id" force_save="1" readonly="1" required="1" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="unit_standard_type" force_save="1" readonly="1" required="1" invisible="0" options="{'no_create': True, 'no_open': True}"/> 
+                                        <field name="credits" sum="Total Credits"/>
+                                    </tree>
+                                
+                                </field>
+                            </page>
+                            <page name="skills_assessment_ids" string="Skills Assessement">
+                                <separator string="Skills Assessment"/>
+                                <field name="skills_assessment_ids" options="{'no_create':True}">
+                                    <form string="-">
+                                        <group>
+                                            <group>
+                                                <field name="learner_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="code" readonly="1"/>
+                                                <field name="credits" readonly="1"/>
+                                                <field name="verification_date" readonly="1"/>
+                                            </group>
+                                            <group>
+                                                <field name="assessor_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="assessment_date" readonly="1"/>
+                                                <field name="moderator_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        
+                                                <field name="assessment_status_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="" delete="0" create="0">
+                                        <field name="learner_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="code" readonly="1"/>
+                                        <field name="credits" readonly="1"/>
+                                        <field name="verification_date" readonly="1"/>
+                                        <field name="assessor_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="assessment_date" readonly="1"/>
+                                        <field name="moderator_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="assessment_status_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="partial_assessment_ids" string="Partial Assessement">
+                                
+                                <separator string="Skills Partial Assessment"/>
+                                <field name="learner_skill_partial_assessment_ids" options="{'no_create':True}">
+                                    <form string="-">
+                                        <group>
+                                            <group>
+                                                <field name="inseta_assessment_detail_id" readonly="1"/>
+                                                <field name="learner_skill_learnership_id" readonly="1"/>
+                                                <field name="learner_id"/>
+                                            </group>
+                                            <group>
+                                                <field name="learner_skill_assessment_id"/>
+                                                <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="code"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="" delete="0" create="0">
+                                        <field name="inseta_assessment_detail_id" readonly="1"/>
+                                        <field name="learner_id"/>
+                                        <field name="learner_skill_learnership_id" readonly="1"/>
+                                        <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="code"/>
+                                        <field name="learner_skill_assessment_id"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                            <!-- <page name="attachment_ids" string="Documents &amp; Attachments">
+                                <separator string="Add documents"/>
+                                <field name="attachment_ids" required="0"/>
+                            </page> -->
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_inseta_skill_learnership_tree" model="ir.ui.view">
+            <field name="name">Inseta Skills learnership</field>
+            <field name="model">inseta.skill.learnership</field>
+            <field name="arch" type="xml">
+                <tree string="Skill learnership Assessment" create="false">
+                    <field name="learner_id" required="0" /> 
+                    <field name="skill_programme_id" required="0" /> 
+                    <field name="agreement_number" required="0" /> 
+                    <field name="financial_year_id" required="0" />
+                    <!-- <field name="project_id" required="0" /> -->
+                    <field name="enrollment_date" readonly="1"/>
+                    <field name="programme_status_id" required="0" />
+                    <field name="certificate_issued" required="0"/>
+                    <field name="certificate_created_date" readonly="1"/>
+                    <field name="achievement_date" readonly="1"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_inseta_skill_learnership_filter" model="ir.ui.view">
+            <field name="name">Inseta Skill learnership</field>
+            <field name="model">inseta.skill.learnership</field>
+            <field name="arch" type="xml">
+                <search string="Inseta Skill learnership">
+                    <!-- <field name="learner_id" required="0" />  -->
+                    <field name="skill_programme_id" required="0" /> 
+                    <field name="agreement_number" required="0" /> 
+                    <field name="financial_year_id" required="0" />
+                    <!-- <field name="project_id" required="0" /> -->
+                    <field name="verified" required="0" />
+                    <filter name="skill_grp" string="Skill"
+                    domain="[('skill_programme_id', '!=', False)]"/>
+                    <group  expand='0' string='Group by...'>
+                        <filter name ="rec_skill_grp" string='Skills Programme' domain="[]" context="{'group_by' : 'skill_programme_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="view_inseta_skill_learnership_pivot" model="ir.ui.view">
+            <field name="name">inseta skill learnership pivot</field>
+            <field name="model">inseta.skill.learnership</field>
+            <field name="arch" type="xml">
+                <pivot string="Learnership">
+                    <field name="organisation_id" type="col"/>
+                    <field name="provider_id" type="col"/>
+                    <field name="skill_programme_id" type="row"/>
+                    <field name="learner_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_inseta_skill_learnership_graph" model="ir.ui.view">
+            <field name="name">inseta skill learnership graph</field>
+            <field name="model">inseta.skill.learnership</field>
+            <field name="arch" type="xml">
+                <graph string="Skill Learnership">
+                    <!-- <field name="qualification_id" type="row"/> -->
+                    <field name="skill_programme_id" type="row"/>
+                    <field name="provider_id" type="row"/>
+                    <field name="financial_year_id" type="measure"/>
+                    <field name="learner_id" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_inseta_skill_learnership" model="ir.actions.act_window">
+            <field name="name">Skills Report</field>
+            <field name="res_model">inseta.skill.learnership</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="context">{'search_default_rec_skill_grp': 1}</field>
+            <field name="view_id" eval="view_inseta_skill_learnership_filter" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record>
+
+
+        <record id="view_inseta_qualification_learnership_form" model="ir.ui.view">
+            <field name="name">view.inseta.qualification.learnership.form</field>
+            <field name="model">inseta.qualification.learnership</field>
+            <field name="arch" type="xml">
+                <form string="Learning Assessment" create="false">
+                    <header>
+                        <button name="action_print_all_certficate" string="Print Certificates" type="object" class="oe_highlight"
+							groups="inseta_etqa.group_etqa_assessment_specialist,base.group_system,inseta_etqa.group_it_admin"
+							/>
+
+                        <button name="action_print_result_statement" string="Print Result Statements" type="object" class="oe_highlight"
+                        />
+                        <!-- groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_approved_provider,inseta_etqa.group_provider_access_user,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_admin_audit_access_user,inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_it_admin"
+                        /> -->
+                        <button name="set_to_edit" string="Toggle Edit Mode" class="btn-primary" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="learner_id" required="0" readonly="0" force_save="1" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="provider_id" required="1" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="organisation_id" string="Employer" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="secondary_provider_id" invisible="1" required="0" string="Secondary Provider" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                <field name="secondary_organisation_id" invisible="1" required="0" string="Secondary Employer" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+
+                                <field name="qualification_id" required="1" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="qualification_code" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="student_number" readonly="0" invisible="1"/>
+                                <!-- <field name="certificate_number"/>
+                                <field name="certificate_created_date" readonly="0"/> -->
+                                <field name="financial_year_id" readonly="0" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="commencement_date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="completion_date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="achievement_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <!-- <button name="action_print_result_statement" string="Print Statement" class="oe_highlight btn-sm" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/>
+                                <button name="action_print_certficate" string="Print Certificate" class="oe_highlight btn-sm" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/> -->
+                            </group>
+                            <group>
+                                <!-- <field name="verified" readonly="0"/>
+                                <field name="is_successful" readonly="0"/>
+                                <field name="endorsed" readonly="0"/>
+                                <field name="project_type_id" invisible="1"/> -->
+                                <field name="funding_type" string="Sponsor" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_open':True, 'no_create':True}"/>
+                                <field name="programme_status_id" string="Programme Status" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_open':True, 'no_create':True}"/>
+                                <field name="most_recent_registration_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+					            <field name="edit_mode" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                            </group>
+                        </group>
+                        <notebook>
+                             <page name="unitstandards" string="Qualification Unit Standards line">
+                                 <field name="qualification_unit_standard_ids" nolabel="1" readonly="1" required="0" context="{'default_programme_id': qualification_id}" force_save="1">
+                                    <tree string="Qualification Unit standards" editable="bottom" delete="false" create="false">
+                                        <field name="select"/> 
+                                        <field name="qualification_learnership_id" required="1" invisible="1" options="{'no_create': True, 'no_open': True}"/> 
+                                        <field name="programme_id" required="0" invisible="1" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="unit_standard_id" readonly="1" required="1" options="{'no_create': True, 'no_open': True}" force_save="1"/>
+                                        <field name="unit_standard_type" readonly="1" required="1" invisible="0" options="{'no_create': True, 'no_open': True}" force_save="1"/> 
+                                        <field name="credits"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="assessment_ids" string="Assessement">
+                                <separator string="Qualification Assessment"/>
+                                <field name="qualification_assessment_ids" options="{'no_create':True}">
+                                    <form string="-">
+                                        <group>
+                                            <group>
+                                                <field name="learner_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="code" readonly="1"/>
+                                                <field name="credits" readonly="1"/>
+                                                <field name="verification_date" readonly="1"/>
+                                            </group>
+                                            <group>
+                                                <field name="assessor_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="assessment_date" readonly="1"/>
+                                                <field name="moderator_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="assessment_status_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="" delete="0" create="0">
+                                        <field name="learner_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="code" readonly="1"/>
+                                        <field name="credits" readonly="1"/>
+                                        <field name="verification_date" readonly="1"/>
+                                        <field name="assessor_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="assessment_date" readonly="1"/>
+                                        <field name="moderator_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="assessment_status_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="partial_assessment_ids" string="Partial Assessement">
+                                <separator string="Qualification Partial Assessment"/>
+                                <field name="learner_qualification_partial_assessment_ids" options="{'no_create':True}">
+                                    <form string="-">
+                                        <group>
+                                            <group>
+                                                <field name="inseta_assessment_detail_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="learner_qualification_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                 
+                                            </group>
+                                            <group>
+                                                <field name="learner_id"/>
+                                                <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                <field name="code"/>
+                                                <field name="learner_qualification_assessment_id" invisible="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="" delete="0" create="0">
+                                        <field name="inseta_assessment_detail_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="learner_id"/>
+                                        <field name="learner_qualification_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="unit_standard_type_id" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        <field name="code"/>
+                                        <field name="learner_qualification_assessment_id"  invisible="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <!-- <page name="attachment_ids" string="Documents &amp; Attachments">
+                                <separator string="Add documents"/>
+                                <field name="attachment_ids" required="0"/>
+                            </page> -->
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_inseta_qualification_learnership_tree" model="ir.ui.view">
+            <field name="name">Inseta qualifications learnership</field>
+            <field name="model">inseta.qualification.learnership</field>
+            <field name="arch" type="xml">
+                <tree string="Qualification" delete="true" create="false" edit="false">
+                    <field name="learner_id" required="0" options="{'no_open':True, 'no_create':True}"/> 
+                    <field name="provider_id" required="0" options="{'no_open':True, 'no_create':True}" /> 
+                    <field name="qualification_id" required="0" options="{'no_open':True, 'no_create':True}"/> 
+                    <field name="agreement_number" required="0" /> 
+                    <field name="financial_year_id" required="0" options="{'no_open':True, 'no_create':True}"/>
+                    <field name="enrollment_date" readonly="1"/>
+                    <field name="programme_status_id" required="0" options="{'no_open':True, 'no_create':True}"/>
+                    <field name="certificate_issued" required="0"/>
+                    <field name="certificate_created_date" readonly="1"/>
+                    <field name="achievement_date" readonly="1"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_inseta_qualification_learnership_filter" model="ir.ui.view">
+            <field name="name">Inseta qualification learnership</field>
+            <field name="model">inseta.qualification.learnership</field>
+            <field name="arch" type="xml">
+                <search string="Inseta qualification">
+                    <field name="learner_id" required="0" readonly="1"/> 
+                    <field name="qualification_programming_id" required="0" /> 
+                    <field name="agreement_number" required="0" /> 
+                    <field name="financial_year_id" required="0" />
+                    <field name="project_id" required="0" />
+                    <field name="verified" required="0" />
+                    <filter name="qualification_grp" string="Qualification is True"
+                    domain="[('qualification_id', '!=', False)]"/>
+                    <group expand='0' string='Group by...'>
+                        <filter name ="rec_qualification_grp" string='Qualification' domain="[]" context="{'group_by' : 'qualification_id'}"/>
+                    </group>
+                    </search>
+            </field>
+        </record>
+
+        <record id="view_inseta_qualification_learnership_pivot" model="ir.ui.view">
+            <field name="name">inseta qualification learnership pivot</field>
+            <field name="model">inseta.qualification.learnership</field>
+            <field name="arch" type="xml">
+                <pivot string="qualification">
+                    <field name="organisation_id" type="col"/>
+                    <field name="provider_id" type="col"/>
+                    <field name="qualification_programming_id" type="row"/>
+                    <field name="learner_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_inseta_qualification_learnership_graph" model="ir.ui.view">
+            <field name="name">inseta qualification learnership graph</field>
+            <field name="model">inseta.qualification.learnership</field>
+            <field name="arch" type="xml">
+                <graph string="qualification">
+                    <field name="qualification_programming_id" type="row"/>
+                    <field name="provider_id" type="row"/>
+                    <field name="financial_year_id" type="measure"/>
+                    <field name="learner_id" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_inseta_qualification_learnership" model="ir.actions.act_window">
+            <field name="name">Inseta Qualification Report</field>
+            <field name="res_model">inseta.qualification.learnership</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="context">{'search_default_qualification_grp': 1, 'search_default_rec_qualification_grp': 1}</field>
+            <field name="view_id" eval="view_inseta_qualification_learnership_filter" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record> 
+
+
+        <menuitem id="view_learner_programme_main_report_menu" name="Reports" sequence="12" parent="inseta_etqa.etqa_root_menu" 
+		groups="inseta_etqa.group_etqa_user,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider"/>
+
+        <menuitem id="view_learnership_programme_report_menu" name="Learnership Report" sequence="1" action="action_inseta_learner_learnership_id" parent="inseta_etqa.view_learner_programme_main_report_menu"/>
+        <menuitem id="view_skills_programme_report_menu" name="Skills Report" sequence="2" action="action_inseta_skill_learnership" parent="inseta_etqa.view_learner_programme_main_report_menu"/>
+        <menuitem id="view_qualification_programme_report_menu" name="Qualification Report" sequence="3" action="action_inseta_qualification_learnership" parent="inseta_etqa.view_learner_programme_main_report_menu"/>
+
+        <menuitem id="view_learner_programme_user_report_menu" name="Learner Programmes" sequence="12" parent="inseta_etqa.learner_registerations_menu" 
+		groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_user,base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_approved_assesor,inseta_etqa.group_moderator_access_user,inseta_etqa.group_approved_moderator,inseta_etqa.group_approved_assesor,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system,inseta_skills.group_employer"/>
+        
+
+        <menuitem id="menu_provider_see_learner_programme" name="Learnership Report" sequence="1" action="action_inseta_learner_learnership_id" parent="inseta_etqa.view_learner_programme_user_report_menu"/>
+        <menuitem id="menu_provider_see_skill_programme" name="Skills Report" sequence="2" action="action_inseta_skill_learnership" parent="inseta_etqa.view_learner_programme_user_report_menu"/>
+        <menuitem id="menu_provider_see_qualification_programme" name="Qualification Report" sequence="3" action="action_inseta_qualification_learnership" parent="inseta_etqa.view_learner_programme_user_report_menu"/>
+
+    </odoo>

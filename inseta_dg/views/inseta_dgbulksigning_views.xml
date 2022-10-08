@@ -1,0 +1,167 @@
+<odoo>
+    <data>
+      <record id="view_dgbulksigning_tree" model="ir.ui.view">
+			<field name="name">inseta.dgbulksigning.form</field>
+			<field name="model">inseta.dgbulksigning</field>
+			<field name="arch" type="xml">
+				<tree string="DG Approval"> 
+					<field name="name"/>
+					<field name="dgtype_id"/>
+					<field name="financial_year_id"/>
+					<field name="count" />
+					<field name="create_date" />
+					<field name="create_uid" />
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_dgbulksigning_filter" model="ir.ui.view">
+			<field name="name">inseta.dgbulksigning.filter</field>
+			<field name="model">inseta.dgbulksigning</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="name"/>
+					<field name="dgtype_id"/>
+					<field name="financial_year_id"/>
+					<field name="create_date" />
+					<field name="create_uid" />
+				</search>
+			</field>
+		</record>
+
+		<record id="view_dgbulksigning_form" model="ir.ui.view">
+			<field name="name">inseta.dgbulksigning.form</field>
+			<field name="model">inseta.dgbulksigning</field>
+			<field name="arch" type="xml">
+				<form string="DG Bulk Signing"> 
+                    <header>
+                        <button name="action_draft"
+							states="awaiting_sign1,awaiting_sign1,signed" 
+							string="Reset" 
+							type="object"
+							confirm="Are you sure you want to reset to draft?"
+							groups="base.group_system" />
+
+                        <button name="generate_letter"
+							states="draft" 
+							string="Generate Letters" 
+							class="oe_highlight"
+							type="object"
+							confirm="Are you sure you want to generate Letter for all applications?"
+							groups="inseta_dg.group_pmo_admin" />
+
+						<button name="action_send_to_programme_mgr" 
+							string="Send Letter to Manager" 
+							type="object" 
+							class="oe_highlight" 
+							states="awaiting_sign1"
+							confirm="Are you sure you want to manager for signature?" 
+							groups="inseta_dg.group_pmo_admin"/>
+
+						<button name="action_send_to_coo" 
+							string="Send Letter to COO" 
+							type="object" 
+							class="oe_highlight" 
+							states="awaiting_sign2"
+							confirm="Are you sure you want to COO for signature?" 
+							groups="inseta_dg.group_pmo_admin" />
+
+						<button string='Sign Manager' states="awaiting_sign1" confirm="Are you sure u want to sign all the letters?" name="action_sign1" type="object" class="oe_highlight"/>
+						<button string='Sign COO' states="awaiting_sign2" confirm="Are you sure u want to sign all the letters?" name="action_sign2" type="object" class="oe_highlight"/>
+						
+						<field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="draft,awaiting_sign1,awaiting_sign2,signed"
+							statusbar_colors='{"draft":"blue","signed":"green"}'/>
+                    </header>
+					<sheet>
+						<div class="oe_title" >
+							<h1>
+								<field name="name" readonly="1"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" required="1" attrs="{'readonly':[('state','=','approve')]}"/>
+								<!-- <field name="dgapplication_id" invisible="1" /> -->
+								<field name="dgtype_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','=','approve')]}"/>
+								<field name="approval_sheet" filename="file_name" required="1" attrs="{'readonly':[('state','=','approve')]}"/>
+								<field name="file_name" invisible="0" readonly="1" force_save="1" attrs="{'readonly':[('state','=','approve')]}"/> 
+							</group>
+							<group/>
+							<group>
+								<button  name="action_pull" type="object" string="Search Records" class="oe_highlight pull-right" attrs="{'invisible':[('state','=','approve')]}"/>
+								<div class="clearfix"/>
+							</group>
+							<group/>
+						</group>
+					
+                         <notebook>
+                            <page string="DG Applications">
+								<field name="evaluation_ids" nolabel="1" 
+									context="{'form_view_ref':'inseta_dg.dgevaluation_view_form'}">
+
+									<tree class="table-4-cols" create="0" delete="0" string="DG Evalutaion">
+										<field name="organisation_id" />
+										<field name="dgapplication_id" />
+										<field name="dgapplicationdetails_id" invisible="1" />
+										<field name="is_learnership" invisible="1"/>
+										<field name="dgtype_code" invisible="1"/>
+
+										<field name="currency_id" invisible="1" />
+										<field name="actual_cost_per_student" invisible="1" />
+										<field name="learnership_id" readonly="1" force_save="1" attrs="{'invisible': [('is_learnership','=',False)]}" />
+										<field name="programme_name" readonly="1" force_save="1" attrs="{'invisible':[('dgtype_code','not in', ('IT-DEGREE','IT-MATRIC'))]}"/>
+										<field name="fullqualification_title" attrs="{'invisible': [('dgtype_code','not in', ('SP','BUR'))]}" />
+										<field name="no_learners" readonly="1" force_save="1"/>
+										<field name="disabled"  attrs="{'invisible': [('is_learnership','=',False)]}"/>
+										<field name="total_learners" readonly="1" force_save="1" />
+										<field name="amount_applied" readonly="1" force_save="1" />
+
+										<field name="no_learners_recommended" />
+										<field name="disabled_recommended" attrs="{'invisible': [('is_learnership','=',False)]}"/>
+										<field name="total_recommended" attrs="{'invisible': [('is_learnership','=',False)]}" />
+										<field name="amount_total_recommended"/>
+
+										<field name="no_learners_approved" attrs="{'invisible': [('state', '=', 'submit')]}" />
+										<field name="disabled_approved"  attrs="{'invisible': [('state', '=', 'submit')]}" />
+										<field name="total_learners_approved" attrs="{'invisible': [('state', '=', 'submit')]}" />
+										<field name="amount_total_approved" attrs="{'invisible': [('state', '=', 'submit')]}" />
+
+										<field name="amount_total_approved" attrs="{'invisible': [('state', '=', 'submit')]}" />
+										<field name="option" string="Option" attrs="{'invisible': [('state', '=', 'submit')], 'required': [('state', '=', 'submit')]}" /> 
+										<field name="comment" attrs="{'invisible': [('state', '=', 'submit')],'required':[('option','in', ('Query',)),]}"/>
+										<field name="state" />
+
+									</tree>
+								</field>
+                            </page>
+                         </notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+        <record id="act_window_dgbulksigning" model="ir.actions.act_window">
+			<field name="name">DG Bulk Signing</field>
+			<field name="res_model">inseta.dgbulksigning</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create"></p>
+			</field>
+		</record>
+
+        <!-- <menuitem id="menu_dgbulksigning" 
+            name="DG Bulk Signing" 
+            sequence="4" 
+            parent="inseta_dg.menu_root"
+            groups="inseta_dg.group_coo,inseta_dg.group_pmo_manager,inseta_dg.group_pmo_admin,inseta_learning_programme.group_learning_manager_id"
+            action="act_window_dgbulksigning"
+		/> -->
+
+    </data>
+</odoo>

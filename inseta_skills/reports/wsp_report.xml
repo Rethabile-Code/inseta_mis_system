@@ -1,0 +1,1674 @@
+<odoo>
+    <data>
+        <record id="action_wsp_report" model="ir.actions.report">
+            <field name="name">WSP Report</field>
+            <field name="model">inseta.wspatr</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">inseta_skills.report_wsp</field>
+            <field name="report_file">inseta_skills.report_wsp</field>
+            <field name="print_report_name">(object.organisation_id.sdl_no +'_'+(object.name).replace('/','_')+'_'+time.strftime('%Y-%m-%d-%H:%M:%S'))</field>
+            <field name="attachment">((object.name).replace('/','_')+time.strftime('%Y-%m-%d-%H:%M:%S').replace('-','_')+'wsp.pdf')</field>
+            <field name="binding_model_id" ref="model_inseta_wspatr"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="inseta_skills.wsp_paperformat_landscape" />
+        </record>
+
+        <template id="wsp_page">
+
+            <div class="col-lg-12 col-md-12 report-details" t-if="o.form_type == 'Large'">
+
+                <t t-set="skillsdev" t-value="o.skillsdevconsultplanning_ids and o.skillsdevconsultplanning_ids[0] or False" />
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 1 : Skills Development Consultation &amp; Planning for <span t-field="o.wsp_period"/></h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Questions</th>
+                            <th>Responses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold; width:60%">1.1. What process was used to develop the Workplace Skills Plan?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.workplacespid and skillsdev.workplacespid.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.1.1. Please add additional comments if applicable</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comment1 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.2. Provide a brief summary of the impact of the legislation on the organization i.e. FAIS regulatory exams</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comment2 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color:#143e90; color:#ffffff"> 1.3. Note: Question must be posed and completed by people in the following occupational areas and not completed by SDF: How much has your job changed in the last 12 months and in the last 3 years?</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.1. Underwriter</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.underwriter or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.2. Insurance Broker</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.insurancebroker or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.3. Software Developer / Programmer / IT related occupations</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.itoccupations or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.4. Claims Clerks / Manager / Assessor</td>
+                            <td>
+                                <field name="claims" required="1" nolabel="1"/>
+                                <span t-esc="skillsdev and skillsdev.claims or 'N/A' "/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.5. Sales Managers</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.salesmanager or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.6. Accountant</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.accountant or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.7. Actuary</td>
+                            <td>
+                                <field name="actuary" required="1" nolabel="1"/>
+                                <span t-esc="skillsdev and skillsdev.actuary or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.4. Has your Organisation gone through any restructuringin the past 12 months due to merger/acquisition?</td>
+                            <td>
+                                <field name="merged" required="1" nolabel="1"/>
+                                <span t-esc="skillsdev and skillsdev.merged or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color:#143e90; color:#ffffff">1.5. Number of people retrenched/dismissed/resigned for the period 1 January 2019 to 31 December 2019</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.1. Retrenched</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.retrenched or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.2. Dismissed - Misconduct</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.dismissedmisconduct or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.3. Resigned</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.resigned or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.4. Deceased</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.deceased or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.5. Retired</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.retired or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.6. Non- Renewal of Contract</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.nonrenewal or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.7. Dismissed - Incapacity</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.dismissedincapacity or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.8. Dismissed – Non-compliance ( RE )</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.dismissednoncompliance or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color:#143e90; color:#ffffff">1.6. In order to measure the impact of training in your Organisation kindly state:</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.6.1. Has productivity increased or decreased in the Organisation?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.productivity or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.6.2. What are your findings based on?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comment4 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color:#143e90; color:#ffffff">1.7. Class of Business for the Organisation</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1. Are you a product provider?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.productprovider or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1.1. What is your Core business?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.providercorebusiness_id and skillsdev.providercorebusiness_id.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1.2. Comment</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comments5 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1.3. What is your Secondary business?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.providersecondary_id and skillsdev.providersecondary_id.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1.4. Comment</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comments6 or '' "/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2. Are you a Broker?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.broker or '' "/>
+                            </td>
+                        </tr>
+                        <!--1.7.2 if No option is selected then 1.7.2.1 to 1.7.2.4 must not be mandatory. 
+                        if Yes option is seleted then 1.7.2.1 to 1.7.2.4 must be mandatory-->
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2.1. What is your Core business?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.brokercorebusiness_id and skillsdev.brokercorebusiness_id.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2.2. Comment</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comments7 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2.3. What is your Secondary business?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.brokersecondary_id and skillsdev.brokersecondary_id.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2.4. Comment</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comments8 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.8. What is the percentage of payroll spent on training?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.payroll or 0 "/>
+                            </td>
+                        </tr>
+                    </tbody>
+                
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 2 : Current Employment Profile for <span t-field="o.wsp_period"/> </h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th colspan="3">African</th>
+                            <th colspan="3">Colored</th>
+                            <th colspan="3">Indian / Asian</th>
+                            <th colspan="3">White</th>
+                            <th colspan="3">Other</th>
+                            <th colspan="3">Total </th>
+                            <th colspan="4">Age Group</th>
+                        </tr>
+                        <tr>
+                            <th>Major Group </th> 
+                            <th>Sub Major Group</th>
+                            <th>Occupation</th>
+                            <th>Specialization</th>                 
+                            <th>Foreign Country</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Less than 35</th>
+                            <th>35 to 54</th>
+                            <th>55 to 64</th>
+                            <th>Greater than 64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.employement_profile_ids" t-as="obj">
+                            <td><span t-esc="obj.ofo_majorgroup_id and obj.ofo_majorgroup_id.name or 'None'" /></td>
+                            <td><span t-esc="obj.ofo_submajorgroup_id and obj.ofo_submajorgroup_id.name or 'None'" /></td>
+                            <td> <span t-esc="obj.ofo_occupation_id and obj.ofo_occupation_id.name or 'None' "/></td>
+                            <td> <span t-esc="obj.ofo_specialization_id and obj.ofo_specialization_id.name or 'None'"/></td>
+                            <td><span t-esc="obj.other_country"/></td>
+                            <td><span t-esc="obj.african_male"/></td>
+                            <td><span t-esc="obj.african_female"/></td>
+                            <td><span t-esc="obj.african_disabled"/></td>
+                            <td><span t-esc="obj.colored_male"/></td>
+                            <td><span t-esc="obj.colored_female"/></td>
+                            <td><span t-esc="obj.colored_disabled"/></td>
+                            <td><span t-esc="obj.indian_male"/></td>
+                            <td><span t-esc="obj.indian_female"/></td>
+                            <td><span t-esc="obj.indian_disabled"/></td>
+                            <td><span t-esc="obj.white_male"/></td>
+                            <td><span t-esc="obj.white_female"/></td>
+                            <td><span t-esc="obj.white_disabled"/></td>
+                            <td><span t-esc="obj.other_male"/></td>
+                            <td><span t-esc="obj.other_female"/></td>
+                            <td><span t-esc="obj.other_disabled"/></td>
+                            <td><span t-esc="obj.total_male"/></td>
+                            <td><span t-esc="obj.total_female"/></td>
+                            <td><span t-esc="obj.total_disabled"/></td>
+                            <td><span t-esc="obj.age1"/></td>
+                            <td><span t-esc="obj.age2"/></td>
+                            <td><span t-esc="obj.age3"/></td>
+                            <td><span t-esc="obj.age4"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">Subtotal</td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('african_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('african_female'))" /></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('african_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('colored_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('colored_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('colored_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('indian_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('indian_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('indian_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('white_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('white_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('white_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('other_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('other_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('other_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('total_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('total_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('total_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('age1'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('age2'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('age3'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('age4'))"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="20">Grand Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold"><span t-esc="sum(o.employement_profile_ids.mapped('grand_total_gender'))"/></td>
+                            <td colspan="4" style="text-align:center; font-weight:bold"><span t-esc="sum(o.employement_profile_ids.mapped('grand_total_agegroup'))"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 3 : Highest Educational Profile for <span t-field="o.wsp_period"/></h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th colspan="3">African</th>
+                            <th colspan="3">Colored</th>
+                            <th colspan="3">Indian / Asian</th>
+                            <th colspan="3">White</th>
+                            <th colspan="3">Other</th>
+                            <th colspan="3">Total </th>
+                            <th colspan="4">Age Group</th>
+                        </tr>
+                        <tr>
+                            <th>Descriptions</th> 
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Less than 35</th>
+                            <th>35 to 54</th>
+                            <th>55 to 64</th>
+                            <th>Greater than 64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.highest_educational_profile_ids" t-as="obj">
+                            <td><span t-esc="obj.formspl_id and obj.formspl_id.name or 'None' "/></td>
+                            <td><span t-esc="obj.african_male"/></td>
+                            <td><span t-esc="obj.african_female"/></td>
+                            <td><span t-esc="obj.african_disabled"/></td>
+                            <td><span t-esc="obj.colored_male"/></td>
+                            <td><span t-esc="obj.colored_female"/></td>
+                            <td><span t-esc="obj.colored_disabled"/></td>
+                            <td><span t-esc="obj.indian_male"/></td>
+                            <td><span t-esc="obj.indian_female"/></td>
+                            <td><span t-esc="obj.indian_disabled"/></td>
+                            <td><span t-esc="obj.white_male"/></td>
+                            <td><span t-esc="obj.white_female"/></td>
+                            <td><span t-esc="obj.white_disabled"/></td>
+                            <td><span t-esc="obj.other_male"/></td>
+                            <td><span t-esc="obj.other_female"/></td>
+                            <td><span t-esc="obj.other_disabled"/></td>
+                            <td><span t-esc="obj.total_male"/></td>
+                            <td><span t-esc="obj.total_female"/></td>
+                            <td><span t-esc="obj.total_disabled"/></td>
+                            <td><span t-esc="obj.age1"/></td>
+                            <td><span t-esc="obj.age2"/></td>
+                            <td><span t-esc="obj.age3"/></td>
+                            <td><span t-esc="obj.age4"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('african_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('african_female'))" /></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('african_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('colored_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('colored_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('colored_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('indian_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('indian_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('indian_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('white_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('white_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('white_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('other_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('other_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('other_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('total_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('total_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('total_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('age1'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('age2'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('age3'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('age4'))"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="16">Grand Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold"><span t-esc="sum(o.highest_educational_profile_ids.mapped('grand_total_gender'))"/></td>
+                            <td colspan="4" style="text-align:center; font-weight:bold"><span t-esc="sum(o.highest_educational_profile_ids.mapped('grand_total_agegroup'))"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 4 : Provincial Breakdown for <span t-field="o.wsp_period"/></h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Number of Employees per L Number</th> 
+                            <th>Western Cape</th>
+                            <th>Northern Cape</th>
+                            <th>Eastern Cape</th>
+                            <th>Free State</th>
+                            <th>Gauteng</th>
+                            <th>Mpumalanga</th>
+                            <th>Limpopo</th>
+                            <th>North West</th>
+                            <th>Kwa Zulu-Natal</th>
+                            <th>Total</th>
+                            <th>Company Size</th>
+                            <th>Levy paying</th>
+                            <th>No Employees</th>
+                            <th>Reasons for not listing employees</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.provincialbreakdown_ids" t-as="obj">
+                            <td><span t-esc="obj.sdl_no or ''" /></td>
+                            <td><span t-esc="obj.westerncape"/></td>
+                            <td><span t-esc="obj.northerncape"/></td>
+                            <td><span t-esc="obj.easterncape"/></td>
+                            <td><span t-esc="obj.freestate"/></td>
+                            <td><span t-esc="obj.gauteng"/></td>
+                            <td><span t-esc="obj.mpumalanga"/></td>
+                            <td><span t-esc="obj.limpopo"/></td>
+                            <td><span t-esc="obj.northwest"/></td>
+                            <td><span t-esc="obj.kwazulunatal"/></td>
+                            <td><span t-esc="obj.total"/></td>
+                            <td><span t-esc="obj.company_size"/></td>
+                            <td><span t-esc="obj.levy_status"/></td>
+                            <td><span t-esc="obj.noemployees"/></td>
+                            <td><span t-esc="obj.reasons or '' " /></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 5 : Planned AET Training for <span t-field="o.wsp_period"/></h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="6"></th>
+                            <th colspan="3">African</th>
+                            <th colspan="3">Colored</th>
+                            <th colspan="3">Indian / Asian</th>
+                            <th colspan="3">White</th>
+                            <th colspan="3">Other</th>
+                            <th colspan="3">Total </th>
+                            <th colspan="4">Age Group</th>
+                        </tr>
+                        <tr>
+                            <th>Major Group </th> 
+                            <th>Sub Major Group</th>
+                            <th>Occupation</th>
+                            <th>Specialization</th>                 
+                            <th>Foreign Country</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Less than 35</th>
+                            <th>35 to 54</th>
+                            <th>55 to 64</th>
+                            <th>Greater than 64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.planned_aet_training_ids" t-as="obj">
+                            <td><span t-esc="obj.ofo_majorgroup_id and obj.ofo_majorgroup_id.name or 'None'" /></td>
+                            <td><span t-esc="obj.ofo_submajorgroup_id and obj.ofo_submajorgroup_id.name or 'None'" /></td>
+                            <td> <span t-esc="obj.ofo_occupation_id and obj.ofo_occupation_id.name or 'None' "/></td>
+                            <td> <span t-esc="obj.ofo_specialization_id and obj.ofo_specialization_id.name or 'None'"/></td>
+                            <td><span t-esc="obj.other_country"/></td>
+                            <td><span t-esc="obj.african_male"/></td>
+                            <td><span t-esc="obj.african_female"/></td>
+                            <td><span t-esc="obj.african_disabled"/></td>
+                            <td><span t-esc="obj.colored_male"/></td>
+                            <td><span t-esc="obj.colored_female"/></td>
+                            <td><span t-esc="obj.colored_disabled"/></td>
+                            <td><span t-esc="obj.indian_male"/></td>
+                            <td><span t-esc="obj.indian_female"/></td>
+                            <td><span t-esc="obj.indian_disabled"/></td>
+                            <td><span t-esc="obj.white_male"/></td>
+                            <td><span t-esc="obj.white_female"/></td>
+                            <td><span t-esc="obj.white_disabled"/></td>
+                            <td><span t-esc="obj.other_male"/></td>
+                            <td><span t-esc="obj.other_female"/></td>
+                            <td><span t-esc="obj.other_disabled"/></td>
+                            <td><span t-esc="obj.total_male"/></td>
+                            <td><span t-esc="obj.total_female"/></td>
+                            <td><span t-esc="obj.total_disabled"/></td>
+                            <td><span t-esc="obj.age1"/></td>
+                            <td><span t-esc="obj.age2"/></td>
+                            <td><span t-esc="obj.age3"/></td>
+                            <td><span t-esc="obj.age4"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">Subtotal</td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('african_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('african_female'))" /></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('african_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('colored_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('colored_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('colored_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('indian_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('indian_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('indian_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('white_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('white_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('white_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('other_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('other_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('other_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('total_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('total_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('total_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('age1'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('age2'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('age3'))"/></td>
+                            <td><span t-esc="sum(o.planned_aet_training_ids.mapped('age4'))"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="20">Grand Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold"><span t-esc="sum(o.planned_aet_training_ids.mapped('grand_total_gender'))"/></td>
+                            <td colspan="4" style="text-align:center; font-weight:bold"><span t-esc="sum(o.planned_aet_training_ids.mapped('grand_total_agegroup'))"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px"> WSP Form 6 : Planned Beneficiaries of Training for <span t-field="o.wsp_period"/></h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="7"></th>
+                            <th colspan="3">African</th>
+                            <th colspan="3">Colored</th>
+                            <th colspan="3">Indian / Asian</th>
+                            <th colspan="3">White</th>
+                            <th colspan="3">Other</th>
+                            <th colspan="3">Total </th>
+                            <th colspan="4">Age Group</th>
+                        </tr>
+                        <tr>
+                            <th>Major Group </th> 
+                            <th>Sub Major Group</th>
+                            <th>Occupation</th>
+                            <th>Specialization</th>                 
+                            <th>Municipality</th>
+                            <th>Foreign Country</th>
+
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Less than 35</th>
+                            <th>35 to 54</th>
+                            <th>55 to 64</th>
+                            <th>Greater than 64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.planned_beneficiaries_ids" t-as="obj">
+                            <td><span t-esc="obj.ofo_majorgroup_id and obj.ofo_majorgroup_id.name or 'None'" /></td>
+                            <td><span t-esc="obj.ofo_submajorgroup_id and obj.ofo_submajorgroup_id.name or 'None'" /></td>
+                            <td> <span t-esc="obj.ofo_occupation_id and obj.ofo_occupation_id.name or 'None' "/></td>
+                            <td> <span t-esc="obj.ofo_specialization_id and obj.ofo_specialization_id.name or 'None'"/></td>
+                            <td> <span t-esc="obj.municipality_id and obj.municipality_id.name or 'None'"/></td>
+                            <td><span t-esc="obj.other_country"/></td>
+                            <td><span t-esc="obj.african_male"/></td>
+                            <td><span t-esc="obj.african_female"/></td>
+                            <td><span t-esc="obj.african_disabled"/></td>
+                            <td><span t-esc="obj.colored_male"/></td>
+                            <td><span t-esc="obj.colored_female"/></td>
+                            <td><span t-esc="obj.colored_disabled"/></td>
+                            <td><span t-esc="obj.indian_male"/></td>
+                            <td><span t-esc="obj.indian_female"/></td>
+                            <td><span t-esc="obj.indian_disabled"/></td>
+                            <td><span t-esc="obj.white_male"/></td>
+                            <td><span t-esc="obj.white_female"/></td>
+                            <td><span t-esc="obj.white_disabled"/></td>
+                            <td><span t-esc="obj.other_male"/></td>
+                            <td><span t-esc="obj.other_female"/></td>
+                            <td><span t-esc="obj.other_disabled"/></td>
+                            <td><span t-esc="obj.total_male"/></td>
+                            <td><span t-esc="obj.total_female"/></td>
+                            <td><span t-esc="obj.total_disabled"/></td>
+                            <td><span t-esc="obj.age1"/></td>
+                            <td><span t-esc="obj.age2"/></td>
+                            <td><span t-esc="obj.age3"/></td>
+                            <td><span t-esc="obj.age4"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">Subtotal</td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('african_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('african_female'))" /></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('african_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('colored_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('colored_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('colored_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('indian_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('indian_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('indian_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('white_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('white_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('white_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('other_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('other_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('other_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('total_male'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('total_female'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('total_disabled'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('age1'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('age2'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('age3'))"/></td>
+                            <td><span t-esc="sum(o.planned_beneficiaries_ids.mapped('age4'))"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="21">Grand Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold"><span t-esc="sum(o.planned_beneficiaries_ids.mapped('grand_total_gender'))"/></td>
+                            <td colspan="4" style="text-align:center; font-weight:bold"><span t-esc="sum(o.planned_beneficiaries_ids.mapped('grand_total_agegroup'))"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 7 : Pivotal Planned Beneficiaries for <span t-field="o.wsp_period"/> </h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="9"></th>
+                            <th colspan="3">African</th>
+                            <th colspan="3">Colored</th>
+                            <th colspan="3">Indian / Asian</th>
+                            <th colspan="3">White</th>
+                            <th colspan="3">Other</th>
+                            <th colspan="3">Total </th>
+                            <th colspan="4">Age Group</th>
+                        </tr>
+                        <tr>
+                            <th>Major Group </th> 
+                            <th>Sub Major Group</th>
+                            <th>Occupation</th>
+                            <th>Specialization</th>                 
+                            <th>Municipality</th>
+                            <th>Socio Economic Status</th>
+                            <th>Pivotal Programme</th>
+                            <th>Other Pivotal Programme</th>
+                            <th>Foreign Country</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Less than 35</th>
+                            <th>35 to 54</th>
+                            <th>55 to 64</th>
+                            <th>Greater than 64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.pivotal_planned_beneficiaries_ids" t-as="obj">
+                            <td><span t-esc="obj.ofo_majorgroup_id and obj.ofo_majorgroup_id.name or 'None'" /></td>
+                            <td><span t-esc="obj.ofo_submajorgroup_id and obj.ofo_submajorgroup_id.name or 'None'" /></td>
+                            <td> <span t-esc="obj.ofo_occupation_id and obj.ofo_occupation_id.name or 'None' "/></td>
+                            <td> <span t-esc="obj.ofo_specialization_id and obj.ofo_specialization_id.name or 'None'"/></td>
+                            <td> <span t-esc="obj.municipality_id and obj.municipality_id.name or 'None'"/></td>
+                            <td> <span t-esc="obj.socio_economic_status or 'None' "/></td>
+                            <td> <span t-esc="obj.pivotal_programme_id and obj.pivotal_programme_id.name or 'None' "/></td>
+                            <td> <span t-esc="obj.other_pivotal_programme or 'None' "/></td>
+                            <td><span t-esc="obj.other_country"/></td>
+                            <td><span t-esc="obj.african_male"/></td>
+                            <td><span t-esc="obj.african_female"/></td>
+                            <td><span t-esc="obj.african_disabled"/></td>
+                            <td><span t-esc="obj.colored_male"/></td>
+                            <td><span t-esc="obj.colored_female"/></td>
+                            <td><span t-esc="obj.colored_disabled"/></td>
+                            <td><span t-esc="obj.indian_male"/></td>
+                            <td><span t-esc="obj.indian_female"/></td>
+                            <td><span t-esc="obj.indian_disabled"/></td>
+                            <td><span t-esc="obj.white_male"/></td>
+                            <td><span t-esc="obj.white_female"/></td>
+                            <td><span t-esc="obj.white_disabled"/></td>
+                            <td><span t-esc="obj.other_male"/></td>
+                            <td><span t-esc="obj.other_female"/></td>
+                            <td><span t-esc="obj.other_disabled"/></td>
+                            <td><span t-esc="obj.total_male"/></td>
+                            <td><span t-esc="obj.total_female"/></td>
+                            <td><span t-esc="obj.total_disabled"/></td>
+                            <td><span t-esc="obj.age1"/></td>
+                            <td><span t-esc="obj.age2"/></td>
+                            <td><span t-esc="obj.age3"/></td>
+                            <td><span t-esc="obj.age4"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="9">Subtotal</td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('african_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('african_female'))" /></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('african_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('colored_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('colored_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('colored_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('indian_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('indian_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('indian_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('white_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('white_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('white_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('other_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('other_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('other_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('total_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('total_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('total_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('age1'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('age2'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('age3'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('age4'))"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="24">Grand Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold"><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('grand_total_gender'))"/></td>
+                            <td colspan="4" style="text-align:center; font-weight:bold"><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('grand_total_agegroup'))"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="col-lg-12 col-md-12" id="report-details" t-if="o.form_type == 'Small'">
+                <t t-set="skillsdev" t-value="o.skillsdevconsultplanning_ids and o.skillsdevconsultplanning_ids[0] or False" />
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 1 : Skills Development Consultation &amp; Planning for <span t-field="o.wsp_period"/></h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Questions</th>
+                            <th>Responses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold; width:60%">1.1. What process was used to develop the Workplace Skills Plan?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.workplacespid and skillsdev.workplacespid.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.1.1. Please add additional comments if applicable</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comment1 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.2. Provide a brief summary of the impact of the legislation on the organization i.e. FAIS regulatory exams</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comment2 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color:#143e90; color:#ffffff"> 1.3. Note: Question must be posed and completed by people in the following occupational areas and not completed by SDF: How much has your job changed in the last 12 months and in the last 3 years?</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.1. Underwriter</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.underwriter or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.2. Insurance Broker</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.insurancebroker or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.3. Software Developer / Programmer / IT related occupations</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.itoccupations or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.4. Claims Clerks / Manager / Assessor</td>
+                            <td>
+                                <field name="claims" required="1" nolabel="1"/>
+                                <span t-esc="skillsdev and skillsdev.claims or 'N/A' "/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.5. Sales Managers</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.salesmanager or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.6. Accountant</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.accountant or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.3.7. Actuary</td>
+                            <td>
+                                <field name="actuary" required="1" nolabel="1"/>
+                                <span t-esc="skillsdev and skillsdev.actuary or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.4. Has your Organisation gone through any restructuringin the past 12 months due to merger/acquisition?</td>
+                            <td>
+                                <field name="merged" required="1" nolabel="1"/>
+                                <span t-esc="skillsdev and skillsdev.merged or 'N/A' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color:#143e90; color:#ffffff">1.5. Number of people retrenched/dismissed/resigned for the period 1 January 2019 to 31 December 2019</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.1. Retrenched</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.retrenched or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.2. Dismissed - Misconduct</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.dismissedmisconduct or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.3. Resigned</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.resigned or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.4. Deceased</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.deceased or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.5. Retired</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.retired or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.6. Non- Renewal of Contract</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.nonrenewal or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.7. Dismissed - Incapacity</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.dismissedincapacity or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.5.8. Dismissed – Non-compliance ( RE )</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.dismissednoncompliance or 0 "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color:#143e90; color:#ffffff">1.6. In order to measure the impact of training in your Organisation kindly state:</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.6.1. Has productivity increased or decreased in the Organisation?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.productivity or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.6.2. What are your findings based on?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comment4 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color:#143e90; color:#ffffff">1.7. Class of Business for the Organisation</td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1. Are you a product provider?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.productprovider or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1.1. What is your Core business?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.providercorebusiness_id and skillsdev.providercorebusiness_id.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1.2. Comment</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comments5 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1.3. What is your Secondary business?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.providersecondary_id and skillsdev.providersecondary_id.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.1.4. Comment</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comments6 or '' "/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2. Are you a Broker?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.broker or '' "/>
+                            </td>
+                        </tr>
+                        <!--1.7.2 if No option is selected then 1.7.2.1 to 1.7.2.4 must not be mandatory. 
+                        if Yes option is seleted then 1.7.2.1 to 1.7.2.4 must be mandatory-->
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2.1. What is your Core business?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.brokercorebusiness_id and skillsdev.brokercorebusiness_id.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2.2. Comment</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comments7 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2.3. What is your Secondary business?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.brokersecondary_id and skillsdev.brokersecondary_id.name or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.7.2.4. Comment</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.comments8 or '' "/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:center; font-weight:bold">1.8. What is the percentage of payroll spent on training?</td>
+                            <td>
+                                <span t-esc="skillsdev and skillsdev.payroll or 0 "/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 2 : Current Employment Profile for <span t-field="o.wsp_period"/> </h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th colspan="3">African</th>
+                            <th colspan="3">Colored</th>
+                            <th colspan="3">Indian / Asian</th>
+                            <th colspan="3">White</th>
+                            <th colspan="3">Other</th>
+                            <th colspan="3">Total </th>
+                            <th colspan="4">Age Group</th>
+                        </tr>
+                        <tr>
+                            <th>Major Group </th> 
+                            <th>Sub Major Group</th>
+                            <th>Occupation</th>
+                            <th>Specialization</th>                 
+                            <th>Foreign Country</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Less than 35</th>
+                            <th>35 to 54</th>
+                            <th>55 to 64</th>
+                            <th>Greater than 64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.employement_profile_ids" t-as="obj">
+                            <td><span t-esc="obj.ofo_majorgroup_id and obj.ofo_majorgroup_id.name or 'None'" /></td>
+                            <td><span t-esc="obj.ofo_submajorgroup_id and obj.ofo_submajorgroup_id.name or 'None'" /></td>
+                            <td> <span t-esc="obj.ofo_occupation_id and obj.ofo_occupation_id.name or 'None' "/></td>
+                            <td> <span t-esc="obj.ofo_specialization_id and obj.ofo_specialization_id.name or 'None'"/></td>
+                            <td><span t-esc="obj.other_country"/></td>
+                            <td><span t-esc="obj.african_male"/></td>
+                            <td><span t-esc="obj.african_female"/></td>
+                            <td><span t-esc="obj.african_disabled"/></td>
+                            <td><span t-esc="obj.colored_male"/></td>
+                            <td><span t-esc="obj.colored_female"/></td>
+                            <td><span t-esc="obj.colored_disabled"/></td>
+                            <td><span t-esc="obj.indian_male"/></td>
+                            <td><span t-esc="obj.indian_female"/></td>
+                            <td><span t-esc="obj.indian_disabled"/></td>
+                            <td><span t-esc="obj.white_male"/></td>
+                            <td><span t-esc="obj.white_female"/></td>
+                            <td><span t-esc="obj.white_disabled"/></td>
+                            <td><span t-esc="obj.other_male"/></td>
+                            <td><span t-esc="obj.other_female"/></td>
+                            <td><span t-esc="obj.other_disabled"/></td>
+                            <td><span t-esc="obj.total_male"/></td>
+                            <td><span t-esc="obj.total_female"/></td>
+                            <td><span t-esc="obj.total_disabled"/></td>
+                            <td><span t-esc="obj.age1"/></td>
+                            <td><span t-esc="obj.age2"/></td>
+                            <td><span t-esc="obj.age3"/></td>
+                            <td><span t-esc="obj.age4"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">Subtotal</td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('african_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('african_female'))" /></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('african_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('colored_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('colored_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('colored_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('indian_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('indian_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('indian_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('white_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('white_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('white_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('other_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('other_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('other_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('total_male'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('total_female'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('total_disabled'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('age1'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('age2'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('age3'))"/></td>
+                            <td><span t-esc="sum(o.employement_profile_ids.mapped('age4'))"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="20">Grand Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold"><span t-esc="sum(o.employement_profile_ids.mapped('grand_total_gender'))"/></td>
+                            <td colspan="4" style="text-align:center; font-weight:bold"><span t-esc="sum(o.employement_profile_ids.mapped('grand_total_agegroup'))"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 3 : Highest Educational Profile for <span t-field="o.wsp_period"/></h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th colspan="3">African</th>
+                            <th colspan="3">Colored</th>
+                            <th colspan="3">Indian / Asian</th>
+                            <th colspan="3">White</th>
+                            <th colspan="3">Other</th>
+                            <th colspan="3">Total </th>
+                            <th colspan="4">Age Group</th>
+                        </tr>
+                        <tr>
+                            <th>Descriptions</th> 
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Less than 35</th>
+                            <th>35 to 54</th>
+                            <th>55 to 64</th>
+                            <th>Greater than 64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.highest_educational_profile_ids" t-as="obj">
+                            <td><span t-esc="obj.formspl_id and obj.formspl_id.name or 'None' "/></td>
+                            <td><span t-esc="obj.african_male"/></td>
+                            <td><span t-esc="obj.african_female"/></td>
+                            <td><span t-esc="obj.african_disabled"/></td>
+                            <td><span t-esc="obj.colored_male"/></td>
+                            <td><span t-esc="obj.colored_female"/></td>
+                            <td><span t-esc="obj.colored_disabled"/></td>
+                            <td><span t-esc="obj.indian_male"/></td>
+                            <td><span t-esc="obj.indian_female"/></td>
+                            <td><span t-esc="obj.indian_disabled"/></td>
+                            <td><span t-esc="obj.white_male"/></td>
+                            <td><span t-esc="obj.white_female"/></td>
+                            <td><span t-esc="obj.white_disabled"/></td>
+                            <td><span t-esc="obj.other_male"/></td>
+                            <td><span t-esc="obj.other_female"/></td>
+                            <td><span t-esc="obj.other_disabled"/></td>
+                            <td><span t-esc="obj.total_male"/></td>
+                            <td><span t-esc="obj.total_female"/></td>
+                            <td><span t-esc="obj.total_disabled"/></td>
+                            <td><span t-esc="obj.age1"/></td>
+                            <td><span t-esc="obj.age2"/></td>
+                            <td><span t-esc="obj.age3"/></td>
+                            <td><span t-esc="obj.age4"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('african_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('african_female'))" /></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('african_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('colored_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('colored_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('colored_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('indian_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('indian_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('indian_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('white_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('white_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('white_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('other_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('other_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('other_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('total_male'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('total_female'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('total_disabled'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('age1'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('age2'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('age3'))"/></td>
+                            <td><span t-esc="sum(o.highest_educational_profile_ids.mapped('age4'))"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="16">Grand Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold"><span t-esc="sum(o.highest_educational_profile_ids.mapped('grand_total_gender'))"/></td>
+                            <td colspan="4" style="text-align:center; font-weight:bold"><span t-esc="sum(o.highest_educational_profile_ids.mapped('grand_total_agegroup'))"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 4 : Pivotal Planned Beneficiaries for <span t-field="o.wsp_period"/> </h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="9"></th>
+                            <th colspan="3">African</th>
+                            <th colspan="3">Colored</th>
+                            <th colspan="3">Indian / Asian</th>
+                            <th colspan="3">White</th>
+                            <th colspan="3">Other</th>
+                            <th colspan="3">Total </th>
+                            <th colspan="4">Age Group</th>
+                        </tr>
+                        <tr>
+                            <th>Major Group </th> 
+                            <th>Sub Major Group</th>
+                            <th>Occupation</th>
+                            <th>Specialization</th>                 
+                            <th>Municipality</th>
+                            <th>Socio Economic Status</th>
+                            <th>Pivotal Programme</th>
+                            <th>Other Pivotal Programme</th>
+                            <th>Foreign Country</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Less than 35</th>
+                            <th>35 to 54</th>
+                            <th>55 to 64</th>
+                            <th>Greater than 64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.pivotal_planned_beneficiaries_ids" t-as="obj">
+                            <td><span t-esc="obj.ofo_majorgroup_id and obj.ofo_majorgroup_id.name or 'None'" /></td>
+                            <td><span t-esc="obj.ofo_submajorgroup_id and obj.ofo_submajorgroup_id.name or 'None'" /></td>
+                            <td> <span t-esc="obj.ofo_occupation_id and obj.ofo_occupation_id.name or 'None' "/></td>
+                            <td> <span t-esc="obj.ofo_specialization_id and obj.ofo_specialization_id.name or 'None'"/></td>
+                            <td> <span t-esc="obj.municipality_id and obj.municipality_id.name or 'None'"/></td>
+                            <td> <span t-esc="obj.socio_economic_status or 'None' "/></td>
+                            <td> <span t-esc="obj.pivotal_programme_id and obj.pivotal_programme_id.name or 'None' "/></td>
+                            <td> <span t-esc="obj.other_pivotal_programme or 'None' "/></td>
+                            <td><span t-esc="obj.other_country"/></td>
+                            <td><span t-esc="obj.african_male"/></td>
+                            <td><span t-esc="obj.african_female"/></td>
+                            <td><span t-esc="obj.african_disabled"/></td>
+                            <td><span t-esc="obj.colored_male"/></td>
+                            <td><span t-esc="obj.colored_female"/></td>
+                            <td><span t-esc="obj.colored_disabled"/></td>
+                            <td><span t-esc="obj.indian_male"/></td>
+                            <td><span t-esc="obj.indian_female"/></td>
+                            <td><span t-esc="obj.indian_disabled"/></td>
+                            <td><span t-esc="obj.white_male"/></td>
+                            <td><span t-esc="obj.white_female"/></td>
+                            <td><span t-esc="obj.white_disabled"/></td>
+                            <td><span t-esc="obj.other_male"/></td>
+                            <td><span t-esc="obj.other_female"/></td>
+                            <td><span t-esc="obj.other_disabled"/></td>
+                            <td><span t-esc="obj.total_male"/></td>
+                            <td><span t-esc="obj.total_female"/></td>
+                            <td><span t-esc="obj.total_disabled"/></td>
+                            <td><span t-esc="obj.age1"/></td>
+                            <td><span t-esc="obj.age2"/></td>
+                            <td><span t-esc="obj.age3"/></td>
+                            <td><span t-esc="obj.age4"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="9">Subtotal</td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('african_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('african_female'))" /></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('african_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('colored_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('colored_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('colored_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('indian_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('indian_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('indian_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('white_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('white_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('white_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('other_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('other_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('other_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('total_male'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('total_female'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('total_disabled'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('age1'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('age2'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('age3'))"/></td>
+                            <td><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('age4'))"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="24">Grand Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold"><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('grand_total_gender'))"/></td>
+                            <td colspan="4" style="text-align:center; font-weight:bold"><span t-esc="sum(o.pivotal_planned_beneficiaries_ids.mapped('grand_total_agegroup'))"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="font-weight:bold; margin-top:64px">WSP Form 5 : Provincial Breakdown for <span t-field="o.wsp_period"/></h3>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Number of Employees per L Number</th> 
+                            <th>Western Cape</th>
+                            <th>Northern Cape</th>
+                            <th>Eastern Cape</th>
+                            <th>Free State</th>
+                            <th>Gauteng</th>
+                            <th>Mpumalanga</th>
+                            <th>Limpopo</th>
+                            <th>North West</th>
+                            <th>Kwa Zulu-Natal</th>
+                            <th>Total</th>
+                            <th>Company Size</th>
+                            <th>Levy paying</th>
+                            <th>No Employees</th>
+                            <th>Reasons for not listing employees</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.provincialbreakdown_ids" t-as="obj">
+                            <td><span t-esc="obj.sdl_no or ''" /></td>
+                            <td><span t-esc="obj.westerncape"/></td>
+                            <td><span t-esc="obj.northerncape"/></td>
+                            <td><span t-esc="obj.easterncape"/></td>
+                            <td><span t-esc="obj.freestate"/></td>
+                            <td><span t-esc="obj.gauteng"/></td>
+                            <td><span t-esc="obj.mpumalanga"/></td>
+                            <td><span t-esc="obj.limpopo"/></td>
+                            <td><span t-esc="obj.northwest"/></td>
+                            <td><span t-esc="obj.kwazulunatal"/></td>
+                            <td><span t-esc="obj.total"/></td>
+                            <td><span t-esc="obj.company_size"/></td>
+                            <td><span t-esc="obj.levy_status"/></td>
+                            <td><span t-esc="obj.noemployees"/></td>
+                            <td><span t-esc="obj.reasons or '' " /></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 style="font-weight:bold; margin-top:64px"> WSP Form 6 : Planned Beneficiaries of Training for <span t-field="o.wsp_period"/></h5>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="8"></th>
+                            <th colspan="3">African</th>
+                            <th colspan="3">Colored</th>
+                            <th colspan="3">Indian / Asian</th>
+                            <th colspan="3">White</th>
+                            <th colspan="3">Other</th>
+                            <th colspan="3">Total </th>
+                            <th colspan="4">Age Group</th>
+                        </tr>
+                        <tr>
+                            <th>Major Group </th> 
+                            <th>Sub Major Group</th>
+                            <th>Occupation</th>
+                            <th>Specialization</th>    
+                            <th>Scarce and Critical Skills Priority</th>   
+                            <th>NQF Level of above Skill Priority</th>
+                            <th>Other NQF Level of Skill Priority</th>          
+                            <th>Foreign Country</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Disabled</th>
+                            <th>Less than 35</th>
+                            <th>35 to 54</th>
+                            <th>55 to 64</th>
+                            <th>Greater than 64</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.workplaceskillsplan_ids" t-as="obj">
+                            <td><span t-esc="obj.ofo_majorgroup_id and obj.ofo_majorgroup_id.name or 'None'" /></td>
+                            <td><span t-esc="obj.ofo_submajorgroup_id and obj.ofo_submajorgroup_id.name or 'None'" /></td>
+                            <td> <span t-esc="obj.ofo_occupation_id and obj.ofo_occupation_id.name or 'None' "/></td>
+                            <td> <span t-esc="obj.ofo_specialization_id and obj.ofo_specialization_id.name or 'None'"/></td>
+                            <td> <span t-esc="obj.formsp_id and obj.formsp_id.name or 'None'"/></td>
+                            <td> <span t-esc="obj.formspl_id and obj.formspl_id.name or 'None'"/></td>
+                            <td> <span t-esc="obj.formspl_notes or 'None'"/></td>
+                            <td><span t-esc="obj.other_country"/></td>
+                            <td><span t-esc="obj.african_male"/></td>
+                            <td><span t-esc="obj.african_female"/></td>
+                            <td><span t-esc="obj.african_disabled"/></td>
+                            <td><span t-esc="obj.colored_male"/></td>
+                            <td><span t-esc="obj.colored_female"/></td>
+                            <td><span t-esc="obj.colored_disabled"/></td>
+                            <td><span t-esc="obj.indian_male"/></td>
+                            <td><span t-esc="obj.indian_female"/></td>
+                            <td><span t-esc="obj.indian_disabled"/></td>
+                            <td><span t-esc="obj.white_male"/></td>
+                            <td><span t-esc="obj.white_female"/></td>
+                            <td><span t-esc="obj.white_disabled"/></td>
+                            <td><span t-esc="obj.other_male"/></td>
+                            <td><span t-esc="obj.other_female"/></td>
+                            <td><span t-esc="obj.other_disabled"/></td>
+                            <td><span t-esc="obj.total_male"/></td>
+                            <td><span t-esc="obj.total_female"/></td>
+                            <td><span t-esc="obj.total_disabled"/></td>
+                            <td><span t-esc="obj.age1"/></td>
+                            <td><span t-esc="obj.age2"/></td>
+                            <td><span t-esc="obj.age3"/></td>
+                            <td><span t-esc="obj.age4"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8">Subtotal</td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('african_male'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('african_female'))" /></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('african_disabled'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('colored_male'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('colored_female'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('colored_disabled'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('indian_male'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('indian_female'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('indian_disabled'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('white_male'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('white_female'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('white_disabled'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('other_male'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('other_female'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('other_disabled'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('total_male'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('total_female'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('total_disabled'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('age1'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('age2'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('age3'))"/></td>
+                            <td><span t-esc="sum(o.workplaceskillsplan_ids.mapped('age4'))"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="23">Grand Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold"><span t-esc="sum(o.workplaceskillsplan_ids.mapped('grand_total_gender'))"/></td>
+                            <td colspan="4" style="text-align:center; font-weight:bold"><span t-esc="sum(o.workplaceskillsplan_ids.mapped('grand_total_agegroup'))"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </template>
+
+        <template id="report_wsp">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-offset-2 text-right">
+                        <img src='/inseta_skills/static/description/icon.png' style="max-height: 50px;"/>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.with_context(lang=lang)" />
+                    <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+                        <div class="page">
+                            <style>
+                                body {
+                                    
+                                    font-family: Ubuntu, Calibri, Arial, Cambria, Georgia, Roboto, 'Open Sans';
+                                }
+
+                                page {
+                                    margin-top: 2em;
+                                }
+
+                                p {
+                                    text-align: justify;
+                                    margin: 0;
+                                    
+                                }
+                                li {
+                                    text-align: justify;
+                                    margin-top:8px;
+                                    
+                                }
+                                ol.list-table-content li{
+                                    margin-top:8px;
+                                    
+                                }
+                                ol.list-table-content span{
+                                    
+                                    font-weight:bold;
+                                    padding-bottom:16px;
+                                    
+                                }
+                                table tfoot tr td {
+                                    font-weight:bold !important;
+                                }
+                            
+                                #header{
+                                    text-align:center;
+                                    padding-top:50px;
+                                    font-size:1.4em;
+                                    font-weight:bold
+                                }
+                                .title{
+                                    font-weight:bold
+                                }
+                                ol.note{
+                                    margin-top: 4em;
+                                }
+                                ol.note li{
+                                    margin-top:1.3em;
+                                }
+                                p.due{
+                                    text-align:center,
+                                    margin-top: 2em;
+                                }
+                                
+                                #table-content ol > li, #table-content ol li ul > li  {
+                                    margin-top:1.3em;
+                                    font-size:1.4em;
+                                    font-weight:bold
+                                }
+                                #org-details table{
+                                    font-size:1.5em;
+                                }
+                                .report-details{
+                                    font-size:1.3em;
+                                }
+                            </style>
+                            <t t-call="inseta_skills.wspatr_report_header" />
+
+                            <div class="col-lg-12 col-md-12" id="table-content">
+                                <ol class="list-table-content">
+                                    <h1>Table of Contents</h1>
+                                    <li>ORGANISATION DETAILS</li>
+                                    <li>SKILLS DEVELOPMENT FACILITATOR</li>
+                                    <li>ATR AND WSP FORMS
+                                        <ul style="list-style-type: none;" t-if="o.form_type == 'Large' ">
+                                            <li>3.8. WSP Form 1 : Skills Development Consultation &amp; Planning for <span t-field="o.wsp_period"/></li>
+                                            <li>3.9. WSP Form 2 : Current Employment Profile for <span t-field="o.wsp_period"/> </li>
+                                            <li>3.10. WSP Form 3 : Highest Educational Profile for <span t-field="o.wsp_period"/> </li>
+                                            <li>3.11. WSP Form 4 : Provincial Breakdown for <span t-field="o.wsp_period"/> </li>
+                                            <li>3.12. WSP Form 5 : Planned AET Training for <span t-field="o.wsp_period"/> </li>
+                                            <li>3.13. WSP Form 6 : Planned Beneficiaries of Training for <span t-field="o.wsp_period"/> </li>
+                                            <li>3.14. WSP Form 7 : Pivotal Planned Beneficiaries for <span t-field="o.wsp_period"/> </li>
+                                        </ul>
+                                        <ul style="list-style-type: none;" t-if="o.form_type == 'Small' ">
+                                            <li>3.5. WSP Form 1 : Skills Development Consultation &amp; Planning for <span t-field="o.wsp_period"/></li>
+                                            <li>3.6. WSP Form 2 : Current Employment Profile for <span t-field="o.wsp_period"/> </li>
+                                            <li>3.7. WSP Form 3 : Highest Educational Profile for <span t-field="o.wsp_period"/> </li>
+                                            <li>3.8. WSP Form 4 : Pivotal Planned Beneficiaries for <span t-field="o.wsp_period"/> </li>
+                                            <li>3.9. WSP Form 5 : Provincial Breakdown for <span t-field="o.wsp_period"/> </li>
+                                            <li>3.10. WSP Form 6 : Planned Beneficiaries of Training for <span t-field="o.wsp_period"/> </li>
+                                        </ul>
+                                    </li>
+                                    <li>CHILD ORGANISATIONS</li>
+
+                                </ol>
+                            </div>
+                    
+                            <p style="page-break-before:always;"> </p>
+
+                            <t t-call="inseta_skills.wspatr_org_details" />
+                            
+                            <p style="page-break-before:always;"> </p>
+
+                             <t t-call="inseta_skills.wsp_page" />
+
+                            <p style="page-break-before:always;"></p>
+                            <t t-call="inseta_skills.authorization_page" />
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <record id="dgevaluation_header_view_form2" model="ir.ui.view">
+        <field name="name">inseta.dgevaluation.header.form</field>
+        <field name="model">inseta.dgevaluation.header</field>
+        <field name="arch" type="xml">
+            <form string="DG Evaluation">
+                <header>
+                    <button string='Complete Evaluation' states="submit,rework" confirm="Are you sure u want to complete this evaluation?" name="dgapplication_evaluate" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" clickable="True" statusbar_visible="draft" />
+                </header>
+
+                <sheet>
+                    <field name="stage" invisible="1" />
+                    <div class="oe_title">
+                        <h1>
+                            <field name="dgapplication_id" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="dgapplication_id" invisible="1"/>
+                            <field name="dgtype_id" invisible="1" />
+                            <field name="dgtype_code" invisible="1" />
+                            <field name="option" invisible="1" string="Option" attrs="{'required':[('stage','in',('evaluate',))]}"/>
+                            <field name="is_learnership" invisible="1" />
+                        </group>
+                        <group/>
+                    </group>
+                    <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+                        Please click on each line item							
+                    </div>
+                    <field name="evaluation_ids">
+                        <tree class="table-4-cols" create="0" delete="0" string="DG Evalutaion">
+                            <field name="dgapplication_id" invisible="1" />
+                            <field name="dgapplicationdetails_id" invisible="1" />
+                            <field name="currency_id" invisible="1" />
+                            <field name="actual_cost_per_student" invisible="1" />
+                            <field name="learnership_id" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_learnership','=',False)]}" />
+                            <field name="programme_name" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.dgtype_code','not in', ('IT-DEGREE','IT-MATRIC'))]}"/>
+                            <field name="fullqualification_title" attrs="{'column_invisible': [('parent.dgtype_code','not in', ('SP','BUR'))]}" />
+                            <field name="no_learners" readonly="1" force_save="1"/>
+                            <field name="disabled"  attrs="{'column_invisible': [('parent.is_learnership','=',False)]}"/>
+                            <field name="total_learners" readonly="1" force_save="1" />
+                            <field name="amount_applied" readonly="1" force_save="1" />
+
+                            <field name="no_learners_recommended" />
+                            <field name="disabled_recommended" attrs="{'column_invisible': [('parent.is_learnership','=',False)]}"/>
+                            <field name="total_recommended" attrs="{'column_invisible': [('parent.is_learnership','=',False)]}" />
+                            <field name="amount_total_recommended"/>
+
+                            <field name="no_learners_approved" attrs="{'column_invisible': [('parent.stage', '=', 'desktop_evaluation')]}" />
+                            <field name="disabled_approved"  attrs="{'column_invisible': [('parent.stage', '=', 'desktop_evaluation')]}" />
+                            <field name="total_learners_approved" attrs="{'column_invisible': [('parent.stage', '=', 'desktop_evaluation')]}" />
+                            <field name="amount_total_approved" attrs="{'column_invisible': [('parent.stage', '=', 'desktop_evaluation')]}" />
+
+                            <field name="amount_total_approved" attrs="{'column_invisible': [('parent.stage', '=', 'desktop_evaluation')]}" />
+                            <field name="option" string="Option" attrs="{'column_invisible': [('parent.stage', '=', 'desktop_evaluation')], 'required': [('parent.stage', '=', 'desktop_evaluation')]}" /> 
+                            <field name="comment" attrs="{'column_invisible': [('parent.stage', '=', 'desktop_evaluation')],'required':[('option','in', ('Query',)),]}"/>
+
+                        </tree>
+                        <form string="DG">
+                            <header>
+                                <button string='Reset'  confirm="Are you sure u want to reset?" name="action_reset" type="object" groups="base.group_system" />
+
+                                <button string='Generate Letter' states="approve" confirm="Are you sure u want to generate letter?" name="generate_letter" type="object" class="oe_highlight"/>
+                                <button string='Sign Manager' states="awaiting_sign1" confirm="Are you sure u want to sign this letter?" name="action_sign1" type="object" class="oe_highlight"/>
+                                <button string='Sign COO' states="awaiting_sign2" confirm="Are you sure u want to sign this letter?" name="action_sign2" type="object" class="oe_highlight"/>
+
+                                <button 
+                                    name="action_print_recommendation_letter" 
+                                    string="Recommendation Letter" 
+                                    class="oe_highlight"
+                                    states="awaiting_sign1,awaiting_sign2,signed"
+                                    type="object"
+                                    groups="inseta_dg.group_pmo_manager,inseta_dg.group_pmo_admin,inseta_dg.group_coo,inseta_dg.group_ceo"/> 
+
+                                <button name="action_print_rejection_letter" 
+                                    string="Decline Letter" 
+                                    states="awaiting_sign1,awaiting_sign2,signed"
+                                    type="object"
+                                    groups="inseta_dg.group_pmo_manager,inseta_dg.group_pmo_admin,inseta_dg.group_coo,inseta_dg.group_ceo"/> 
+
+                            </header>
+                            <sheet>
+                                <div class="oe_title">
+                                    <h1>
+                                        <field name="name" readonly="1" force_save="1"/>
+                                    </h1>
+                                </div>
+                                <group>
+                                    <field name="stage" invisible="1" />
+                                    <field name="dgapplicationdetails_id" invisible="1" />
+                                    <field name="dgtype_code" invisible="1"/>
+                                    <field name="state" invisible="1" />
+                                    <field name="currency_id" invisible="1" />
+                                    <field name="is_learnership" invisible="1" />
+                                    <field name="learnership_id" readonly="1" force_save="1" attrs="{'invisible': [('is_learnership','=',False)]}" />
+                                    <field name="programme_name" readonly="1" force_save="1" attrs="{'invisible': [('dgtype_code','not in', ('IT-DEGREE','IT-MATRIC'))]}"/>
+                                    <field name="fullqualification_title" readonly="1" force_save="1" attrs="{'invisible': [('dgtype_code','not in', ('SP','BUR'))]}" />
+                                    <field name="no_learners" readonly="1" force_save="1"/>
+                                    <field name="disabled" readonly="1" force_save="1" attrs="{'invisible': [('is_learnership','=',False)]}"/>
+                                    <field name="total_learners" readonly="1" force_save="1" />
+                                    <field name="actual_cost_per_student" string="Cost Per Student" readonly="1" force_save="1"/>
+                                    <field name="cost_per_disabled" readonly="1" force_save="1"  attrs="{'invisible':[('dgtype_code','not in',('LRN-Y','LRN-D','LRN-R'))]}"/>
+                                    <field name="amount_applied" readonly="1" force_save="1"/>
+
+                                    <separator string="Desktop Evaluation"/>
+                                    <field name="no_learners_recommended" required="1" force_save="1" attrs="{'readonly': [('stage', '!=', 'desktop_evaluation')]}"/>
+                                    <field name="disabled_recommended" force_save="1" attrs="{'required': [('stage', '=', 'desktop_evaluation')], 'readonly': [('stage', '!=', 'desktop_evaluation')], 'invisible': [('is_learnership','=',False)]}"/>
+                                    <field name="total_recommended" readonly="1" force_save="1"/>
+                                    <field name="amount_total_recommended" readonly="1" force_save="1"/>
+
+                                    <separator string="Approval"  attrs="{'invisible': [('stage', '=', 'desktop_evaluation')]}" />
+                                    <field name="no_learners_approved"  attrs="{'invisible': [('stage', '=', 'desktop_evaluation')],'required': [('stage', '!=', 'desktop_evaluation')], 'readonly':[('state', 'not in', ('approve','reject'))]}" />
+                                    <field name="disabled_approved"  attrs="{'invisible': ['|',('stage', '=', 'desktop_evaluation'),('is_learnership','=',False)],'required': [('stage', '!=', 'desktop_evaluation')], 'readonly':[('state', 'not in', ('approve','reject'))]}" />
+                                    <field name="total_learners_approved" attrs="{'invisible': [('stage', '=', 'desktop_evaluation')],'required': [('stage', '!=', 'desktop_evaluation')],'readonly':[('state', 'not in', ('approve','reject'))]}"/>
+                                    <field name="amount_total_approved"  attrs="{'invisible': [('stage', '=', 'desktop_evaluation')]}" />
+                                    
+                                    <separator string="Comment"  attrs="{'invisible': [('stage', '!=', 'desktop_evaluation')]}" />
+                                    <field name="option" string="Option"  attrs="{'invisible': [('stage', '!=', 'desktop_evaluation')],'required':[('stage','in',('desktop_evaluation',))]}"  />
+                                    <field string="Comment" name="comment"  attrs="{'invisible': [('stage', '!=', 'desktop_evaluation')], 'required':[('option','in', ('Query',)),]}" />
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dgevaluation_header_view_tree" model="ir.ui.view">
+        <field name="name">inseta.dgevaluation.header.tree</field>
+        <field name="model">inseta.dgevaluation.header</field>
+        <field name="arch" type="xml">
+            <tree string="DG Application Evaluation">
+                <field name="dgapplication_id" />
+                <field name="dgtype_id"  />
+                <field name="dgtype_code" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="dgevaluation_header_view_search" model="ir.ui.view">
+        <field name="name">inseta.dgevaluation.header.search</field>
+        <field name="model">inseta.dgevaluation.header</field>
+        <field name="arch" type="xml">
+            <search string="DG Application Evaluation">
+                <field name="dgapplication_id" />
+                <field name="dgtype_id"  />
+                <field name="dgtype_code" />
+                <field name="state" />
+                <field name="stage" /> 
+            </search>
+        </field>
+    </record> -->
+
+    <!--dg evaluation-->
+
+    <record id="dgevaluation_view_tree" model="ir.ui.view">
+        <field name="name">inseta.dgevaluation.tree</field>
+        <field name="model">inseta.dgevaluation</field>
+        <field name="arch" type="xml">
+            <tree class="table-4-cols" create="0" delete="0" string="DG Evalutaion">
+                <field name="dgapplication_id" invisible="1" />
+                <field name="dgapplicationdetails_id" invisible="1" />
+                <field name="currency_id" invisible="1" />
+                <field name="actual_cost_per_student" invisible="1" />
+                <field name="learnership_id" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.is_learnership','=',False)]}" />
+                <field name="programme_name" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.dgtype_code','not in', ('IT-DEGREE','IT-MATRIC'))]}"/>
+                <field name="fullqualification_title" attrs="{'column_invisible': [('parent.dgtype_code','not in', ('SP','BUR'))]}" />
+                <field name="no_learners" readonly="1" force_save="1"/>
+                <field name="disabled"  attrs="{'column_invisible': [('parent.is_learnership','=',False)]}"/>
+                <field name="total_learners" readonly="1" force_save="1" />
+                <field name="amount_applied" readonly="1" force_save="1" />
+
+                <field name="no_learners_recommended" />
+                <field name="disabled_recommended" attrs="{'column_invisible': [('parent.is_learnership','=',False)]}"/>
+                <field name="total_recommended" attrs="{'column_invisible': [('parent.is_learnership','=',False)]}" />
+                <field name="amount_total_recommended"/>
+
+                <field name="no_learners_approved" attrs="{'column_invisible': [('parent.state', '=', 'submit')]}" />
+                <field name="disabled_approved"  attrs="{'column_invisible': [('parent.state', '=', 'submit')]}" />
+                <field name="total_learners_approved" attrs="{'column_invisible': [('parent.state', '=', 'submit')]}" />
+                <field name="amount_total_approved" attrs="{'column_invisible': [('parent.state', '=', 'submit')]}" />
+
+                <field name="amount_total_approved" attrs="{'column_invisible': [('parent.state', '=', 'submit')]}" />
+                <field name="option" string="Option" attrs="{'column_invisible': [('parent.state', '=', 'submit')], 'required': [('parent.state', '=', 'submit')]}" /> 
+                <field name="comment" attrs="{'column_invisible': [('parent.state', '=', 'submit')],'required':[('option','in', ('Query',)),]}"/>
+                <field name="state" />
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="dgevaluation_view_search" model="ir.ui.view">
+        <field name="name">inseta.dgevaluation.search</field>
+        <field name="model">inseta.dgevaluation</field>
+        <field name="arch" type="xml">
+            <search string="DG Evaluation">
+                <field name="dgapplication_id" />
+                <field name="dgapplicationdetails_id"/>
+                <field name="dgtype_id"  />
+                <field name="dgtype_code" />
+                <field name="state" />
+            </search>
+        </field>
+    </record> 
+
+    <record id="dgevaluation_view_form" model="ir.ui.view">
+        <field name="name">inseta.dgevaluation.form</field>
+        <field name="model">inseta.dgevaluation</field>
+        <field name="arch" type="xml">
+            <form string="DG Evaluation">
+                <header>
+                    <field name="is_ceo_approved" invisible="1" />
+                    <button string='Reset' confirm="Are you sure u want to reset?" name="action_reset" type="object" groups="base.group_system" />
+
+                    <button string='Generate Letter' states="approve,reject" confirm="Are you sure u want to generate letter?" name="generate_letter" type="object" class="oe_highlight" groups="inseta_dg.group_pmo_admin"/>
+                    <button string='Sign Manager' states="awaiting_sign1" confirm="Are you sure u want to sign this letter?" name="action_sign1" type="object" class="oe_highlight"/>
+                    <button string='Sign COO' states="awaiting_sign2" confirm="Are you sure u want to sign this letter?" name="action_sign2" type="object" class="oe_highlight" groups="inseta_dg.group_coo"/>
+
+                    <button 
+                        name="action_print_recommendation_letter" 
+                        string="Print Recommendation Letter" 
+                        class="oe_highlight"
+                        attrs="{'invisible':['|',('is_ceo_approved','=',False),('state','not in', ('awaiting_sign1','awaiting_sign2','signed') )]}"
+                        type="object"
+                        groups="inseta_dg.group_pmo_manager,inseta_dg.group_pmo_admin,inseta_dg.group_coo"/> 
+
+                    <button name="action_print_rejection_letter" 
+                        string="Print Decline Letter" 
+                        class="oe_highlight"
+                        attrs="{'invisible':['|',('is_ceo_approved','=',True),('state','not in', ('awaiting_sign1','awaiting_sign2','signed') )]}"
+                        type="object"
+                        groups="inseta_dg.group_pmo_manager,inseta_dg.group_pmo_admin,inseta_dg.group_coo"/> 
+
+                    <button name="action_send_letter_employer" 
+                        string="Email Letter to Employer" 
+                        class="oe_highlight"
+                        confirm="Are you sure u want to email this letter to the Employer?"
+                        states="signed"
+                        type="object"
+                        groups="inseta_dg.group_pmo_manager,inseta_dg.group_pmo_admin"/> 
+                        
+
+                    <field name="state" widget="statusbar" readonly="1" force_save="1" statusbar_visible="draft,submit,approve,reject"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" force_save="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="dgapplicationdetails_id" invisible="1" />
+                        <field name="dgtype_code" invisible="1"/>
+                        <field name="state" invisible="1" />
+                        <field name="currency_id" invisible="1" />
+                        <field name="is_learnership" invisible="1" />
+                        <field name="learnership_id" readonly="1" force_save="1" attrs="{'invisible': [('is_learnership','=',False)]}" />
+                        <field name="programme_name" readonly="1" force_save="1" attrs="{'invisible': [('dgtype_code','not in', ('IT-DEGREE','IT-MATRIC'))]}"/>
+                        <field name="fullqualification_title" readonly="1" force_save="1" attrs="{'invisible': [('dgtype_code','not in', ('SP','BUR'))]}" />
+                        <field name="no_learners" readonly="1" force_save="1"/>
+                        <field name="disabled" readonly="1" force_save="1" attrs="{'invisible': [('is_learnership','=',False)]}"/>
+                        <field name="total_learners" readonly="1" force_save="1" />
+                        <field name="actual_cost_per_student" string="Cost Per Student" readonly="1" force_save="1"/>
+                        <field name="cost_per_disabled" readonly="1" force_save="1"  attrs="{'invisible':[('dgtype_code','not in',('LRN-Y','LRN-D','LRN-R'))]}"/>
+                        <field name="amount_applied" readonly="1" force_save="1"/>
+
+                        <separator string="Desktop Evaluation"/>
+                        <field name="no_learners_recommended" required="1" force_save="1" attrs="{'readonly': [('state', '!=', 'submit')]}"/>
+                        <field name="disabled_recommended" force_save="1" attrs="{'required': [('state', '=', 'submit')], 'readonly': [('state', '!=', 'submit')], 'invisible': [('is_learnership','=',False)]}"/>
+                        <field name="total_recommended" readonly="1" force_save="1"/>
+                        <field name="amount_total_recommended" readonly="1" force_save="1"/>
+
+                        <separator string="Approval"  attrs="{'invisible': [('state', '=', 'submit')]}" />
+                        <field name="no_learners_approved"  attrs="{'invisible': [('state', '=','submit')],'required': [('state', '!=', 'submit')], 'readonly':[('state', 'not in', ('approve','reject'))]}" />
+                        <field name="disabled_approved"  attrs="{'invisible': ['|',('state', '=','submit'),('is_learnership','=',False)],'required': [('state', '!=', 'submit')], 'readonly':[('state', 'not in', ('approve','reject'))]}" />
+                        <field name="total_learners_approved" attrs="{'invisible': [('state', '=', 'submit')],'required': [('state', '!=', 'submit')],'readonly':[('state', 'not in', ('approve','reject'))]}"/>
+                        <field name="amount_total_approved"  attrs="{'invisible': [('state', '=', 'submit')]}" />
+                        
+                        <separator string="Comment"  attrs="{'invisible': [('state', '!=', 'submit')]}" />
+                        <field name="option" string="Option"  attrs="{'invisible': [('state', '!=', 'submit')],'required':[('state','in',('submit',))]}"  />
+                        <field string="Comment" name="comment"  attrs="{'invisible': [('state', '!=', 'submit')], 'required':[('option','in', ('Query',)),]}" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="dgevaluation_act_window" model="ir.actions.act_window">
+        <field name="name"> DG Evaluation</field>
+        <field name="res_model">inseta.dgevaluation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+</odoo>

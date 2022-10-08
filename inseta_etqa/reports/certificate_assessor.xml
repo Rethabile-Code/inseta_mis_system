@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report 
+        id="assessor_certificate_report_2"
+        model="inseta.assessor"
+        string="Print Certificate"
+        report_type="qweb-pdf"
+        name="inseta_etqa.report_certificate_assessor_template_id"
+        file="inseta_etqa.report_certificate_assessor_template_id"
+        menu="False"
+        />
+    <report 
+        id="assessor_certificate_report_register"
+        model="inseta.assessor.register"
+        string="Print Certificate"
+        report_type="qweb-pdf"
+        name="inseta_etqa.report_certificate_assessor_register_template_id"
+        file="inseta_etqa.report_certificate_assessor_register_template_id"
+        menu="False"
+        />
+
+    <template id="report_certificate_assessor_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="inseta_etqa.report_certificate_assessor_template"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_certificate_assessor_register_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="inseta_etqa.report_certificate_assessor_template"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_certificate_assessor_template">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 18px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+                </style>
+                <!-- <img class="banner table-responsive" style="height:50px;width: 830px" src='/inseta_etqa/static/description/icon.png'/> -->
+                <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                <hr/> 
+                
+                <br/><br/><br/>
+                <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE</strong></h1>
+                <br/><br/><br/>
+                <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="doc.first_name"/> <span t-field="doc.middle_name"/> <span t-field="doc.last_name"/></strong></h2> </p>
+                <h1 style="text-align: center; font-size: 35px;"><strong><span t-field="doc.id_no"/></strong></h1>
+
+                <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 30px;">
+                    Is registered with INSETA with effect from <span t-field="doc.start_date"/> till <span t-field="doc.end_date"/><br/>
+                    with rspect to the Unit Standard(s) / Qualification(s) as stated in the scope confirmation letter.
+                </p> 
+                <br/><br/><br/>
+                <div>
+                    <center>
+                        <img style="height: 60px; width: auto;" src="/inseta_etqa/static/img/etqa_manager.png"/><br/>
+                        _______________________<br/>
+                        Signed<br/>
+                    </center>
+                    <hr/> 
+                </div>
+                <!-- <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="doc.reference"/></strong></h3> </p> -->
+                <!-- <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                    has satisfy the requirements<br/> for the following qualification(s). 
+                </p> 
+                
+                <t t-foreach="doc.qualification_ids" t-as="qual">
+                    <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="qual.name"/> </p><br/>
+                </t>
+                 
+                <div>
+                    <div class="signleft">
+                        _______________________<br/>
+                        CHIEF EXECUTIVE OFFICER<br/>
+                    </div>
+                    <div class="signright">
+                        _______________________<br/>
+                        Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                    </div>
+                </div> -->
+                 
+            </div>
+        </t>
+    </template>
+</odoo>

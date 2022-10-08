@@ -1,0 +1,192 @@
+<odoo>
+  <data>
+  
+
+    <report 
+        id="provider_accreditation_summary_report"
+        model="inseta.provider.accreditation"
+        string="Accreditation Statement summary"
+        report_type="qweb-pdf"
+        name="inseta_etqa.provider_accreditation_summary_template_id"
+        file="inseta_etqa.provider_accreditation_summary_template_id"
+        paperformat="inseta_etqa.paperformat_moderator_letter"
+        menu="False" 
+        />
+        
+    <template id="provider_accreditation_summary_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="details">
+                <!-- <t t-foreach="o.learner_assessment_details" t-as="details"> -->
+                    <t t-call="inseta_etqa.main_provider_accreditation_summary_template_id"/>
+                <!-- </t> -->
+            </t>
+        </t>
+    </template>  
+    <template id="main_provider_accreditation_summary_template_id">
+        <t t-call="web.html_container">
+            <div class="page" style="max-width: 700px; margin: auto;">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 22px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+                    table,
+                        th,
+                        td {
+                            padding: 10px;
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                        }
+                </style>
+                <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <h1 style="text-align: center; font-size: 20px;"><strong>ACCREDITATION STATEMENT</strong></h1>
+                <div class="row">
+                    <div class="col-xs-3" style="font-size: 20px;">
+                            <strong style="margin-right: 20px;">Skills Development Provider Name :  </strong><span style="margin-left: 20px;" t-field="details.provider_name"/><br/>
+                            <strong style="margin-right: 20px;">Accreditation Type               :                </strong><span t-field="details.provider_type_id.name"/><br/>
+                            <strong style="margin-right: 20px;">Accreditation Status             :                </strong><span t-field="details.provider_status.name"/><br/>
+                            <strong style="margin-right: 20px;">Accredtiation Start Date         :                </strong><span t-field="details.start_date"/><br/>
+                            <strong style="margin-right: 20px;">Accredtiation End Date           :                </strong><span t-field="details.end_date"/><br/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h3 style="text-align: left;"><strong>Learning Programme Details:</strong></h3>
+                </div>
+                <div class="row">
+                    <t t-if='details.qualification_ids'> 
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th><strong>QUALIFICATION TITLE</strong></th>
+                                    <th><strong>QUALIFICATION CODE</strong></th>
+                                    <th><strong>NQF LEVEL</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="details.qualification_ids" t-as="quali">
+                                    <td>
+                                        <span t-esc="quali.name" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="quali.saqa_id" />
+                                    </td>
+                                    <td style="white-space: text-nowrap;">
+                                        <span t-esc="quali.nqflevel_id.name" />
+                                    </td>
+                                </tr>
+                                <br/><br/>
+                            </tbody>
+                        </table>
+                    </t> 
+                    <t t-if='details.learner_programmes_ids'>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th><strong>LEARNERSHIP TITLE</strong></th>
+                                    <th><strong>CODE</strong></th>
+                                    <th><strong>NQF LEVEL</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="details.learner_programmes_ids" t-as="learn">
+                                    <td>
+                                        <span t-esc="learn.name" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="learn.programme_code" />
+                                    </td>
+                                    <td style="white-space: text-nowrap;">
+                                        <span t-esc="learn.nqflevel_id.name" />
+                                    </td>
+                                </tr>
+                                <br/><br/>
+                            </tbody>
+                        </table>
+                    </t>
+                    <br/><br/>
+                </div>
+                <div class="row">
+                    <p style="text-align: left; font-family: 'Times New Roman', Times, serif; font-size: 18px;"><strong>The provider's award of accreditation is dependent on the provider's alignment to the following criteria which are conditions of accreditation</strong></p><br/>
+                    <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                        a).	Accredited Skills Development Providers will be required to comply with INSETA's reporting procedures during the provider's period of accreditation, as awarded.<br/>
+                        b).	Accreditation scope, as well as any extensions, will be dependent on the provider's successful delivery against INŞETA's policies and procedures. This will be an on-going condition of accreditation.  <br/>
+                        c).	Accreditation scope as well as any extensions will dependent on the provider's successful delivery against INSETA policies and procedures and any conditions attaching specifically to this approval which may be stated separately.<br/>
+                        d).  INSETA reserves the right to conduct site visits at an accredited Skills Development Provider's recorded site of operation and or delivery site (s) at any stage of the stipulated accreditation period.<br/>
+                        f).  Accreditation is dependent on the provider's successful alignment against the INSETA's policies, procedures, quality assurance criteria and guidelines for the duration of the organisation's accreditation and related scope approval with the INSETA.<br/>
+
+                        g).	The provider's accreditation end date is subject to applicable legislation and delegation governing the operations of the INSETA during the period of the provider's accreditation award. Accreditation is also dependant on the currency of unit standards 
+                            or qualifications that have been awarded to the provider. Should currently registered NQF qualifications expire, be replaced or be repealed prior to the end date of the provider's accreditation cycle, the actual life of the expired qualification takes precedence over the provider's accreditation period.<br/>
+
+                        h).	Accreditation scope remains provisional for the period stipulated and is conditional until at least one assessment intervention is successfully delivered, verified and approved by the INSETA.<br/>
+                        i).  This accreditation does not automatically cover new unit standards or qualifications that may replace reviewed-ones.<br/>
+                            Applications must be made separately to extend the provider's accreditation scope as awarded.<br/>
+                        j).  A request to renew or extend an award of accreditation must be requested in writing and must reach the INSETA at least three (3) months prior to the provider's recorded accreditation end date.<br/>
+                    </p><br/>
+                </div>
+                <div class="row">
+                    <p style="text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                        The INSETA reserves the right to withdraw or amend a provider's award of accreditation should a Skills Development <br/>
+                        Provider be found to have breached any of the above conditions. 
+                    </p><br/>
+                </div>
+                <br/><br/>
+                <div>
+                    <div class="signright2">
+                        _______________________<br/>
+                        ETQA Manager<br/>
+                    </div>
+                </div> 
+                <p/><p/>
+            </div>
+        </t>
+    </template>
+  </data>
+</odoo>

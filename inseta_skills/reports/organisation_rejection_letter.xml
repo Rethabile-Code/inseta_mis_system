@@ -1,0 +1,75 @@
+<odoo>
+  <data>
+
+
+    <record id="action_organisation_rejection_letter_report" model="ir.actions.report">
+        <field name="name">Organisation Rejection Letter</field>
+        <field name="model">inseta.organisation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_skills.organisation_rejection_letter</field>
+        <field name="report_file">inseta_skills.organisation_rejection_letter</field>
+        <field name="print_report_name">(object.sdl_no +'_'+(object.name).replace('/','_')+'_rejection_letter_'+time.strftime('%Y-%m-%d-%H:%M:%S'))</field>
+        <field name="attachment">((object.name).replace('/','_')+'_rejection_letter.pdf')</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="inseta_skills.paperformat_letter" />
+    </record>
+
+    <template id="organisation_rejection_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=lang)" />
+                    <div class="page">
+                        <br />
+                        <br/>
+                        <span t-field="o.trade_name"/>,<br/>
+                        <span t-field="o.street"/> <span t-field="o.street2"/> <span t-field="o.street3"/><br/>
+                        <span t-field="o.physical_city_id.name"/>,<span t-field="o.physical_province_id.name"/><br/>
+                        <span t-field="o.nationality_id.name"/> <br/>
+                        <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /></p>
+
+                        <p align="justify">
+                            Dear <span t-field="o.trade_name"/>,
+                        </p>
+
+                        <h4 style="text-align: center;"><b><u>EMPLOYER REGISTERATION REJECTION</u></b></h4>
+                        <p>
+                        A registration for an organization <span t-field="o.trade_name"/> with 
+                        <t t-if="o.register_type == 'non_levy' ">
+                           N Number <span t-field="o.sdl_no"/>
+                        </t>
+                        <t t-else="">
+                           L Number <span t-field="o.sdl_no"/>
+                        </t>
+                        has been rejected by INSETA. Please find below the findings:
+                        <br/><br/>
+                        <b>Rejection reason: <span t-esc="o.rejection_comment" /></b>
+                        <br/><br/>
+ 
+                            You may now access the system using the following link
+                            https://InSETAMIS.inseta.org.za/web/login <br/><br/>
+                            For any queries please contact the INSETA Call Centre on 086 113 0013.
+                        </p>
+                                           
+                        <p>Yours in Skills Development
+                            <br/><br/>
+                            <t t-set="mgr" t-value="o.get_skills_mgr() and o.get_skills_mgr()[0] or False "/>
+                           <b> <span t-esc="mgr and mgr.name or 'Adeline Singh' " />
+                            <br/>
+                            <table border="1" style="width:100%;" t-if="mgr">
+                                <tr style="font-weight:bold;">
+                                    <td>
+                                        <div widget="html" t-field="mgr.signature"/>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            Manager: Skills Planning </b>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

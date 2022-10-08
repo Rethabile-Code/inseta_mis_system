@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report 
+        id="provider_certificate_report_2"
+        model="inseta.provider"
+        string="Print Certificate"
+        report_type="qweb-pdf"
+        name="inseta_etqa.report_certificate_provider_template_id"
+        file="inseta_etqa.report_certificate_provider_template_id"
+        menu="False"
+        />
+
+    <template id="report_certificate_provider_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="inseta_etqa.report_certificate_provider_template"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_certificate_provider_template">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 18px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+                </style>
+                <!-- <img class="banner table-responsive" style="height:50px;width: 830px" src='/inseta_etqa/static/description/icon.png'/> -->
+                <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center>
+                <hr/> 
+                
+                <br/><br/><br/>
+                <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE OF ACHIEVEMENT</strong></h1>
+                <br/><br/><br/>
+                <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="doc.name"/></strong>.</h2> </p>
+                <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="doc.registration_no"/></strong></h3> </p>
+                <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                    has satisfy the requirements<br/> for the following qualification(s). 
+                </p> 
+                <t t-foreach="doc.provider_qualification_ids" t-as="qual">
+                    <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="qual.qualification_id.name"/> </p><br/>
+                </t>
+                <!-- <div>
+                    <div class="signleft2">
+                        <strong>at.<span t-field="doc.qualification_id.nqflevel_id.name"/> </strong><br/>
+                    </div>
+                    <div class="signright2">
+                        <strong>NLRD No.<span t-field="doc.qualification_id.nqflevel_id.name"/> </strong><br/>
+                    </div>
+                </div> -->
+                <div>
+                    <div class="signleft">
+                        _______________________<br/>
+                        CHIEF EXECUTIVE OFFICER<br/>
+                    </div>
+                    <div class="signright">
+                        _______________________<br/>
+                        Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                    </div>
+                </div>
+                <div>
+                    <div class="signleft">
+                        <h6>Provider Accreditation Number: <span t-field="doc.provider_accreditation_number"/> </h6><br/>
+                    </div>
+                    <div class="signright">
+                        <h6>Name: <span t-field="doc.name"/> </h6><br/>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

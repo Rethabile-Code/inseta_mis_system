@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+    <!-- -->
+    <record id="res_all_inseta_lpro_rule" model="ir.rule">
+        <field name="name">Learning Programme LPRO Rule See All</field>
+        <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <!-- <field name="groups" eval="[(4, ref('inseta_learning_programme.group_learning_specialist_id')), (4, ref('base.user_root')),(4, ref('inseta_learning_programme.group_learning_manager_id')), (4, ref('inseta_dg.group_pmo_admin')), (4, ref('inseta_dg.group_coo')), (4, ref('inseta_learning_programme.group_learning_programme_cfo_id')),  (4, ref('inseta_dg.group_ceo'))]"/> -->
+        <field name="groups" eval="[(4, ref('inseta_learning_programme.group_learning_specialist_id')), (4, ref('inseta_learning_programme.group_learning_manager_id')), (4, ref('inseta_dg.group_pmo_admin')),  (4, ref('inseta_learning_programme.group_lp_admin_id')), (4, ref('inseta_dg.group_coo')), (4, ref('inseta_learning_programme.group_learning_programme_cfo_id')),  (4, ref('inseta_dg.group_ceo'))]"/>
+    </record>
+
+    <record id="res_inseta_lpro_rule" model="ir.rule">
+        <field name="name">Learning Programme LPRO Rule see own record</field>
+        <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('create_uid', '=', user.id), ('organisation_id.user_id.id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user')), (4, ref('inseta_learning_programme.group_learning_programme_user_id'))]"/>
+    </record>
+
+    <!--added by george-->
+    <record model="ir.rule" id="rule_dgapplication_learnership_document">
+        <field name="name">Access DG Applications Learnership Programme</field>
+        <field name="model_id" ref="inseta_dg.model_inseta_dgapplication"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('dgtype_code', 'in', ('LRN-Y','LRN-R','LRN-W','SP') )]</field>
+        <field name="groups" eval="[
+            (4,ref('inseta_learning_programme.group_learning_manager_id')), 
+            (4,ref('inseta_learning_programme.group_lp_admin_id')),
+            (4,ref('inseta_learning_programme.group_learning_specialist_id')),
+            (4,ref('inseta_learning_programme.group_learning_programme_user_id')),
+        ]"/> 
+    </record>
+
+    <record model="ir.rule" id="rule_dgapplication_internship_document">
+        <field name="name">Access DG Applications Intenship Programme</field>
+        <field name="model_id" ref="inseta_dg.model_inseta_dgapplication"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('dgtype_code', 'in', ('IT-DEGREE','IT-MATRIC') )]</field>
+        <field name="groups" eval="[
+            (4,ref('inseta_learning_programme.group_intern_admin_id')), 
+            (4,ref('inseta_learning_programme.group_learning_manager_id')), 
+            (4,ref('inseta_learning_programme.group_learning_specialist_id')),
+            (4,ref('inseta_learning_programme.group_learning_programme_user_id')),
+        ]"/> 
+    </record>
+
+
+    <record model="ir.rule" id="rule_dgapplication_bursary_document">
+        <field name="name">Access DG Applications Bursary Programme</field>
+        <field name="model_id" ref="inseta_dg.model_inseta_dgapplication"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('dgtype_code', 'in', ('BUR',) )]</field>
+        <field name="groups" eval="[
+            (4,ref('inseta_learning_programme.group_bursary_administrator_id')), 
+            (4,ref('inseta_learning_programme.group_learning_manager_id')), 
+            (4,ref('inseta_learning_programme.group_learning_specialist_id')),
+            (4,ref('inseta_learning_programme.group_learning_programme_user_id')),
+
+        ]"/>  
+    </record>
+     
+</odoo>

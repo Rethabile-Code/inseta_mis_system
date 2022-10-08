@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dgbulkrecommend_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.dgbulkrecommend.wizard.form</field>
+        <field name="model">inseta.dgbulkrecommend.wizard</field>
+        <field name="arch" type="xml">
+            <form string="DG Application Approval">
+                <field name="stage" invisible="1" />
+                <group>
+                    <group colspan="4" >
+                        <field  name="dgrecommendation_id" invisible="1"/>
+                        <label for="option"  style="width: 50%"/>
+                        <div class="o_row">
+                            <field name="option" required="1" string="Option"/>
+                        </div>
+                        <field name="dgec_recommendation_sheet" filename="file_name" attrs="{'required':[('stage','=','evaluation')],'invisible':[('stage','!=','evaluation')]}" />
+                        <field name="file_name" invisible="1"  attrs="{'invisible':[('stage','!=','evaluation')]}"/> 
+                        <field name="dgac_recommendation_sheet"  filename="file_name2" attrs="{'required':[('stage','=','adjudication')],'invisible':[('stage','!=','adjudication')]}"/>
+                        <field name="file_name2" invisible="1" /> 
+                        <!-- <separator string="Grand Totals" />
+                        <field name="no_learners"/>
+                        <field   name="no_learners_recommended" string="Total Recommended"  readonly="1"/>
+                        <field   name="amount_total_recommended" attrs="{'required':[('option','not in', ('Query',)),]}"/> -->
+                    </group>
+                
+                </group>
+                <group colspan="4">
+                    <field string="Comment" name="comment" attrs="{'required':[('option','in', ('Query',)),]}"/>
+                </group>
+
+                <footer>
+                    <button string='Recommend'  name="bulk_recommend" type="object" class="oe_highlight"/>
+
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="dgbulkrecommend_wizard_action" model="ir.actions.act_window">
+        <field name="name">DG Bulk Recommendation</field>
+        <field name="res_model">inseta.dgbulkrecommend.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="dgbulkrecommend_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

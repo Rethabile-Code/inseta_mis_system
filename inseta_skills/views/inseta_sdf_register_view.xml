@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <!-- SDF Registration form -->
+		<record id="view_sdf_registration_form" model="ir.ui.view">
+			<field name="name">view.sdf.register.form</field>
+			<field name="model">inseta.sdf.register</field>
+			<field name="arch" type="xml">
+				<form string="SDF" create="0">
+					<header>
+                        <button name="action_set_to_draft" 
+							string="Set to Draft" 
+							type="object"
+							states="approve"
+							groups="base.group_system" />
+
+						<button name="action_submit" string="Submit" type="object"
+							class="oe_highlight"
+							attrs="{'invisible':[('state','not in',['draft'])]}" />
+
+						<!--Skill Specialist and Manager can ask for rework. 
+						When skill specialist asks for rework it goes to SDF
+						When skill manager asks for rework, it goes to Skill specialist-->
+                    	<button name="%(inseta_skills.sdf_register_rework_wizard_action)d" 
+							states="pending_verification,pending_approval,rework_skill_spec" 
+							context="{'default_comment_type':'Rework'}" 
+							string="Rework" 
+							type="action" 
+							groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager" />
+
+						<!--Skill Specialist SDF for rework. 
+						if SDF does not rework within 10 days, Specialise can submit for Rejection-->
+						<button name="action_request_manager_rejection" 
+							string="SKill Spec. Request Rejection" type="object"
+							class="oe_highlight" groups="inseta_skills.group_skills_specialist"
+							confirm="Please confirm"
+							states="awaiting_rejection"
+						/>
+
+						<button name="action_sdf_submit_rework" 
+							string="Re-submit" 
+							type="object"
+							confirm="Are you sure you want to resubmit rework? All followers will be notified!"
+							class="oe_highlight" 
+							states="rework"
+							/>
+
+                        <button name="action_verify" string="Verify" type="object"
+							class="oe_highlight" 
+							groups="inseta_skills.group_skills_specialist"
+							confirm="Are you sure you want to verify this Registration? All followers will be notified!"
+							states="pending_verification,rework_skill_spec" 
+							/>
+
+						<button name="%(inseta_skills.sdf_register_rework_wizard_action)d"  
+							string="Reject"
+							type="action" 
+							context="{'default_comment_type':'Reject'}" 
+							class="oe_highlight" groups="inseta_skills.group_skills_manager"
+							states="pending_approval, awaiting_rejection2"/>
+
+                        <button name="action_manager_approve" string="Approve" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to approve this Registration? All followers will be notified!"
+							groups="inseta_skills.group_skills_manager"
+							states="pending_approval" />
+
+						<!-- <button name="action_rework" string="Rework" type="object"
+							class="oe_highlight"
+							attrs="{'invisible':[('state','not in',['pending_verification','pending_approval','queried'])]}"
+							/> -->
+
+						<button name="action_print_appointment_letter" string="Print Approval Letter" type="object"
+							attrs="{'invisible':[('state','not in', ['approve'])]}" groups="inseta_skills.group_skills_specialist, inseta_skills.group_skills_manager"
+							/>
+
+						<button name="action_print_reject_letter" string="Print Rejection Letter" type="object"
+							attrs="{'invisible':[('state','not in',['reject'])]}" groups="inseta_skills.group_skills_specialist, inseta_skills.group_skills_manager"
+							/> 
+         
+						<field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="draft,submit,pending_verification,pending_approval,reject,approve"
+							statusbar_colors='{"rework":"blue","approve":"green","reject":"red"}'
+							/>
+					</header>
+					<sheet>
+					
+						<field name="image_512" widget='image' class="oe_left oe_avatar"/>
+						<div class="oe_title" >
+							<h2><field name="reference" string="Ref. No" readonly="1" /> </h2>
+							<h1>
+								<field name="name" required="1" placeholder="Full Name" attrs="{'readonly': [('state','not in',('draft','rework',))]}"/>
+							</h1>
+						</div>
+
+						<notebook class="dolphin">
+							<page string="SDF">
+								<group >
+									<separator string="Learner Details" colspan="4" />
+									<group attrs="{'readonly': [('state','not in',('draft','rework',))]}">
+										<field name="is_existing_reg" invisible="1"/>
+										<field name="sdf_role" invisible="1" required="0"/>
+										<field name="title" string="Title" required="1"/>
+										<field name="first_name" required="1"/>
+										<field name="last_name" string="Surname" required="1"/>
+										<field name="middle_name" string="Middlename" />
+										<field name="initials" required="1"/>
+										<field name="user_id" string="Related User" />
+										<field name="password" string="Password" groups="base.group_system"/>
+
+										<span class="o_form_label o_td_label" name="address_name">
+											<b>Physical Address</b>
+										</span>
+										<div class="o_address_format">
+											<field name="country_id" required="1" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+											<field name="physical_address1" placeholder='' required="1" class="o_address_street"/>
+											<field name="physical_address2" placeholder='' required="1" class="o_address_street"/>
+											<field name="physical_address3" placeholder='' class="o_address_street"/>
+											<field name="physical_code"  placeholder="Physical Code" class="o_address_street"  required="1"/>
+											<field name="physical_suburb_id"  required="1" placeholder="Physical Suburb"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+											<field name="physical_city_id"  required="1" placeholder="Physical City" class="o_address_city" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+											<field name="physical_province_id"  required="1"  class="o_address_state" placeholder="Physical Province" options="{'no_open': True, 'no_create': True}" />
+											<field name="physical_urban_rural"  required="1"  placeholder="Urban/Rural" class="o_address_zip" />
+											<field name="physical_municipality_id"  required="1" placeholder="Physical Municipality"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+											<!-- <button name="action_work_addr_map" 
+												string="Map" type="object"
+												icon="fa-map" /> -->
+										</div>
+
+										<label for="use_physical_for_postal_addr" />
+										<field name="use_physical_for_postal_addr" string="Use Physical for Postal?" nolabel="1" />
+										<span class="o_form_label o_td_label" name="postal_address_name">
+											<b>Postal Address</b>
+										</span>
+										<div class="o_address_format" string="Postal Address">
+											<field name="postal_address1"  required="1" placeholder="Postal Address Line 1" class="o_address_street" />
+											<field name="postal_address2"  required="1" placeholder="Postal Address Line 2" class="o_address_street" />
+											<field name="postal_address3" placeholder="Postal Address Line 3" class="o_address_street" />
+											<field name="postal_code"  required="1" placeholder="Postal Code" class="o_address_street" />
+
+											<field name="postal_suburb_id"  required="1" placeholder="Postal Suburb"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+											<field name="postal_city_id"  required="1" placeholder="Physical City" class="o_address_city" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+											<field name="postal_province_id" required="1" class="o_address_state" placeholder="Postal Province" options="{'no_open': True, 'no_create': True}" />
+											<field name="postal_urban_rural" required="1" placeholder="Urban/Rural" class="o_address_zip" />
+											<field name="postal_municipality_id" required="1" placeholder="Postal Municipality"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+											<!-- <button name="action_postal_addr_map" 
+												string="Map" type="object"
+												icon="fa-map" /> -->
+										</div>
+									</group>
+									<group>
+										<field name="email" string="Email" widget="email" required="1" />
+										<field name="phone" placeholder="0117827460" />  
+										<field name="fax_number" />
+										<field name="mobile" placeholder="0116076900" required="1"/>
+										<field name="gender_id" options="{'no_create': True,'no_quick_create':True,'no_open':True}" required="1"/>
+										<field name="birth_date" required="1"/>
+										<field name="approval_date" />
+										<field name="registration_date" />
+									</group> 
+								</group>
+                                <group string="GPS Cordinates">
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="latitude_degree">
+                                            <b>Latitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="latitude_degree" placeholder="Degree" string="Degree" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_seconds" placeholder="Seconds" string="Seconds" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <button
+                                                string="Get Geolocation"
+                                                name="get_geolocation"
+                                                colspan="2"
+                                                icon="fa-check"
+                                                type="object"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="longitude_degree">
+                                            <b>Longitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="longitude_degree" string="Degree" placeholder="Degree" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_seconds" placeholder="Seconds" string="Seconds" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                        </div>
+                                    </group>
+                                </group>
+								<group attrs="{'readonly':[('state','not in',('draft','rework'))]}">
+									<field name="general_comments" colspan="4"/>
+								</group>
+
+							</page>
+
+							<page string="Citizenship &amp; Other Info"  >
+								<group >
+									<group string="Citizenship" >  
+										<field name="citizen_resident_status_id" options="{'no_create': True,'no_quick_create':True,'no_open':True}" />
+										<field name="nationality_id" placeholder="Nationality" class="oe_no_button"
+											options="{'no_create': True,'no_quick_create':True,'no_open':True}"
+											 />
+										<field name="id_no" required="1" />
+										<field name="alternateid_type_id"  options="{'no_create': True,'no_quick_create':True,'no_open':True}"/>
+										<field name="passport_no" />
+										<field name="home_language_id" />
+									</group>
+									<group string="Status" >
+										<field name="disability_id" />
+										<field name="socio_economic_status_id" options="{'no_create': True,'no_quick_create':True,'no_open':True}"/>
+										<field name="equity_id" options="{'no_create': True,'no_quick_create':True,'no_open':True}" />
+									</group>
+
+									<group string="Occupation" >
+										<field name="current_occupation" />
+										<field name="occupation_years"/> 
+										<field name="occupation_experience" style="background:#efefef" />
+									</group>
+
+									<group string="Training" >
+										<field name="highest_edu_level_id" options="{'no_create': True,'no_quick_create':True,'no_open':True}"/>
+										<field name="highest_edu_desc" />
+										<field name="has_requested_sdftraining" />
+										<field name="has_completed_sdftraining" />
+										<field name="accredited_trainingprovider_name" />
+									</group>
+								</group>
+							</page>
+							<page string="Organisations" >
+								<group>
+									<field name="employer_ids"  nolabel="1">
+										<tree string="Employers" editable="bottom" delete="false">
+											<field name="org_id" required="1"/>
+											<field name="org_registration_no" required="0"/>
+											<field name="appointment_letter" filename="file_name"/>
+											<field name="file_name" readonly="1" force_save="1"/> 
+											<field name="appointment_letter_id" invisible="1" />
+											<field name="sdf_role" />
+											<field name="state"/>
+											<field name="has_request_send" invisible="1"/>
+										</tree>
+										<form>
+											<header>
+												<button name="action_reject" 
+													string="Reject" 
+													type="object"
+													confirm="Are you sure you want to reject this SDF?"
+													states="Reject"
+													groups="inseta_skills.group_employer"/>
+
+												<button name="action_approve" 
+													string="Approve" 
+													type="object"
+													confirm="Are you sure you want to approve this SDF?"
+													class="oe_highlight"
+													states="approve"
+													groups="inseta_skills.group_employer"/>
+
+												<field name="state" widget="statusbar" clickable="True"
+													statusbar_visible="draft,approve,reject"
+													statusbar_colors='{"approve":"green","reject":"red"}'
+													/>
+											</header>
+											<sheet>
+												<div class="oe_title" >
+													<h1>
+														<field name="org_id" readonly="1"/>
+													</h1>
+												</div>
+												<group>
+													<group>
+														<field name="sdf_register_id" string="SDF" readonly="1" force_save="1"/>
+														<field name="sdf_role" />
+														<field name="appointment_letter" filename="file_name"/>
+														<field name="file_name" readonly="1" force_save="1"/> 
+														<field name="create_date" readonly="1" force_save="1"/>
+													</group>
+													<group>
+													</group>
+												</group>
+											</sheet>
+										</form>
+									</field>
+								</group>
+							</page>
+							<page string="Attachments">
+								<group>
+
+									<group>
+										<span class="o_form_label o_td_label" name="sdf_certificate">
+											<b>SDF Certificate</b>
+										</span>
+										<div class="o_address_format" string="Postal Address">
+											<field name="sdf_certificate"  filename="file_name"   widget="binary" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+											<field name="file_name" readonly="1" force_save="1" />
+										</div>
+										<span class="o_form_label o_td_label" name="code_of_conduct">
+											<b>Code of Conduct</b>
+										</span>
+										<div class="o_address_format" string="Postal Address">
+											<field name="code_of_conduct" filename="file_name2" widget="binary" attrs="{'readonly':[('state','in',['approve', 'reject'])]}" />
+											<field name="file_name2" string="File Name" readonly="1" force_save="1" />
+										</div>
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+	
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<!-- SDF Registration Form Ends -->
+
+		<!-- SDF Registration Tree Starts -->
+		<record id="view_sdf_register_tree" model="ir.ui.view">
+			<field name="name">view.inseta.sdf.register.tree</field>
+			<field name="model">inseta.sdf.register</field>
+			<field name="arch" type="xml">
+				<tree create="0" string="SDF">
+					<field name="reference" />
+					<field name="first_name" />
+					<field name="last_name" />
+					<field name="mobile" string="Phone" placeholder="0116076900" />
+					<field name="email" string="Email" />
+					<field name="registration_date" />
+					<field name="approval_date" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+		<!-- SDF Registration Tree Ends -->
+
+		<record id="view_sdf_register_filter" model="ir.ui.view">
+			<field name="name">SDF Register</field>
+			<field name="model">inseta.sdf.register</field>
+			<field name="arch" type="xml">
+				<search string="SDF Registration">
+					<field name="reference" />
+					<field name="name" />
+					<field name="email" />
+					<group expand="0" string="Group By">
+						<filter string="Status" name="grp_state" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<!-- SDF Registration Action. -->
+		<record id="action_sdf_register" model="ir.actions.act_window">
+			<field name="name">SDF Registration</field>
+			<field name="res_model">inseta.sdf.register</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_sdf_register_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Register SDF. 
+				</p>
+			</field>
+		</record>
+        
+		<!-- <menuitem id="skills_sdf_registerations_menu1" name="Register SDF" sequence="0" parent="skills_sdf_registerations_menu" action="action_sdf_register"/> -->
+
+</odoo>

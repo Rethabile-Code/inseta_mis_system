@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_inseta_nlrd_id,access_inseta_nlrd_user,model_inseta_nlrd,base.group_user,1,1,1,1
+access_inseta_nlrd_export_id,access_inseta_nlrd_exportuser,model_inseta_nlrd_export,base.group_user,1,1,1,1
+access_inseta.setmis.export_id,access_inseta.setmis.export_user,model_inseta_setmis_export,base.group_user,1,1,1,1
+access_inseta_inseta_setmis_id,access_inseta_inseta_setmis_user,model_inseta_setmis,base.group_user,1,1,1,1
+access_inseta_nlrd_dialog_setmis_id,access_inseta_nlrd_dialog_user,model_inseta_nlrd_dialog,base.group_user,1,1,1,1

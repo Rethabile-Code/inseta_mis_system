@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="wspatr_import_wizard_view_form" model="ir.ui.view">
+        <field name="name">Import WSP/ATR Data</field>
+        <field name="model">inseta.wspatr.import.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Impprt WSP/ATR">
+                <div class="oe_title">
+                    <h1>
+                        <field name="template" readonly="1" force_save="1"/>
+                        <field name="form_type" invisible="0" />
+                    </h1>
+                </div>
+
+                  <div class='alert alert-info' role="alert">
+                    <span attrs="{'invisible':[('template','!=','Current Employment Profile')]}">
+                        Download  <a href='/inseta_skills/static/templates/2022_WSP_Current_Employment_Profile_V1.xlsx' target="_blank"> <strong>WSP Current Employment Profile Template</strong> </a> <br/>
+                    </span>
+                    <p attrs="{'invisible':[('template','!=','Highest Educational Profile')]}">
+                        Download  <a href='/inseta_skills/static/templates/2022_WSP_Highest_Educational_Profile_V1.xlsx' target="_blank"> <strong>WSP Highest Educational Profile Template</strong> </a> <br/>
+                    </p>
+
+                    <p attrs="{'invisible':[('template','!=','Pivotal_Planned_Beneficiaries_Large')]}">
+                        Download  <a href='/inseta_skills/static/templates/2022_WSP_Pivotal_Planned_Beneficiaries_V1.xlsx' target="_blank"> <strong>WSP Pivotal Planned Beneficiaries Template - [Medium/Large Firms]</strong> </a> <br/>
+                    </p>
+
+                    <p attrs="{'invisible':[('template','!=','Pivotal_Planned_Beneficiaries_Small')]}">
+                        Download  <a href='/inseta_skills/static/templates/2022_WSP_Pivotal_Planned_Beneficiaries_V1_small.xlsx' target="_blank"> <strong>WSP Pivotal Planned Beneficiaries Template - [Small Firms]</strong> </a> <br/>
+                    </p>
+
+                    <p attrs="{'invisible':[('template','!=','Planned_Beneficiaries_Large')]}">
+                        Download  <a href='/inseta_skills/static/templates/2022_WSP_Planned_Beneficiaries_V1.xlsx' target="_blank"> <strong>WSP Planned Beneficiaries Template - [Medium/Large Firms]</strong> </a> <br/>
+                    </p>
+
+                    <p attrs="{'invisible':[('template','!=','Planned_Beneficiaries_Small')]}">
+                        Download  <a href='/inseta_skills/static/templates/2022_WSP_ Planned _Beneficiaries _of_Training_V1.xlsx' target="_blank"> <strong>WSP Planned Beneficiaries Template- [Small Firms]</strong> </a> <br/>
+                    </p>
+
+                    <span attrs="{'invisible':[('template','!=','Planned AET Training')]}">
+                        Download  <a href='/inseta_skills/static/templates/2022_WSP_Planned_AET_Training_V1.xlsx' target="_blank"> <strong>WSP Planned AET Training Template</strong> </a> <br/>
+                    </span>
+                    <!-- <span attrs="{'invisible':[('template','!=','Training planned')]}">
+                        Download  <a href='/inseta_skills/static/templates/2020_WSP_Training_Planned_V1.xlsx' target="_blank"> <strong>WSP Training planned Template</strong> </a> <br/>
+                    </span> -->
+                    <span attrs="{'invisible':[('template','!=','Workplace Skill Plan')]}">
+                        Download  <a href='/inseta_skills/static/templates/2021_WSP_Planned_Beneficiaries_V1.xlsx' target="_blank"> <strong> WSP form: Workplace Skills Plan for training planned.</strong> </a> <br/>
+                    </span>
+                    
+                    <span attrs="{'invisible':[('template','!=','Provincial Breakdown')]}">
+                        Download  <a href='/inseta_skills/static/templates/2022_WSP_Provincial_Breakdown_V1.xlsx' target="_blank"> <strong> WSP form: Provincial Breakdown</strong> </a> <br/>
+                    </span>
+
+                    <!--ATR-->
+                    <span attrs="{'invisible':[('template','!=','Implementation Report')]}">
+                        Download  <a href='/inseta_skills/static/templates/ATR/2021_ATR_Implementation_Report_V2.xlsx' target="_blank"> <strong>ATR Implementation Report Template</strong> </a> <br/>
+                    </span>
+                    <span attrs="{'invisible':[('template','!=','Trained Beneficiaries Report')]}">
+                        Download  <a href='/inseta_skills/static/templates/ATR/2021_ATR_Trained_Beneficiaries_Report_V1.xlsx' target="_blank"> <strong>ATR Trained Beneficiaries Report Template</strong> </a> <br/>
+                    </span>
+                    <span attrs="{'invisible':[('template','!=','Trained AET')]}">
+                        Download  <a href='/inseta_skills/static/templates/ATR/2021_ATR_Adult_Education_And_Training_V1.xlsx' target="_blank"> <strong>ATR Trained AET Template</strong> </a> <br/>
+                    </span>
+
+                    <span attrs="{'invisible':[('template','!=','Skills Gap')]}">
+                        Download  <a href='/inseta_skills/static/templates/ATR/2021_ATR_Skills_Gaps_V1.xlsx' target="_blank"> <strong>ATR Skills Gaps</strong> </a> <br/>
+                    </span>
+                    <span attrs="{'invisible':[('template','!=','Pivotal Trained Beneficiaries')]}">
+                        Download  <a href='/inseta_skills/static/templates/ATR/2021_ATR_Pivotal_Trained_Beneficiaries_V1.xlsx' target="_blank"> <strong>ATR Pivotal Trained Beneficiaries Template</strong> </a> <br/>
+                    </span>
+                    
+                    <span attrs="{'invisible':[('template','!=','Hard To Fill Vacancies')]}">
+                        Download  <a href='/inseta_skills/static/templates/ATR/2021_ATR_Hard_to_fill_vacancies_V1.xlsx' target="_blank"> <strong>ATR Hard to fill vacancies</strong> </a> <br/>
+                    </span>
+                    <span attrs="{'invisible':[('template','!=','Learning Programmes')]}">
+                        Download  <a href='/inseta_skills/static/templates/ATR/2021_ATR_Learning_Programmes_V1.xlsx' target="_blank"> <strong>ATR Learning Programmes Template</strong> </a> <br/>
+                    </span>
+                </div>
+                <newline/>
+                <group>
+                    <group>
+                        <field name="submission_type" readonly="1" />
+                        <field name="file" filename="file_name"/>
+                        <!-- Allowed file types: .xls, .xlsx -->
+                        <field name="is_small_firm" invisible="1" />
+                        <field name="file_name" readonly="1" force_save="1"/> 
+                    </group>
+                    <group></group>
+                </group>
+                <div class="oe_clear"/>
+                <separator colspan="10" />
+                <footer>
+                    <button special="cancel" string="Close" />
+                    <button name="action_import" type="object" class="oe_highlight" string="Import Data" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--report-->
+    <record id="act_window_wspatr_import_risk" model="ir.actions.act_window">
+        <field name="name">Import WSP/ATR Data</field>
+        <field name="res_model">inseta.wspatr.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

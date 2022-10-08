@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <!-- GENERIC EMAIL TEMPLATE FOR SENDING ATTACHENT OR REPORTS -->
+        <record id="etqa_generic_email_template" model="mail.template">
+            <field name="name">ETQA Generic Email template</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">ETQA Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                An attachment has been sent to you. Kindly check and review the content
+                 <br/>
+                 Regards
+                  <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+        <!--Email template -->
+
+        <record id="email_template_send_to_provider_after_submission" model="mail.template">
+            <field name="name">Provider Accreditation Notification After submission</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Provider Accreditation Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                A registration for accreditation dated ${object.write_date} is hereby acknowledged. <br/>
+                Your username and password is ${object.user_id.login} and ${object.password}  <br/>
+                The outcome will be communicated thereafter.<br/>
+                
+                Should you require any additional information, please contact;<br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+
+        <record id="email_template_send_to_provider_contact" model="mail.template">
+            <field name="name">Provider Accreditation Notification to Contact</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">${ctx['subject']}</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                A registration for accreditation with a reference number ${object.reference} dated ${object.write_date} has been submitted. <br/>
+                Should you require any additional information, please contact;<br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_send_to_provider_evaluating_conmmittee" model="mail.template">
+            <field name="name">Provider Accreditation Notification to Evaluating Committee</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Provider Accreditation Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                A registration for provider accreditation with a reference number ${object.reference} dated ${object.write_date} has been submitted. <br/>
+                Kindly log into the system to verify;<br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_provider_notify_all_after_approval" model="mail.template">
+            <field name="name">Provider Accreditation Notification for Evaluating Committee Approval</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Provider Accreditation Approval Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                An application for accreditation has been verified by INSETA and is recommend.<br/>
+
+                Kindly note that you have up to 21 days to upload and submit learners.<br/>
+                ${object.comments}<br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_provider_notify_provider_for_expiry" model="mail.template">
+            <field name="name">Provider Accreditation Notification for Expiry Date</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Provider Accreditation Expiry Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                Please note that your accreditation will expire in 3months. Please apply for re-accreditation <br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_query_notification" model="mail.template">
+            <field name="name">Provider Accreditation Notification for Query</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Provider Accreditation Query Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.provider_id.name or object.trade_name}, <br/>
+                An application for accreditation has been verified by INSETA, please find below the outcomes; <br/>
+                Findings:<br/> 
+                Required Action: <br/> 
+                Comments: ${object.comments}<br/> 
+                Kindly note that you up until end of business day on the ${ctx['query_submission_date']} (5 days after the submission of a query) to respond to this query. <br/> 
+                Failure to do so may result to your registration being rejected.<br/>
+                Yours sincerely<br/> 
+                INSETA ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_notify_provider_rejection" model="mail.template">
+            <field name="name">Provider Accreditation Notification for Evaluating Committee Reject</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Provider Accreditation Reject Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                An application for accreditation has been rejected, please find below for comment. <br/>
+                ${object.refusal_comment} <br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_submit_query_notification" model="mail.template">
+            <field name="name">Query resubmission Notification</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Query re-submission Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                The moderator / Assessor ${object.trade_name} has responded to a query. please log on to the system to evaluate. <br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+
+        <!-- PROVIDER ACCREDITATION ENDS HERE  -->
+
+        <!-- ASSESSOR STARTS HERE -->
+        <record id="email_template_send_to_assessor_after_submission" model="mail.template">
+            <field name="name">Assessor Notification After submission</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Assessor Registration Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessor_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                A registration for an assessor dated ${object.write_date} is hereby acknowledged. <br/>
+                The outcome will be communicated thereafter.<br/>
+                Username:${object.user_id.login}<br/>
+                Password: ${object.password}<br/>
+                
+                Should you require any additional information, please contact;<br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+        
+        <record id="email_template_send_to_assessor_evaluating_conmmittee" model="mail.template">
+            <field name="name">Assessor Notification to Evaluating Committee</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Asessor Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessor_register"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                A registration for an assessor, ${object.id_no} with a reference number ${object.reference} dated ${object.write_date} has been submitted. <br/>
+                Kindly log into the system to verify;<br/>
+                Yours Sincerely <br/>
+                ETQA Division
+            ]]></field>
+        </record>
+
+        <record id="email_template_assessor_notify_all_after_approval" model="mail.template">
+            <field name="name">Assessor Notification for Evaluating Committee Approval</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Assessor Approval Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessor_register"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                An application for Assessor has been verified by INSETA and is approved.<br/>
+                Comments: ${object.comments}<br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_notify_assessor_for_expiry" model="mail.template">
+            <field name="name">Assessor Notification for Expiry Date</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Assessor registration Expiration</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessor"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                Please note that your registration will expire in 3 months. Please apply for re-registration <br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_assessor_query_notification" model="mail.template">
+            <field name="name">Assessor Notification for Query</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Query Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessor_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.name}, <br/>
+                An application for accreditation has been verified by INSETA, please find below the outcomes; <br/>
+                Findings:<br/> 
+                Required Action: <br/> 
+                Comments: ${object.comments}<br/> 
+                Kindly note that you up until end of business day on the ${ctx['query_submission_date']} (5 days after the submission of a query) to respond to this query. <br/> 
+                Failure to do so may result to your registration being rejected.<br/>
+                Yours sincerely<br/> 
+                INSETA ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_notify_assessor_rejection" model="mail.template">
+            <field name="name">Assessor Notification for Evaluating Committee Reject</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Reject Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessor_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                An application for accreditation has been rejected, please find below for comment. <br/>
+                ${object.refusal_comment} <br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+
+        </record>
+
+        <record id="email_template_assessor_submit_query_notification" model="mail.template">
+            <field name="name">Query resubmission Notification</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Query re-submission Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessor_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                The Assessor ${object.name} has responded to a query. please log on to the system to evaluate. <br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+         
+        <!-- ASSESSOR ENDS HERE -->
+        
+
+        <!-- MODERATOR STARTS HERE -->
+
+        <record id="email_template_send_to_moderator_after_submission" model="mail.template">
+            <field name="name">Moderator Notification After submission</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Moderator Registration Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_moderator_register"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                A registration for a Moderator dated ${object.write_date} is hereby acknowledged. <br/>
+                The outcome will be communicated thereafter.<br/>
+                Kindly use your assessor login details to assess the system;
+                Username: ${object.user_id.login}<br/>
+                
+                Should you require any additional information, please contact;<br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+
+            ]]></field>
+        </record>
+        
+        <record id="email_template_send_to_moderator_evaluating_conmmittee" model="mail.template">
+            <field name="name">Moderator Notification to Evaluating Committee</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Moderator Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_moderator_register"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                A registration for an moderator ${object.name}, ${object.id_no} with a reference number ${object.reference} dated ${object.write_date} has been submitted. <br/>
+                Kindly log into the system to verify;<br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_moderator_notify_all_after_approval" model="mail.template">
+            <field name="name">Moderator Notification for Evaluating Committee Approval</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Moderator Approval Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_moderator_register"/>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                An application for Moderator has been verified by INSETA and is pending approved.<br/>
+
+                Comments: ${object.comments}<br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_notify_moderator_for_expiry" model="mail.template">
+            <field name="name">MODERATOR Notification for Expiry Date</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Moderator Registration Expiry Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_moderator"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                Please note that your registration will expire in 3 months. Please apply for re-registration <br/>
+                Should you require any additional information, please contact;<br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_notify_assessor_moderator_for_expiry" model="mail.template">
+            <field name="name">Moderator / Assessor Registration Expiry Notification</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Expiry Notification</field>
+            <!-- <field name="model_id" ref="inseta_etqa.model_inseta_moderator"/> -->
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                Your registration as an assessor / Moderator has expired.<br/>
+                Should you require any additional information, please contact;<br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_moderator_query_notification" model="mail.template">
+            <field name="name">Assessor Notification for Query</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Query Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_moderator_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.name}, <br/>
+                An application for moderator has been verified by INSETA, please find below the outcomes; <br/>
+                Findings:<br/> 
+                Required Action: <br/> 
+                Comments: ${object.comments}<br/> 
+                Kindly note that you up until end of business day on the ${ctx['query_submission_date']} (5 days after the submission of a query) to respond to this query. <br/> 
+                Failure to do so may result to your registration being rejected.<br/>
+                Yours sincerely<br/> 
+                INSETA ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_notify_moderator_rejection" model="mail.template">
+            <field name="name">Moderator Notification for Evaluating Committee Reject</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Reject Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_moderator_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                An application for moderator has been rejected, please find below for comment. <br/>
+                ${object.refusal_comment} <br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="email_template_moderator_submit_query_notification" model="mail.template">
+            <field name="name">Query resubmission Notification</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Query re-submission Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_moderator_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/>
+                The moderator ${object.name} has responded to a query. please log on to the system to evaluate. <br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+        <!-- MODERATOR ENDS HERE -->
+
+        <!-- LEARNER REGISTRATION STARTS HERE --> 
+        
+
+         
+
+        <record id="mail_template_notify_learner_moderator_and_assessor_after_reg" model="mail.template">
+            <field name="name">Learners Notify Moderators and Assessors for Registration</field>
+            <field name="email_from">"${object.write_uid.company_id.name|safe}"${(object.write_uid.company_id.email or '')|safe}</field>
+            <!-- <field name="email_to">${",".join((object.email,object.assessor_id.partner_id.email,object.moderator_id.partner_id.email))}</field> -->
+            <field name="subject">Notification for Learners Registration</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/> <br/>
+                Learner registration dated ${object.create_date} with reference number ${object.reference} 
+                is hereby acknowledged. <br /> 
+                The outcome will be communicated to you thereafter. <br/>
+                Should you require any additional information please inform INSETA <br/><br/>
+                Yours Sincerely <br/>
+                <br/> ETQA DIVISON <br/>
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_committee_after_registration" model="mail.template">
+            <field name="name">Learners Notify Moderators and Assessors for evaluation</field>
+            <field name="email_from">"${object.write_uid.company_id.name|safe}"${(object.write_uid.company_id.email or '')|safe}</field>
+            <!-- <field name="email_to">${",".join((object.email,object.assessor_id.partner_id.email,object.moderator_id.partner_id.email))}</field> -->
+            <field name="subject">Notification for Learners Registration</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/> <br/>
+                Learner registration with reference number ${object.reference} 
+                has been evaluated. <br /> 
+                The outcome will be communicated to you thereafter. <br/>
+                Should you require any additional information please inform INSETA <br/><br/>
+                Yours Sincerely <br/>
+                <br/> ETQA DIVISON <br/>
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learner_moderator_and_assessor_after_evaluation" model="mail.template">
+            <field name="name">Learners Notify Moderators and Assessors for evaluation</field>
+            <field name="email_from">"${object.write_uid.company_id.name|safe}"${(object.write_uid.company_id.email or '')|safe}</field>
+            <!-- <field name="email_to">${",".join((object.email,object.assessor_id.partner_id.email,object.moderator_id.partner_id.email))}</field> -->
+            <field name="subject">Notification for Learners Verification </field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/> <br/>
+                Learner registration date with reference number ${object.reference} 
+                has been evaluated <br /> 
+                Should you require any additional information please inform INSETA <br/><br/>
+                Yours Sincerely <br/>
+                --<br/> ETQA DIVISON <br/>
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_etqa_admin_after_evaluation" model="mail.template">
+            <field name="name">Learners Notify ETQA Admin for Approval</field>
+            <field name="email_from">"${object.write_uid.company_id.name|safe}"${(object.write_uid.company_id.email or '')|safe}</field>
+            <field name="email_to">${",".join((object.etqa_committee_ids).mapped(login))}</field>
+            <field name="subject">Notification to Approve Learners</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/> <br/>
+                Learner registration date with reference number ${object.reference} 
+                has been sent to you for approval <br /> 
+                 
+                Please log on to the system to approve. <br/><br/>
+                Yours Sincerely <br/>
+                --<br/> ${object.write_uid.name} <br/>
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learner_moderator_and_assessor_after_approval" model="mail.template">
+            <field name="name">Learners Notify Moderators and Assessors for Approval</field>
+            <field name="email_from">"${object.write_uid.company_id.name|safe}"${(object.write_uid.company_id.email or '')|safe}</field>
+            <field name="email_to">${",".join((object.email,object.assessor_id.partner_id.email,object.moderator_id.partner_id.email))}</field>
+            <field name="subject">Notification for Learners Approval </field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam, <br/> <br/>
+                Learner registration date with reference number ${object.reference} 
+                has been approved <br /> 
+                 
+                Should you require any additional information please inform INSETA <br/><br/>
+                Yours Sincerely <br/>
+                --<br/> ETQA DIVISON <br/>
+            ]]></field>
+        </record>
+
+        <record id="mail_act_learner_rework" model="mail.activity.type">
+            <field name="name">Learner Rework</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+        </record>
+
+        <!-- Email template for "Sending Notification" to learners for rework -->
+        <record id="mail_template_notify_learners_rework" model="mail.template">
+            <field name="name">Learners Registration Rework</field>
+            <field name="model_id" ref="model_inseta_learner_register"/>
+            <field name="email_from">${object.user_id.partner_id.company_id.email_formatted|safe}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">Attn ${object.name}: Rework Learners Registration</field>
+            <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+            <tbody>
+                <!-- CONTENT -->
+                <tr>
+                    <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                            <tr><td valign="top" style="font-size: 13px;">
+                                <div>
+                                    Dear ${object.name or ''},<br/> <br/>
+                                    Your registration has been verified by INSETA, please find below the outcomes: <br /><br/>
+                                    Findings: <br/> 
+                                    Required action: <br/>
+                                    Comments: ${object.rework_comment}
+                                    <br /><br/>
+                                    Kindly note that you up until end of business day on the ${object.rework_expiration_date} to
+                                    respond to this query. Failure to do so may result to your registration being rejected.
+                                    <br/><br/>
+                                    Yours Sincerely,<br />
+                                    --<br/>INSETA Skills Division
+                                </div>
+                            </td></tr>
+                            <tr><td style="text-align:center;">
+                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                            </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </td></tr>
+            </table>
+            </field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_notify_moderator_and_assessor_for_rework" model="mail.template">
+            <field name="name">Learner Registration Rework: Moderator &amp; Assessor</field>
+            <field name="email_from">"${object.write_uid.company_id.name|safe}"${(object.write_uid.company_id.email or '')|safe}</field>
+            <!-- <field name="email_to">${",".join((object.employer_ids.org_id.partner_id).mapped("email"))}</field> -->
+            <field name="email_to">${object.create_uid.login}</field>
+            <field name="subject">Attn: Learner Registration Rework</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+            <tbody>
+                <!-- CONTENT -->
+                <tr>
+                    <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                            <tr><td valign="top" style="font-size: 13px;">
+                                <div>
+                                    Dear Sir/Madame,<br/> <br/>
+                                    A registration for a Learner ${object.first_name} ${object.last_name} ${object.id_no} with reference number ${object.reference} 
+                                    has been sent back for rework. <br/> <br/>
+                                    Comment: ${object.rework_comment}
+                                    <br /><br/>
+                                    Yours Sincerely,<br />
+                                    --<br/>INSETA Skills Division
+                                </div>
+                            </td></tr>
+                            <tr><td style="text-align:center;">
+                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                            </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </td></tr>
+            </table>
+            </field>
+        </record>
+
+         <record id="mail_template_notify_learner_rejection" model="mail.template">
+            <field name="name">Learner Registration Rejection: Learner</field>
+            <field name="email_from">${object.user_id.partner_id.company_id.email_formatted|safe}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">Attn ${object.name}: Your Learner Registration Rejection.</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.name} <br/>
+                    Your registration as a Learner with reference number  ${object.reference} has been rejected by INSETA. Please find
+                    below the findings: <br/><br/>
+                    ${object.rejection_comment}
+                    <br/> <br/>
+                Yours Sincerely <br/>
+                --<br/>INSETA ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_moderators_and_assessors_after_rejection_sdf" model="mail.template">
+            <field name="name">Learner Registration Rejection: Organisation</field>
+            <field name="email_from">"${object.write_uid.company_id.name|safe}"${(object.write_uid.company_id.email or '')|safe}</field>
+            <!-- <field name="email_to">${",".join((object.employer_ids.org_id.partner_id).mapped("email"))}</field> -->
+            <field name="email_to">${object.create_uid.login}</field>
+            <field name="subject">Attn: Learner Registration for ${object.name} Rejected!</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+            <tbody>
+                <!-- CONTENT -->
+                <tr>
+                    <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                            <tr><td valign="top" style="font-size: 13px;">
+                                <div>
+                                    Dear Sir/Madame,<br/> <br/>
+                                    Your registration as a Learner with reference number ${object.reference} has been rejected by INSETA. Please find
+                                    below the findings:
+                                    <br /><br/>
+                                    ${object.rejection_comment}
+                                    <br/> <br/>
+                                    Yours Sincerely,<br />
+                                    --<br/>INSETA Skills Division
+                                </div>
+                            </td></tr>
+                            <tr><td style="text-align:center;">
+                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                            </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </td></tr>
+            </table>
+            </field>
+        </record>
+
+
+        <!-- ASSESSMENT Email template -->
+
+        <record id="reject_assessment_mail_template" model="mail.template">
+            <field name="name">Assessment Rejection Notification</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Rejection Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="oehealth.action_report_patient_labtest"/> -->
+            <!-- <field name="report_name">LabTest_Attachment_For_${(object.patient.partner_id.name or '').replace('/','_')}</field> -->
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.provider_id.email}, <br/>
+                An Verification for Assessment dated is rejected. <br/>
+                <p>See Reasons Below: </p>
+                <p>${object.refusal_comment}</p>
+                Should you require any additional information, please contact;<br/>
+                Yours Sincerely <br/>
+                ETQA Division
+
+            ]]></field>
+        </record>
+
+        <record id="submission_assessment_mail_template" model="mail.template">
+            <field name="name">Assessment Submission Notification</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Submission Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                An assessment for ${object.provider_id.name}  has been submitted, please log onto the system to allocate a verifier. <br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record>
+
+        <record id="request_verification_assessment_mail_template" model="mail.template">
+            <field name="name">Assessment Verification Notification Request</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Verification Notification Request</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                An assessment for ${object.provider_id.name}  has been submitted, please log onto the system to verify. <br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record> 
+
+        <record id="verification_assessment_mail_template" model="mail.template">
+            <field name="name">Assessment Verification Notification</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Verification Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                An assessment with Verification Number: ${object.verification_number} has been verified by INSETA, please find below. <br/>
+                the outcomes: <br/>
+                Findings: <br/>
+                Required action:<br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record> 
+
+        <record id="manager_verification_assessment_mail_template" model="mail.template">
+            <field name="name">Manager Approve Verification Notification</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Verification Approval Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                A Verification report with reference: ${object.verification_number} has been approve by INSETA, please find below if any comment or outcomes. <br/>
+                Findings: <br/> 
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record> 
+
+        <record id="queried_assessment_mail_template" model="mail.template">
+            <field name="name">Assessment Query Notification</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Verification Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                An assessment with Verification Number: ${object.verification_number} has been queried by INSETA, please find below. <br/>
+                the outcomes: <br/>
+                Findings: <br/>
+                Required action:<br/>
+                Kindly note that you up until end of business day on the 5th day after the submission of a query to  <br/>
+                respond to any query. Failure to do so may result to your registration being rejected. 
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record> 
+
+        <record id="endorse_signoff_to_admin_assessment_mail_template" model="mail.template">
+            <field name="name">Assessment Verification signoff Notification Request</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Endorsement Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+               An assessment with Verification Number: ${object.verification_number} has been verified by INSETA and has been endorsed. <br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record> 
+
+        <record id="endorse_notification_to_provider_assessment_mail_template" model="mail.template">
+            <field name="name">Assessment Endorsed Notification to provider </field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Endorsement Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.provider_id.name}, <br/>
+                An assessment for ${object.provider_id.name} has been endorsed, please log onto the system to view details.  <br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record> 
+
+        <record id="endorse_signoff_assessment_mail_template" model="mail.template">
+            <field name="name">Assessment Endorsed Notification to Verifiers</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Notification:</field>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Hi, <br/>
+                An assessment for ${object.provider_id.name} has been endorsed.<br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record>
+
+        <record id="send_to_manager_assessment_mail_template" model="mail.template">
+            <field name="name">Assessment Manager Notification</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Notification:</field>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Hi, <br/>
+                An assessment for ${object.provider_id.name} has been signed off and ready for apporval. <br/>
+                Kindly log in and approve. <br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record> 
+
+        <record id="send_to_manager_assessment_detail_mail_template" model="mail.template">
+            <field name="name">Assessment Detail Manager Notification</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Detail Notification:</field>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_assessment_detail"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Hi, <br/>
+                An assessment for ${object.learner.name} has been signed off and ready for apporval. <br/>
+                Kindly log in and approve. <br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record> 
+
+        <record id="endorse_notification_to_provider_assessment_detail_mail_template" model="mail.template">
+            <field name="name">Assessment detail Endorsed Notification to provider </field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Endorsement Notification</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_assessment_detail"/>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.provider_id.name}, <br/>
+                An assessment for ${object.learner.name} has been endorsed, please log onto the system to view details.  <br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record> 
+
+        <record id="endorse_signoff_assessment_detail_mail_template" model="mail.template">
+            <field name="name">Assessment Detail Endorsed Notification to Verifiers</field>
+            <field name="email_from">${object.write_uid.email}</field>
+            <field name="subject">Assessment Notification</field>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="model_id" ref="inseta_etqa.model_inseta_learner_assessment_detail"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Hi, <br/>
+                An assessment for ${object.provider_id.name} has been endorsed.<br/>
+                Yours Sincerely <br/>
+                INSETA ETQA Division
+            ]]></field>
+        </record>
+
+        
+  
+    </data>
+</odoo>

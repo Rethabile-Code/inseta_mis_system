@@ -1,0 +1,457 @@
+<odoo>
+    <data>
+        <template id="dg_letter_body">
+
+            <t t-if="dg.dgtype_code in ('LRN-Y','LRN-R','LRN-W')">
+                <p>
+                    <ol class="list-unstyled">
+                        <li>
+                            1. The INSETA is pleased to confirm that you have been <b>recommended</b> for Discretionary Grant funding for the following:
+                        </li>
+                    </ol>
+                    <t t-if="o.dgapplicationdetails_id">
+                        <t t-if="dg.dgtype_code == 'LRN-W' ">
+                            <table class="table table-bordered" style="font-size:1.1em">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>Recommended number of learners</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Recommended Rand Amount per Learner</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Total Recommended Amount</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><span t-field="o.no_learners_approved" /></td>
+                                        <td><span t-field="o.actual_cost_per_student" /></td>
+                                        <td><span t-field="o.amount_learners_approved" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <table class="table table-bordered" style="font-size:1.1em">
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <strong>Recommended No. of Learners</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Recommended Rand Amount per Learner</strong>
+                                        </td>
+                                        <td>
+                                            <strong>Total Recommended Amount</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Disabled
+                                        </td>
+                                        <td><span t-field="o.disabled_approved" /></td>
+                                        <td><span t-field="o.cost_per_disabled" /></td>
+                                        <td><span t-field="o.amount_disabled_approved" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Not Disabled
+                                        </td>
+                                        <td><span t-field="o.no_learners_approved" /></td>
+                                        <td><span t-field="o.actual_cost_per_student" /></td>
+                                        <td><span t-field="o.amount_learners_approved" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                         </t>
+                        <br/>
+                        Learnership Title and DHET Registration Number: <span style="font-weight:bold" t-esc="o.dgapplicationdetails_id.programme_name or o.dgapplicationdetails_id.learnership_id.name or o.dgapplicationdetails_id.fullqualification_title " /> <span t-esc="o.dgapplicationdetails_id.learnership_code" /> <br/>
+                        <t t-if="o.dgapplicationdetails_id.province_id">
+                            Province: <span style="font-weight:bold" t-field="o.dgapplicationdetails_id.province_id" />
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <p>No Learnership Details Found</p>
+                    </t>
+                </p>
+
+                <p>
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold" style="font-weight:1.2em">2. This recommended funding is subject to compliance by your company with the terms and timeframes detailed below. </span>
+                            <ol class="list-unstyled list-indented">
+                                <li> 2.1 Learners are to commence their programme(s) by no later than 01 February <span t-esc="dg.financial_year_id.date_to.year"/> </li>
+                                <li> 2.2 Documentation is to be submitted on INSETA templates, and as per the timeframes and prescribed submission process. Early submissions are encouraged </li>
+                                <li>2.3 Non-compliance to the terms and timeframes shall result in the INSETA withdrawal of the recommended funding, without further notice. </li>
+                                <li>2.4 In the event the submitted information and/or documentation is incomplete and/or inaccurate, the whole batch shall be returned to the submitter to correct and resubmit to INSETA within 72 hours.</li>
+                                <li>2.5 Funding is subject to the INSETA monitoring and evaluation process</li>
+                                <li>2.6 You agree to provide information as required by INSETA for the purposes of reporting to the Department of Higher Education and Training, as well as other statutory stakeholders.</li>
+                                <li>2.7 In all instances the training institution must be accredited by the relevant Quality Assurance Entity and be accredited to offer the programme applied for. </li>
+                                <li>2.8 Kindly quote the reference number in all correspondence.</li>
+
+                            </ol>
+                        </li>
+                    </ol>
+
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold">3. Within thirty calendar days of the date of this letter, submit to INSETA </span>
+                            <ol class="list-unstyled list-indented">
+                                <li>3.1 Letter of Authorisation: A letter confirming the details of the person authorised to enter into contractual agreements with INSETA on behalf of the company. <br/>
+                                    Details must include the Full Name(s), Surname, Designation, Email address, and Contact number of the authorised person, and must be on the company letterhead.
+                                </li>
+                                <li>3.2  Letter of Confirmation of 
+                                    <ol class="list-unstyled list-indented">
+                                        <li>3.2.1 the Recommended Number of Learners as detailed in (1) above</li>
+                                        <li>3.2.2 the intended date on which learners will commence with their learning programme</li>
+                                    </ol>
+                                </li>
+
+                            </ol>
+                        </li>
+                    </ol>
+
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold" style="font-weight:1.2em">4. Four (4) calendar weeks prior to learner commencement on the learning programme, submit to INSETA </span>
+                            <ol class="list-unstyled list-indented">
+                                <li>4.1 Where the learnership is not an INSETA learnership, submit a letter from the training institution, <br/> providing the training institution’s particulars and the details of the learnership(s) 
+                                </li>
+                                <li>4.2  Where the training institution is a private entity, submit  
+                                    <ol class="list-unstyled list-indented">
+                                        <li>4.2.1 Proof of the training institution’s accreditation by the relevant Quality Assurance Entity</li>
+                                        <li>4.2.2 Proof that the training institution has permission (scope) from the relevant Quality Assurance Entity to deliver the learnership(s) </li>
+                                    </ol>
+                                </li>
+                                <li>4.3 Learner Agreements and Documentation submission  
+                                    <ol class="list-unstyled list-indented">
+                                        <li>4.3.1 A complete, duly signed, and dated INSETA Learnership Programme agreement between the learner, the training institution, and the employer, detailing the learning programme title and registration code as well as clear start (commencement) and end dates of learners. </li>
+                                        <li>4.3.2 Certified copy of learners’ Identity document</li>
+                                        <li>4.3.3 A duly completed, signed, and dated fixed term employment contract between the learner and the employer. </li>
+                                        <li>4.3.4 Certified copy of learner’s highest qualification</li>
+                                        <li>4.3.5 Complete and accurate SETMIS Upload Template</li>
+                                        <li>4.3.6 Protection of Personal Information Act (POPIA) declaration completed, duly signed, and dated by each learner</li>
+                                        <li>4.3.7 Confirmation of disability if applicable</li>
+                                    </ol>
+                                </li>
+
+                            </ol>
+                        </li>
+                    </ol>
+                </p>
+
+                <p>
+                    Submissions and enquiries are to be sent to  <span t-field="dg.dgtype_id.seta_mail_to"/>
+                </p>
+            </t>
+
+            <!--Internship-->
+            <t t-if="dg.dgtype_code in ('IT-DEGREE','IT-MATRIC')">
+                <p>
+                    <ol class="list-unstyled">
+                        <li>
+                            1. The INSETA is pleased to confirm that you have been <b>recommended</b> for Discretionary Grant funding for the following:
+                        </li>
+                    </ol>
+                    <t t-if="o.dgapplicationdetails_id">
+                        <table class="table table-bordered" style="font-size:1.1em">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>Recommended number of Interns</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Recommended Rand Amount per Intern</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Total Recommended Amount</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span t-field="o.no_learners_approved" /></td>
+                                    <td><span t-field="o.actual_cost_per_student" /></td>
+                                    <td><span t-field="o.amount_learners_approved" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </t>
+                    <t t-else="">
+                        <p>No Learnership Details Found</p>
+                    </t>
+                </p>
+
+                <p>
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold" style="font-weight:1.2em">2. This recommended funding is subject to compliance by your company with the terms and timeframes detailed below. </span>
+                            <ol class="list-unstyled list-indented">
+                                <li> 2.1 Learners are to commence their programme(s) by no later than 01 February <span t-esc="dg.financial_year_id.date_to.year"/> </li>
+                                <li> 2.2 Documentation is to be submitted on INSETA templates, and as per the timeframes and prescribed submission process. Early submissions are encouraged </li>
+                                <li>2.3 Non-compliance to the terms and timeframes shall result in the INSETA withdrawal of the recommended funding, without further notice. </li>
+                                <li>2.4 In the event the submitted information and/or documentation is incomplete and/or inaccurate, the whole batch shall be returned to the submitter to correct and resubmit to INSETA within 72 hours.</li>
+                                <li>2.5 Funding is subject to the INSETA monitoring and evaluation process</li>
+                                <li>2.6 You agree to provide information as required by INSETA for the purposes of reporting to the Department of Higher Education and Training, as well as other statutory stakeholders.</li>
+                                <li>2.7 In all instances the training institution must be accredited by the relevant Quality Assurance Entity and be accredited to offer the programme applied for. </li>
+                                <li>2.8 Kindly quote the reference number in all correspondence.</li>
+
+                            </ol>
+                        </li>
+                    </ol>
+
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold">3. Within thirty calendar days of the date of this letter, submit to INSETA </span>
+                            <ol class="list-unstyled list-indented">
+                                <li>3.1 Letter of Authorisation: A letter confirming the details of the person authorised to enter into contractual agreements with INSETA on behalf of the company. <br/>
+                                    Details must include the Full Name(s), Surname, Designation, Email address, and Contact number of the authorised person, and must be on the company letterhead.
+                                </li>
+                                <li>3.2  Letter of Confirmation of 
+                                    <ol class="list-unstyled list-indented">
+                                        <li>3.2.1 the Recommended Number of Interns as detailed in (1) above</li>
+                                        <li>3.2.2 the intended date on which interns will commence their internship</li>
+                                    </ol>
+                                </li>
+
+                            </ol>
+                        </li>
+                    </ol>
+
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold" style="font-weight:1.2em">4. Four (4) calendar weeks prior to learner commencement on the learning programme, submit to INSETA </span>
+                            <ol class="list-unstyled list-indented">
+                                <li>4.3.1  A complete, duly signed, and dated INSETA Internship Agreement between the intern and the SETA or its contracted agent, as well as clear start (commencement) and end dates of interns.  </li>
+                                <li>4.3.2 Certified copy of interns’ Identity document</li>
+                                <li>4.3.3 Complete and accurate SETMIS Upload Template</li>
+                                <li>4.3.4 Certified copy of learner’s highest qualification</li>
+                                <li>4.3.5 Protection of Personal Information Act (POPIA) declaration completed, duly signed, and dated by each intern</li>
+                                <li>4.3.6 Confirmation of disability if applicable</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </p>
+
+                <p>
+                    Submissions and enquiries are to be sent to  <span t-field="dg.dgtype_id.seta_mail_to"/>
+                </p>
+            </t>
+
+            <!--Skills Programme-->
+            <t t-if="dg.dgtype_code in ('SP','BUR')">
+                <p>
+                    <ol class="list-unstyled">
+                        <li>
+                            1. The INSETA is pleased to confirm that you have been <b>recommended</b> for Discretionary Grant funding for the following:
+                        </li>
+                    </ol>
+                    <t t-if="o.dgapplicationdetails_id">
+                        <table class="table table-bordered" style="font-size:1.1em">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>Recommended number of learners</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Recommended Rand Amount per Learner</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Total Recommended Amount</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span t-field="o.no_learners_approved" /></td>
+                                    <td><span t-field="o.actual_cost_per_student" /></td>
+                                    <td><span t-field="o.amount_learners_approved" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-else="">
+                        <p>No Learnership Details Found</p>
+                    </t>
+                </p>
+
+                <p>
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold" style="font-weight:1.2em">2. This recommended funding is subject to compliance by your company with the terms and timeframes detailed below. </span>
+                            <ol class="list-unstyled list-indented">
+                                <li> 2.1 Learners are to commence their programme(s) by no later than 01 February <span t-esc="dg.financial_year_id.date_to.year"/> </li>
+                                <li> 2.2 Documentation is to be submitted on INSETA templates, and as per the timeframes and prescribed submission process. Early submissions are encouraged </li>
+                                <li>2.3 Non-compliance to the terms and timeframes shall result in the INSETA withdrawal of the recommended funding, without further notice. </li>
+                                <li>2.4 In the event the submitted information and/or documentation is incomplete and/or inaccurate, the whole batch shall be returned to the submitter to correct and resubmit to INSETA within 72 hours.</li>
+                                <li>2.5 Funding is subject to the INSETA monitoring and evaluation process</li>
+                                <li>2.6 You agree to provide information as required by INSETA for the purposes of reporting to the Department of Higher Education and Training, as well as other statutory stakeholders.</li>
+                                <li>2.7 In all instances the training institution must be accredited by the relevant Quality Assurance Entity and be accredited to offer the programme applied for. </li>
+                                <li>2.8 Kindly quote the reference number in all correspondence.</li>
+
+                            </ol>
+                        </li>
+                    </ol>
+
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold">3. Within thirty calendar days of the date of this letter, submit to INSETA </span>
+                            <ol class="list-unstyled list-indented">
+                                <li>3.1 Letter of Authorisation: A letter confirming the details of the person authorised to enter into contractual agreements with INSETA on behalf of the company. <br/>
+                                    Details must include the Full Name(s), Surname, Designation, Email address, and Contact number of the authorised person, and must be on the company letterhead.
+                                </li>
+                                <li>3.2  Letter of Confirmation of 
+                                    <ol class="list-unstyled list-indented">
+                                        <li>3.2.1 the Recommended Number of Learners as detailed in (1) above</li>
+                                        <li>3.2.2 the intended date on which learners will commence with their learning programme</li>
+                                    </ol>
+                                </li>
+
+                            </ol>
+                        </li>
+                    </ol>
+
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold">4. Requests for learner replacements are to be submitted on a signed company letterhead, with the full details of the replacement(s) - 
+                            learner details, learning programme, training entity-, seven calendar days prior to the commencement date of the learning programme.</span>
+                        </li>
+                    </ol>
+
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold" style="font-weight:1.2em">5. Four (4) calendar weeks prior to learner commencement on the learning programme, submit to INSETA </span>
+                            <ol class="list-unstyled list-indented">
+                                <li>5.1 A quotation from the training institution confirming the programme cost </li>
+                                <li t-if="dg.dgtype_code == 'SP'">5.2 Where the skills programme is not an INSETA learning programme, submit a letter from the training institution, <br/> providing the training institution’s particulars and the details of the programme(s)</li>
+                                <li t-if="dg.dgtype_code == 'BUR'">5.2 Where the qualification is not an INSETA qualification, submit a letter from the training institution, <br/> providing the training institution’s particulars and the details of the qualification/learning programme(s) </li>
+                                <li>5.3 A letter from the training institution, providing the training institution’s particulars and the details of the learning programme(s). 
+                                </li>
+                                <li>5.4  Where the training institution is a private entity, submit  
+                                    <ol class="list-unstyled list-indented">
+                                        <li>5.4.1 Proof of the training institution’s accreditation by the relevant Quality Assurance Entity</li>
+                                        <li>5.4.2 Proof that the training institution has permission (scope) from the relevant Quality Assurance Entity to deliver the learnership(s) </li>
+                                    </ol>
+                                </li>
+                                <li>5.5 Learner Agreements and Documentation submission  
+                                    <ol class="list-unstyled list-indented">
+                                        <li>5.5.1 A complete, duly signed, and dated INSETA Skills Programme agreement, or a duly signed learner registration form, between the learner and the SETA or its contracted agent, detailing the learning programme title and registration code as well as clear start (commencement) and end dates of learners</li>
+                                        <li>5.5.2 Certified copy of learners’ Identity document, or in the case of non-South African residents, a certified copy of passport</li>
+                                        <li>5.5.3 Official proof of registration/ admission from the Training Institution </li>
+                                        <li>5.5.4 Complete and accurate SETMIS Upload Template</li>
+                                        <li>5.5.5 Protection of Personal Information Act (POPIA) declaration completed, duly signed, and dated by each learner</li>
+                                        <li>5.5.6 Letter of Confirmation of learners’ employment, signed, dated and on the company’s letterhead.</li>
+                                        <li>5.5.7 Confirmation of disability if applicable</li>
+                                    </ol>
+                                </li>
+
+                            </ol>
+                        </li>
+                    </ol>
+                </p>
+
+                <p>
+                    Submissions and enquiries are to be sent to  <span t-field="dg.dgtype_id.seta_mail_to"/>
+                </p>
+            </t>
+
+            <!--Internship-->
+            <t t-if="dg.dgtype_code in ('WIL',)">
+                <p>
+                    <ol class="list-unstyled">
+                        <li>
+                            1. The INSETA is pleased to confirm that you have been <b>recommended</b> for Discretionary Grant funding for the following:
+                        </li>
+                    </ol>
+                    <t t-if="o.dgapplicationdetails_id">
+                        <table class="table table-bordered" style="font-size:1.1em">
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <strong>Recommended number of Interns</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Recommended Rand Amount per Intern</strong>
+                                    </td>
+                                    <td>
+                                        <strong>Total Recommended Amount</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Work Integrated Learning (WIL Stipend – 18 months)</td>
+                                    <td><span t-field="o.no_learners_approved" /></td>
+                                    <td><span t-field="o.actual_cost_per_student" /></td>
+                                    <td><span t-field="o.amount_learners_approved" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Admin Fee (5%)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Work Readiness Programme</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </t>
+                    <t t-else="">
+                        <p>No Learnership Details Found</p>
+                    </t>
+                </p>
+
+                <p>
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold" style="font-weight:1.2em">2. This recommended funding is subject to compliance by your TVET College/Organisation with the terms and timeframes detailed below:  </span>
+                            <ol class="list-unstyled list-indented">
+                                <li> 2.1 Work Integrated Learners are to commence their programme(s) by no later than 01 February <span t-esc="dg.financial_year_id.date_to.year"/> </li>
+                                <li> 2.2 Documentation is to be submitted on INSETA templates, and as per the timeframes and prescribed submission process. Early submissions are encouraged </li>
+                                <li>2.3 Non-compliance to the terms and timeframes shall result in the INSETA withdrawal of the recommended funding, without further notice. </li>
+                                <li>2.4 In the event the submitted information and/or documentation is incomplete and/or inaccurate, the whole batch shall be returned to the submitter to correct and resubmit to INSETA within 72 hours.</li>
+                                <li>2.5 Funding is subject to the INSETA monitoring and evaluation process</li>
+                                <li>2.6 The TVET College/Organisation agree to provide information as required by INSETA for the purposes of reporting to the Department of Higher Education and Training, as well as other statutory stakeholders.</li>
+                                <li>2.7 In all instances the training institution must be accredited by the relevant Quality Assurance Entity and be accredited to offer the programme applied for. </li>
+                                <li>2.8 Kindly quote the reference number in all correspondence.</li>
+
+                            </ol>
+                        </li>
+                    </ol>
+
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold">3. Within thirty calendar days of the date of this letter, submit to INSETA </span>
+                            <ol class="list-unstyled list-indented">
+                                <li>3.1 Letter of Authorisation: A letter confirming the details of the person authorised to enter into contractual agreements with INSETA on behalf of the TVET College/Organisation. <br/>
+                                    Details must include the Full Name(s), Surname, Designation, Email address, and Contact number of the authorised person, and must be on the company letterhead.
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+
+                    <ol class="list-unstyled">
+                        <li>
+                            <span class="bold" style="font-weight:1.2em">4. Four (4) calendar weeks prior to Work Integrated Learners commencement on the WIL Programme, submit to INSETA the following documentation: </span>
+                            <ol class="list-unstyled list-indented">
+                                <li>4.1 A complete, duly signed, and dated INSETA Workplace Base Learning Agreement between the Work Integrated Learner and the SETA, as well as clear start (commencement) and end dates of learner.  </li>
+                                <li>4.2 Certified copy of Work Integrated Learner’ Identity document</li>
+                                <li>4.3 Complete and accurate SETMIS Upload Template</li>
+                                <li>4.4 Protection of Personal Information Act (POPIA) declaration completed, duly signed, and dated by each Work Integrated Learner</li>
+                                <li>4.5 A duly completed, signed and dated fixed term employment contract between the Work Integrated Learner and the employer. </li>
+                                <li>4.6 The final expression of interest aligning to recommended numbers from TVET/host employers</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </p>
+
+                <p>
+                    Submissions and enquiries are to be sent to  <span t-field="dg.dgtype_id.seta_mail_to"/>
+                </p>
+            </t>
+        </template>
+    </data>
+</odoo>

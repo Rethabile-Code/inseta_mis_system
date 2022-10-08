@@ -1,0 +1,45 @@
+<odoo>
+    <data noupdate="0">
+
+        <!-- Automated Action: Email SDF 5 days before rework expiration. -->
+        <record id="rule_set_rework_dgapplication_5d" model="base.automation">
+            <field name="name">Email Organisation 5 days before rework expiration.</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="template_id" ref="mail_template_remind_dgapplication_rework"/>
+            <field name="trigger">on_time</field>
+            <field name="state">email</field>
+            <field name="trg_date_id" ref="field_inseta_dgapplication__rework_expiration_date"/>
+            <field name="trg_date_range">-5</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','rework')]</field>
+        </record>
+
+        <!-- Automated Action: Email SDF (10 days later) on rework expiration date. -->
+        <record id="rule_set_rework_dgapplication_10d" model="base.automation">
+            <field name="name">Email Organisation on rework expiration date.</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="template_id" ref="mail_template_remind_dgapplication_rework"/>
+            <field name="trigger">on_time</field>
+            <field name="state">email</field>
+            <field name="trg_date_id" ref="field_inseta_dgapplication__rework_expiration_date"/>
+            <field name="trg_date_range">0</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','rework')]</field>
+        </record>
+
+
+        <!-- Automated Action: Change State to awaiting_rejection after rework expiration date. -->
+        <record id="rule_set_change_state_dgapplication_after_10d" model="base.automation">
+            <field name="name">Change Dg Application state to "Awaiting Rejection" after rework expiration date.</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="trigger">on_time</field>
+            <field name="state">code</field>
+            <field name="trg_date_id" ref="field_inseta_dgapplication__rework_expiration_date"/>
+            <field name="trg_date_range">1</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','rework')]</field>
+            <field name="code">record.write({'state': 'awaiting_rejection'})</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,101 @@
+<odoo>
+  <data>
+    
+    <report 
+            id="learner_appointment_letter_report"
+            model="inseta.learner.register"
+            string="Appointment Letter"
+            report_type="qweb-pdf"
+            name="inseta_etqa.learner_appointment_letter"
+            file="inseta_etqa.learner_appointment_letter"
+            paperformat="inseta_etqa.paperformat_moderator_letter"
+            menu="False"
+        />
+
+    <template id="learner_appointment_letter">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-3">
+                    .<!-- <img src="https://imgur.com/gLIZY9S.jpg" style="max-height: 150px;" /> -->
+                </div>
+                <div class="col-xs-offset-2 text-right">
+                    <img src='/inseta_etqa/static/description/icon.png' style="max-height: 70px;"/>
+                </div>
+            </div>
+            <hr/> 
+        </div>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="max-width: 660px; margin: auto;">
+
+                    <style>
+                        body {
+                            line-height: 180%;
+                            font-size: 18px;
+                            font-family: 'EB Garamond';
+                        }
+
+                        page {
+                            margin-bottom: -30px;
+                        }
+
+                        p {
+                        text-align: justify;
+                            margin: 0;
+                        }
+
+                        .abc {
+                                margin-left: 40px;
+                                list-style-type: lower-alpha;
+                                }
+
+                        li {
+                        text-align: justify;
+                            padding-top: 2%;
+                            padding-bottom: 20px;
+                        }
+                    </style>
+
+                    <br /><br /><br />
+
+                    <span t-field="o.name"/>,<br/>
+                    <span t-field="o.physical_address1"/>,<br/>
+                    <span t-field="o.physical_city_id.name"/>,<span t-field="o.physical_province_id.name"/>,<br/>
+                    <span t-field="o.nationality_id.name"/> <br/>
+                    <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /></p>
+
+                    <p align="justify">
+                        Dear <span t-field="o.name"/>,
+                    </p>
+
+                    <h4 style="text-align: center;"><strong><u>LEARNER APPROVAL LETTER </u></strong></h4>
+ 
+                    <p>Please be advised that your application to be registered as a learner on INSETA's system has been <strong>approved</strong>. </p>
+                    You may now access the system using the following link  <br/>
+                    http://indicium.inseta.org.za/web/login <br/>
+                    
+                    <p style="padding-left: 25px;text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;" >
+                        ✓ For any queries please contact the INSETA Call Centre on 086 113 0013.<br/>
+                    </p>
+
+                    
+                    <div class="row">
+                        <p style="text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;"><strong>GENERAL COMMENTS</strong></p>
+                            <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                                <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;"><span t-field="o.general_comments"/> </p><br/>
+                            </p>
+                    </div>
+
+                    <div class="row">
+                        <br/><br/>
+                        <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">Yours in ETQA,<br/><br/><br/></p>
+                        <strong style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;"></strong>
+                        <img src='/inseta_etqa/static/description/icon.png' style="max-height: 120px;"/>
+                        <strong style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;"> Manager: ETQA</strong>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

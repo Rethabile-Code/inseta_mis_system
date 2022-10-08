@@ -1,0 +1,70 @@
+<odoo>
+  <data>
+    
+    <record id="action_wspatr_approval_letter_report" model="ir.actions.report">
+        <field name="name">WSP Approval Letter</field>
+        <field name="model">inseta.wspatr</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_skills.report_wspatr_approval_letter</field>
+        <field name="report_file">inseta_skills.report_wspatr_approval_letter</field>
+        <field name="print_report_name">(object.organisation_id.sdl_no +'_'+(object.name or '').replace('/','_')+'_approval_letter_'+time.strftime('%Y-%m-%d-%H:%M:%S'))</field>
+        <field name="attachment">((object.name or '').replace('/','_')+'_approval_letter.pdf')</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_wspatr_approval_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=lang)" />
+                    <div class="page">
+                        <span t-field="o.organisation_id.name"/>,<br/>
+                        <span t-field="o.organisation_id.sdl_no"/>,<br/>
+                        <span t-field="o.organisation_id.street"/> <span t-field="o.organisation_id.street2"/> <span t-field="o.organisation_id.street3"/><br/>
+                        <span t-field="o.organisation_id.physical_city_id.name"/>,<span t-field="o.organisation_id.physical_province_id.name"/><br/>
+                        <span t-field="o.organisation_id.nationality_id.name"/> <br/>
+                        <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /></p>
+
+                        <p align="justify">
+                            Dear <span t-field="o.sdf_id.name"/>,
+                        </p>
+
+                        <h4 style="text-align: center;"><b><u>WSP Submission</u></b></h4>
+                        <p>
+                            Please be advised that your WSP Submission on INSETA's system has
+                            been approved.
+                            <br/><br/>
+                            <span t-if="o.organisation_id.linkage_ids"> Child organisations are listed below:
+                                <t t-foreach="o.organisation_id.linkage_ids" t-as="link">
+                                    <span t-esc="link.childorganisation_id.sdl_no"/> <br/>
+                                </t>
+                             <br/>
+                            
+                            </span>
+                            You may now access the system using the following link
+                            https://InSETAMIS.inseta.org.za/web/login <br/><br/>
+                            For any queries please contact the INSETA Call Centre on 086 113 0013.
+                        </p>
+                                           
+                        <p>Yours in Skills Development
+                            <br/><br/>
+                            <t t-set="mgr" t-value="o.get_skills_mgr() and o.get_skills_mgr()[0] or False "/>
+                           <b> <span t-esc="mgr and mgr.name or 'Adeline Singh' " />
+                            <br/>
+                            <table border="1" style="width:100%;" t-if="mgr">
+                                <tr style="font-weight:bold;">
+                                    <td>
+                                        <div widget="html" t-field="mgr.signature"/>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            Manager: Skills Planning </b>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

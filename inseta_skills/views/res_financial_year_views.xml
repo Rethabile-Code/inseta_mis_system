@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="res_financial_year_form_view" model="ir.ui.view">
+        <field name="name">Form view for res.financial.year</field>
+        <field name="model">res.financial.year</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" placeholder="Fiscal Year 2021" />
+                        <field name="date_from" />
+                        <field name="date_to" />
+                        <field name="saqacode" />
+                        <field name="company_id" groups="base.group_multi_company" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="res_financial_year_search_view" model="ir.ui.view">
+        <field name="name">Search view for res.financial.year</field>
+        <field name="model">res.financial.year</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="res_financial_year_tree_view" model="ir.ui.view">
+        <field name="name">Tree view for res.financial.year</field>
+        <field name="model">res.financial.year</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field name="saqacode" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="actions_res_financial_year" model="ir.actions.act_window">
+        <field name="name">Financial Years</field>
+        <field name="res_model">res.financial.year</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new Financial year.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_actions_res_financial_year"
+        sequence="3" 
+        parent="menu_wsp_config"
+        action="actions_res_financial_year"
+    />
+</odoo>

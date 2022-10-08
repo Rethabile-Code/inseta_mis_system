@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ofocode_import_wizard" model="ir.ui.view">
+        <field name="name">ofocode.import.wizard.form</field>
+        <field name="model">ofocode.import.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Message">
+                <div class="oe_title">
+                    <h1>
+                        OFO Code Import
+                    </h1>
+                </div>
+                <div class='alert alert-info' role="alert">
+                    Downlaod sample  import template <a href='#'> here </a> <br/>
+                    Allowed file types: .xls, .xlsx
+                </div>
+                <newline/>
+                <group>
+                    <group>
+                        <field name="file_type" />
+                        <field name="file" filename="file_name" required="1"/>
+                        <field name="model" required="1" /> 
+                    </group>
+                    <group></group>
+                </group>
+                <div class="oe_clear"/>
+                <separator colspan="10" />
+                <footer>
+                    <button special="cancel" string="Close" />
+                    <button name="action_import" type="object" class="oe_highlight" string="Import" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--report-->
+    <record id="action_ofocode_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import OfO Code</field>
+        <field name="res_model">ofocode.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id ="menu_import_ofocode" name="Import OFO Code" sequence="1" parent="menu_import_inseta_data" action="action_ofocode_import_wizard"/>
+
+
+</odoo>

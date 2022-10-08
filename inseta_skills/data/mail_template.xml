@@ -1,0 +1,1645 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+     <!-- Email template for "Sending Notification" to SDF after registration -->
+        <record id="mail_template_notify_sdf" model="mail.template">
+            <field name="name">SDF Registration: SDF</field>
+            <field name="model_id" ref="model_inseta_sdf"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">Your SDF Registration is submitted</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.name or ''},<br/> <br/>
+                        A registration for an SDF with reference number ${object.reference} dated ${object.registration_date} is hereby acknowledged. <br/>
+                        The outcome will be communicated thereafter.
+                        % for sdforg in object.organisation_ids:
+                            <ul>
+                                <li>Company Name: ${sdforg.organisation_id.name}</li>
+                                <li>SDL Number: ${sdforg.organisation_id.sdl_no}</li>
+                                <li>SDF Role: ${sdforg.sdf_role or ''}</li>
+                            </ul>
+                        % endfor
+                        Herewith your login details: 
+                        <ul>
+                            <li>Username: ${object.user_id.login}</li>
+                            <li>Password: ${object.password}</li>
+                        </ul>
+
+                        Should you require any additional information, please contact INSETA.<br/>
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+     <!-- Email template for "Sending Notification" to SDF after registration -->
+        <record id="mail_template_notify_skills_specialist" model="mail.template">
+            <field name="name">SDF Registration: Skills Specialist</field>
+            <field name="model_id" ref="model_inseta_sdf"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">registrations@inseta.org.za</field>
+            <field name="subject">SDF Registration:${object.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Skills Specialist,<br/> <br/>
+                        A registration for an SDF ${object.first_name} ${object.last_name} ${object.id_no or ''} with reference number ${object.reference} 
+                        has been submitted. <br/> 
+                        Please log onto the system to verify
+                        
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    <!-- Email template for "Sending Notification" to SDF for rework -->
+        <record id="mail_template_notify_sdf_rework" model="mail.template">
+            <field name="name">SDF Registration Rework</field>
+            <field name="model_id" ref="model_inseta_sdf"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">SDF Registration Rework</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.name or 'INSETA Stakeholder'},<br/> <br/>
+                        Your registration has been verified by INSETA, please find below the outcomes: <br /><br/>
+                        Findings: <br/> 
+                        Required action: <br/>
+                        Comments: ${object.rework_comment}
+                        <br /><br/>
+                        Kindly note that you up until end of business day on the ${object.rework_expiration_date} to
+                        respond to this query. Failure to do so may result to your registration being rejected.
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_notify_organisation_rework" model="mail.template">
+            <field name="name">SDF Registration Rework: Organisation</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_employer_contact_email()}</field>
+            <field name="subject">SDF Registration Rework</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear INSETA Stakeholder,<br/> <br/>
+                        A registration for an SDF ${object.first_name} ${object.last_name} ${object.id_no or ''} with reference number ${object.reference} 
+                        has been sent back for rework. <br/> <br/>
+                        Comment: ${object.rework_comment}
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+        </record>
+
+        <record id="mail_template_notify_skills_spec_after_rework" model="mail.template">
+            <field name="name">SDF Registration Reworked</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">registrations@inseta.org.za</field>
+            <field name="subject">SDF Registration Reworked!</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Skills Specialist, <br/> <br/>
+                A registration for an SDF ${object.first_name} ${object.last_name} ${object.id_no or ''} with reference number ${object.reference} 
+                has been reworked <br/>
+                
+                Yours Sincerely <br/>
+                --<br/> ${object.name}
+
+            ]]></field>
+        </record>
+
+    <!-- Email template for "Sending Notification Reminder" to SDF for rework -->
+        <record id="mail_template_remind_sdf_rework" model="mail.template">
+            <field name="name">SDF Registration Rework Reminder</field>
+            <field name="model_id" ref="model_inseta_sdf"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">SDF Registration: Rework Reminder</field>
+            <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+            <tbody>
+                <!-- CONTENT -->
+                <tr>
+                    <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                            <tr><td valign="top" style="font-size: 13px;">
+                                <div>
+                                    Dear ${object.name or 'INSETA Stakeholder'},<br/> <br/>
+                                    Your registration for an SDF with reference number ${object.reference} 
+                                    is waiting to be reworked. Kindly address and submit the rework.<br/>
+
+                                    <br/><br/>
+                                    Yours Sincerely,<br />
+                                    --<br/>INSETA Skills Division
+                                </div>
+                            </td></tr>
+                            <tr><td style="text-align:center;">
+                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                            </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </td></tr>
+            </table>
+        </field>
+        <field name="lang">${object.user_id.partner_id.lang}</field>
+        <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_notify_manager_after_verify_sdf" model="mail.template">
+            <field name="name">SDF Registration Verified: Manager</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_skills_mgr_email()}</field>
+            <field name="subject">SDF Registration for ${object.name} Verified!</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.get_skills_mgr() and object.get_skills_mgr()[0].name or ''}, <br/> <br/>
+                A registration for an SDF ${object.first_name} ${object.last_name} ${object.id_no or ''} with reference number ${object.reference} 
+                has been verified. <br /> 
+                Please log onto the system to approve. <br/><br/>
+                Yours Sincerely <br/>
+                --<br/> ${object.write_uid.name} <br/>
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_organisation_after_verify_sdf" model="mail.template">
+            <field name="name">SDF Registration Verified: Organisation</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_employer_contact_email()}</field>
+            <field name="subject">SDF Registration for ${object.name} Verified!</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear INSETA Stakeholder,<br/> <br/>
+                        A registration for an SDF ${object.first_name} ${object.last_name} ${object.id_no or ''} with reference number ${object.reference} 
+                        has been verified!. <br/> <br/>
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+        </record>
+
+       <record id="mail_template_notify_skills_spec_after_mgr_rework_sdf" model="mail.template">
+            <field name="name">SDF Registration Rework: Skills Specialist</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">registrations@inseta.org.za</field>
+            <field name="subject">SDF Registration Rework for ${object.name} by Skills Manager</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                Dear Skills Specialist,<br/> <br/>
+                A registration for an SDF ${object.first_name} ${object.last_name} ${object.id_no or ''} with reference number ${object.reference} 
+                has been reworked by the Skills Manager ${object.write_uid.name}. Please find below the outcomes: <br/>
+                Findings: <br/> <br/>
+                Required action: <br/>
+                Comments: ${object.rework_comment}
+                <br /><br/>
+                Yours Sincerely,<br />
+            --<br/> ${object.write_uid.name}
+            ]]></field>
+        </record>
+
+        <!--Notify to SDF after skill Manager rejection SDF-->
+       <record id="mail_template_notify_rejection_sdf" model="mail.template">
+            <field name="name">SDF Registration Rejection: SDF</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject"> Your SDF Registration is Rejected.</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.name} <br/>
+                    Your registration as an SDF with reference number  ${object.reference} has been rejected by INSETA. Please find
+                    below the findings: <br/><br/>
+                    ${object.rejection_comment}
+                    <br/> <br/>
+                Yours Sincerely <br/>
+                --<br/>INSETA Skills Division
+
+            ]]></field>
+        </record>
+
+        <!--Notify to Organisation after skill Manager rejection SDF-->
+        <record id="mail_template_notify_organisation_after_rejection_sdf" model="mail.template">
+            <field name="name">SDF Registration Rejection: Organisation</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_employer_contact_email()}</field>
+            <field name="subject">SDF Registration for ${object.name} Rejected!</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear INSETA Stakeholder,<br/> <br/>
+                        Your registration as an SDF with reference number ${object.reference} has been rejected by INSETA. Please find
+                        below the findings:
+                        <br /><br/>
+                        ${object.rejection_comment}
+                        <br/> <br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+        </record>
+
+        <!--Notify to SDF after skill Manager approval SDF-->
+       <record id="mail_template_notify_approval_sdf" model="mail.template">
+            <field name="name">SDF Registration Approval: SDF</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">Congrats! ${object.name}: Your SDF Registration is Approved!.</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.name} <br/> <br/>
+                    Your registration as an SDF with reference number  ${object.reference} has been approved by INSETA.
+                    <br/> <br/>
+                Yours Sincerely <br/>
+                --<br/>INSETA Skills Division
+
+            ]]></field>
+        </record>
+
+        <!--Notify Organisation after skill Manager approval of SDF-->
+       <record id="mail_template_notify_organisation_approval_sdf" model="mail.template">
+            <field name="name">SDF Registration Approval: Organisation</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_employer_contact_email()}</field>
+            <field name="subject">SDF Registration for ${object.name} Approved!</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear INSETA Stakeholder, <br/> <br/>
+                    Your registration as an SDF with reference number ${object.reference} has been approved by INSETA.
+                    <br/> <br/>
+                Yours Sincerely <br/>
+                --<br/>INSETA Skills Division
+            ]]></field>
+        </record>
+
+<!--EXISTING SDF LINKING EMAIL TEMPLATES-->
+
+     <!-- Email sKILL Spec after existing SDF link an organisation -->
+        <record id="mail_template_notify_skills_spec_existing_sdf" model="mail.template">
+            <field name="name">Existing SDF Organisation Application: Skills Spec.</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">registrations@inseta.org.za</field>
+            <field name="subject">New SDF Registration by ${object.sdf_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Skills Specialist,<br/> <br/>
+                        A registration for an SDF ${object.sdf_id.first_name} ${object.sdf_id.last_name} ${object.sdf_id.id_no or ''} with reference number ${object.reference} 
+                        has been submitted. <br/> 
+                        Please log onto the system to verify
+                        
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_notify_existing_sdf" model="mail.template">
+            <field name="name">SDF Organisation Registration: SDF</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.sdf_id.partner_id.email}</field>
+            <field name="subject">${object.sdf_id.name}: Your SDF Registration</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.sdf_id.name or ''},<br/> <br/>
+                        A registration for an SDF with reference number ${object.reference} dated ${object.application_date} is hereby acknowledged. <br/>
+                        The outcome will be communicated thereafter.
+                        <ul>
+                            <li>Company Name: ${object.organisation_id.name}</li>
+                            <li>SDL Number: ${object.organisation_id.sdl_no}</li>
+                            <li>SDF Role: ${object.sdf_role or ''}</li>
+                        </ul>
+             
+                        Herewith your login details: 
+                        <ul>
+                            <li>Username: ${object.sdf_id.user_id.login}</li>
+                            <li>Password: ${object.sdf_id.password}</li>
+                        </ul>
+
+                        Should you require any additional information, please contact INSETA.<br/>
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+     <!-- Email template for "Sending Notification" to SDF employer after registration -->
+        <record id="mail_template_notify_sdf_employer" model="mail.template">
+            <field name="name">SDF Registration: Employer</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.organisation_id.get_contact_email()}</field>
+            <field name="subject">${object.organisation_id.name}: SDF Registration for ${object.sdf_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                 
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear INSETA Stakeholder,<br/> <br/>
+                        A registration for an SDF with reference number ${object.reference} is hereby acknowledged.
+                        The outcome will be communicated thereafter.
+                        <ul>
+                            <li>Company Name: ${object.organisation_id.name}</li>
+                            <li>SDL Number: ${object.organisation_id.sdl_no}</li>
+                            <li>SDF Role: ${object and object.sdf_role or ''}</li>
+                        </ul>
+                        Should you require any additional information, please contact INSETA.
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_notify_sdf_rework_existingsdf" model="mail.template">
+            <field name="name">Existing SDF Registration Rework: SDF and Skills Admin</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.sdf_id.get_skills_admin_email()}</field>
+            <field name="subject">Rework SDF Registration for ${object.sdf_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear,<br/> <br/>
+                        Your registration has been verified by INSETA, please find below the outcomes: <br /><br/>
+                        Findings: <br/> 
+                        Required action: <br/>
+                        Comments: ${object.rework_comment}
+                        <br /><br/>
+                        Kindly note that you up until end of business day on the ${object.rework_expiration_date} to
+                        respond to this query. Failure to do so may result to your registration being rejected.
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_notify_skills_spec_after_rework_existingsdf" model="mail.template">
+            <field name="name">Existing SDF Registration Reworked</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">registrations@inseta.org.za</field>
+            <field name="subject">SDF Registration for ${object.sdf_id.name} Reworked</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Skills Specialist, <br/> <br/>
+                        A registration for an SDF ${object.sdf_id.first_name} ${object.sdf_id.last_name} ${object.sdf_id.id_no or ''} with reference number ${object.reference} 
+                        has been reworked <br/>
+
+                        Click the button below to recommend <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.organisation_id.id}&amp;model=inseta.organisation&amp;view_type=form&amp;cids=1&amp;menu_id=">Recommend</a>
+                        Yours Sincerely <br/>
+                        --<br/> ${object.sdf_id.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+        <record id="mail_template_notify_manager_after_verify_existing_sdf" model="mail.template">
+            <field name="name">Existing SDF Notify Manager After Recommendation: Skills Spec.</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.sdf_id.get_skills_mgr_email()}</field>
+            <field name="subject">Approval Request: SDF Registration by ${object.sdf_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.sdf_id.get_skills_mgr() and object.sdf_id.get_skills_mgr()[0].name or '' },<br/> <br/>
+                        A registration for an SDF ${object.sdf_id.name} ${object.sdf_id.id_no or ''} with reference number ${object.reference or ''} 
+                        has been verified. <br/> 
+                        Please log onto the system to approve
+                        <br/>
+                        Click the button below to approve <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.organisation_id.id}&amp;model=inseta.organisation&amp;view_type=form&amp;cids=1&amp;menu_id=">Approve</a>
+                        
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.write_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+        <record id="mail_template_notify_skills_spec_after_mgr_rework_existingsdf" model="mail.template">
+            <field name="name">Existing SDF Registration Rework by Skills mgr</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.sdf_id.partner_id.email},registrations@inseta.org.za</field>
+            <field name="subject">SDF Registration Rework for ${object.sdf_id.name} by Skills Manager</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.sdf_id.name or ''},<br/> <br/>
+                        A registration for an SDF ${object.sdf_id.name} ${object.sdf_id.id_no or ''} with reference number ${object.reference} 
+                        has been reworked by the Skills Manager ${object.write_uid.name}. Please find below the outcomes: <br/>
+                        Findings: <br/> <br/>
+                        Required action: <br/>
+                        Comments: ${object.rework_comment_mgr}
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/> ${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.write_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+        <record id="mail_template_notify_approval_existingsdf" model="mail.template">
+            <field name="name">Existing SDF: Registration Approval by Skills mgr</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.sdf_id.partner_id.email}</field>
+            <field name="subject">Your SDF Registration is Approved!.</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.sdf_id.name or ''},<br/> <br/>
+                        Your registration as an SDF with reference number  ${object.reference} has been approved by INSETA.<br/><br/>
+                        Please find attached the approval letter.
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/> ${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.write_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="report_template" ref="inseta_skills.action_sdf_approval_letter_report"/>
+            <field name="report_name">${object.reference}_${(object.sdf_id.name or '').replace('/','_')}_approval_letter</field>
+        </record>
+
+
+        <record id="mail_template_notify_rejection_existingsdf" model="mail.template">
+            <field name="name">Existing SDF: Registration Rejection by Skills mgr</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.sdf_id.partner_id.email}</field>
+            <field name="subject">Your SDF Registration is Rejected.</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.sdf_id.name or ''},<br/> <br/>
+                        Your registration as an SDF with reference number  ${object.reference} has been rejected by INSETA. Please find
+                        below the findings: <br/><br/>
+                        <strong>${object.rejection_comment}</strong>
+                        <br /><br/>
+                        Attached herewith is the rejection letter.
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.write_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="report_template" ref="inseta_skills.action_sdf_rejection_letter_report"/>
+            <field name="report_name">${object.reference}_${(object.sdf_id.name or '').replace('/','_')}_rejection_letter</field>
+        </record>
+
+
+<!--WSP/ATR EMAIL TEMPLATES -->
+       <record id="mail_template_notify_wsp_submit_sdf" model="mail.template">
+            <field name="name">WSP/ATR Submission: SDF</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${(object.sdf_id.email or '')|safe}</field>
+            <field name="subject">WSP/ATR Submission for ${object.organisation_id.name}</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.sdf_id.partner_id.name or ''} <br/> <br/>
+                    Thank you for submitting the WSP and ATR for the financial year ${object.financial_year_id.name}. Your report will be evaluated by
+                    INSETA and the outcome will be communicated thereafter.
+                    <br/> <br/>
+                Yours Sincerely <br/>
+                --<br/>INSETA Skills Division
+            ]]></field>
+        </record>
+
+       <record id="mail_template_notify_wsp_submit_skilladmin" model="mail.template">
+            <field name="name">WSP/ATR Submission: Skill Admin</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${'skills@inseta.org.za'|safe}</field>
+            <field name="partner_to">${False}</field>
+            <field name="subject">WSP/ATR Submission for ${object.organisation_id.name}</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Skills Admin, <br/> <br/>
+                    A WSP and ATR has been submitted by the SDF ${object.sdf_id.name or ''} ${object.sdf_id.id_no or ''} for the financial period
+                    ${object.financial_year_id.name}. Please log onto the system to validate.
+                    <br/> <br/>
+                Yours Sincerely <br/>
+                --<br/>INSETA Skills Division
+            ]]></field>
+        </record>
+
+       <record id="mail_template_notify_wsp_reworked_sdf" model="mail.template">
+            <field name="name">WSP/ATR Reworked: SDF</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${'skills@inseta.org.za'|safe}</field>
+            <field name="partner_to">${False}</field>
+            <field name="subject">WSP/ATR reworked by SDF - ${object.sdf_id.name}</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Skills Admin, <br/> <br/>
+                    A WSP and ATR with reference no ${object.name} has been reworked by the SDF ${object.sdf_id.name or ''} ${object.sdf_id.id_no or ''} for the financial period
+                    ${object.financial_year_id.name}. Please log onto the system to validate.
+                    <br/> <br/>
+                Yours Sincerely <br/>
+                --<br/>INSETA Skills Division
+            ]]></field>
+        </record>
+
+
+        <record id="mail_template_notify_wsp_rework_sdf2" model="mail.template">
+            <field name="name">WSP/ATR Rework: SDF</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.sdf_id.partner_id.email}</field>
+            <field name="subject">${object.organisation_id.sdl_no}: ${object.financial_year_id.name} Workplace Skills Plan (ATR) and Annual Training Report (ATR) has been queried</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear INSETA Stakeholder,<br/> <br/>
+                        Thank you for submitting the workplace skills plan and annual training report for the current fiscal year ${object.financial_year_id.name}. 
+                        Your report and plan have been evaluated and queried by INSETA, kindly find below the findings: <br /><br/>
+                        <strong>Findings:</strong> <br/>
+                        <ul>
+                            % if object.evaluation_ids and object.evaluation_ids[0].authorisation_page == 'Query': 
+                                <li>Authorisation Page: ${object.evaluation_ids and object.evaluation_ids[0].authorisation_page_noncompliance_reason or ''}</li>
+                            % elif object.evaluation_ids and object.evaluation_ids[0].bank_confirmation == 'Query':
+                                <li>Bank Confirmation: ${object.evaluation_ids and object.evaluation_ids[0].bank_confirmation_noncompliance_reason or ''}</li>
+                            % elif object.evaluation_ids and object.evaluation_ids[0].bee_certificate == 'Query':
+                                <li>BEE Certificate: ${object.evaluation_ids and object.evaluation_ids[0].bee_certificate_noncompliance_reason or ''}</li>
+                            % elif object.evaluation_ids and object.evaluation_ids[0].fsp_license == 'Query':
+                                <li>FSP License: ${object.evaluation_ids and object.evaluation_ids[0].fsp_license_noncompliance_reason or ''}</li>
+                            % endif
+                        </ul>
+                        <strong>Required action:</strong> <br/>
+                        <ul>
+                            <li>Comments: ${object.evaluation_ids and object.evaluation_ids[0].comment or ''}</li>
+                        </ul>
+                        <br /><br/>
+                        Kindly note you have 10 working days to respond to this query,   
+                        % if object.organisation_id.levy_status == "Levy Paying" : 
+                            failure to respond will result to your WSP and ATR being rejected and forfeit your 20% mandatory grant for the current fiscal year. 
+                        % else : 
+                            failure to respond will result to your WSP and ATR being rejected 
+                        % endif
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <!--skill admin recommends wsp submission to skill spec -->
+       <record id="mail_template_notify_wsp_recommend_skillspec" model="mail.template">
+            <field name="name">WSP/ATR Recommendation: Skill Specialist</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">registrations@inseta.org.za</field>
+            <field name="subject">WSP/ATR recommendation for ${object.organisation_id.name}</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Skills Specialist, <br/> <br/>
+                    A WSP and ATR has been ${object.evaluation_ids[0].state} for the SDF ${object.sdf_id.name or ''} ${object.sdf_id.id_no or ''}
+                    for the financial period ${object.financial_year_id.name}. Please log onto the system to assess.
+                    <br/> <br/>
+                Yours Sincerely <br/>
+                --<br/>${object.write_uid.name}
+            ]]></field>
+        </record>
+
+        <!--skill specialist reworks wsp submission to skill admin -->
+        <record id="mail_template_notify_wsp_rework_skilladmin" model="mail.template">
+            <field name="name">WSP/ATR Rework: Skill Admin</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">skills@inseta.org.za</field>
+            <field name="subject">Attn Skills Admin: Rework for WSP Submission for ${object.organisation_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Skills Admin,<br/> <br/>
+                        A WSP and ATR has been queried for the SDF ${object.sdf_id.name or ''} ${object.sdf_id.id_no or ''} for the financial period
+                        ${object.financial_year_id.name}. Please log onto the system to correct.
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <!--skill specialist recommends wsp submission to skill manager -->
+       <record id="mail_template_notify_wsp_recommend_skillmgr" model="mail.template">
+            <field name="name">WSP/ATR Recommendation: Skills Manager</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_skill_managers_email()}</field>
+            <field name="subject">Attention Skills Manager: WSP/ATR recommendation for ${object.organisation_id.name}</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.get_skills_mgr() and object.get_skills_mgr()[0].name or ''}, <br/> <br/>
+                    A WSP and ATR has been
+                    % if object.evaluation_ids[0].state == "Recommended_For_Approval": 
+                        recommended for approval
+                    % else : 
+                        recommended for rejection
+                    % endif
+                    for the SDF ${object.sdf_id.name or ''} ${object.sdf_id.id_no or ''}
+                    for the financial period ${object.financial_year_id.name}. Please log onto the system to assess.
+                    <br/> <br/>
+                Yours Sincerely <br/>
+                --<br/>${object.write_uid.name}
+            ]]></field>
+        </record>
+
+        <!--skill mgr reworks wsp submission to skill skill spec -->
+        <record id="mail_template_notify_wsp_rework_skillspec" model="mail.template">
+            <field name="name">WSP/ATR Rework: Skill Specialist</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">registrations@inseta.org.za</field>
+            <field name="subject">Attn SKills Admin: Rework for WSP Submission for ${object.organisation_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Skills Admin,<br/> <br/>
+                        A WSP and ATR has been queried for the SDF ${object.sdf_id.name or ''} ${object.sdf_id.id_no or ''} for the financial period
+                        ${object.financial_year_id.name}. Please log onto the system to correct.
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+        <!--WSP rejection email -->
+        <record id="mail_template_notify_wsp_rejection_sdf" model="mail.template">
+            <field name="name">WSP/ATR Rejection: SDF</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.sdf_id.partner_id.email}</field>
+            <field name="subject">WSP Rejected for ${object.organisation_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.sdf_id.name or 'INSETA Stakeholder'},<br/> <br/>
+                        Thank you for submitting the WSP and ATR for the financial year ${object.financial_year_id.name}. Your report has been evaluated
+                        by INSETA and has been rejected. Please find below the outcomes: <br /><br/>
+                        Findings: <br/> 
+                        Required action: <br/>
+                        Comments: ${object.evaluation_ids and object.evaluation_ids.filtered(lambda e: e.state == "Rejected")[0].comment}
+                        <br /><br/>
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="report_template" ref="inseta_skills.action_wspatr_rejection_letter_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}_rejection_letter</field>
+        </record>
+
+
+        <!--WSP Approval email -->
+        <record id="mail_template_notify_wsp_approval_sdf" model="mail.template">
+            <field name="name">WSP/ATR Approval: SDF</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.sdf_id.partner_id.email}</field>
+            <field name="subject">WSP Approval for ${object.organisation_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.sdf_id.name or ''},<br/> <br/>
+                        Thank you for submitting the WSP and ATR for the financial year ${object.financial_year_id.name}. Your report has been evaluated
+                        by INSETA and has been approved.
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="report_template" ref="inseta_skills.action_wspatr_approval_letter_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}_approval_letter</field>
+        </record>
+
+
+        <!--DHET Levy/ Non levy Employer Update Rework Notification-->
+        <record id="mail_template_notify_dhet_levyemployer_rework_sdf" model="mail.template">
+            <field name="name">DHET Employer Update Rework: SDF</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_contact_email()}</field>
+            <field name="subject">Rework Organisation Registration - ${object.trade_name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear INSETA Stakeholder,<br/> <br/>
+                        Your registration has been verified by INSETA, please find below the outcomes: <br /><br/>
+                        Findings: <br/> 
+                        Required action: <br/>
+                        Comments: ${object.rework_comment}
+                        <br /><br/>
+                        Kindly note that you up until end of business day on the ${object.rework_expiration_date} to
+                        respond to this query. Failure to do so may result to your registration being rejected.
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <!--ORGANISATIONS-->
+        <!--email to org. contacts after non levy org registration-->
+        <record id="mail_template_notify_nonlevy_org_contacts" model="mail.template">
+            <field name="name">Non-Levy Org Registration: Contacts</field>
+            <field name="model_id" ref="model_inseta_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_contact_email()}</field>
+            <field name="subject">Attn ${object.name}: Your Registration</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear INSETA Stakeholder,<br/> <br/>
+                        Your registration dated ${object.create_date.strftime('%B %d, %Y')} is hereby acknowledged. The outcome will be communicated to you thereafter. <br/>
+                        <ul>
+                            <li>Company Name: ${object.trade_name}</li>
+                            <li>
+                            % if object.levy_status == "Levy Paying" : 
+                                Reference Number ${object.sdl_no} 
+                            % else : 
+                                N Number ${object.sdl_no} 
+                            % endif
+                            </li>
+                        </ul>
+                        Herewith your login details: 
+                        <ul>
+                            <li>Username: ${object.user_id.login}</li>
+                            <li>Password: ${object.password}</li>
+                        </ul>
+
+                        Should you require any additional information, please contact INSETA.<br/>
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+        <!--email to skill admin after non levy org registration-->
+        <record id="mail_template_notify_nonlevy_org_skilladmin" model="mail.template">
+            <field name="name">Non-Levy Org Registration: Skill Admin</field>
+            <field name="model_id" ref="model_inseta_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">skills@inseta.org.za</field>
+            <field name="subject">Skill Admin: Organisation Registration for ${object.trade_name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Skills Admin,<br/> <br/>
+                        A registration for an Organization 
+                        <ul>
+                            <li>Company Name: ${object.trade_name}</li>
+                            <li>
+                            % if object.levy_status == "Levy Paying" : 
+                                Reference Number ${object.sdl_no} 
+                            % else : 
+                                N Number ${object.sdl_no} 
+                            % endif
+                            </li>
+                        </ul>
+                        
+                        has been submitted. Please log onto the system to verify.
+                        <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.organisation&amp;view_type=form">Verify</a>
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+    
+        <!--email to skill manager after non levy org verification -->
+        <record id="mail_template_notify_nonlevy_org_afterverify_skillmgr" model="mail.template">
+            <field name="name">Non-Levy Org Registration: Skill Manager</field>
+            <field name="model_id" ref="model_inseta_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_skill_mgr_email()}</field>
+            <field name="subject">Attention Skills Planning Manager: Registration for ${object.trade_name} Verified!</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.get_skills_mgr() and object.get_skills_mgr()[0].name or 'Adeline'}<br/> <br/>
+                        A registration for an Organization 
+                        <ul>
+                            <li>Company Name: ${object.trade_name}</li>
+                            <li>
+                            % if object.levy_status == "Levy Paying" : 
+                                Reference Number ${object.sdl_no} 
+                            % else : 
+                                Reference Number ${object.sdl_no} 
+                            % endif
+                            </li>
+                        </ul>
+                        
+                        has been verified.  Please log onto the system to approve.
+                        <br/>
+                        Click the button below to approve <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.organisation&amp;view_type=form">Approve</a>
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/> ${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.write_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+       <!--Org Approval email -->
+        <record id="mail_template_notify_org_approval_sdf" model="mail.template">
+            <field name="name">Organisation Approval: SDF</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_contact_email()}</field>
+            <field name="subject">Organisation Approval for ${object.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear INSETA Stakeholder,<br/> <br/>
+                        A registration for an organization ${object.trade_name} with 
+                        % if object.levy_status == "Levy Paying" : 
+                            Reference Number ${object.sdl_no} 
+                        % else : 
+                            Reference Number ${object.sdl_no} 
+                        % endif
+                        has been approved by INSETA.
+                        <br/><br/>
+                        Attached Herewith is the approval letter <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="report_template" ref="inseta_skills.action_organisation_approval_letter_report"/>
+            <field name="report_name">${(object.sdl_no or '').replace('/','_')}_approval_letter</field>
+        </record>
+
+
+       <!--Org Rejection email -->
+        <record id="mail_template_notify_org_rejection_sdf" model="mail.template">
+            <field name="name">Organisation Rejection: SDF</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_contact_email()}</field>
+            <field name="subject">Organisation Registration Rejection for ${object.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear INSETA Stakeholder,<br/> <br/>
+                        A registration for an organization ${object.trade_name} with 
+                        % if object.levy_status == "Levy Paying" : 
+                            Reference Number ${object.sdl_no} 
+                        % else : 
+                            Reference Number ${object.sdl_no} 
+                        % endif
+                        has been rejected by INSETA. Please find below the findings: <br /><br/>
+                        Findings: <br/> 
+                        Required action: <br/>
+                        Comments: ${object.rejection_comment} <br/><br/>
+                        Attached Herewith is the rejection letter <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>INSETA Skills Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="report_template" ref="inseta_skills.action_organisation_rejection_letter_report"/>
+            <field name="report_name">${(object.sdl_no or '').replace('/','_')}_rejection_letter</field>
+        </record>
+
+
+       <record id="mail_template_notify_skills_admin_after_mgr_rework_org" model="mail.template">
+            <field name="name">Organisation Registration Rework: Skills Admin</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_skill_admin_email()}</field>
+            <field name="subject">Attn: Organisation Registration Rework for ${object.trade_name} by Skills Manager</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_organisation"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                Dear Skills Admin,<br/> <br/>
+                A registration for an Organisation ${object.trade_name} with N number ${object.sdl_no} 
+                has been reworked by the Skills Manager ${object.write_uid.name}. Please find below the outcomes: <br/>
+                Findings: <br/> <br/>
+                Required action: <br/>
+                Comments: ${object.rework_comment}
+                <br /><br/>
+                Yours Sincerely,<br />
+            --<br/> ${object.write_uid.name}
+            ]]></field>
+        </record>
+
+        <!-- Email template for "Sending Notification Reminder" to Organisation for rework -->
+        <record id="mail_template_remind_org_rework" model="mail.template">
+            <field name="name">Org Registration Rework Reminder</field>
+            <field name="model_id" ref="model_inseta_organisation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_contact_email()}</field>
+            <field name="subject">Attn ${object.trade_name}: Organisation Registration Rework Reminder</field>
+            <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+            <tbody>
+                <!-- CONTENT -->
+                <tr>
+                    <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                            <tr><td valign="top" style="font-size: 13px;">
+                                <div>
+                                    Dear INSETA Stakeholder,<br/> <br/>
+                                    Your Organisation registration with
+                                    % if object.levy_status == "Levy Paying" : 
+                                        Reference Number ${object.sdl_no} 
+                                    % else : 
+                                        Reference Number ${object.sdl_no} 
+                                    % endif
+                                    is waiting to be reworked. Kindly address and submit the rework.<br/>
+
+                                    <br/><br/>
+                                    Yours Sincerely,<br />
+                                    --<br/>INSETA Skills Division
+                                </div>
+                            </td></tr>
+                            <tr><td style="text-align:center;">
+                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                            </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </td></tr>
+            </table>
+        </field>
+        <field name="lang">${object.user_id.partner_id.lang}</field>
+        <field name="auto_delete" eval="False"/>
+        </record>
+
+
+       <!--Organisation Linkage-->
+       <record id="mail_template_org_linkage_submit" model="mail.template">
+            <field name="name">Organisation Linkage submit: Skills Admin</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.organisation_id.get_skill_spec_email()}</field>
+            <field name="subject">Child organisation linking request</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_organisationlinkages"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                Dear Skills Specialist,<br/> <br/>
+                A request for child organisation linking for an Organisation ${object.organisation_id.trade_name} with SDL number ${object.organisation_id.sdl_no} 
+                has been submitted.
+                <br /><br/>
+                Yours Sincerely,<br />
+            --<br/> ${object.write_uid.name}
+            ]]></field>
+        </record>
+
+       <record id="mail_template_org_linkage_approved" model="mail.template">
+            <field name="name">Organisation Linkage Approved: Skills Spec</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.organisation_id.get_contact_email()}</field>
+            <field name="subject">Child organisation linking Approved</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_organisationlinkages"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                Dear INSETA Stakeholder,<br/> <br/>
+                Your request for linking ${object.childorganisation_id.trade_name} as child organisation to the Organisation ${object.organisation_id.trade_name} with SDL number ${object.organisation_id.sdl_no} 
+                has been approved.
+                <br /><br/>
+                Yours Sincerely,<br />
+            --<br/> ${object.write_uid.name}
+            ]]></field>
+        </record>
+
+       <record id="mail_template_org_linkage_rework" model="mail.template">
+            <field name="name">Organisation Linkage Rework: Skills Spec</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.organisation_id.get_skill_admin_email()}</field>
+            <field name="subject">Child organisation linking Approved</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_organisationlinkages"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                Dear Skills Admin,<br/> <br/>
+                A child organisation linking for ${object.organisation_id.trade_name} with SDL number ${object.organisation_id.sdl_no} 
+                has been reworked by the Skills Spectialist ${object.write_uid.name}. Please find below the outcomes: <br/>
+                Findings: <br/> <br/>
+                Required action: <br/>
+                Comments: ${object.rework_comment}
+                <br /><br/>
+                Yours Sincerely,<br />
+            --<br/> ${object.write_uid.name}
+            ]]></field>
+        </record>
+
+       <!-- Email template for "Sending Notification Reminder" to Organisation for rework -->
+        <record id="mail_template_remind_org_link_termination" model="mail.template">
+            <field name="name">Org Registration Rework Reminder</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_organisationlinkages"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.organisation_id.get_contact_email()}</field>
+            <field name="subject">Reminder: Child Organisation Termination</field>
+            <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+            <tbody>
+                <!-- CONTENT -->
+                <tr>
+                    <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                            <tr><td valign="top" style="font-size: 13px;">
+                                <div>
+                                    Dear INSETA Stakeholder,<br/> <br/>
+                                    A child organisation linking for ${object.organisation_id.trade_name} with SDL number ${object.organisation_id.sdl_no} will be terminated in 10 days.<br/>
+
+                                    <br/><br/>
+                                    Yours Sincerely,<br />
+                                    --<br/>INSETA Skills Division
+                                </div>
+                            </td></tr>
+                            <tr><td style="text-align:center;">
+                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                            </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </td></tr>
+            </table>
+        </field>
+        <field name="lang">${object.user_id.partner_id.lang}</field>
+        <field name="auto_delete" eval="False"/>
+        </record>
+
+       <record id="mail_template_org_linkage_terminated" model="mail.template">
+            <field name="name">Organisation Linkage terminated</field>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_parent_child_sdf_emails()}</field>
+            <!-- <field name="email_cc">${'skills@inseta.org.za'|safe}</field> -->
+            <field name="subject">Child organisation linking Termintaed</field>
+            <field name="model_id" ref="inseta_skills.model_inseta_organisationlinkages"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                Dear SDF,<br/> <br/>
+                A request for child organisation termination for an Organisation ${object.childorganisation_id.legal_name} with SDL number ${object.organisation_id.sdl_no} has been actioned and the organisation has been terminated.
+                <br /><br/>
+                Yours Sincerely,<br />
+            --<br/> ${object.write_uid.name}
+            ]]></field>
+        </record>
+ 
+    </data>
+</odoo> 

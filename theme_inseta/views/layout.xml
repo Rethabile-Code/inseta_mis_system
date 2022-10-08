@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+
+        <template id="template_header_default_oe_structure_header_default_1" inherit_id="website.template_header_default" name="Template Header Default (oe_structure_header_default_1)">
+            <xpath expr="//*[hasclass('oe_structure')][@id='oe_structure_header_default_1']" position="replace">
+                <div class="oe_structure oe_structure_solo" id="oe_structure_header_default_1">
+                    <section class="s_text_block" data-snippet="s_text_block" data-name="Text">
+                        <div class="container">
+                            <!-- <a href="/requests" class="ml-4">Helpdesk</a>  -->
+
+                            <div class="dropdown show">
+                                <a class="btn btn-primary ml-4 mr-4 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Applications
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="/sdf-registration">SDF Registration</a>
+                                    <a class="dropdown-item" href="/nonlevy-registration">Non-Levy Organisation registration</a>
+                                    <!-- <a class="dropdown-item" groups="base.group_user" href="/provider-accreditation">Provider Accreditation</a>
+                                    <a class="dropdown-item" groups="base.group_user" href="/assessor-registration">Assessor Registration</a>
+                                    <a class="dropdown-item" groups="base.group_user" href="/moderator-registration">Moderator Registration</a> -->
+
+                                    <a class="dropdown-item" href="/provider-accreditation">Provider Accreditation</a>
+                                    <a class="dropdown-item" href="/assessor-registration">Assessor Registration</a>
+                                    <a class="dropdown-item" href="/moderator-registration">Moderator Registration</a>
+                                    <a class="dropdown-item" href="/hei-rep-registration">HEI Representative Registration</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </xpath>
+        </template>
+        <!-- Home page  -->
+        <template id="homepage" inherit_id="website.homepage" name="Home Page">
+            <xpath expr="//div[@id='wrap']" position="replace">
+                <div id="wrap">
+                     <div class="oe_structure">
+                        <section id="myCarousel" class="s_carousel s_carousel_default carousel slide" data-interval="10000">
+                            <!-- Content -->
+                            <div class="carousel-inner">
+
+                                <div class="carousel-item banner-area py-7 active" data-name="Slide 1">
+                                    <!-- Content -->
+                                    <div class="container">
+                                        <div class="row  align-items-center">
+                                            <div class="col-md-12 col-lg-7 text-center text-lg-left">
+                                                <div class="main-banner">
+                                                    <!-- Heading -->
+                                                    <h1 class="display-4 mb-4 font-weight-normal">
+                                                        INSETA MIS
+                                                    </h1>
+
+                                                    <!-- Subheading -->
+                                                    <p class="lead mb-4">
+                                                        developing and implementing the best skills and educational solutions for the insurance sector and its employees.
+                                                    </p>
+
+                                                    <!-- Button -->
+                                                    <p class="mb-0">
+                                                        <a href="/sdf-registration" target="_blank" class="btn btn-primary btn-circled">
+                                                            Register New SDF
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-5 d-none d-lg-block">
+                                                <div class="banner-img-block">
+                                                    <img src="/theme_inseta/static/img/inseta-img3.png" alt="banner-img"
+                                                        class="img-fluid"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- / .row -->
+                                    </div>
+                                    <!-- / .container -->
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+        <!--Footer-->
+        <template id="theme_footer" inherit_id="website.footer_custom">
+            <xpath expr="//div[@id='footer']" position="replace">
+                <div id="footer" class="oe_structure oe_structure_solo">
+                    <section class="s_text_block pt64 pb32">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="footer-widget">
+                                        <!-- Brand -->
+                                        <a href="/" class="logo">
+                                            <span t-field="website.logo" class="" t-options="{'widget': 'image'}" role="img"
+                                                t-att-aria-label="'Logo of %s' % website.name"
+                                                t-att-title="website.name"/>
+                                        </a>
+                                        <p class="footer-copy ">
+                                            Copyright &amp;copy; 2022 <span t-field="res_company.name" itemprop="name">INSETA</span> All rights reserved.
+                                        </p>
+
+                                        <div>
+                                            <t t-call="website.language_selector"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="footer-widget">
+                                        <h3>Contact</h3>
+
+                                        <p>
+                                           <span class="fa fa-map-marker" /> Ground Floor,
+                                            37 Empire Road Parktown, Johannesburg <br/>
+                                            <span class="fa fa-phone" /> Tel: 011 381 8900 Call
+                                        </p>                                      
+                                    </div>
+                                </div>
+                               
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="footer-widget">
+                                        <h3>About</h3>
+                                        <!-- Links -->
+                                        <ul class="footer-links ">
+                                            <li>
+                                                <a href="/requests">
+                                                    Need Help?
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://inseta.org.za/about-inseta/" target="_blank">
+                                                    About Us
+                                                </a>
+                                            </li>
+                        
+                                            <li>
+                                                <a href="https://inseta.org.za/contact-us/" target="_blank">
+                                                    Contact
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!--  Page Scroll to Top  -->
+
+                <a class="scroll-to-top js-scroll-trigger" href="#top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+                <section class="py-2">
+                    <div class="container">
+                        <div class="row text-right pt-5">
+                            <div class="col-lg-12">
+                                <!-- Copyright -->
+                                <!-- <p class="footer-copy ">
+                                    Copyright &amp;copy; 2021 <span t-field="res_company.name" itemprop="name">INSETA</span> All rights reserved.
+                                </p> -->
+                                <div class="o_brand_promotion">
+                                        <a target="_blank"
+                                            href="https://www.qisolutions.co.za/"
+                                            class="badge badge-light">
+                                            <span style="height: 1em; vertical-align: baseline;">Powered by QI Solutions</span>
+                                        </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / .row -->
+                    </div>
+                </section>
+            </xpath>
+        </template>
+        <template id="theme_brand_promotion" inherit_id="website.brand_promotion">
+            <xpath expr="//div[hasclass('o_brand_promotion')]" position="replace">
+                <div class="o_brand_promotion">
+                        <a target="_blank"
+                            href="https://www.qisolutions.co.za/"
+                            class="badge badge-light">
+                            <span style="height: 1em; vertical-align: baseline;">Powered by QI Solutions</span>
+                        </a>
+                </div>
+            </xpath>
+        </template>
+        <template id="theme_frontend_footer" inherit_id="web.frontend_layout">
+            <xpath expr="//div[hasclass('o_footer_copyright')]" position="replace"></xpath>
+        </template>
+    </data>
+</odoo>

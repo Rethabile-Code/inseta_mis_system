@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="etqa_data_import_wizard" model="ir.ui.view">
+        <field name="name">inseta.etqa.data.import.wizard.form</field>
+        <field name="model">inseta.etqa.data.import.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Message">
+                <div class="oe_title">
+                    <h1>
+                        ETQA Data Import
+                    </h1>
+                </div>
+                <div class='alert alert-info' role="alert">
+                    Downlaod sample  import template <a href='#'> here </a> <br/>
+                    Allowed file types: .xls, .xlsx
+                </div>
+                <newline/>
+                <group>
+                    <group>
+                        <field name="file_type" />
+                        <field name="file" filename="file_name"/>
+                        <field name="file_name" readonly="1" force_save="1"/> 
+                        <field name="import_type" required="1"/>
+                    </group>
+                    <group></group>
+                </group>
+                <div class="oe_clear"/>
+                <separator colspan="10" />
+                <footer>
+                    <button special="cancel" string="Close" />
+                    <button name="action_import" type="object" class="oe_highlight" string="Import" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--report-->
+    <record id="action_wizard_etqa_data_import" model="ir.actions.act_window">
+        <field name="name">Import </field>
+        <field name="res_model">inseta.etqa.data.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id ="menu_import_etqa_data" name="Import ETQA Data" sequence="19" parent="inseta_migration_module.menu_import_inseta_data" action="action_wizard_etqa_data_import"/>
+
+
+</odoo>

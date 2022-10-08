@@ -1,0 +1,162 @@
+<odoo>
+  <data>
+    <report 
+        id="programmes_skill_learnership_certificate_report"
+        model="inseta.skill.learnership"
+        string="Skills certificate"
+        report_type="qweb-pdf"
+        name="inseta_etqa.container_programmes_skill_learnership_certificate_template_id"
+        file="inseta_etqa.container_programmes_skill_learnership_certificate_template_id"
+        paperformat="inseta_etqa.paperformat_moderator_letter"
+        menu="True"
+
+        /> 
+
+    <template id="container_programmes_skill_learnership_certificate_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="details">
+                <t t-call="inseta_etqa.skill_learnership_certificate_template_id"/>
+            </t>
+        </t>
+    </template>
+ 
+    <!-- MAIN skill_ LAYOUT -->
+    <!-- MAIN ASSESSMENT LAYOUT -->
+    <template id="skill_learnership_certificate_template_id">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 18px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+
+                    aside {
+                        display: block;
+                        position: relative;
+                        margin: 40px 0;
+                        }
+
+                    aside h3 {
+                        font: bold 12px Sans-Serif;
+                        letter-spacing: 2px;
+                        text-transform: uppercase;
+                        background: #369;
+                        color: #fff;
+                        padding: 5px 10px;
+                        margin: 0 0 10px 0;
+                        line-height: 24px;
+                        }
+
+                        /* Class name via Modernizr */
+                        .csstransforms aside {
+                        border-left: 34px solid #369;
+                        padding-left: 10px;
+                        }
+                        .csstransforms aside h3 {
+                        /* Abs positioning makes it not take up vert space */
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+
+                        /* Border is the new background */
+                        background: none;
+
+                        /* Rotate from top left corner (not default) */
+                        transform-origin: 0 0;
+                        transform: rotate(90deg);
+                        }
+                </style>
+                <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                <hr/> 
+                
+                <br/><br/><br/>
+                <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE OF ACHIEVEMENT</strong></h1>
+                <br/><br/><br/>
+                <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="details.learner_id.name"/></strong>.</h2> </p>
+                <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="details.learner_id.id_no"/></strong></h3> </p>
+                <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                    has satisfy the requirements<br/> for the successful completion of. 
+                </p>
+                <t t-if='details.skill_programme_id'> 
+                    <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="details.skill_programme_id.name"/> </p><br/>
+                    <div>
+                        <div class="signleft2">
+                            <strong>at.<span t-field="details.skill_programme_id.nqflevel_id.name"/> </strong><br/>
+                        </div>
+                        <div class="signright2">
+                            <strong>NLRD No.<span t-field="details.skill_programme_id.programme_code"/> </strong><br/>
+                        </div>
+                    </div>
+                </t>
+                <aside>
+                    <h6>Reprint</h6>
+                </aside>
+                <div>
+                    <div class="signleft">
+                        _______________________<br/>
+                        CHIEF EXECUTIVE OFFICER<br/>
+                    </div>
+                    <div class="signright">
+                        _______________________<br/>
+                        Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                    </div>
+                </div> 
+                <div>
+                    <div class="signleft">
+                        <h6>Provider Accreditation Number: <span t-field="details.provider_id.provider_accreditation_number"/></h6>
+                    </div>
+                    <div class="signright">
+                        <h6>Name: <span t-field="details.provider_id.name"/></h6><br/>
+                    </div>
+                </div> 
+                <p/><p/>
+
+            </div>
+        </t>
+    </template>
+  </data>
+</odoo>

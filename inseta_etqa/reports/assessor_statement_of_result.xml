@@ -1,0 +1,156 @@
+<odoo>
+  <data>
+
+    <report 
+        id="assessor_result_statement_report"
+        model="inseta.assessor.register"
+        string="Result Statement"
+        report_type="qweb-pdf"
+        name="inseta_etqa.report_assessor_result_statement_template_id"
+        file="inseta_etqa.report_assessor_result_statement_template_id"
+        paperformat="inseta_etqa.paperformat_moderator_letter"
+        menu="False"
+
+        />
+        
+    <template id="report_assessor_result_statement_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="inseta_etqa.assessor_result_statement_template_id"/>
+            </t>
+        </t>
+    </template>
+ 
+    <template id="assessor_result_statement_template_id">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 18px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+                </style>
+                <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center>
+                <hr/> 
+                
+                <br/>
+                <h1 style="text-align: center; font-size: 25px;"><strong>Scope of Assessment</strong></h1>
+                <div class="row">
+                    <div class="col-xs-3" style="font-size: 20px;">
+                            <strong>Name :   <span t-field="o.first_name"/> <span t-field="o.last_name"/></strong><br/>
+                            <strong>National ID Number:   <span t-field="o.id_no"/></strong><br/>
+                            <strong>Assessor Registration Number:  <span t-field="o.id_no"/></strong><br/>
+                            <strong>Assessor Registration Start Date:   <span t-field="o.registration_start_date"/></strong><br/>
+                            <strong>Assessor Registration End Date:   <span t-field="o.registration_end_date"/></strong><br/>
+                            <strong>Date Issued : <span t-raw="time.strftime('%Y-%m-%d')"/> </strong><br/>
+
+                            <p>Please note that the registration start date is subject to the last date of Achievement as started in each qualification. <br/>
+                            Assessors are permitted to access beyond their registration end date or the qualification registration end date (Which ever occurs)
+                            </p>
+                    </div><br/>
+                </div>
+
+                <br/>
+                <table class="table table-condensed">
+                <p> <h2 style="text-align: left;font-family: 'Gabriola';"><strong>Unit standards / Qualification</strong>.</h2> </p>
+                    <thead>
+                        <tr>
+                            <th><strong>NQF LEVEL</strong></th>
+                            <th><strong>CODE</strong></th>
+                            <th><strong>TITLE</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-if='o.unit_standard_ids'> 
+                            <tr t-foreach="o.unit_standard_ids" t-as="unitline">
+                                <td style="white-space: text-nowrap;">
+                                    <span t-esc="unitline.nqflevel_id.name" />
+                                </td>
+                                <td>
+                                    <span t-esc="unitline.code" />
+                                </td>
+                                <td>
+                                    <span t-esc="unitline.name" />
+                                </td>
+                                  
+                            </tr>
+                        </t><br/>
+                        <t t-if='o.qualification_ids'>
+                            <tr t-foreach="o.qualification_ids" t-as="qual">
+                                <td style="white-space: text-nowrap;">
+                                    <span t-esc="qual.nqflevel_id.name" />
+                                </td>
+                                <td style="white-space: text-nowrap;">
+                                    <span t-esc="qual.saqa_id" />
+                                </td>
+                                <td>
+                                    <span t-esc="qual.name" />
+                                </td> 
+                            </tr>
+                        </t>
+                        
+                    </tbody>
+                </table><p/><p/>
+                <p>Please note that the application for re-registration is submitted at least three months after the end date to allow sufficient<br/>
+                time for ETQA evaluation <br/>
+                Please Note: it is your responsibility to confirm the unit standard falling under the qualification for which you are awarded the scope <br/>
+                </p>
+                <p/><p/>
+                <br/><br/>
+                <br/>
+                <div>
+                    <div class="signright">
+                        <img style="height: 60px; width: auto;" src="/inseta_etqa/static/img/etqa_manager.png"/><br/>
+                        _______________________<br/>
+                         ETQA Manager<br/>
+                    </div>
+                </div> 
+                <p/><p/>
+            </div>
+        </t>
+    </template>
+  </data>
+</odoo>

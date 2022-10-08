@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <!--Users Inherit form view-->
+        <record id="view_users_form_popiact" model="ir.ui.view">
+            <field name="name">res.users.form.popiact</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='action_id']" position="after">
+                        <field name="has_agreed_popiact"/>
+                        <span attrs="{'invisible':[('has_agreed_popiact','!=',True)]}">
+                            POPI Act Document  <a href='/mis_popi_act/static/js/templates/POPI_ACT.docx' target="_blank"> <strong>download here</strong> </a> <br/>
+                        </span>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+
+        <record id="view_users_tree_popiact" model="ir.ui.view">
+            <field name="name">res.users.tree</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree  create="0" delete="0" >
+                    <field name="login" string="Username"/>
+                    <field name="name" /> 
+                    <field name="user_email" /> 
+                    <field name="has_agreed_yes_no" string="User has registered?" />
+                    <field name="popiact_date" string="Date of Registration"/> 
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_users_popiact" model="ir.actions.act_window">
+            <field name="name">POPI Act Report</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('has_agreed_popiact','=',True)]</field>
+        </record>
+
+        <record id="action_users_popiact_tree_view" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="mis_popi_act.view_users_tree_popiact"/>
+            <field name="act_window_id" ref="action_users_popiact"/>
+        </record>
+
+        <menuitem id="menu_popiact_report" name="POPI Act Report" action="action_users_popiact" sequence="20" groups="inseta_skills.group_skills_manager,inseta_etqa.group_etqa_evaluating_manager,inseta_dg.group_pmo_manager,inseta_dg.group_spo_manager"/>
+
+    </data>
+</odoo>

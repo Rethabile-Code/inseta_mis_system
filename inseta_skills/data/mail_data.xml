@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_act_pending_verification" model="mail.activity.type">
+            <field name="name">SDF Pending Verification</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="inseta_skills.model_inseta_sdf"/>
+        </record>
+
+        <record id="mail_act_pending_approval" model="mail.activity.type">
+            <field name="name">SDF Pending Approval</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="inseta_skills.model_inseta_sdf"/>
+        </record>
+
+        <record id="mail_act_sdf_rework" model="mail.activity.type">
+            <field name="name">SDF Rework</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="inseta_skills.model_inseta_sdf"/>
+        </record>
+
+        <record id="mail_act_wspatr_rework" model="mail.activity.type">
+            <field name="name">WSP/ATR Rework</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="inseta_skills.model_inseta_wspatr"/>
+        </record>
+
+        <record id="mail_act_employerupdate_rework" model="mail.activity.type">
+            <field name="name">Employer Rework</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="inseta_skills.model_inseta_organisation"/>
+        </record>
+
+
+        <!-- Email Templates -->
+        <!-- <template id="sdf_register_template_rework_reason">
+            <p>Your  SDF Registration has been refused</p>
+            <ul class="o_timeline_tracking_value_list">
+                <li>Reason : <t t-esc="reason"/></li>
+            </ul>
+        </template> -->
+
+    </data>
+</odoo>

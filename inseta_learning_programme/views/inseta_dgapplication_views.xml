@@ -1,0 +1,182 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+
+
+    <record model="ir.ui.view" id="view_dgapplication_form">
+      <field name="name">inseta.dgapplication.form.lp</field>
+      <field name="model">inseta.dgapplication</field>
+      <field name="inherit_id" ref="inseta_dg.view_dgapplication_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//page[@name='dg_evaluation']" position="replace">
+            <page string="DG Evaluation" name="dg_evaluation" groups="inseta_dg.group_desktop_evaluation,
+              inseta_dg.group_pmo_admin,
+              inseta_dg.group_coo,
+              inseta_dg.group_pmo_manager,
+              inseta_learning_programme.group_learning_specialist_id,
+              inseta_learning_programme.group_learning_manager_id,
+              inseta_learning_programme.group_lp_admin_id,
+              inseta_learning_programme.group_intern_admin_id,
+              inseta_learning_programme.group_bursary_administrator_id">
+
+              <button string='Complete Evaluation' states="submit,rework" 
+                confirm="Are you sure u want to complete this evaluation?" 
+                name="dgapplication_evaluate" 
+                type="object" 
+                class="oe_highlight"
+                style="margin-bottom:8px"
+                groups="inseta_dg.group_pmo_admin,
+                  inseta_dg.group_desktop_evaluation,
+                  inseta_learning_programme.group_learning_specialist_id,
+                  inseta_learning_programme.group_lp_admin_id,
+                  inseta_learning_programme.group_intern_admin_id,
+                  inseta_learning_programme.group_bursary_administrator_id" />
+
+              <button name="action_send_to_programme_mgr" 
+                  string="Send Letter to Manager" 
+                  type="object" 
+                  class="oe_highlight" 
+                  states="awaiting_sign1"
+                  confirm="Are you sure you want to manager for signature?" 
+                  groups="inseta_dg.group_pmo_admin,inseta_dg.group_desktop_evaluation,
+                  inseta_learning_programme.group_learning_specialist_id,
+                  inseta_learning_programme.group_lp_admin_id,
+                  inseta_learning_programme.group_intern_admin_id,
+                  inseta_learning_programme.group_bursary_administrator_id" 
+                  style="margin-bottom:8px"/>
+
+              <button name="action_send_to_coo" 
+                  string="Send Letter to COO" 
+                  type="object" 
+                  class="oe_highlight" 
+                  states="awaiting_sign2"
+                  confirm="Are you sure you want to COO for signature?" 
+                  groups="inseta_dg.group_pmo_admin,inseta_dg.group_desktop_evaluation,
+                      inseta_learning_programme.group_learning_specialist_id,
+                      inseta_learning_programme.group_lp_admin_id,
+                      inseta_learning_programme.group_intern_admin_id,
+                      inseta_learning_programme.group_bursary_administrator_id,
+                      inseta_learning_programme.group_learning_manager_id" 
+                  style="margin-bottom:8px"/>
+
+              <button name="action_send_letter_employer" 
+                  string="Send Letter to Employer" 
+                  confirm="Are you sure u want to email this letter to the Employer?"
+                  type="object" 
+                  class="oe_highlight" 
+                  states="signed"
+                  groups="inseta_dg.group_pmo_admin,inseta_dg.group_desktop_evaluation,
+                      inseta_learning_programme.group_learning_specialist_id,
+                      inseta_learning_programme.group_lp_admin_id,
+                      inseta_learning_programme.group_intern_admin_id,
+                      inseta_learning_programme.group_bursary_administrator_id,
+                      inseta_learning_programme.group_learning_manager_id" 
+                  style="margin-bottom:8px"/>
+
+                <button name="action_print_letter" 
+                    string="print Letter(s)" 
+                    class="oe_highlight" 
+                    confirm="Are you sure u want to print the letter(s)?"
+                    type="object" 
+                    states="signed"
+                    groups="inseta_dg.group_pmo_admin,inseta_dg.group_desktop_evaluation,
+                       inseta_learning_programme.group_learning_specialist_id,
+                      inseta_learning_programme.group_lp_admin_id,
+                      inseta_learning_programme.group_intern_admin_id,
+                      inseta_learning_programme.group_bursary_administrator_id,
+                      inseta_learning_programme.group_learning_manager_id" 
+                    style="margin-bottom:8px; margin-left:8px"/>
+                  
+              <field name="evaluation_ids" nolabel="1" 
+                context="{'default_dgapplication_id': active_id, 
+                'form_view_ref':'inseta_dg.dgevaluation_view_form', 
+                'tree_view_ref':'inseta_dg.dgevaluation_view_tree'}" />
+              
+            </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="dgevaluation_view_form" model="ir.ui.view">
+      <field name="name">inseta.dgevaluation.form.lp</field>
+      <field name="model">inseta.dgevaluation</field>
+      <field name="inherit_id" ref="inseta_dg.dgevaluation_view_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//header" position="replace">
+              <header>
+                  <field name="is_ceo_approved" invisible="1" />
+                  <button string='Reset' confirm="Are you sure u want to reset?" name="action_reset" type="object" groups="base.group_system" />
+
+                  <button string='Generate Letter' states="approve,reject" 
+                    confirm="Are you sure u want to generate letter?" 
+                    name="generate_letter" 
+                    type="object" 
+                    class="oe_highlight" 
+                    groups="inseta_dg.group_pmo_admin,
+                      inseta_learning_programme.group_learning_specialist_id,
+                      inseta_learning_programme.group_lp_admin_id,
+                      inseta_learning_programme.group_intern_admin_id,
+                      inseta_learning_programme.group_bursary_administrator_id"/>
+
+                  <button string='Sign Manager' states="awaiting_sign1" 
+                    confirm="Are you sure u want to sign this letter?" 
+                    name="action_sign1" 
+                    type="object" 
+                    class="oe_highlight"
+                    groups="inseta_learning_programme.group_learning_manager_id"/>
+
+                  <button string='Sign COO' states="awaiting_sign2" 
+                    confirm="Are you sure u want to sign this letter?" 
+                    name="action_sign2" type="object" class="oe_highlight" 
+                    groups="inseta_dg.group_coo"/>
+
+                  <button 
+                      name="action_print_recommendation_letter" 
+                      string="Print Recommendation Letter" 
+                      class="oe_highlight"
+                      attrs="{'invisible':['|',('is_ceo_approved','=',False),('state','not in', ('awaiting_sign1','awaiting_sign2','signed') )]}"
+                      type="object"
+                      groups="inseta_dg.group_pmo_manager,
+                      inseta_dg.group_pmo_admin,inseta_dg.group_coo,
+                      inseta_learning_programme.group_learning_specialist_id,
+                      inseta_learning_programme.group_lp_admin_id,
+                      inseta_learning_programme.group_intern_admin_id,
+                      inseta_learning_programme.group_bursary_administrator_id,
+                      inseta_learning_programme.group_learning_manager_id"/> 
+
+                  <button name="action_print_rejection_letter" 
+                      string="Print Decline Letter" 
+                      class="oe_highlight"
+                      attrs="{'invisible':['|',('is_ceo_approved','=',True),('state','not in', ('awaiting_sign1','awaiting_sign2','signed') )]}"
+                      type="object"
+                      groups="inseta_dg.group_pmo_manager,inseta_dg.group_pmo_admin,inseta_dg.group_coo,
+                      inseta_learning_programme.group_learning_specialist_id,
+                      inseta_learning_programme.group_lp_admin_id,
+                      inseta_learning_programme.group_intern_admin_id,
+                      inseta_learning_programme.group_bursary_administrator_id,
+                      inseta_learning_programme.group_learning_manager_id"/> 
+
+                  <button name="action_send_letter_employer" 
+                      string="Email Letter to Employer" 
+                      class="oe_highlight"
+                      confirm="Are you sure u want to email this letter to the Employer?"
+                      states="signed"
+                      type="object"
+                      groups="inseta_dg.group_pmo_manager,
+                      inseta_dg.group_pmo_admin,
+                      inseta_learning_programme.group_learning_specialist_id,
+                      inseta_learning_programme.group_lp_admin_id,
+                      inseta_learning_programme.group_intern_admin_id,
+                      inseta_learning_programme.group_bursary_administrator_id"/> 
+                      
+
+                  <field name="state" widget="statusbar" readonly="1" force_save="1" statusbar_visible="draft,submit,approve,reject"/>
+              </header>
+        </xpath>
+
+      </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="learner_data_import_wizard" model="ir.ui.view">
+        <field name="name">inseta.learner.batch.upload.wizard.form</field>
+        <field name="model">inseta.learner.batch.upload.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Message">
+                <div class="oe_title">
+                    <h1>
+                        Learner Data Import
+                    </h1>
+                </div>
+                <div class='alert alert-info' role="alert">
+                    Download sample import template <a href='https://docs.google.com/spreadsheets/d/13rEhbbR3gws4XAt_FJ604XbxGtbco3TOqskjT3meWqw/edit#gid=550572752'> here </a> <br/>
+                    Allowed file types: .xls, .xlsx
+                </div>
+                <newline/>
+                <group>
+                    <group>
+                        <field name="import_type" />
+                        <field name="file_type" />
+                        <field name="file" filename="file_name"/>
+                        <field name="file_name" readonly="1" force_save="1"/> 
+                         
+                    </group>
+                    <group></group>
+                </group>
+                <div class="oe_clear"/>
+                <separator colspan="10" />
+                <footer>
+                    <button special="cancel" string="Close" />
+                    <button name="action_import" type="object" class="oe_highlight" string="Import" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--report-->
+    <record id="action_wizard_learner_data_import" model="ir.actions.act_window">
+        <field name="name">Import learner</field>
+        <field name="res_model">inseta.learner.batch.upload.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+	<menuitem id="menu_import_learner_data" name="Batch Upload Learners" sequence="4" parent="learner_registerations_menu" action="inseta_etqa.action_wizard_learner_data_import"
+    groups="inseta_etqa.group_accessor_moderator_reg,base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_approved_assesor,inseta_etqa.group_moderator_access_user,inseta_etqa.group_approved_moderator,inseta_etqa.group_approved_assesor,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system,inseta_skills.group_employer"/>
+</odoo>

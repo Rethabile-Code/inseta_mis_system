@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="inseta_nlrd_export_wizard" model="ir.ui.view">
+        <field name="name">inseta.nlrd.export.wizard.form</field>
+        <field name="model">inseta.nlrd.export</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Message">
+                <div class="oe_title">
+                    <h1>
+                        Inseta NLRD
+                    </h1>
+                    <p style="color: red;">* 
+                        File directory is located @here: /var/log/odoo";<br/>
+                        Contact system system admin to give permission using: "sudo chmod -R 777 /var/log/odoo" 
+                    </p>
+                </div>
+                <div class='alert alert-info' role="alert"> 
+                    Click on the button to download .DAT File.<br/>
+                    If you are running batch process, check the is_continious_download box to continue from last generated record ;<br/>
+                    *** Batch processess generates per the record limit depending how long you want to wait;<br/>
+                    *** System keeps track of the last generated record ;<br/>
+                    *** When all records are generated, depending on the limit set, the zip file will be downlaoded per batch;<br/>
+                </div>
+                <newline/>
+                <group>
+                    <group>
+                        <field name="dat_file" filename="filename"/>
+                        <field name="filename" readonly="1" force_save="1"/> 
+                        <field name="file_type" required="1"/>
+                        <field name="filter_by" required="0" invisible="1"/>
+                        <field name="is_continious_download" string="Continue batch" required="0" invisible="0"/>
+                        <field name="continious_date" required="1"/> 
+                        <!-- attrs="{'required': [('is_continious_download', '=', True)], 'invisible': [('is_continious_download', '=', False)]}" /> -->
+                    </group>
+                    <group>
+                        <field name="date_threshold" required="0"/>
+                        <!-- <field name="start_date" attrs="{'required': [('filter_by', '=', 'date')], 'invisible': [('filter_by', '!=', 'date')]}" />
+                        <field name="end_date" attrs="{'required': [('filter_by', '=', 'date')], 'invisible': [('filter_by', '!=', 'date')]}"/> -->
+                        <field name="limit" invisible="0" required="1"/>
+                        <field name="last_generated_limit" invisible="0" readonly="1" force_save="1"/>
+                        <field name="start_limit" invisible="0" readonly="1" force_save="1"/>
+                        <field name="end_limit" invisible="0" readonly="1" force_save="1"/>                    
+                    </group>
+                    <notebook>
+                        <page string="Provider lists">
+                            <field name="provider_list"/>
+                        </page>
+                        <page string="Learner lists">
+                            <field name="learner_list"/>
+                        </page>
+                        <page string="unit standard lists">
+                            <field name="unit_standard_list"/>
+                        </page>
+                        <page string="Qualification list">
+                            <field name="qualification_list"/>
+                        </page>
+                        <page string="Learnership lists">
+                            <field name="learnership_list"/>
+                        </page>
+                        <page string="Assessor lists">
+                            <field name="assessor_list"/>
+                        </page> 
+                    </notebook>
+
+                </group>
+                <div class="oe_clear"/>
+                <separator colspan="10" />
+                <footer>
+                    <button special="cancel" string="Close" />
+                    <button name="action_export_nlrd_data" type="object" class="oe_highlight" string="Generate NLRD Report" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="inseta_nlrd_export_tree_wizard" model="ir.ui.view">
+        <field name="name">inseta.nlrd.export.wizard.tree</field>
+        <field name="model">inseta.nlrd.export</field>
+        <field name="arch" type="xml">
+            <tree string="" create="1">
+                <field name="dat_file" filename="filename"/>
+                <field name="filename" readonly="1" force_save="1"/> 
+                <field name="file_type" required="1"/>
+                <field name="filter_by" required="0" invisible="1"/>
+                <field name="is_continious_download" string="Continue batch" required="0" invisible="0"/>
+                <field name="continious_date" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--report-->
+    <record id="action_inseta_nlrd_export" model="ir.actions.act_window">
+        <field name="name">Inseta NLRD Export</field>
+        <field name="res_model">inseta.nlrd.export</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+    
+    <record id="inseta_nlrd_form" model="ir.ui.view">
+            <field name="name">view.inseta.nlrd.form</field>
+            <field name="model">inseta.nlrd</field>
+            <field name="arch" type="xml">
+            <form string="NLRD">
+                <header>
+                    <button name="action_go_to_record" string="See Related record" type="object" class="oe_highlight"></button>
+                </header>
+                <group>
+                    <group>
+                    <group>
+                        <field name="name" readonly="1"/> 
+                        <field name="file_unique_identifier" readonly="1"/> 
+                        <field name="ref_id" readonly="1"/> 
+                        <field name="model_id" readonly="1"/> 
+                        
+                    </group>
+
+                    <group>
+                        <field name="create_uid" readonly="1"/> 
+                        <field name="create_date" readonly="1"/> 
+                    </group>
+                    <field name="error_to_fix" readonly="0"/> 
+                </group>
+                </group>
+                 
+                </form>
+            </field>
+        </record>
+        <record id="inseta_nlrd_tree" model="ir.ui.view">
+            <field name="name">inseta nlrd tree</field>
+            <field name="model">inseta.nlrd</field>
+            <field name="arch" type="xml">
+                <tree string="" create="0">
+                    <field name="name" invisible="0" readonly="1"/>
+                    <field name="file_unique_identifier" readonly="1"/> 
+                    <field name="create_uid" readonly="1"/> 
+                    <field name="create_date" readonly="1"/> 
+                </tree>
+            </field>
+        </record>
+
+        <record id="inseta_nlrd_filter" model="ir.ui.view">
+            <field name="name">inseta nlrd</field>
+            <field name="model">inseta.nlrd</field>
+            <field name="arch" type="xml">
+                <search string="NLRD">
+                    <field name="name" invisible="0" required="1"/>
+                    <field name="file_unique_identifier" required="1"/> 
+                    <field name="create_uid" readonly="1"/> 
+                    <field name="create_date" readonly="1"/> 
+                </search>
+            </field>
+        </record>
+
+        <record id="action_inseta_nlrd_record" model="ir.actions.act_window">
+            <field name="name">INSETA NLRD</field>
+            <field name="res_model">inseta.nlrd</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="inseta_nlrd_filter" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record>
+
+        <record id="view_confirmation_dialog" model="ir.ui.view">
+            <field name="name">inseta.nlrd.dialog</field>
+            <field name="model">inseta.nlrd.dialog</field>
+            <field name="arch" type="xml">
+                <form string="Message">
+                    <field name="name"/>
+                
+                    <footer>
+                        <button string="OK" class="btn-primary" special="cancel" />
+                    </footer>				
+                </form>
+            </field>	
+	    </record>
+
+    <menuitem id ="menu_nlrd_setmis_root_id" name="NLRD &amp; SETMIS" sequence="19" groups="inseta_etqa.group_etqa_evaluating_manager"/>
+    <menuitem id ="menu_nlrd_id" name="NLRD" parent = "menu_nlrd_setmis_root_id" sequence="1"/>
+    <menuitem id ="menu_nlrd_records" name="Generated NLRD Records" parent = "menu_nlrd_id" sequence="1" action="action_inseta_nlrd_record" 
+    groups="inseta_etqa.group_etqa_evaluating_manager"/>
+    <menuitem id ="menu_nlrd_export" name="NLRD Log Report" parent = "menu_nlrd_id" sequence="2" action="action_inseta_nlrd_export" groups="inseta_etqa.group_etqa_evaluating_manager"/>
+    <menuitem id ="menu_setmis_id" name="SETMIS" parent = "menu_nlrd_setmis_root_id" sequence="2"/>
+
+</odoo>

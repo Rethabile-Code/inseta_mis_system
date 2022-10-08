@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="view_ofo_majorgroup_form" model="ir.ui.view">
+        <field name="name">res.ofo.majorgroup.form</field>
+        <field name="model">res.ofo.majorgroup</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="ofoyear" />
+                        <field name="version_no" />
+                        <field name="legacy_system_id" readonly="1" force_save="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ofo_majorgroup_seach" model="ir.ui.view">
+        <field name="name">res.ofo.majorgroup.search</field>
+        <field name="model">res.ofo.majorgroup</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="code" />
+                <field name="ofoyear" />
+                <field name="version_no" />
+					<group expand="0" string="Group By">
+						<filter string="Code" name="group_code" domain="[]" context="{'group_by':'code'}"/>
+						<filter string="Ofo Year" name="group_ofoyear" domain="[]" context="{'group_by':'ofoyear'}"/>
+						<filter string="Version number" name="group_vno" domain="[]" context="{'group_by':'version_no'}"/>
+					</group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ofo_majorgroup_tree" model="ir.ui.view">
+        <field name="name">res.ofo.majorgroup.tree</field>
+        <field name="model">res.ofo.majorgroup</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="code" />
+                <field name="ofoyear" />
+                <field name="version_no" />
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ofo_submajorgroup_form" model="ir.ui.view">
+        <field name="name">res.ofo.submajorgroup.form</field>
+        <field name="model">res.ofo.submajorgroup</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="major_group_id" />
+                        <field name="legacy_system_id" readonly="1" force_save="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ofo_submajorgroup_tree" model="ir.ui.view">
+        <field name="name">res.ofo.submajorgroup.tree</field>
+        <field name="model">res.ofo.submajorgroup</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="code" />
+                <field name="major_group_id" />
+					<field name="ofoyear" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ofo_unitgroup_form" model="ir.ui.view">
+        <field name="name">res.ofo.unitgroup.form</field>
+        <field name="model">res.ofo.unitgroup</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="sub_major_group_id" />
+                        <field name="legacy_system_id" readonly="1" force_save="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ofo_unitgroup_tree" model="ir.ui.view">
+        <field name="name">res.ofo.unitgroup.tree</field>
+        <field name="model">res.ofo.unitgroup</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="code" />
+                <field name="sub_major_group_id" />
+				<field name="ofoyear" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ofo_occupation_form" model="ir.ui.view">
+        <field name="name">res.ofo.occupation.form</field>
+        <field name="model">res.ofo.occupation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="unit_group_id" />
+                        <field name="legacy_system_id" readonly="1" force_save="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ofo_occupation_tree" model="ir.ui.view">
+        <field name="name">res.ofo.occupation.tree</field>
+        <field name="model">res.ofo.occupation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="code" />
+                <field name="unit_group_id" />
+                <field name="ofoyear" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_ofo_specialization_tree" model="ir.ui.view">
+        <field name="name">res.ofo.specialization.tree</field>
+        <field name="model">res.ofo.specialization</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="code" />
+                <field name="occupation_id" />
+                <field name="ofoyear" />
+            </tree>
+        </field>
+    </record>
+
+   <record id="view_ofo_specialization_form" model="ir.ui.view">
+        <field name="name">res.ofo.specialization.form</field>
+        <field name="model">res.ofo.specialization</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="occupation_id" />
+                        <field name="legacy_system_id" readonly="1" force_save="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_ofo_minorgrp_tree" model="ir.ui.view">
+        <field name="name">res.ofo.minorgroup.tree</field>
+        <field name="model">res.ofo.minorgroup</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="code" />
+                <field name="sub_major_group_id" />
+				<field name="ofoyear" />
+            </tree>
+        </field>
+    </record>
+
+
+
+   <record id="view_pivotal_programme_form" model="ir.ui.view">
+        <field name="name">res.pivotal.programme.form</field>
+        <field name="model">res.pivotal.programme</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="saqacode" />
+                        <field name="legacy_system_id" readonly="1" force_save="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pivotal_programme_tree" model="ir.ui.view">
+        <field name="name">res.pivotal.programme.tree</field>
+        <field name="model">res.pivotal.programme</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="saqacode" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="act_window_pivotal_programme" model="ir.actions.act_window">
+        <field name="name">Pivotal Programme</field>
+        <field name="res_model">res.pivotal.programme</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new Pivotal Programme.
+            </p>
+        </field>
+    </record>
+
+    <record id="act_window_ofo_occupation" model="ir.actions.act_window">
+        <field name="name">OFO Occupation</field>
+        <field name="res_model">res.ofo.occupation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new ofo Occupation.
+            </p>
+        </field>
+    </record>
+    <record id="act_window_ofo_specialization" model="ir.actions.act_window">
+        <field name="name">OFO Specialisation</field>
+        <field name="res_model">res.ofo.specialization</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new OFO Specialisation.
+            </p>
+        </field>
+    </record>
+
+    <record id="act_window_ofo_majorgrp" model="ir.actions.act_window">
+        <field name="name">OFO Major Group</field>
+        <field name="res_model">res.ofo.majorgroup</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new OFO Major Group.
+            </p>
+        </field>
+    </record>
+    <record id="act_window_ofo_submajorgrp" model="ir.actions.act_window">
+        <field name="name">OFO Sub Major Group</field>
+        <field name="res_model">res.ofo.submajorgroup</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new ofo Sub Major Group.
+            </p>
+        </field>
+    </record>
+    <record id="act_window_ofo_unitgrp" model="ir.actions.act_window">
+        <field name="name">OFO Unit Group</field>
+        <field name="res_model">res.ofo.unitgroup</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new OFO Unit Group.
+            </p>
+        </field>
+    </record>
+
+    <record id="act_window_ofo_minorgrp" model="ir.actions.act_window">
+        <field name="name">OFO Minor Group</field>
+        <field name="res_model">res.ofo.minorgroup</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to create a new OFO Minor Group.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_actions_ofo_menu"
+		name="OFO" 
+        sequence="3" 
+        parent="inseta_skills.skills_configuration_menu"
+    />
+    <menuitem
+        id="menu_ofo_majorgroup"
+        sequence="0" 
+		name="OFO Major Group" 
+        parent="menu_actions_ofo_menu"
+        action="act_window_ofo_majorgrp"
+    />
+    <menuitem
+        id="menu_ofo_submajorgroup"
+        sequence="1" 
+		name="OFO Sub Major Group" 
+        parent="menu_actions_ofo_menu"
+        action="act_window_ofo_submajorgrp"
+    />
+    <menuitem
+        id="menu_ofo_minorgroup"
+        sequence="2" 
+		name="OFO Minor Group" 
+        parent="menu_actions_ofo_menu"
+        action="act_window_ofo_minorgrp"
+    />
+    <menuitem
+        id="menu_ofo_unitgroup"
+        sequence="2" 
+		name="OFO Unit Group" 
+        parent="menu_actions_ofo_menu"
+        action="act_window_ofo_unitgrp"
+    />
+    <menuitem
+        id="menu_ofo_occupation"
+        sequence="3" 
+		name="OFO Occupation" 
+        parent="menu_actions_ofo_menu"
+        action="act_window_ofo_occupation"
+    />
+    <menuitem
+        id="menu_ofo_specialization"
+        sequence="4" 
+		name="OFO Specialisation" 
+        parent="menu_actions_ofo_menu"
+        action="act_window_ofo_specialization"
+    />
+    <!--WSP res menus-->
+    <menuitem
+        id="menu_pivotal_programme"
+		name="Pivotal Programmes" 
+		sequence="3" 
+		parent="menu_wsp_config" 
+        action="act_window_pivotal_programme"
+    />
+    
+</odoo>

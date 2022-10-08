@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="inseta_setmis_export_wizard" model="ir.ui.view">
+        <field name="name">inseta.setmis.export.wizard.form</field>
+        <field name="model">inseta.setmis.export</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Message">
+                <div class="oe_title">
+                    <h1>
+                        Inseta SETMIS
+                    </h1>
+                    <p style="color: red;">* 
+                        File directory is located @here: /var/log/odoo";<br/>
+                        Contact system system admin to give permission using: "sudo chmod -R 777 /var/log/odoo" 
+                    </p>
+                </div>
+                <div class='alert alert-info' role="alert"> 
+                    Click on the button to download .DAT File  
+                </div>
+                <newline/>
+                <group>
+                    <group>
+                        <field name="dat_file" filename="filename"/>
+                        <field name="filename" readonly="1" force_save="1"/> 
+                        <field name="file_type" required="1"/>
+                        <field name="filter_by" required="1"/>
+                    </group>
+                    <group>
+                        <field name="date_threshold" required="0"/>
+                        <field name="start_date" attrs="{'required': [('filter_by', '=', 'date')], 'invisible': [('filter_by', '!=', 'date')]}" />
+                        <field name="end_date" attrs="{'required': [('filter_by', '=', 'date')], 'invisible': [('filter_by', '!=', 'date')]}"/>
+                        <field name="limit" invisible="1"/>
+                    </group>
+                </group>
+                <div class="oe_clear"/>
+                <separator colspan="10" />
+                <footer>
+                    <button special="cancel" string="Close" />
+                    <button name="action_export_setmis_data" type="object" class="oe_highlight" string="Generate SETMIS Report" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--report-->
+    <record id="action_inseta_setmis_export" model="ir.actions.act_window">
+        <field name="name">Inseta setmis Export</field>
+        <field name="res_model">inseta.setmis.export</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+ 
+    <record id="inseta_setmis_form" model="ir.ui.view">
+            <field name="name">view.inseta.setmis.form</field>
+            <field name="model">inseta.setmis</field>
+            <field name="arch" type="xml">
+
+            <form string="setmis">
+                <header>
+                    <button name="action_go_to_record" string="See Related record" type="object" class="oe_highlight"></button>
+                </header>
+                <group>
+                    <group>
+                        <field name="name" readonly="1"/> 
+                        <field name="file_unique_identifier" readonly="1"/> 
+                        <field name="ref_id" readonly="1"/> 
+                        <field name="model_id" readonly="1"/> 
+                        
+                    </group>
+
+                    <group>
+                        <field name="create_uid" readonly="1"/> 
+                        <field name="create_date" readonly="1"/> 
+                    </group>
+                    <field name="error_to_fix" readonly="0"/> 
+                </group>
+                 
+                </form>
+            </field>
+        </record>
+        <record id="inseta_setmis_tree" model="ir.ui.view">
+            <field name="name">inseta setmis tree</field>
+            <field name="model">inseta.setmis</field>
+            <field name="arch" type="xml">
+                <tree string="" create="0">
+                    <field name="name" invisible="0" readonly="1"/>
+                    <field name="file_unique_identifier" readonly="1"/> 
+                    <field name="create_uid" readonly="1"/> 
+                    <field name="create_date" readonly="1"/> 
+                </tree>
+            </field>
+        </record>
+
+        <record id="inseta_setmis_filter" model="ir.ui.view">
+            <field name="name">inseta setmis</field>
+            <field name="model">inseta.setmis</field>
+            <field name="arch" type="xml">
+                <search string="SETMIS">
+                    <field name="name" invisible="0" required="1"/>
+                    <field name="file_unique_identifier" required="1"/> 
+                    <field name="create_uid" readonly="1"/> 
+                    <field name="create_date" readonly="1"/> 
+                </search>
+            </field>
+        </record>
+
+        <record id="action_inseta_setmis_record" model="ir.actions.act_window">
+            <field name="name">inseta.setmis</field>
+            <field name="res_model">inseta.setmis</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="inseta_setmis_filter" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record>
+
+    <menuitem id ="menu_setmis_record_id" name="Generated SETMIS Records" parent = "inseta_nlrd.menu_setmis_id" sequence="1" action="action_inseta_setmis_record" 
+    groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/>
+    <menuitem id ="menu_setmis_export" name="SETMIS Report" parent="inseta_nlrd.menu_setmis_id" sequence="2" action="action_inseta_setmis_export" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/>
+
+</odoo>

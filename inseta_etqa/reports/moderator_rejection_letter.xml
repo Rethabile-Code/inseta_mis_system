@@ -1,0 +1,108 @@
+<odoo>
+  <data>
+    
+    <report 
+            id="moderator_rejection_letter_report"
+            model="inseta.moderator.register"
+            string="Rejection Letter"
+            report_type="qweb-pdf"
+            name="inseta_etqa.moderator_rejection_letter"
+            file="inseta_etqa.moderator_rejection_letter"
+            paperformat="inseta_etqa.paperformat_moderator_letter"
+            menu="False"
+        />
+
+    <template id="moderator_rejection_letter">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-3">
+                    .<!-- <img src="https://imgur.com/gLIZY9S.jpg" style="max-height: 150px;" /> -->
+                </div>
+                <div class="col-xs-offset-2 text-right">
+                    <img src='/inseta_etqa/static/description/icon.png' style="max-height: 70px;"/>
+                </div>
+            </div>
+            <hr/> 
+        </div>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="max-width: 660px; margin: auto;">
+
+                    <style>
+                        body {
+                            line-height: 180%;
+                            font-size: 18px;
+                            font-family: 'EB Garamond';
+                        }
+
+                        page {
+                            margin-bottom: -30px;
+                        }
+
+                        p {
+                        text-align: justify;
+                            margin: 0;
+                        }
+
+                        .abc {
+                                margin-left: 40px;
+                                list-style-type: lower-alpha;
+                                }
+
+                        li {
+                        text-align: justify;
+                            padding-top: 2%;
+                            padding-bottom: 20px;
+                        }
+                    </style>
+
+                    
+                    <!-- <p><t t-esc="o.date_order" /></p> -->
+
+                    <br /><br /><br />
+
+                    <span t-field="o.name"/>,<br/>
+                    <span t-field="o.physical_address1"/>,<br/>
+                    <span t-field="o.physical_city_id.name"/>,<span t-field="o.physical_province_id.name"/>,<br/>
+                    <span t-field="o.nationality_id.name"/> <br/>
+                    <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /></p>
+
+                    <p align="justify">
+                        Dear <span t-field="o.name"/>,
+                    </p>
+
+                    <h4 style="text-align: center;"><strong><u>MODERATOR REJECTION LETTER </u></strong></h4>
+ 
+                    <p>Please be advised that your application to be registered as a Moderator on INSETA's system has been <strong>rejected</strong>. </p> <br/>
+                    
+                    <p style="padding-left: 25px;text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;" >
+                        ✓ For any queries please contact the INSETA Call Centre on 086 113 0013.<br/>
+                    </p>
+
+                    
+                    <div class="row">
+                        <p style="text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 24px;"><strong><u>GENERAL COMMENTS</u></strong></p>
+                            <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                                <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;"><span t-field="o.refusal_comment"/> </p><br/>
+                            </p>
+                    </div>
+
+                    <div class="row">
+                        <br/><br/>
+                        <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">Yours in Skills Development,<br/><br/><br/></p>
+                        <p><br/></p>
+                        <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                            <strong style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;"></strong>
+                            <br/><br/>
+                                        <img src='/inseta_etqa/static/description/icon.png' style="max-height: 120px;"/>
+                                <br/>
+                            <br/>
+                            <strong style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;"> Manager: Skills Planning</strong>
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

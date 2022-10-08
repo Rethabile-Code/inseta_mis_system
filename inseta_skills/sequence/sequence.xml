@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_inseta_sdf_registration_model_id" model="ir.sequence">
+            <field name="name">inseta.sdf.register</field>
+            <field name="code">inseta.sdf.register</field>
+            <field name="prefix">R</field>
+            <field name="padding">8</field>
+        </record>
+
+
+        <record id="seq_wsp_plan_code" model="ir.sequence">
+            <field name="name">WSP Reference</field>
+            <field name="code">inseta.wspatr.reference</field>
+            <field name="prefix">WSP/YR/</field>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="seq_DHET_employer_update_code" model="ir.sequence">
+            <field name="name">DHET Employer update code</field>
+            <field name="code">dhet.employer.update.code</field>
+            <field name="prefix">UDT/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="seq_DHET_inter_seta_code" model="ir.sequence">
+            <field name="name">DHET Inter Seta transfer reference</field>
+            <field name="code">dhet.interseta.number</field>
+            <field name="prefix">IST/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+
+
+        <record id="seq_wsp_period_code" model="ir.sequence">
+            <field name="name">WSP Period Reference</field>
+            <field name="code">inseta.wspatr.period.reference</field>
+            <field name="prefix">WSPATR/%(year)s/</field>
+            <field name="padding">3</field>
+        </record>
+
+        <record id="seq_wsp_payment_code" model="ir.sequence">
+            <field name="name">WSP Payment Reference</field>
+            <field name="code">inseta.wspatr.payment.reference</field>
+            <field name="prefix">WSP/PY/%(year)s/</field>
+            <field name="padding">3</field>
+        </record>
+         
+        <record id="seq_organisation_reg_code" model="ir.sequence">
+            <field name="name">Non Levy Employer No</field>
+            <field name="code">nonlevy.employer.no</field>
+            <field name="prefix">N</field>
+            <field name="padding">8</field>
+        </record>
+        
+    </data>
+</odoo>

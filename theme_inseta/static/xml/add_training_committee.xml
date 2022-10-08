@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="training_committee_list" xml:space="preserve">
+    <t t-name="theme_inseta.training_committee_lines">
+        <table class="table table-sm table-stripped">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Cell Phone</th>
+                    <th>Member Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tr t-foreach="childs" t-as="member">
+                <td><span t-esc="member.inputMemberFname"/></td>
+                <td><span t-esc="member.inputMemberLname"/></td>
+                <td><span t-esc="member.inputItiMemberCell"/></td>
+                <td><span t-esc="member.selectMemberType"/></td>
+                <td>
+                    <a data-target="#remove-member-modal" t-att-data-sn="member.sn" t-att-data-firstname="member.inputMemberFname" data-toggle="modal" class="btn text-danger">
+                        <i class="fa fa-trash"/>
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <!--Modal to remove a member-->
+        <div id="remove-member-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h4>Remove
+                            <span class="text-secondary" id="rm-name">Name</span>
+                            from the List?
+                        </h4>
+                        <div class="row actions mt-4 pt-4 border-top-blue">
+                            <div class="col-6">
+                                <div data-dismiss="modal" class="btn btn-outline-primary">Cancel</div>
+                            </div>
+                            <div class="col-6 text-right">
+                                <button type="button" id="remove-member" class="btn btn-primary">Remove </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

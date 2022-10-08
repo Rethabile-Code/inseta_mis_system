@@ -1,0 +1,100 @@
+<odoo>
+    <data>
+        <!-- INDUSTRY FUNDED WINDOW TREE VIEW-->
+        <record id="view_dgindustryfundedgwindow_tree" model="ir.ui.view">
+            <field name="name">inseta.dgindustryfunded.window.tree</field>
+            <field name="model">inseta.dgindustryfunded.window</field>
+            <field name="arch" type="xml">
+                <tree string="DG Industry Funded Window">
+                  <field name="name" />
+                        <field name="opening_date"/>
+                        <field name="closing_date"/>
+                        <field name="request_letter"/>
+                        <field name="comments" />
+                        <field name="state" />
+                </tree>
+            </field>
+            </record>
+        <!-- INDUSTRY FUNDED WINDOW TREE VIEW-->
+            <record id="view_dgindustryfundedgwindow_form" model="ir.ui.view">
+            <field name="name">inseta.dgindustryfunded.window.form</field>
+            <field name="model">inseta.dgindustryfunded.window</field>
+            <field name="arch" type="xml">
+                <form string="DG Industry Funded Window">
+                <header>
+
+                    <button name="action_set_to_draft" 
+                        string="Set to Draft" 
+                        type="object"
+                        states="approve"
+                        groups="base.group_system" />
+
+                    <button name="action_submit" string="Submit" type="object"
+                        class="oe_highlight"
+                        states="draft,rework"
+                        confirm="Are you sure you want to submit? The COO will be notified" 
+                        groups="inseta_dg.group_pmo_manager" />
+
+                    <button name="action_rework" string="Rework" type="object"
+                        confirm="Please confirm rework"
+                        states="submit" 
+                        groups="inseta_dg.group_coo" />
+
+                    <button name="action_approve" string="Approve" type="object"
+                        class="oe_highlight"
+                        states="submit" 
+                        confirm="Are you sure you want to approve?" 
+                        groups="inseta_dg.group_coo" />
+
+                    <field name="state" widget="statusbar" clickable="True" statusbar_visible="draft,approve,reject" statusbar_colors='{"open":"green","close":"red"}'/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                    </div>
+                    <group>
+                    <group>
+                        <field name="name" />
+                        <field name="opening_date" string="Opening Date" required="1" />
+                        <field name="closing_date" string="Closing Date" required="1" />
+                        <field name="request_letter" string="Request Letter" required="1" />
+                        <field name="employer" string="Employer" required="1" />
+                    </group>
+                    <group/>
+                    </group>
+                    <group>
+                    <group colspan="4">
+                        <field name="comments"/>
+                    </group>
+                    </group>
+                </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+		<record id="act_window_dgindustryfunded_window" model="ir.actions.act_window">
+			<field name="name">DG Industry Funded Window</field>
+			<field name="res_model">inseta.dgindustryfunded.window</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to Create new DG Industry Funded window. 
+				</p>
+			</field>
+		</record>
+        <menuitem 
+            name="DG Industry Funded Window" 
+            sequence="5" 
+            id="menu_dgindustryfunded_window"
+            parent="inseta_dg.menu_root" 
+            action="act_window_dgindustryfunded_window" 
+            groups="inseta_dg.group_pmo_manager,inseta_dg.group_spo_manager,inseta_dg.group_ceo"
+        />
+    </data>
+</odoo>

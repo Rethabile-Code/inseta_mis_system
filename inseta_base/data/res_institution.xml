@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="res.inseta.institution" id="data_inseta_institution1">
+            <field name="name">Cape Peninsula University of Technology</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution2">
+            <field name="name">Central University of Technology</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution3">
+            <field name="name">Durban University of Technology</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution4">
+            <field name="name">Mangosuthu University of Technology</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution5">
+            <field name="name">Nelson Mandela Metropolitan University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution6">
+            <field name="name">North West University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution7">
+            <field name="name">Rhodes University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution8">
+            <field name="name">Stellenbosch University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution9">
+            <field name="name">Tshwane University of Technology</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution10">
+            <field name="name">University of Cape Town</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution11">
+            <field name="name">University of Fort Hare</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution12">
+            <field name="name">University of Johannesburg</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution13">
+            <field name="name">University of KwaZulu-Natal</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution14">
+            <field name="name">University of Limpopo</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution15">
+            <field name="name">University of Pretoria</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">15</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution16">
+            <field name="name">University of South Africa</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">16</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution17">
+            <field name="name">University of the Free State</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">17</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution18">
+            <field name="name">University of the Western Cape</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">18</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution19">
+            <field name="name">University of the Witwatersrand</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">19</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution20">
+            <field name="name">University of Venda</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">20</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution21">
+            <field name="name">University of Zululand</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">21</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution22">
+            <field name="name">Vaal University of Technology</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">22</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution23">
+            <field name="name">Walter Sisulu University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">23</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution24">
+            <field name="name">Boland TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">24</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution25">
+            <field name="name">College of Cape Town for TVET</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">25</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution26">
+            <field name="name">False Bay TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">26</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution27">
+            <field name="name">Northlink TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">27</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution28">
+            <field name="name">South Cape TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">28</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution29">
+            <field name="name">West Coast TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">29</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution30">
+            <field name="name">Buffalo City TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">30</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution31">
+            <field name="name">Eastcape Midlands TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">31</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution32">
+            <field name="name">Ikhala TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">32</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution33">
+            <field name="name">Ingwe TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">33</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution34">
+            <field name="name">King Hintsa TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">34</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution35">
+            <field name="name">King Sabata Dalindyebo TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">35</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution36">
+            <field name="name">Lovedale TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">36</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution37">
+            <field name="name">Port Elizabeth TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">37</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution38">
+            <field name="name">Flavius Mareka TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">38</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution39">
+            <field name="name">Goldfields TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">39</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution40">
+            <field name="name">Maluti TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">40</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution41">
+            <field name="name">Motheo TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">41</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution42">
+            <field name="name">Central Johannesburg TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">42</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution43">
+            <field name="name">Ekurhuleni East TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">43</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution44">
+            <field name="name">Ekurhuleni West TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">44</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution45">
+            <field name="name">Sedibeng TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">45</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution46">
+            <field name="name">South West TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">46</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution47">
+            <field name="name">Tshwane North TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">47</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution48">
+            <field name="name">Tshwane South TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">48</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution49">
+            <field name="name">Western TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">49</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution50">
+            <field name="name">Coastal TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">50</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution51">
+            <field name="name">Elangeni TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">51</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution52">
+            <field name="name">Esayidi TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">52</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution53">
+            <field name="name">Majuba TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">53</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution54">
+            <field name="name">Mnambithi TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">54</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution55">
+            <field name="name">Mthashana TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">55</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution56">
+            <field name="name">Thekwini TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">56</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution57">
+            <field name="name">Umfolozi TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">57</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution58">
+            <field name="name">Umgungundlovu TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">58</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution59">
+            <field name="name">Capricorn TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">59</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution60">
+            <field name="name">Lephalale TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">60</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution61">
+            <field name="name">Letaba TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">61</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution62">
+            <field name="name">Mopani South East TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">62</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution63">
+            <field name="name">Sekhukhune TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">63</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution64">
+            <field name="name">Vhembe TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">64</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution65">
+            <field name="name">Waterberg TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">65</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution66">
+            <field name="name">Ehlanzeni TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">66</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution67">
+            <field name="name">Gert Sibande TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">67</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution68">
+            <field name="name">Nkangala TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">68</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution69">
+            <field name="name">Northern Cape Rural TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">69</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution70">
+            <field name="name">Northern Cape Urban TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">70</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution71">
+            <field name="name">Orbit TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">71</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution72">
+            <field name="name">Taletso TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">72</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution73">
+            <field name="name">Vuselela TVET College</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">73</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution74">
+            <field name="name">Gordon Institute of Business Science (GIBS) - University of Pretoria</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">74</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution75">
+            <field name="name">Graduate School of Business - University of KwaZulu-Natal</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">75</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution76">
+            <field name="name">Nelson Mandela Metropolitan University Business School - Nelson Mandela Metropolitan University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">76</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution77">
+            <field name="name">Graduate School of Business and Government Leadership - North-West University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">77</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution78">
+            <field name="name">Potchefstroom Business School - North-West University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">78</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution79">
+            <field name="name">Rhodes Business School (RBS) - Rhodes University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">79</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution80">
+            <field name="name">School of Business Leadership (SBL) - University of South Africa</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">80</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution81">
+            <field name="name">Tshwane University of Technology Business School - Tshwane University of Technology</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">81</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution82">
+            <field name="name">Turfloop Graduate School of Leadership - University of Limpopo</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">82</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution83">
+            <field name="name">UCT Graduate School of Business (GSB) - University of Cape Town</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">83</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution84">
+            <field name="name">University of Stellenbosch Business School (USB) - Stellenbosch University</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">84</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution85">
+            <field name="name">University of the Free State Business School - University of the Free State</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">85</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution86">
+            <field name="name">Faculty of Economic and Financial Sciences - University of Johannesburg (UJ)</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">86</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.inseta.institution" id="data_inseta_institution87">
+            <field name="name">Wits Business School (WBS) - University of the Witwatersrand</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">87</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

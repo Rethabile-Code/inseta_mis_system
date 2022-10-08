@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record model="inseta.het" id="id_het_01">
+            <field name="name">Matric</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="inseta.het" id="id_het_02">
+            <field name="name">University</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+
+        <record model="inseta.fet" id="id_fet_01">
+            <field name="name">Central Johannesburg TVET College</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="inseta.fet" id="id_fet_02">
+            <field name="name">Ekurhuleni East TVET College</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+
+        <record model="inseta.fet" id="id_fet_03">
+            <field name="name">Ekurhuleni West TVET College</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">3</field>
+        </record>
+
+        <record model="inseta.fet" id="id_fet_04">
+            <field name="name">Sedibeng TVET College</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">4</field>
+        </record>
+
+        <record model="inseta.fet" id="id_fet_05">
+            <field name="name">South West Gauteng TVET College</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">5</field>
+        </record>
+
+        <record model="inseta.fet" id="id_fet_06">
+            <field name="name">Tshwane North TVET College</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">6</field>
+        </record>
+
+        <record model="inseta.fet" id="id_fet_07">
+            <field name="name">Western TVET Colleg</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">7</field>
+        </record>
+
+        <record model="inseta.verification.status" id="id_verification_status_01">
+            <field name="name">Registered</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="inseta.verification.status" id="id_verification_status_01">
+            <field name="name">Registered</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="inseta.verification.status" id="id_verification_status_02">
+            <field name="name">Completed</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+        <record model="inseta.assessment.status.model" id="id_assessment_status_competent">
+            <field name="name">Competent</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="inseta.assessment.status.model" id="id_assessment_status_incompetent">
+            <field name="name">Not yet Competent</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">2</field>
+        </record> 
+
+        <record model="inseta.program.status" id="id_programme_status_02">
+            <field name="name">Achieved</field>
+            <field name="active">True</field>
+            <field name="code">2</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+        <record model="inseta.program.status" id="id_programme_status_06">
+            <field name="name">Enrolled</field>
+            <field name="active">True</field>
+            <field name="code">3</field>
+            <field name="legacy_system_id">6</field>
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_03">
+            <field name="name">InCompleted (Enrolled)</field>
+            <field name="active">True</field>
+            <field name="code">3</field>
+            <field name="legacy_system_id">3</field>
+        </record>
+        <record model="inseta.program.status" id="id_programme_status_04">
+            <field name="name">Terminated</field>
+            <field name="code">10</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">4</field>
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_05">
+            <field name="name">De-Registered</field>
+            <field name="code">4</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">5</field>
+        </record>
+        <record model="inseta.program.status" id="id_programme_status_01">
+            <field name="name">Registered</field>
+            <field name="code">5</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+        <record model="inseta.program.status" id="id_programme_status_07">
+            <field name="name">Completed(Achieved and Certificated)</field>
+            <field name="active">True</field>
+            <field name="code">15</field>
+            <field name="legacy_system_id">7</field>
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_08">
+            <field name="name">De-enrolled</field>
+            <field name="code">4</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_09">
+            <field name="name">Re-enrolled</field>
+            <field name="code">5</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_10">
+            <field name="name">Witheld</field>
+            <field name="code">7</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_11">
+            <field name="name">Disconitnued</field>
+            <field name="code">10</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_12">
+            <field name="name">Achieved - Certification Not Required</field>
+            <field name="code">14</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_13">
+            <field name="name">Achieved and Certificated</field>
+            <field name="code">15</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_14">
+            <field name="name">Withdrawn</field>
+            <field name="code">27</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_15">
+            <field name="name">Reinstated</field>
+            <field name="code">28</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_16">
+            <field name="name">Achieved and Not Entitled to Practise</field>
+            <field name="code">29</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_17">
+            <field name="name">Waiting for WIL (pre-achievement)</field>
+            <field name="code">31</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_18">
+            <field name="name">WIL in progress (pre-achievement)</field>
+            <field name="code">32</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_19">
+            <field name="name">Non-Endorsed Enrollment</field>
+            <field name="code">49</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_20">
+            <field name="name">Non-Endorsed Achievement</field>
+            <field name="code">50</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_21">
+            <field name="name">Enrolled (Provider reversed the Achievement)</field>
+            <field name="code">69</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_22">
+            <field name="name">Enrolled (ETQA/QAB reversed the Achievement)</field>
+            <field name="code">70</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_23">
+            <field name="name">Handover to Next Provider or Qualification</field>
+            <field name="code">89</field>
+            <field name="active">True</field>
+            <!-- <field name="legacy_system_id"></field> -->
+        </record>
+
+        <record model="inseta.wiltvet.type" id="inseta_wiltvet_type_01">
+            <field name="description">WIL-TVET</field>
+            <field name="saqacode">TVET</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="inseta.wiltvet.type" id="inseta_wiltvet_type_02">
+            <field name="description">WIL-University of Technology</field>
+            <field name="saqacode">UNI</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+ 
+        <!-- <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status1">
+            <field name="name">Deregistered</field>
+            <field name="code">503</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status2">
+            <field name="name">Proposed</field>
+            <field name="code">506</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status3">
+            <field name="name">Registered</field>
+            <field name="code">501</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status4">
+            <field name="name">Reregistered</field>
+            <field name="code">505</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status5">
+            <field name="name">Withdrawn</field>
+            <field name="code">514</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status6">
+            <field name="name">Unsuccessful</field>
+            <field name="code">515</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+         
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status8">
+            <field name="name">Exemption - Age</field>
+            <field name="code">594</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status9">
+            <field name="name">Exemption - Ill Health</field>
+            <field name="code">595</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status10">
+            <field name="name">Exemption - Other</field>
+            <field name="code">596</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status11">
+            <field name="name">Exemption - Restricted</field>
+            <field name="code">597</field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.moderator.reg.status" id="data_inseta_moderator_regis_status12">
+            <field name="name">Deceased</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status1">
+            <field name="name">Deregistered</field>
+            <field name="code">503</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status2">
+            <field name="name">Proposed</field>
+            <field name="code">506</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status3">
+            <field name="name">Registered</field>
+            <field name="code">501</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status4">
+            <field name="name">Reregistered</field>
+            <field name="code">505</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status5">
+            <field name="name">Withdrawn</field>
+            <field name="code">514</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status6">
+            <field name="name">Unsuccessful</field>
+            <field name="code">515</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status7">
+            <field name="name">Deceased</field>
+            <field name="code">580</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status8">
+            <field name="name">Exemption - Age</field>
+            <field name="code">594</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status9">
+            <field name="name">Exemption - Ill Health</field>
+            <field name="code">595</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status10">
+            <field name="name">Exemption - Other</field>
+            <field name="code">596</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.assessor.reg.status" id="data_inseta_assessor_regis_status11">
+            <field name="name">Exemption - Restricted</field>
+            <field name="code">597</field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record> -->
+         
+
+
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status1">
+            <field name="name">Accredited</field>
+            <field name="code">510</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status2">
+            <field name="name">Accredited - Provisional</field>
+            <field name="code">513</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status3">
+            <field name="name">Re-Accredited</field>
+            <field name="code">511</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status4">
+            <field name="name">Proposed</field>
+            <field name="code">506</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status5">
+            <field name="name">De-Accredited</field>
+            <field name="code">512</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status6">
+            <field name="name">Registered</field>
+            <field name="code">501</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status7">
+            <field name="name">Withdrawn</field>
+            <field name="code">514</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status8">
+            <field name="name">Unsuccessful</field>
+            <field name="code">515</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status9">
+            <field name="name">Approved</field>
+            <field name="code">0</field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status10">
+            <field name="name">Deregistered</field>
+            <field name="code">512</field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status11">
+            <field name="name">Pending</field>
+            <field name="code">0</field>
+            <field name="legacy_system_id">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status12">
+            <field name="name">Reaccredited</field>
+            <field name="code">511</field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status13">
+            <field name="name">Reregistered</field>
+            <field name="code">511</field>
+            <field name="legacy_system_id">15</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status14">
+            <field name="name">Whole Firm Accreditation</field>
+            <field name="code">700</field>
+            <field name="legacy_system_id">16</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status15">
+            <field name="name">Full Accreditation</field>
+            <field name="code">510</field>
+            <field name="legacy_system_id">17</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status16">
+            <field name="name">Provisional Accreditation</field>
+            <field name="code">513</field>
+            <field name="legacy_system_id">18</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status17">
+            <field name="name">Full Registration</field>
+            <field name="code">501</field>
+            <field name="legacy_system_id">19</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.provider.registration.status" id="data_inseta_provider_regis_status18">
+            <field name="name">Provisional Registration</field>
+            <field name="code">501</field>
+            <field name="legacy_system_id">20</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="inseta.qualification.programme.type" id="inseta_qualification_programme_type_01">
+            <field name="name">Standalone</field>
+            <field name="active">True</field>
+            <field name="code">1</field>
+
+        </record>
+
+        <record model="inseta.qualification.programme.type" id="inseta_qualification_programme_type_02">
+            <field name="name">Non-Standalone</field>
+            <field name="active">True</field>
+            <field name="code">2</field>
+        </record>
+
+        <record model="inseta.skill.programme.type" id="inseta_skill_programme_type_01">
+            <field name="name">Standalone</field>
+            <field name="active">True</field>
+            <field name="code">1</field>
+
+        </record>
+
+        <record model="inseta.skill.programme.type" id="inseta_skill_programme_type_02">
+            <field name="name">Leads to a Qualification</field>
+            <field name="active">True</field>
+            <field name="code">2</field>
+        </record>
+
+
+        <record model="inseta.learning.programme.type" id="inseta_learning_programme_type_G">
+            <field name="name">G - Work-based only</field>
+            <field name="active">True</field>
+            <field name="code">G</field>
+        </record>
+
+        <record model="inseta.learning.programme.type" id="inseta_learning_programme_type_F">
+            <field name="name">F - Occupationally-directed instructional programmes</field>
+            <field name="active">True</field>
+            <field name="code">F</field>
+        </record>
+
+        <record model="inseta.learning.programme.type" id="inseta_learning_programme_type_E">
+            <field name="name">E - Occupationally-directed instructional and work-based learning programme that does not require a formal contract</field>
+            <field name="active">True</field>
+            <field name="code">E</field>
+        </record>
+
+        <record model="inseta.learning.programme.type" id="inseta_learning_programme_type_D">
+            <field name="name">D - Occupationally-directed instructional and work-based learning programme that requires a formal contract</field>
+            <field name="active">True</field>
+            <field name="code">D</field>
+        </record>
+
+        <record model="inseta.learning.programme.type" id="inseta_learning_programme_type_C">
+            <field name="name">C - Recognised or registered workplace structured experiential learning</field>
+            <field name="active">True</field>
+            <field name="code">C</field>
+        </record>
+
+        <record model="inseta.learning.programme.type" id="inseta_learning_programme_type_B">
+            <field name="name">B - Institution-based theoretical instruction and some practical learning</field>
+            <field name="active">True</field>
+            <field name="code">B</field>
+        </record>
+
+        <record model="inseta.learning.programme.type" id="inseta_learning_programme_type_A">
+            <field name="name">A - Institution-based theoretical instructionalone</field>
+            <field name="active">True</field>
+            <field name="code">A</field>
+        </record>
+
+
+        <record model="inseta.learning.programme.type" id="inseta_learning_programme_type_A">
+            <field name="name">A - Institution-based theoretical instruction and some practical learning</field>
+            <field name="active">True</field>
+            <field name="code">A</field>
+        </record>
+         
+
+
+        <record model="inseta.programme.type" id="id_skill_programme_type_01">
+            <field name="name">Skills Programme</field>
+            <field name="active">True</field>
+            <field name="code">1</field>
+            <field name="is_type">skills</field>
+
+        </record>
+        <record model="inseta.programme.type" id="id_qualification_programme_type_01">
+            <field name="name">Qualification Programme</field>
+            <field name="active">True</field>
+            <field name="code">2</field>
+            <field name="is_type">qualification</field>
+
+        </record>
+        <record model="inseta.programme.type" id="id_learnership_programme_type_01">
+            <field name="name">Learnership Programme</field>
+            <field name="active">True</field>
+            <field name="code">3</field>
+            <field name="is_type">learnership</field>
+        </record>
+
+        <record model="inseta.programme.type" id="id_unit_standard_programme_type_01">
+            <field name="name">Unit Standard</field>
+            <field name="active">True</field>
+            <field name="code">4</field>
+            <field name="is_type">unit</field>
+        </record>
+
+        <record model="res.provider.category" id="id_provider_category_1">
+            <field name="name">Training Provider- Short Course</field>
+            <field name="active">True</field>
+            <field name="code">Short Course</field>
+            <field name="legacy_system_id">3</field>
+        </record>
+
+        <record model="res.provider.category" id="id_provider_category_2">
+            <field name="name">Training Provider - Full Qualification</field>
+            <field name="active">True</field>
+            <field name="code">Full Qualification</field>
+            <field name="legacy_system_id">4</field>
+        </record>
+        
+        <record model="res.provider.category" id="id_provider_category_5">
+            <field name="name">Training Provider - Whole Firm Accreditation</field>
+            <field name="active">True</field>
+            <field name="code">Whole Firm Accreditation</field>
+            <field name="legacy_system_id">5</field>
+        </record>
+
+        <record model="res.provider.category" id="id_provider_category_6">
+            <field name="name">Workplace Provider</field>
+            <field name="active">True</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">6</field>
+        </record>
+
+        <record model="res.provider.category" id="id_provider_category_7">
+            <field name="name">Training Provider-Internship</field>
+            <field name="active">True</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">7</field>
+        </record> 
+
+        <record model="inseta.qualification.type" id="data_qualification_type_1">
+            <field name="name">Unit Standard Based</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">1</field>
+        </record>
+        <record model="inseta.qualification.type" id="data_qualification_type_2">
+            <field name="name">Non Unit Standard Based</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">2</field>
+        </record>
+
+        <record model="inseta.unit.standard.type" id="data_unit_standard_type_1">
+            <field name="name">Core</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="inseta.unit.standard.type" id="data_unit_standard_type_2">
+            <field name="name">Fundamental</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">2</field>
+        </record>
+
+        <record model="inseta.unit.standard.type" id="data_unit_standard_type_3">
+            <field name="name">Elective</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">3</field>
+        </record>
+        <record model="inseta.unit.standard.type" id="data_unit_standard_type_4">
+            <field name="name">Compulsory Elective</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">4</field>
+        </record>
+
+        <!-- PROVIDER TYPE ID -->
+        <record model="res.provider.type" id="data_res_provider_type1">
+            <field name="name">Assessment</field>
+            <field name="code">1</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.type" id="data_res_provider_type2">
+            <field name="name">Delivery</field>
+            <field name="code">2</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.type" id="data_res_provider_type3">
+            <field name="name">Delivery and Assessment</field>
+            <field name="code">3</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.type" id="data_res_provider_type4">
+            <field name="name">Approved</field>
+            <field name="code">4</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.type" id="data_res_provider_type5">
+            <field name="name">Internship</field>
+            <field name="code">5</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.type" id="data_res_provider_type6">
+            <field name="name">Whole Firm</field>
+            <field name="code">6</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.type" id="data_res_provider_type7">
+            <field name="name">Development Enterprise NGO</field>
+            <field name="code">2</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.type" id="data_res_provider_type8">
+            <field name="name">Employer</field>
+            <field name="code">4</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.type" id="data_res_provider_type9">
+            <field name="name">Leading Provider</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.type" id="data_res_provider_type10">
+            <field name="name">Other Provider</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.provider.class" id="data_res_provider_class1">
+            <field name="name">Foreign</field>
+            <field name="code">3</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.class" id="data_res_provider_class2">
+            <field name="name">Public</field>
+            <field name="code">4</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.class" id="data_res_provider_class3">
+            <field name="name">Private</field>
+            <field name="code">5</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.class" id="data_res_provider_class4">
+            <field name="name">NGO/CBO</field>
+            <field name="code">7</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.provider.class" id="data_res_provider_class5">
+            <field name="name">Mixed: Public and Private</field>
+            <field name="code">8</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

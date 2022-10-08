@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <record id="wizard_skills_report" model="ir.ui.view">
+        <field name="name">wizard.skills.report.filter.form</field>
+        <field name="model">wizard.skills.report.filter</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Skills Report">
+                <group>
+                    <group>
+                        <field name="report_type" required="1"/>
+                        <field name="financial_year_id" required="1" string="Financial Year" />
+                    </group>
+                    <group/>
+                </group>
+        
+                <footer>
+                    <button name="action_view_lines" string="View Lines" type="object" class="btn-primary" />
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+
+        ParentSDLNumber	ParentDHETSDLNumber	FinancialYear	WSPStatus	Type	DueDate	CreatedDate	
+        SubmittedDate	SubmittedBy	ApprovedDate	ApprovedBy	RejectedDate	RejectedBy	
+        SDFFirstName	SDFSurname	SDFIDNumber	SDFCellPhoneNumber	SDFTelephoneNumber	SDFEMail	Number of Employees (Current FY)	
+        Number of Employees (previous WSP submitted
+    -->
+    <record model="ir.ui.view" id="view_organisation_report_line_tree_wsp_approval_list">
+        <field name="name">wizard.skills.report.line.tree.wsp.approval_list</field>
+        <field name="model">wizard.skills.report.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree create="0" string="WSP Approval List">
+                <field name="report_id" optional="show"/>
+                <field name="financial_year_id" />
+                <field name="legal_name"/>
+                <field name="trade_name"/>
+                <field name="sdl_no" string="SDL No" />
+                <field name="dhet_sdl_no" string="DHET SDL No" />
+                <field name="physical_province_id" />
+                <field name="org_size_id" string="Organisation Size"/>
+                <field name="parent_sdl_no" string="Parent SDL No" />
+                <field name="parent_dhet_sdl_no" string="Parent DHET SDL No" />
+                <field name="wsp_status" string="WSP Status" />
+                <field name="wsp_form_type" />
+                <field name="wsp_due_date" string="Due Date"/>
+                <field name="wsp_create_date" string="Create Date"/>
+                <field name="wsp_submitted_date" string="Submitted Date" />
+                <field name="wsp_submitted_by" string="Submitted By" />
+                <field name="wsp_approved_date" string="Approved Date"/>
+                <field name="wsp_approved_by" string="Approved By"/>
+                <field name="wsp_rejected_date" string="Rejected Date" />
+                <field name="wsp_rejected_by" string="Rejected By"/>
+                <field name="sdf_firstname" string="SDF FirstName"/>
+                <field name="sdf_surname" string="SDF Surname"/>
+                <field name="sdf_idno" string="SDFIDNumber"/>
+                <field name="sdf_cellphone" string="SDF CellPhone Number"/>
+                <field name="sdf_phone" string="SDF TelephoneNumber" />
+                <field name="sdf_email" string="SDF EMail" />
+                <field name="no_employees_curr_fy" string="Number of Employees (Current FY)" />
+                <field name="wsp_no_employees_prev_wsp" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_organisation_report_line_tree_wsp">
+        <field name="name">wizard.skills.report.line.tree.wsp</field>
+        <field name="model">wizard.skills.report.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree create="0" string="All WSPs">
+                <field name="report_id" optional="show"/>
+                <field name="financial_year_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_sdf_report_line_tree">
+        <field name="name">wizard.skills.report.line.tree.sdf</field>
+        <field name="model">wizard.skills.report.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree create="0" string="All SDF">
+                <field name="sdf_title" string="Title" optional="show"/>
+                <field name="sdf_firstname" string="First Name" optional="show"/>
+                <field name="sdf_middlename" string="Middle Name" optional="show"/>
+                <field name="sdf_initials" string="Initials" optional="show"/>
+                <field name="sdf_idno" string="ID No" optional="show"/>
+                <field name="sdf_alternateid_type_id" string="AlternateIDType" optional="show"/>
+                <field name="sdf_birth_date" string="Date of Birth" optional="show"/>
+                <field name="sdf_gender_id" string="Gender" optional="show"/>
+                <field name="sdf_equity_id" string="PopulationGroup" optional="show"/>
+                <field name="sdf_disability_id" string="Disability" optional="show"/>
+                <field name="home_language_id" string="HomeLanguage" optional="show"/>
+                <field name="nationality_id" string="Nationality" optional="show"/>
+                <field name="citizen_resident_status_id" string="Citizen Residential Status" optional="show"/>
+                <field name="socio_economic_status_id" string="Socio Economic Status" optional="show"/>
+                <field name="sdf_physical_province_id" string="Region" optional="show"/>
+                <field name="sdf_phone" string="Phone" optional="show"/>
+                <field name="sdf_cellphone" string="Cell Phone Number" optional="show"/>
+                <field name="sdf_faxnumber" string="Fax Number" optional="show"/>
+                <field name="sdf_email" string="Email" optional="show"/>
+                <field name="sdf_highest_edu_level_id" string="Highest Education" optional="show"/>
+                <field name="sdf_highest_edu_desc" string="Highest Education Description" optional="show"/>
+                <field name="sdf_current_occupation" string="Current Occupation" optional="show"/>
+                <field name="sdf_occupation_years" string="Years In Occupation" optional="show"/>
+                <field name="sdf_occupation_experience" string="Experience" optional="show"/>
+                <field name="legal_name" string="SDF Legal Name" optional="show"/>
+                <field name="trade_name" string="SDF Trade Name" optional="show"/>
+                <field name="sdl_no" string="SDF SDL Number" optional="show"/>
+                <field name="start_date" string="Start Date" optional="show"/>
+                <field name="end_date" string="End Date" optional="show"/>
+                <field name="sdf_org_state" string="SDF Status" optional="show"/>
+                <field name="sdf_role" string="SDF Role" optional="show"/>
+                <field name="sdf_reregistration_status" string="SDF ReRegistration Status" optional="show"/>
+                <field name="has_requested_sdftraining" string="I do not have an SDF Certificate and would like to attend an INSETA funded SDF Training" optional="show"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_organisation_report_line_tree">
+        <field name="name">wizard.skills.report.line.tree</field>
+        <field name="model">wizard.skills.report.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree create="0" string="All Organisations">
+                <field name="year" optional="show"/>
+                <field name="trade_name" optional="show"/>
+                <field name="legal_name" optional="show"/>
+                <field name="sdl_no" optional="show"/>
+                <field name="parent_trade_name" optional="show"/>
+                <field name="parent_legal_name" optional="show"/>
+                <field name="parent_sdl_no" optional="show"/>
+                <field name="bee_status_id" optional="show"/>
+                <field name="total_annual_payroll" optional="show"/>
+                <field name="no_employees" optional="show"/>
+                <field name="phone" optional="show"/>
+                <field name="fax_number" optional="show"/>
+                <field name="org_reg_no" optional="show"/>
+                <field name="sic_code_id" optional="show"/>
+                <field name="sic_code_desc" optional="show"/>
+                <field name="physical_address1" optional="show"/>
+                <field name="physical_address2" optional="show"/>
+                <field name="physical_address3" optional="show"/>
+                <field name="physical_code" optional="show"/>
+                <field name="physical_municipality_id" optional="show"/>
+                <field name="physical_urban_rural" optional="show"/>
+                <field name="physical_province_id" optional="show"/>
+                <field name="incorrect_seta" optional="show"/>
+                <field name="legal_status_id" optional="show"/>
+                <field name="interested_in_communication" optional="show" />
+                <field name="financial_year_start"  optional="show"/>
+                <field name="financial_year_end"  optional="show"/>
+                <field name="employees_by_date" optional="show"/>
+                <field name="sdf_acting_for_employer" optional="show"/>
+                <field name="appointment_procedure_id" optional="show"/>
+                <field name="sdf_comments" optional="show"/>
+                <field name="sdf_function_id" optional="show"/>
+                <field name="sdf_title" optional="show"/>
+                <field name="sdf_firstname" optional="show" />
+                <field name="sdf_surname" optional="show"/>
+                <field name="sdf_initials" optional="show" />
+                <field name="sdf_idno" optional="show" />
+                <field name="sdf_alternate_idno" optional="show" />
+                <field name="sdf_alternateid_type_id" optional="show" />
+                <field name="sdf_gender_id" optional="show"/>
+                <field name="sdf_equity_id" optional="show" />
+                <field name="sdf_highest_edu_level_id" optional="show" />
+                <field name="sdf_current_occupation" optional="show" />
+                <field name="sdf_occupation_experience" optional="show" />
+                <field name="sdf_occupation_years" optional="show" />
+                <field name="sdf_phone" optional="show" />
+                <field name="sdf_cellphone" optional="show" />
+                <field name="sdf_faxnumber" optional="show" />
+                <field name="sdf_email" optional="show" />
+                <field name="sdf_postal_address1" optional="show"/>
+                <field name="sdf_postal_address2" optional="show"/>
+                <field name="sdf_postal_address3" optional="show"/>
+                <field name="sdf_postal_municipality_id" optional="show"/>
+                <field name="sdf_postal_code" optional="show"/>
+                <field name="sdf_postal_province_id" optional="show"/>
+                <field name="sdf_physical_province_id" optional="show"/>
+                <field name="sdf_status" optional="show"/>
+                <field name="wsp_year" optional="show"/>
+                <field name="wsp_create_date" optional="show"/>
+                <field name="wsp_status" optional="show"/>
+                <field name="wsp_due_date" optional="show"/>
+                <field name="org_contact_title" optional="show"/>
+                <field name="org_contact_firstname" optional="show"/>
+                <field name="org_contact_surname" optional="show"/>
+                <field name="org_contact_initials" optional="show"/>
+                <field name="org_contact_jobtitle" optional="show"/>
+                <field name="org_contact_phone" optional="show"/>
+                <field name="org_contact_faxnumber" optional="show"/>
+                <field name="org_contact_email" optional="show"/>
+                <field name="org_contact_cell" optional="show"/>
+                <field name="org_contact_address1" optional="show"/>
+                <field name="org_contact_address2" optional="show"/>
+                <field name="org_contact_city_id" optional="show"/>
+                <field name="org_contact_postal_code" optional="show"/>
+                <field name="org_contact_region" optional="show"/>
+                <field name="apr" optional="show"/>
+                <field name="may" optional="show"/>
+                <field name="jun" optional="show"/>
+                <field name="jul" optional="show"/>
+                <field name="aug" optional="show"/>
+                <field name="sep" optional="show"/>
+                <field name="oct" optional="show"/>
+                <field name="nov" optional="show"/>
+                <field name="dec" optional="show"/>
+                <field name="jan" optional="show"/>
+                <field name="feb" optional="show"/>
+                <field name="mar" optional="show"/>
+                <field name="total" optional="show"/>
+
+                <field name="planning_grant" optional="show"/>
+                <field name="implementation_grant" optional="show"/>
+                <field name="discretionary_grant" optional="show"/>
+                <field name="project_grant" optional="show"/>
+                <field name="efacts_contact" optional="show"/>
+                <field name="efacts_address" optional="show"/>
+                <field name="dol_status" optional="show"/>
+                <field name="linked_organisation_type" optional="show"/>
+                <field name="emp_per_profile" optional="show"/>
+                <field name="inter_seta_transfer" optional="show"/>
+                <field name="org_id" optional="show"/>
+                <field name="tmp_org_report_id" optional="show"/>
+                <field name="org_size_id" optional="show"/>
+                <field name="org_registered_by" optional="show"/>
+                <field name="org_registered_date" optional="show"/>
+
+            </tree>
+        </field>
+    </record>
+    
+
+    <record id="action_skills_report" model="ir.actions.act_window">
+        <field name="name">Skills Report</field>
+        <field name="res_model">wizard.skills.report.filter</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+        
+
+    <menuitem id="menu_reports" 
+        name="Reports" 
+        sequence="19" 
+        parent="skills_sdf_menu"
+        groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/> 
+
+
+    <menuitem name="Reports" action="action_skills_report" id="menu_skills_report" parent="inseta_skills.menu_reports" sequence="1"/>        
+
+</odoo>

@@ -1,0 +1,114 @@
+<odoo>
+  <data>
+    
+
+    <record id="action_dgapplication_decline_letter_report" model="ir.actions.report">
+        <field name="name">DG Decline Letter</field>
+        <field name="model">inseta.dgevaluation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_dg.dgapplication_decline_letter</field>
+        <field name="report_file">inseta_dg.dgapplication_decline_letter</field>
+        <field name="print_report_name">(object.organisation_id.sdl_no +'_'+(object.name).replace('/','_')+'_decline_letter_'+time.strftime('%Y-%m-%d-%H:%M:%S'))</field>
+        <field name="attachment">((object.name).replace('/','_')+'_decline_letter.pdf')</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="dgapplication_decline_letter">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-offset-2">
+                    <img src='/inseta_skills/static/description/icon.png' style="max-height: 70px;"/>
+                </div>
+            </div>
+            <hr/>
+        </div>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <!-- <t t-call="web.external_layout"> -->
+                    <t t-set="o" t-value="o.with_context(lang=lang)" />
+                    <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+
+                    <div class="page">
+                       <style>
+                            body {
+                                
+                                font-family: Ubuntu, Calibri, Arial, Cambria, Georgia, Roboto, 'Open Sans';
+                                font-size:14px;
+                            }
+                            h4 {
+                                text-align: center; font-size:16px; font-weight:bold
+                            }
+                            .bold {
+                                font-weight:bold !important
+                            }
+
+                            mt-8{
+                                margin-top:8px !important;
+                            }
+                            mt-16{
+                                margin-top:16px !important;
+                            }
+                            ml-8{
+                                margin-left:8px !important;
+                            }
+                            .list-indented li{
+                                margin-left:8px !important;
+                                margin-top:8px !important;
+                            }
+                        </style>
+                        <t t-set="dg" t-value="o.dgapplication_id" />
+
+                        <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /></p>
+
+                        <span t-field="o.dgapplicationdetails_id.contact_person_name" /><br/>
+                        <span t-field="dg.organisation_id.name"/><br/>
+                        <span t-field="dg.organisation_id.sdl_no"/><br/>
+
+                        <span t-field="dg.organisation_id.postal_address1"/> <span t-field="o.organisation_id.postal_address2"/> <span t-field="o.organisation_id.postal_address3"/><br/>
+                        <span t-field="dg.organisation_id.postal_suburb_id.name"/> <br/> 
+                        <span t-field="dg.organisation_id.postal_code"/><br/>
+
+                        <p class="mt-16">
+                            Dear  <span t-field="o.dgapplicationdetails_id.contact_person_name" />,
+                        </p>
+
+                        <h4 class="mt-8 bold"><b>Re: <span t-esc="dg.dgtype_id.name.title()"/> Application</b> <br/></h4>
+                        <p>
+                            Your DG application  for <span t-esc="dg.dgtype_id.name.title()"/> for funding for the financial Year <span t-field="o.financial_year_id.name"/>  is declined for the following <br/><br/>
+                            <b>Reason: <span t-field="dg.decline_comment"/> </b>
+                            <br/><br/>
+                            INSETA values your partnership and looks forward to engaging with in future. 
+                            Any enquiries must be sent to <span t-field="dg.dgtype_id.seta_mail_to"/>.
+                        </p>
+
+                        <p style="margin-top:150px">Yours Sincerely
+
+                        <table class="table" style="border-top:none">
+                            <tbody>
+                                <tr>
+                                    <td  style="width:50%">
+                                        <p t-if="o.signed_by_mgr">
+                                            <div widget="html" t-field="o.signed_by_mgr.signature"/>
+                                            <span t-esc="o.signed_by_mgr.name or '' " /> <br/>
+                                            <t t-if="o.signed_by_mgr.is_learning_mgr_youth">
+                                               Learning Manager: Youth Programmes
+                                            </t>
+                                            <t t-else="">
+                                                Learning Division Manager
+                                            </t>
+                                            <br/>
+                                            INSETA
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </p>
+                    </div>
+                    </div>
+                <!-- </t> -->
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

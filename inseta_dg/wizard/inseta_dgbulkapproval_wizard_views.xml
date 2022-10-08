@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dgbulkapproval_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.dgbulkapproval.wizard.form</field>
+        <field name="model">inseta.dgbulkapproval.wizard</field>
+        <field name="arch" type="xml">
+            <form string="DG Application Approval">
+                <field name="stage" invisible="1" />
+                <group>
+                    <group colspan="4" >
+                        <field  name="dgapproval_id" invisible="1"/>
+                        <field name="option" required="1" string="Option"/>
+                        <!-- <separator string="Grand Totals" />
+                        <field name="no_learners"/>
+                        <field   name="no_learners_recommended" string="Total Recommended"  readonly="1"/>
+                        <field   name="amount_total_recommended" attrs="{'required':[('option','not in', ('Query',)),]}"/> -->
+                    </group>
+                
+                </group>
+                <group colspan="4">
+                    <field string="Comment" name="comment" attrs="{'required':[('option','in', ('Query',)),]}"/>
+                </group>
+
+                <footer>
+                    <button string='Approve' name="bulk_approve" type="object" class="oe_highlight"/>
+
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="dgbulkapproval_wizard_action" model="ir.actions.act_window">
+        <field name="name">DG Bulk Approval</field>
+        <field name="res_model">inseta.dgbulkapproval.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="dgbulkapproval_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

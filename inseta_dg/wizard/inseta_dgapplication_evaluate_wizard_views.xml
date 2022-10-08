@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dgapplication_evaluate_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.dgapplication.evaluate.wizard.form</field>
+        <field name="model">inseta.dgapplication.evaluate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="DG Application Evaluation">
+                <sheet>
+                    <field name="stage" invisible="1" />
+                    <div class="oe_title">
+                        <h1>
+                            <field name="dgapplication_id" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="dgapplication_id" invisible="1"/>
+                            <field name="dgtype_id" invisible="1" />
+                            <field name="dgtype_code" invisible="1" />
+                            <field name="option" invisible="1" string="Option" attrs="{'required':[('stage','in',('evaluate',))]}"/>
+                        </group>
+                        <group/>
+                    </group>
+                    <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+                        Please click on each line item							
+                    </div>
+                    <field name="line_ids">
+                        <tree class="table-4-cols" create="0" delete="0" string="DG Evalutaion">
+                            <field name="dgapplication_id" invisible="1" />
+                            <field name="dgapplicationdetail_id" invisible="1" />
+                            <field name="currency_id" invisible="1" />
+                            <field name="cost_per_student" invisible="1" />
+                            <field name="no_learners" readonly="1" />
+                            <field name="disabled" readonly="1"/>
+                            <field name="total_learners" invisible="1" />
+                            <field name="amount_applied" readonly="1"/>
+
+                            <field name="no_learners_recommended" />
+                            <field name="disabled_recommended" />
+                            <field name="total_recommended" invisible="1" />
+                            <field name="amount_recommended" readonly="1"/>
+
+                            <field name="no_learners_dgec_recommended" />
+                            <field name="amount_dgec_recommended" readonly="1" />
+
+                            <field name="no_learners_dgac_recommended" />
+                            <field name="amount_dgac_recommended" readonly="1"/>
+
+                            <field name="no_learners_approved" />
+                            <field name="amount_approved" readonly="1" />
+                            <field name="option" string="Option"/>
+
+                        </tree>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <field name="dgapplication_id" invisible="1" />
+                                    <field name="dgapplicationdetail_id" invisible="1" />
+                                    <field name="currency_id" invisible="1" />
+                                    <field name="cost_per_student" invisible="1" />
+                                    <field name="total_learners" invisible="1" />
+                                    <field name="no_learners" readonly="1" />
+                                    <field name="disabled" readonly="1"/>
+                                    <field name="no_learners_recommended" required="1"/>
+                                    <field name="disabled_recommended" required="1"/>
+                                    <field name="total_recommended" readonly="1" />
+                                    <field name="no_learners_dgec_recommended" />
+                                    <field name="no_learners_dgac_recommended" />
+                                    <field name="no_learners_approved" />
+
+                                    <separator string="Amount Applied"/>
+                                    <field name="amount_applied" readonly="1"/>
+
+                                    <separator string="Amount Recommended"/>
+                                    <field name="amount_recommended" readonly="1"/>
+                                    <field name="amount_dgec_recommended" readonly="1" />
+                                    <field name="amount_dgac_recommended" readonly="1"/>
+                                    <field name="amount_approved" readonly="1" />
+                                    <field name="stage" invisible="1" />
+
+                                    <separator string="Comment"/>
+                                    <field name="option" string="Option" attrs="{'required':[('stage','in',('evaluate',))]}"/>
+                                    <field string="Comment" name="comment" attrs="{'required':[('option','in', ('Query',)),]}"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+
+
+                    <footer>
+                        <button string='Submit' name="dgapplication_evaluate" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dgapplication_evaluate_wizard_action" model="ir.actions.act_window">
+        <field name="name">Evaluate DG Application</field>
+        <field name="res_model">inseta.dgapplication.evaluate.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="dgapplication_evaluate_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

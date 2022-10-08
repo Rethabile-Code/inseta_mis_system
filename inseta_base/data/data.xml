@@ -1,0 +1,1499 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <!--SETAs-->
+        <record model="res.bursary.type" id="data_bursarytype1">
+            <field name="name">Full time</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="res.bursary.type" id="data_bursarytype2">
+            <field name="name">Sabbatical</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">2</field>
+        </record>
+
+        <record model="res.seta" id="data_seta2">
+            <field name="name">HWSETA</field>
+            <field name="saqacode">591</field>
+            <field name="seta_id">11</field>
+            <field name="legacy_system_id">8</field>
+        </record>
+
+        <record model="res.seta" id="data_seta1">
+            <field name="name">INSETA</field>
+            <field name="saqacode">595</field>
+            <field name="seta_id">13</field>
+            <field name="legacy_system_id">9</field>
+        </record>
+        <record model="res.seta" id="data_seta3">
+            <field name="name">AGRISETA</field>
+            <field name="description">AgriSETA - Agriculture Sector Education and Training Authority [PAETA and SETASA merged]</field>
+            <field name="seta_id">20 </field>
+            <field name="legacy_system_id">1</field>
+        </record>
+        <record model="res.seta" id="data_seta4">
+            <field name="name">BANKSETA</field>
+            <field name="description">BANKSETA - Banking Sector Education and Training Authority</field>
+            <field name="seta_id">2</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+
+        <record model="res.seta" id="data_seta5">
+            <field name="name">CATHSSETA</field>
+            <field name="description">CATHSSETA - Culture, Arts, Tourism, Hospitality and Sports Education and Training Authority</field>
+            <field name="seta_id">25</field>
+            <field name="legacy_system_id">3</field>
+        </record>
+        <record model="res.seta" id="data_seta6">
+            <field name="name">CETA</field>
+            <field name="description">CETA - Construction Education and Training Authority</field>
+            <field name="seta_id">5</field>
+            <field name="legacy_system_id">4</field>
+        </record>
+        <record model="res.seta" id="data_seta7">
+            <field name="name">CHIETA </field>
+            <field name="description">CHIETA - Chemical Industries Education and Training Authority</field>
+            <field name="seta_id">3</field>
+            <field name="legacy_system_id">18</field>
+        </record>
+        <record model="res.seta" id="data_seta8">
+            <field name="name">ETDP SETA</field>
+            <field name="description">ETDP SETA - Education, Training and Development Practices Sector Education and Training Authority</field>
+            <field name="seta_id">7</field>
+            <field name="legacy_system_id">5</field>
+        </record>
+        <record model="res.seta" id="data_seta9">
+            <field name="name">EWSETA</field>
+            <field name="description">EWSETA - Energy Sector Education and Training Authority</field>
+            <field name="seta_id">8</field>
+            <field name="legacy_system_id">30</field>
+        </record>
+        <record model="res.seta" id="data_seta10">
+            <field name="name">FASSET</field>
+            <field name="description">FASSET - Financial and Accounting Services SETA</field>
+            <field name="seta_id">1</field>
+            <field name="legacy_system_id">6</field>
+        </record>
+
+
+        <!--res.sub.sector is ALMOST Same thing as sic code.
+         Dont know why it is seperated in organisation update Spec-->
+        <record model="res.sub.sector" id="data_subsec1">
+            <field name="name">Short-Term Insurance</field>
+            <field name="siccode">82191</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sub.sector" id="data_subsec2">
+            <field name="name">Activities auxiliary to Financial Intermediation</field>
+            <field name="siccode">83000</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.sub.sector" id="data_subsec3">
+            <field name="name">Reinsurance</field>
+            <field name="siccode">82193</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sub.sector" id="data_subsec4">
+            <field name="name">Insurance and Pension Funding</field>
+            <field name="siccode">82100</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sub.sector" id="data_subsec5">
+            <field name="name">Life Insurance</field>
+            <field name="siccode">82110</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sub.sector" id="data_subsec6">
+            <field name="name">Unit Trusts</field>
+            <field name="siccode">81901</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sub.sector" id="data_subsec7">
+             <field name="name">Funeral Insurance</field>
+            <field name="siccode">82192</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.sub.sector" id="data_subsec8">
+            <field name="name">Pension Funding</field>
+            <field name="siccode">82120</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sub.sector" id="data_subsec9">
+            <field name="name">Risk Management</field>
+            <field name="siccode">81902</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sub.sector" id="data_subsec10">
+            <field name="name">Health Care Benefits Administration</field>
+            <field name="siccode">82131</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--SIC Code-->
+        <record model="res.sic.code" id="data_sic1">
+            <field name="name">Short-Term Insurance</field>
+            <field name="description"></field>
+            <field name="siccode">82191</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.sic.code" id="data_sic2">
+            <field name="name">Activities auxiliary to Financial Intermediation</field>
+            <field name="description"></field>
+            <field name="siccode">83000</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sic.code" id="data_sic3">
+            <field name="name">Reinsurance</field>
+            <field name="description"></field>
+            <field name="siccode">82193</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sic.code" id="data_sic4">
+            <field name="name">Insurance and Pension Funding</field>
+            <field name="siccode">82100</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sic.code" id="data_sic5">
+            <field name="name">Life Insurance</field>
+            <field name="siccode">82110</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sic.code" id="data_sic6">
+            <field name="name">Unit Trusts</field>
+            <field name="siccode">81901</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sic.code" id="data_sic7">
+            <field name="name">Funeral Insurance</field>
+            <field name="siccode">82192</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sic.code" id="data_sic8">
+            <field name="name">Pension Funding</field>
+            <field name="siccode">82120</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sic.code" id="data_sic9">
+            <field name="name">Risk Management</field>
+            <field name="siccode">81902</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sic.code" id="data_sic10">
+            <field name="name">Health Care Benefits Administration</field>
+            <field name="siccode">82131</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--citizenship status-->
+        <record model="res.citizen.status" id="id_citizen_status_dual">
+            <field name="name">Dual (SA plus other)</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+            <field name="saqacode">D</field>
+        </record>
+        
+        <record model="res.citizen.status" id="id_citizen_status_other">
+            <field name="name">Other</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+            <field name="saqacode">O</field>
+
+        </record>
+        <record model="res.citizen.status" id="id_citizen_status_Pr">
+            <field name="name">Permanent Resident</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+            <field name="saqacode">PR</field>
+        </record>
+
+        <record model="res.citizen.status" id="id_citizen_status_sa">
+            <field name="name">South Africa</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+            <field name="saqacode">SA</field>
+        </record>
+
+        <record model="res.citizen.status" id="id_citizen_status_u">
+            <field name="name">Unknown</field>
+            <field name="active">True</field>
+            <field name="saqacode">U</field>
+        </record>
+
+        <!--equity-->
+        <record model="res.equity" id="id_equity_test1">
+            <field name="name">Black: African</field>
+            <field name="description">Black: African</field>
+            <field name="saqacode">BA</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.equity" id="id_equity_test2">
+            <field name="name">Black: Coloured</field>
+            <field name="description">Black: Coloured</field>
+            <field name="saqacode">BC</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.equity" id="id_equity_test3">
+            <field name="name">Black: Indian/Asian</field>
+            <field name="description">Black: Indian/Asian</field>
+            <field name="saqacode">BC</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.equity" id="id_equity_test4">
+            <field name="name">White</field>
+            <field name="description">White</field>
+            <field name="saqacode">Wh</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_driving_license">
+            <field name="name">Driving license</field>
+            <field name="legacy_system_id">6</field>
+            <field name="saqacode">529</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.alternate.id.type" id="id_means_birth_passport">
+            <field name="name">Birth Certificate Number</field>
+            <field name="legacy_system_id">3</field>
+            <field name="saqacode">540</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_number_passport">
+            <field name="name">Passport Number</field>
+            <field name="legacy_system_id">2</field>
+            <field name="saqacode">527</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_emp_number_passport">
+            <field name="name">Employee Number</field>
+            <field name="legacy_system_id">5</field>
+            <field name="saqacode">539</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_student_number">
+            <field name="name">Student Number</field>
+            <field name="legacy_system_id">4</field>
+            <field name="saqacode">537</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_wrk_permit_number">
+            <field name="name">Work Permit No</field>
+            <field name="legacy_system_id">8</field>
+            <field name="saqacode">538</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_sap_permit">
+            <field name="name">SA Residence Permit</field>
+            <field name="legacy_system_id">7</field>
+            <field name="saqacode">SAP</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_temporal_id_permit">
+            <field name="name">Temporary ID No</field>
+            <field name="legacy_system_id">9</field>
+            <field name="saqacode">531</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_qa_id_permit">
+            <field name="name">QA Record Number</field>
+            <field name="legacy_system_id">10</field>
+            <field name="saqacode">561</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_none_id_permit">
+            <field name="name">None</field>
+            <field name="legacy_system_id">11</field>
+            <field name="saqacode">533</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_unknown_id_permit">
+            <field name="name">Unknown</field>
+            <field name="legacy_system_id">12</field>
+            <field name="saqacode">535</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_saqa_id_permit">
+            <field name="name">SAQA Member ID</field>
+            <field name="legacy_system_id">13</field>
+            <field name="saqacode">0</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.alternate.id.type" id="id_means_hrsc_id_permit">
+            <field name="name">HSRC Register Number</field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+ 
+        <!--Highest Education-->
+        <record model="res.education.level" id="data_edu_level1">
+            <field name="name">Certificate</field>
+            <field name="description">Certificate</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.education.level" id="data_edu_level2">
+            <field name="name">Degree</field>
+            <field name="description">Degree</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.education.level" id="data_edu_level3">
+            <field name="name">Diploma</field>
+            <field name="description">Diploma</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.education.level" id="data_edu_level4">
+            <field name="name">Matric / Grade 12</field>
+            <field name="description">Matric / Grade 12</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.education.level" id="data_edu_level5">
+            <field name="name">Other</field>
+            <field name="description">Other</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.sdf.function" id="data_sdf_function1">
+            <field name="name">Single establishment</field>
+            <field name="description">Single establishment</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.sdf.function" id="data_sdf_function2">
+            <field name="name">Single branch of an organisation</field>
+            <field name="description">Single branch of an organisation</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.sdf.function" id="data_sdf_function3">
+            <field name="name">Multiple branches of an organisation</field>
+            <field name="description">Multiple branches of an organisation</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.sdf.function" id="data_sdf_function4">
+            <field name="name">Multiple organisations</field>
+            <field name="description">Multiple organisations</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.sdf.function" id="data_sdf_function5">
+            <field name="name">Group of organisations</field>
+            <field name="description">Group of organisations</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record> 
+
+        <!--employer type-->
+        <record model="res.employer.type" id="data_emp_type1">
+            <field name="name">Primary SDF</field>
+            <field name="description">Primary SDF</field>
+            <field name="saqacode"></field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.employer.type" id="data_emp_type2">
+            <field name="name">Secondary SDF</field>
+            <field name="description">Secondary SDF</field>
+            <field name="saqacode"></field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.employer.type" id="data_emp_type3">
+            <field name="name">HR Manager / Officer</field>
+            <field name="description">HR Manager / Officer</field>
+            <field name="saqacode"></field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.employer.type" id="data_emp_type4">
+            <field name="name">Labour Representative</field>
+            <field name="description">Labour Representative</field>
+            <field name="saqacode"></field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.employer.type" id="data_emp_type5">
+            <field name="name">Senior Financial Representative</field>
+            <field name="description">Senior Financial Representative</field>
+            <field name="saqacode"></field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.employer.type" id="data_emp_type6">
+            <field name="name">Senior Organisation Representative</field>
+            <field name="description">Senior Organisation Representative</field>
+            <field name="saqacode"></field>
+            <field name="active">True</field>
+        </record> 
+
+        <!--res.registration_no_type-->
+
+        <record model="res.registration_no_type" id="data_regno_type1">
+            <field name="name">Company Registration Number</field>
+            <field name="description">Company Registration Number</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.registration_no_type" id="data_regno_type2">
+            <field name="name">Cipro</field>
+            <field name="description">Cipro</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">False</field>
+        </record> 
+
+        <!--gender-->
+        <record model="res.gender" id="data_gender_male">
+            <field name="name">Male</field>
+            <field name="description">Male</field>
+            <field name="saqacode">M</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.gender" id="data_gender_female">
+            <field name="name">Female</field>
+            <field name="description">Female</field>
+            <field name="saqacode">F</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+ 
+        <!--popi act status-->
+        <record model="res.popi.act.status" id="data_popiact_1">
+            <field name="name">Agree</field>
+            <field name="saqacode">1</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.popi.act.status" id="data_popiact_2">
+            <field name="name">Disagree</field>
+            <field name="saqacode">2</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.popi.act.status" id="data_popiact_3">
+            <field name="name">N/A</field>
+            <field name="saqacode">3</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record> 
+
+        <!--socio economic status-->
+        <record model="res.socio.economic.status" id="data_sec_1">
+            <field name="name">Employed</field>
+            <field name="saqacode">1</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.socio.economic.status" id="data_sec_2">
+            <field name="name">Unemployed</field>
+            <field name="saqacode">2</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+
+        <!--type organisation-->
+        <record model="res.type.organisation" id="data_orgtype_1">
+            <field name="name">FET</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.type.organisation" id="data_orgtype_2">
+            <field name="name">HET</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+
+        <!--legal status-->
+        <record model="res.legal.status" id="data_legalstatus_1">
+            <field name="name">Non-governmental Organisation (NGO)</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.legal.status" id="data_legalstatus_2">
+            <field name="name">Community based Organisation (CBO)</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.legal.status" id="data_legalstatus_3">
+            <field name="name">Section 21 company</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.legal.status" id="data_legalstatus_4">
+            <field name="name">Pty /Ltd</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.legal.status" id="data_legalstatus_5">
+            <field name="name">Close Corporation</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.legal.status" id="data_legalstatus_6">
+            <field name="name">Sole Proprietor</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.legal.status" id="data_legalstatus_7">
+            <field name="name">Partnership</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.legal.status" id="data_legalstatus_8">
+            <field name="name">Other</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record> 
+
+        <!--Partnership-->
+        <record model="res.partnership" id="data_partnership_1">
+            <field name="name">Private</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.partnership" id="data_partnership_2">
+            <field name="name">Public</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+
+        <record model="res.partnership" id="data_partnership_3">
+            <field name="name">Private/Public</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record> 
+        <!--Organisation Size-->
+        <record model="res.organisation.size" id="data_orgsize_large">
+            <field name="name">Large (150+)</field>
+            <field name="saqacode">large</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.organisation.size" id="data_orgsize_medium">
+            <field name="name">Medium (50 - 149)</field>
+            <field name="saqacode">medium</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.organisation.size" id="data_orgsize_small_levy">
+            <field name="name">Small Levy Paying (1 - 49)</field>
+            <field name="saqacode">small_levy</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.organisation.size" id="data_orgsize_small_non_levy">
+            <field name="name">Small Non-Levy Paying (1 - 49)</field>
+            <field name="saqacode">small_nonlevy</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record> 
+
+        <!--Bee Status-->
+        <record model="res.bee.status" id="data_bee_status1">
+            <field name="name">Level one contributor</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status2">
+            <field name="name">Level two contributor</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status3">
+            <field name="name">Level three contributor</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status4">
+            <field name="name">Level four contributor</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status5">
+            <field name="name">Level five contributor</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status6">
+            <field name="name">Level Six contributor</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status7">
+            <field name="name">Level Seven contributor</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status8">
+            <field name="name">Level Eight contributor</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status9">
+            <field name="name">Non- compliant</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status10">
+            <field name="name">Non BEE</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.bee.status" id="data_bee_status11">
+            <field name="name">Exempted</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record> 
+
+        <!--Levy Number type-->
+        <record model="res.levy.number.type" id="data_levy_no_type_l">
+            <field name="name">L Number</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.levy.number.type" id="data_levy_no_type_n">
+            <field name="name">N Number</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.levy.number.type" id="data_levy_no_type_x">
+            <field name="name">X Number</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record> 
+
+        <!--Appointment Procedure-->
+        <record model="res.sdf.appointment.procedure" id="data_sdf_appt_procedure_appointed_by_employer">
+            <field name="name">Appointed by employer</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.sdf.appointment.procedure" id="data_sdf_appt_procedure_self_appointed">
+            <field name="name">Self-appointed</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record> 
+        <record model="res.sdf.appointment.procedure" id="data_sdf_appt_procedure_nominated_employee">
+            <field name="name">Nominated by employees</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.sdf.appointment.procedure" id="data_sdf_appt_procedure_others">
+            <field name="name">Other, If other, please specify</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <!--Designation-->
+        <record model="res.designation" id="data_designation1">
+            <field name="name">CEO</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.designation" id="data_designation2">
+            <field name="name">COO</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.designation" id="data_designation3">
+            <field name="name">HR Manager</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.designation" id="data_designation4">
+            <field name="name">Training Manager</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.designation" id="data_designation5">
+            <field name="name">Other</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.designation" id="data_designation6">
+            <field name="name">Financial Manager</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active" eval="True"/>
+        </record> 
+
+        <!--Form SP: Skills Pririties-->
+        <record model="res.formsp" id="data_formsp1">
+            <field name="name">2019-332101 - Insurance Agent</field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp2">
+            <field name="name">2019-212101 - Actuary</field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp3">
+            <field name="name">2019-251201 - Software Developer</field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp4">
+            <field name="name">2019-122101 - Sales &amp; Marketing Manager</field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp5">
+            <field name="name">2019-332102 - Insurance Broker</field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp6">
+            <field name="name">2019-331503 - Insurance Loss Adjuster </field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp7">
+            <field name="name">2019-241301 - Financial Investment Advisor </field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp8">
+            <field name="name">2019-242207 - Compliance Officer</field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp9">
+            <field name="name">2019-251101 - ICT Systems Analyst</field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp10">
+            <field name="name">2019-431204 - Insurance Claims Administrator</field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formsp" id="data_formsp11">
+            <field name="name">None</field>
+            <field name="saqacode">2021</field>
+            <field name="active" eval="True"/>
+        </record> 
+
+        <!--Form SPL-->
+        <record model="res.formspl" id="data_formspl1">
+            <field name="name">Below AET Level 4/NQF Level1(below Grade 9/Std7/Form 2</field>
+            <field name="saqacode">0</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl2">
+            <field name="name">AET Level/NQF Level 1 (at Grade 9/Std 7/Form2</field>
+            <field name="saqacode">1</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl3">
+            <field name="name">NQF Level 2 (up to and including Grade 10/Std8/Form 3/NTC I)</field>
+            <field name="saqacode">2</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl4">
+            <field name="name">NQF Level 3 (up to and including Grade 11/Std8/Form 4/NTC II)</field>
+            <field name="saqacode">3</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl5">
+            <field name="name">NQF Level 4 (up to and including Grade 12/Std8/Form 5/NTC III)</field>
+            <field name="saqacode">4</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl6">
+            <field name="name">NQF Level 5 (Diploma, Certificate/NTC IV,V,VI)</field>
+            <field name="saqacode">5</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl7">
+            <field name="name">NQF Level 6 (National Diploma)</field>
+            <field name="saqacode">6</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl8">
+            <field name="name">NQF Level 7 (First Degree)</field>
+            <field name="saqacode">7</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl9">
+            <field name="name">NQF Level 8 (Honours, Professional Degrees and Post Graduate)</field>
+            <field name="saqacode">8</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl10">
+            <field name="name">NQF Level 9 (Masters)</field>
+            <field name="saqacode">9</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl11">
+            <field name="name">NQF Level 10 (Doctoral)</field>
+            <field name="saqacode">10</field>
+            <field name="legacy_system_id">11</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formspl" id="data_formspl12">
+            <field name="name">Other (Specify)</field>
+            <field name="saqacode">11</field>
+            <field name="legacy_system_id">12</field>
+            <field name="active" eval="True"/>
+        </record> 
+
+        <!--Form Occupation-->
+        <record model="res.formoccupation" id="data_formoccupation1">
+            <field name="name">Managers</field>
+            <field name="saqacode">1</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formoccupation" id="data_formoccupation2">
+            <field name="name">Professionals</field>
+            <field name="saqacode">2</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formoccupation" id="data_formoccupation3">
+            <field name="name">Technicians and Associate Professionals</field>
+            <field name="saqacode">3</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formoccupation" id="data_formoccupation4">
+            <field name="name">Clerical Support Workers</field>
+            <field name="saqacode">4</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formoccupation" id="data_formoccupation5">
+            <field name="name">Service and Sales Workers</field>
+            <field name="saqacode">5</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formoccupation" id="data_formoccupation6">
+            <field name="name">Skilled Agricultural. Forestry, Fishery, Craft and Related Trades Workers</field>
+            <field name="saqacode">6</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formoccupation" id="data_formoccupation7">
+            <field name="name">Plant and Machinery Operators and Assemblers</field>
+            <field name="saqacode">7</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formoccupation" id="data_formoccupation8">
+            <field name="name">Elementary Occupations</field>
+            <field name="saqacode">8</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <record model="res.formoccupation" id="data_formoccupation9">
+            <field name="name">Numerical and Material Recording Clerks</field>
+            <field name="saqacode">9</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active" eval="True"/>
+        </record> 
+        <!--AET Level-->
+        <record model="res.aetlevel" id="data_aetlevel1">
+            <field name="name">ABET Level 0</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active" eval="True"/>
+        </record>
+       <record model="res.aetlevel" id="data_aetlevel2">
+            <field name="name">ABET Level 1</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active" eval="True"/>
+        </record>
+       <record model="res.aetlevel" id="data_aetlevel3">
+            <field name="name">ABET Level 2</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.aetlevel" id="data_aetlevel4">
+            <field name="name">ABET Level 3</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.aetlevel" id="data_aetlevel5">
+            <field name="name">ABET Level 4</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active" eval="True"/>
+        </record>
+        <!--AET Subject-->
+        <record model="res.aetsubject" id="data_aetsubject1">
+            <field name="name">Numeracy</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.aetsubject" id="data_aetsubject2">
+            <field name="name">Literacy</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active" eval="True"/>
+        </record>
+        <!--RES Form Cred-->
+        <record model="res.formcred" id="data_formcred1">
+            <field name="name">Credit-Bearing</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.formcred" id="data_formcred2">
+            <field name="name">Non Credit-Bearing</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active" eval="True"/>
+        </record>
+        <!--RES NQF Level-->
+        <record model="res.nqflevel" id="data_nqflevel1">
+            <field name="name">Level 01</field>
+            <field name="saqacode">1</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel2">
+            <field name="name">Level 02</field>
+            <field name="saqacode">2</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel3">
+            <field name="name">Level 03</field>
+            <field name="saqacode">3</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel4">
+            <field name="name">Level 04</field>
+            <field name="saqacode">4</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel5">
+            <field name="name">Level 05</field>
+            <field name="saqacode">5</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel6">
+            <field name="name">Level 06</field>
+            <field name="saqacode">6</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel7">
+            <field name="name">Level 07</field>
+            <field name="saqacode">7</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel8">
+            <field name="name">Level 08</field>
+            <field name="saqacode">8</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel9">
+            <field name="name">Level 09</field>
+            <field name="saqacode">9</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel10">
+            <field name="name">Level 10</field>
+            <field name="saqacode">10</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.nqflevel" id="data_nqflevel11">
+            <field name="name">Below Level 01</field>
+            <field name="saqacode">0</field>
+            <field name="legacy_system_id">11</field>
+            <field name="active" eval="True"/>
+        </record>
+        <!--RES Intervention-->
+        <record model="res.intervention" id="data_intervention1">
+            <field name="name">Theoretical / Institutional</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active" eval="True"/>
+        </record>
+       <record model="res.intervention" id="data_intervention2">
+            <field name="name">Theoretical / Practical</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active" eval="True"/>
+        </record>
+       <record model="res.intervention" id="data_intervention3">
+            <field name="name">Occupational / Professional</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active" eval="True"/>
+        </record>
+       <record model="res.intervention" id="data_intervention4">
+            <field name="name">Occupationally Directed Learning</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active" eval="True"/>
+        </record>
+       <record model="res.intervention" id="data_intervention5">
+            <field name="name">Work Based Learning</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active" eval="True"/>
+        </record>
+       <record model="res.intervention" id="data_intervention6">
+            <field name="name">Structured Information Sharing</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active" eval="True"/>
+        </record>
+       <record model="res.intervention" id="data_intervention7">
+            <field name="name">Informal Work Based Learning</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active" eval="True"/>
+        </record>
+        <!--RES partner title-->
+        <record model="res.partner.title" id="data_title1">
+            <field name="name">Mr</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+        </record>
+        <record model="res.partner.title" id="data_title2">
+            <field name="name">Mrs</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+        </record>
+        <record model="res.partner.title" id="data_title3">
+            <field name="name">Ms</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+        </record>
+        <record model="res.partner.title" id="data_title4">
+            <field name="name">Miss</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+        </record>
+        <record model="res.partner.title" id="data_title5">
+            <field name="name">Dr</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+        </record>
+        <record model="res.partner.title" id="data_title6">
+            <field name="name">Adv</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+        </record>
+        <record model="res.partner.title" id="data_title7">
+            <field name="name">Prof</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+        </record>
+        <record model="res.partner.title" id="data_title8">
+            <field name="name">Rev</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">8</field>
+        </record>
+        <record model="res.partner.title" id="data_title9">
+            <field name="name">Hon</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">9</field>
+        </record>
+        <!--Res lang-->
+        <record model="res.lang" id="data_lang1">
+            <field name="name">English</field>
+            <field name="iso_code">Eng</field>
+            <field name="code">Eng</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">1</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang2">
+            <field name="name">Afrikaans</field>
+            <field name="iso_code">Afr</field>
+            <field name="code">Afr</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">2</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang3">
+            <field name="name">Other</field>
+            <field name="iso_code">Oth</field>
+            <field name="code">Oth</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">3</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang4">
+            <field name="name">South African Sign Language</field>
+            <field name="iso_code">SASL</field>
+            <field name="code">SASL</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">4</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang5">
+            <field name="name">sePedi [also known as Northern Sotho / Sesotho sa Lebowa]</field>
+            <field name="iso_code">Sep</field>
+            <field name="code">Sep</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">5</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang6">
+            <field name="name">seSotho</field>
+            <field name="iso_code">Ses</field>
+            <field name="code">Ses</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">6</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang7">
+            <field name="name">seTswana</field>
+            <field name="iso_code">Set</field>
+            <field name="code">Set</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">7</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang8">
+            <field name="name">siSwati</field>
+            <field name="iso_code">Swa</field>
+            <field name="code">Swa</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">8</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang9">
+            <field name="name">tshiVenda</field>
+            <field name="iso_code">Tsh</field>
+            <field name="code">Tsh</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">9</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang10">
+            <field name="name">isiXhosa</field>
+            <field name="iso_code">Xho</field>
+            <field name="code">Xho</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">10</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang11">
+            <field name="name">xiTsonga</field>
+            <field name="iso_code">Xit</field>
+            <field name="code">Xit</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">11</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang12">
+            <field name="name">isiZulu</field>
+            <field name="iso_code">Zul</field>
+            <field name="code">Zul</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">12</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.lang" id="data_lang13">
+            <field name="name">isiNdebele</field>
+            <field name="iso_code">Nde</field>
+            <field name="code">Nde</field>
+            <field name="country_id" ref="base.za"/>
+            <field name="legacy_system_id">13</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!--RES Funding type-->
+        <record model="res.fundingtype" id="data_fundingtype1">
+            <field name="name">SETA funded</field>
+            <field name="saqacode">1</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+        <record model="res.fundingtype" id="data_fundingtype2">
+            <field name="name">Industry Funded</field>
+            <field name="saqacode">2</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+
+        <!--Internship type-->
+        <record model="res.internshiptype" id="data_internshiptype1">
+            <field name="name">Graduate Internship Programme</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+        </record>
+        <record model="res.internshiptype" id="data_internshiptype2">
+            <field name="name">Work Integrated Learning</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+        </record>
+        <record model="res.internshiptype" id="data_internshiptype3">
+            <field name="name">Non graduate Internship programme</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+        </record>
+        <!--BANK-->
+        <record model="inseta.bank" id="data_bank1">
+            <field name="name">ABSA</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank2">
+            <field name="name">Standard Bank</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank3">
+            <field name="name">Nedbank</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank4">
+            <field name="name">NBS</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank5">
+            <field name="name">Bank of Athens</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank6">
+            <field name="name">BOE</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank7">
+            <field name="name">Boland PKS</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank8">
+            <field name="name">City Bank</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank9">
+            <field name="name">First National</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank10">
+            <field name="name">First Rand</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank11">
+            <field name="name">MEEG /ABSA</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank12">
+            <field name="name">Mercantile Lisbon</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank13">
+            <field name="name">HBZ Bank</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank14">
+            <field name="name">Investec</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank15">
+            <field name="name">HSBC</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">15</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank16">
+            <field name="name">Reserve Bank</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">16</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank17">
+            <field name="name">Capitec</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">17</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.bank" id="data_bank18">
+            <field name="name">Rand Merchant Bank</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">18</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--Account Type-->
+        <record model="res.accounttype" id="data_acctype1">
+            <field name="name">Current</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.accounttype" id="data_acctype2">
+            <field name="name">Savings</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.accounttype" id="data_acctype3">
+            <field name="name">Transmission</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.accounttype" id="data_acctype4">
+            <field name="name">Credit</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo> 

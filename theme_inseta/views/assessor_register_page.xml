@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- === Assessor Register Page === -->
+    <template id="assessor_moderator_register" name="Assessor Register">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure">
+                    <!-- MultiStep Form -->
+                    <section class="pt32 pb64 assessor-moderator-register">
+                        <div class="container-fluid" id="grad1">
+                            <div class="row justify-content-center mt-0">
+                                <div class="col-12 col-lg-9 col-sm-12 col-md-10 text-center p-0 mt-3 mb-2">
+                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                                        <h2>
+                                            <strong id="register_label"> - </strong>
+                                        </h2>
+                                        <p>Fill all form field to go to next step</p>
+                                        <div class="row">
+                                            <div class="col-md-12 mx-0">
+                                                <form id="msform" class="needs-validation" novalidate="novalidate" method="post" enctype="multipart/form-data">
+                                                    <!-- progressbar -->
+                                                    <ul id="progressbar">
+                                                        <li class="active" id="general">
+                                                            <strong>personal information</strong>
+                                                        </li>
+                                                        <li id="contact">
+                                                            <strong>Address</strong>
+                                                        </li>
+                                                         
+                                                        <li id="citizenship">
+                                                            <strong>Scope Requested</strong>
+                                                        </li>
+
+                                                        <li id="attachments">
+                                                            <strong>Attachments</strong>
+                                                        </li>
+
+                                                        <li id="confirm">
+                                                            <strong>Finish</strong>
+                                                        </li>
+                                                    </ul>                                                    <!-- fieldsets -->
+                                                    <fieldset name="general">
+                                                        
+                                                        <div class="form-card">
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-12">
+                                                                    <label for="fileCodeOfConduct"> Download <a href="/theme_inseta/static/assessor_moderator_code_conduct.pdf" target="_blank">Here</a> Sign and Upload the Code Of Conduct <span class="text-warning">*</span> </label>
+                                                                    <input type="file" class="form-control" id="fileCodeOfConduct" name="fileCodeOfConduct" required="required" accept="image/*,application/pdf" />
+                                                                </div>
+                                                            </div>
+                                                            <h2 class="fs-title">General Information</h2>
+
+                                                            <div class="form-row">
+                                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                                <!-- reqister_type Used to determine assessor / moderator registration since they share both template -->
+                                                                <input type="checkbox" name="reqister_type" class="d-none" id="reqister_type"/>
+                                                            </div>                                                         
+                                                            <!-- <div class="form-row d-none">
+                                                                <div class="col-md-4 mb-6">
+                                                                    <label for="image_512">Add Passport Photo</label>
+                                                                    <input type="file" name="image_512" id="image_512" class="form-control-file" accept="image/*"/>
+                                                                </div>
+                                                            </div> -->
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxx -->
+
+                                                            <div class="form-group d-none" id="is_assessor_box"> 
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" id="is_assessorid" name="is_assessorid"/>
+                                                                    <label class="form-check-label" for="is_assessorid">
+                                                                        Check the box - Please Note: Only registered assessors can apply for this
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-row d-none" id="assessordiv">
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="InputAssessorNo">Enter ID / Assessor No</label>
+                                                                    <input class="form-control form-control-sm" id="InputAssessorNo" name="InputAssessorNo" required="required"/><br/>
+                                                                    <input type="button" name="updatedetails" id="updatedetails" class="updatedetails btn btn-secondary btn-sm d-none" value="Click to add Details" />
+                                                                </div>
+                                                                <!-- <div class="col-md-4 mb-3">
+                                                                    <input type="button" name="updatedetails" id="updatedetails" class="updatedetails btn btn-secondary btn-sm d-none" value="Update Details" />
+                                                                </div>  -->
+                                                            </div>
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxx --> 
+                                                            
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="inputTitle">Title <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="inputTitle" name="inputTitle" required="required" class="form-control form-control-sm">
+                                                                        <option value=""></option>
+                                                                        <t t-foreach="titles" t-as="title">
+                                                                            <option t-att-value="title.id">
+                                                                                <span t-esc="title.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Title
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+
+                                                            <div class="form-row">
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="inputFname">First name <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <input type="text" maxlength="75" class="form-control form-control-sm" id="inputFname" name="inputFname" placeholder="First name" required="required"/>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide First Name
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="inputMname">Middle name</label>
+                                                                    <input type="text" maxlength="75" class="form-control form-control-sm" id="inputMname" name="inputMname" placeholder="Middle name"/>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="inputLname">Surname <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <input type="text" maxlength="75" class="form-control form-control-sm" id="inputLname" name="inputLname" placeholder="Last name" required="required"/>
+                                                                    <div class="invalid-feedback">
+                                                                           Provide Surname Name
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                            <!--end form-row-->
+
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="inputInitials">Initials <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <input type="text" maxlength="25" class="form-control form-control-sm" id="inputInitials" name="inputInitials" placeholder="Initials" required="required"/>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Initials
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group col-md-8">
+                                                                    <label for="inputEmail">Email<span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <input type="email" maxlength="75" class="form-control form-control-sm" id="inputEmail" name="inputEmail" placeholder="chris@mail.com" required="required"/>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Valid Email
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-row">
+                                                                <div class="col-md-4 mb-4">
+                                                                    <label for="inputTel">Telephone Number</label>
+                                                                    <input type="text" maxlength="10" class="form-control form-control-sm" id="inputTel" name="inputTel" placeholder=""/>
+                                                                </div>
+                                                                <div class="col-md-4 mb-4">
+                                                                    <label for="inputCellPhone">Cell Phone Number <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <input type="text" maxlength="10" class="form-control form-control-sm" id="inputCellPhone" name="inputCellPhone" placeholder="" required="required"/>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Cell Phone Number
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-4">
+                                                                    <label for="inputFax">Fax Number</label>
+                                                                    <input type="text" maxlength="10" class="form-control form-control-sm" id="inputFax" name="inputFax" placeholder="" />
+                                                                </div>
+                                                            </div> 
+
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectNationality">Nationality<span class="text-warning">*</span></label>
+                                                                    <select id="selectNationality" name="selectNationality" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="nationalities" t-as="na">
+                                                                            <option t-att-value="na.id">
+                                                                                <span t-esc="na.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectHomeLanguage">Home Language</label>
+                                                                    <select id="selectHomeLanguage" name="selectHomeLanguage" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="langs" t-as="l">
+                                                                            <option t-att-value="l.id">
+                                                                                <span t-esc="l.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="inputDob">Date of Birth <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <input type="text" class="form-control datepicker form-control-sm" id="inputDob" name="inputDob" required="required"/>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Date Of Birth
+                                                                    </div>
+                                                                </div>                                                         
+                                                            </div>
+
+                                                            <div class="row" id="idDiv">
+                                                                
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectAlternativeType">Alternative Type</label>
+                                                                    <select id="selectAlternativeType" name="selectAlternativeType" class="form-control form-control-sm">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="alternativetype" t-as="atl">
+                                                                            <option t-att-value="atl.id">
+                                                                                <span t-esc="atl.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="inputIdNo">Identification No</label> 
+                                                                    <input type="text" class="form-control form-control-sm" id="inputIdNo" name="inputIdNo" placeholder="Provide Valid ID No"/>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Valid ID No
+                                                                    </div>
+                                                                </div>
+
+                                                                <div id="inputpasspartdiv" class="form-group col-md-4 d-none">
+                                                                    <label for="inputPassportNo">Alternate ID No</label> 
+                                                                    <input type="text" class="form-control form-control-sm" id="inputPassportNo" name="inputPassportNo"/>
+                                                                </div> 
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="inputGender">Gender <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="inputGender" name="inputGender" required="required" class="form-control form-control-sm">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <option value="male">Male</option>
+                                                                        <option value="female">Female</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Gender
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectEquity">Equity<span class="text-warning">*</span></label>
+                                                                    <select id="selectEquity" name="selectEquity" class="form-control form-control-sm" required="required" size="5">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="equities" t-as="equity">
+                                                                            <option t-att-value="equity.id">
+                                                                                <span t-esc="equity.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectDisabilityStatus">Disability Status</label>
+                                                                    <select id="selectDisabilityStatus" name="selectDisabilityStatus" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="disability_statuses" t-as="ds">
+                                                                            <option t-att-value="ds.id">
+                                                                                <span t-esc="ds.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div> 
+
+                                                            </div>
+                                                            <div class="form-row d-none">
+
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="inputLongtitude">Longitude <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <input type="text" class="form-control form-control-sm" id="inputLongtitude" name="inputLongtitude"/> <span> - </span>
+                                                                </div> 
+                                                                <div class="form-group col-md-4 d-none">
+                                                                    <label for="inputLatitude">Latitude <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <input type="text" class="form-control form-control-sm" id="inputLatitude" name="inputLatitude"/> <span> - </span>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="statssa_area_code_id">STATSSA Code<span class="text-warning">*</span></label>
+                                                                    <select id="statssa_area_code_id" name="statssa_area_code_id" class="form-control form-control-sm" required="required" size="5">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="statssa_area_code_id" t-as="stat">
+                                                                            <option t-att-value="stat.id">
+                                                                                <span t-esc="stat.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="popi_act_status_id">Popi Act Status<span class="text-warning">*</span></label>
+                                                                    <select id="popi_act_status_id" name="popi_act_status_id" class="form-control form-control-sm" required="required" size="5">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="popi_act_status_id" t-as="popi">
+                                                                            <option t-att-value="popi.id">
+                                                                                <span t-esc="popi.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="school_emis_id">School EMIS</label>
+                                                                    <select id="school_emis_id" name="school_emis_id" class="form-control form-control-sm" required="required">
+                                                                        <option selected="school_emis_id" value=""></option>
+                                                                        <t t-foreach="school_emis_id" t-as="smis">
+                                                                            <option t-att-value="smis.id">
+                                                                                <span t-esc="smis.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                </div> 
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="popi_act_status_date">Popi Act status Date 
+                                                                    </label>
+                                                                    <input type="text" class="form-control datepicker form-control-sm" id="popi_act_status_date" name="popi_act_status_date"/>
+                                                                     
+                                                                </div>
+                                                                <div class="col-md-4 mb-6">
+                                                                    <label for="job_title">Occupation</label>
+                                                                    <input type="text" maxlength="50" class="form-control form-control-sm" id="job_title" name="job_title" placeholder=""/>
+                                                                </div>
+
+                                                            </div>
+                                                            
+                                                            
+                                                               <!--end row-->
+                                                        </div>
+                                                        <input type="button" name="next" class="next btn btn-primary" value="Next Step" />
+                                                    </fieldset>
+                                                    <fieldset>
+                                                        <div class="form-card">
+                                                            <h2 class="fs-title">Physical Address</h2>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="inputPhysicalCode">Physical Code<span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <input type="text" maxlength="25" class="form-control form-control-sm" id="inputPhysicalCode" name="inputPhysicalCode" placeholder="" required="required"/>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Physical Code
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="inputPhysicalAddr1">Physical Address Line 1 <span class="text-warning">*</span>
+                                                                </label>
+                                                                <input type="text" maxlength="100" class="form-control form-control-sm" id="inputPhysicalAddr1" name="inputPhysicalAddr1" required="required"/>
+                                                                <div class="invalid-feedback">
+                                                                        Provide Physical Address Line 1
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputPhysicalAddr2">Physical Address Line 2 <span class="text-warning">*</span>
+                                                                </label>
+                                                                <input type="text" maxlength="100" class="form-control form-control-sm" id="inputPhysicalAddr2" name="inputPhysicalAddr2" required="required"/>
+                                                                <div class="invalid-feedback">
+                                                                        Provide Physical Address Line 2
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputPhysicalAddr3">Physical Address Line 3</label>
+                                                                <input type="text" class="form-control form-control-sm" id="inputPhysicalAddr3" name="inputPhysicalAddr3" placeholder=""/>
+                                                            </div>
+
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectPhysicalProvince">Physical Province <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="selectPhysicalProvince" name="selectPhysicalProvince" required="required" class="form-control form-control-sm">
+                                                                        <option selected="selected"></option>
+                                                                        <t t-foreach="country and country.state_ids or []" t-as="s">
+                                                                            <option t-att-value="s.id">
+                                                                                <t t-esc="s.name" />
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Physical Province
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectPhysicalCity">Physical City <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="selectPhysicalCity" name="selectPhysicalCity" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected"></option>
+                                                                        <t t-foreach="cities" t-as="city">
+                                                                            <option t-att-value="city.id">
+                                                                                <t t-esc="city.name" />
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Physical City
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectPhysicalMunicipality">Physical Municipality <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="selectPhysicalMunicipality" name="selectPhysicalMunicipality" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected"></option>
+                                                                        <t t-foreach="municipalities" t-as="m">
+                                                                            <option t-att-value="m.id">
+                                                                                <t t-esc="m.name" />
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Physical Municipality
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectPhysicalSuburb">Physical Suburb <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="selectPhysicalSuburb" name="selectPhysicalSuburb" required="required" class="form-control form-control-sm">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="suburbs" t-as="suburb">
+                                                                            <option t-att-value="suburb.id">
+                                                                                <span t-esc="suburb.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Physical Suburb
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="selectPhysicalUrbanRural">Physical Urban Rural <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="selectPhysicalUrbanRural" name="selectPhysicalUrbanRural" required="required" class="form-control form-control-sm">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <option value="Urban">Urban</option>
+                                                                        <option value="Rural">Rural</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Urban Rural
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="checkUsePhysicalForPostal" id="checkUsePhysicalForPostal"/>
+                                                                    <label class="form-check-label" for="checkUsePhysicalForPostal">
+                                                                            Use Physical Address For Postal Address?
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                                        <div class="form-card">
+                                                            <h2 class="fs-title">Postal Address</h2>
+
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="inputPostalCode">Postal Code <span class="text-warning">*</span></label>
+                                                                    <input type="text" maxlength="25" class="form-control form-control-sm" id="inputPostalCode" name="inputPostalCode" required="required"/>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Postal Code
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="inputPostalAddr1">Postal Address Line 1 <span class="text-warning">*</span></label>
+                                                                <input type="text" maxlength="100" class="form-control form-control-sm" id="inputPostalAddr1" name="inputPostalAddr1" required="required" />
+                                                                <div class="invalid-feedback">
+                                                                        Provide Postal Address Line 1
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="inputPostalAddr2">Postal Address Line 2 <span class="text-warning">*</span></label>
+                                                                <input type="text" class="form-control form-control-sm" id="inputPostalAddr2" name="inputPostalAddr2" required="required" />
+                                                                <div class="invalid-feedback">
+                                                                        Provide Postal Address Line 2
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="inputPostalAddr3">Postal Address Line 3</label>
+                                                                <input type="text" class="form-control form-control-sm" id="inputPostalAddr3" name="inputPostalAddr3" placeholder=""/>
+                                                            </div>
+
+                                                            <div class="form-row">
+
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectPostalProvince">Postal Province <span class="text-warning">*</span></label>
+                                                                    <select id="selectPostalProvince" name="selectPostalProvince" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected"></option>
+                                                                        <t t-foreach="country and country.state_ids or []" t-as="s">
+                                                                            <option t-att-value="s.id">
+                                                                                <t t-esc="s.name" />
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Postal Province
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectPostalCity">Postal City <span class="text-warning">*</span></label>
+                                                                    <select id="selectPostalCity" name="selectPostalCity" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected"></option>
+                                                                        <t t-foreach="cities" t-as="city">
+                                                                            <option t-att-value="city.id">
+                                                                                <t t-esc="city.name" />
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Postal City
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="selectPostalMunicipality">Postal Municipality <span class="text-warning">*</span></label>
+                                                                    <select id="selectPostalMunicipality" name="selectPostalMunicipality" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected"></option>
+                                                                        <t t-foreach="municipalities" t-as="m">
+                                                                            <option t-att-value="m.id">
+                                                                                <t t-esc="m.name" />
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Postal Municipality
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="selectPostalUrbanRural">Postal Urban Rural <span class="text-warning">*</span></label>
+                                                                    <select id="selectPostalUrbanRural" name="selectPostalUrbanRural" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <option value="Urban">Urban</option>
+                                                                        <option value="Rural">Rural</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Postal Urban Rural
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="selectPostalSuburb">Postal Suburb<span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="selectPostalSuburb" name="selectPostalSuburb" class="form-control form-control-sm" required="required">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="suburbs" t-as="suburb">
+                                                                            <option t-att-value="suburb.id">
+                                                                                <span t-esc="suburb.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                            Provide Postal Suburb
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <input type="button" name="previous" class="previous btn btn-secondary" value="Previous" />
+                                                        <input type="button" name="next" class="next btn btn-primary" value="Next Step" />
+                                                    </fieldset>
+                                                    <fieldset>
+                                                        <div id = "progDiv" class="form-card">
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-12">
+                                                                    <span id="scope-warning" class="text-warning">Note: Use control key + click to select multiple programmes</span><br/>
+                                                                    <span id="scope-warning" class="text-warning d-none">If an Assessor is already linked to a programme: Click next to continue</span><br/>
+                                                                    <label for="inputUnitStandard"> Unit standard 
+                                                                    </label>
+                                                                    <div class="form-group col-md-4">
+                                                                        <label for="inputUnitStandard">Search by SAQA CODE</label>
+                                                                        <input type="text" maxlength="75" class="form-control form-control-sm" id="inputUnitStandard" name="inputUnitStandard"/>
+                                                                    </div>
+                                                                        
+                                                                    <select id="unit_standard_ids" name="unit_standard_ids" class="form-control form-control-sm select2" multiple="multiple" size="5" required="required">
+                                                                        <option selected="selected" value=""></option>
+                                                                         <t t-foreach="unit_standard_ids" t-as="unit_sa">
+                                                                            <option t-att-value="unit_sa.id">
+                                                                                <span t-esc="unit_sa.code"/> - <span t-esc="unit_sa.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-12"> 
+                                                                    <label for="qualification_ids">Qualifications <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <div class="form-group col-md-4">
+                                                                        <label for="inputQual">Search by SAQA CODE</label>
+                                                                        <input type="text" maxlength="75" class="form-control form-control-sm" id="inputQual" name="inputQual"/>
+                                                                    </div>
+                                                                    <select id="qualification_ids" name="qualification_ids" class="form-control form-control-sm select2" multiple="multiple" size="5" required="required">
+                                                                        <option selected="selected" value=""></option>
+                                                                         <t t-foreach="qualification_ids" t-as="qual">
+                                                                            <option t-att-value="qual.id">
+                                                                                <span t-esc="qual.saqa_id"/> - <span t-esc="qual.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select> 
+                                                                </div>
+                                                            </div>
+                                                         
+                                                            <div class="form-row d-none">
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="learning_programmes_ids">Learnership Programmes <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="learning_programmes_ids" name="learning_programmes_ids" class="form-control form-control-sm select2" multiple="multiple" size="5">
+                                                                    <option selected="selected" value=""></option>
+                                                                    <t t-foreach="learning_programmes_ids" t-as="learn">
+                                                                        <option t-att-value="learn.id">
+                                                                            <span t-esc="learn.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row d-none">
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="skill_programmes_ids">Skill Programmes <span class="text-warning">*</span>
+                                                                    </label>
+                                                                    <select id="skill_programmes_ids" name="skill_programmes_ids" class="form-control form-control-sm select2" multiple="multiple" size="5">
+                                                                        <option selected="selected" value=""></option>
+                                                                        <t t-foreach="skill_programmes_ids" t-as="pskill">
+                                                                            <option t-att-value="pskill.id">
+                                                                                <span t-esc="pskill.name"/>
+                                                                            </option>
+                                                                        </t>
+                                                                    </select> 
+                                                                </div>
+                                                            </div> 
+                                                        </div> 
+                                                        <input type="button" name="previous" class="previous btn btn-secondary" value="Previous" />
+                                                        <input type="button" name="next" class="next btn btn-primary" value="Next Step" />
+                                                    </fieldset>
+                                                    <fieldset>
+                                                        <div class="form-card">
+                                                            
+                                                            <div class="form-row">
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="qualification_document_ids">Qualification Document<span class="text-warning">*</span></label>
+                                                                    <input type="file" name="qualification_document_ids" id="qualification_document_ids" class="form-control-file" accept="image/*,application/pdf" required="required"/>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="additional_document_ids">Additional Document</label>
+                                                                    <input type="file" name="additional_document_ids" id="additional_document_ids" class="form-control-file" accept="image/*,application/pdf"/>
+                                                                </div> 
+
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="statement_of_result_ids">ETDP Statement of result<span class="text-warning">*</span></label>
+                                                                    <input type="file" name="statement_of_result_ids" id="statement_of_result_ids" class="form-control-file" accept="image/*,application/pdf" required="required"/>
+                                                                </div> 
+                                                            </div>
+
+                                                            <div class="form-row">
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="cv_ids">CV<span class="text-warning">*</span></label>
+                                                                    <input type="file" name="cv_ids" id="cv_ids" class="form-control-file" accept="image/*,application/pdf" required="required"/>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <label for="id_document_ids">Identity </label>
+                                                                    <input type="file" name="id_document_ids" id="additional_document_ids" class="form-control-file" accept="image/*,application/pdf"/>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" id="checkConfirm" name="checkConfirm" required="required"/>
+                                                                    <label class="form-check-label" for="checkConfirm">
+                                                                            I hereby confirm that the information submitted is complete, accurate and not misleading
+                                                                    </label>
+                                                                    <div class="invalid-feedback">
+                                                                            Please confirm the information provided
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div> <!--panel-body-->
+                                                        <input type="button" name="previous" class="previous btn btn-secondary" value="Previous" />
+                                                        <input type="button" name="submit" class="next btn btn-primary" value="Confirm" />
+                                                        <button id="btn-preloader" class="btn btn-primary d-none" disabled="disabled">
+                                                        <i class="fa fa-spinner fa-spin"></i> working...</button>
+                                                    </fieldset>
+
+                                                    <fieldset>
+                                                        <div class="form-card">
+                                                            <h2 class="fs-title text-center">Success !</h2>
+                                                            <br/>
+                                                            <br/>
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-3">
+                                                                    <img src="/theme_inseta/static/img/icon-ok-170.svg"/>
+                                                                </div>
+                                                            </div>
+                                                            <br/>
+                                                            <br/>
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-7 text-center">
+                                                                    <h5>You Registration is Successful</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <record id="accessor_register_page" model="website.page">
+        <field name="name">Assessor register Page</field>
+        <field name="is_published">True</field>
+        <field name="url">/assessor-registration</field> 
+        <field name="view_id" ref="assessor_moderator_register"/>
+        <field name="website_id" ref="website.default_website" />
+    </record>
+    <record id="menu_accessor_registration" model="website.menu">
+        <field name="name">Registration</field>
+        <field name="url">/assessor-registration</field> 
+        <field name="page_id" ref="accessor_register_page"/>
+        <field name="parent_id" ref="theme_inseta.menu_applications" />
+        <field name="website_id" ref="website.default_website" />
+        <field name="sequence" type="int">4</field>
+    </record>
+
+    <record id="moderator_register_page" model="website.page">
+        <field name="name">Moderator register Page</field>
+        <field name="is_published">True</field>
+        <field name="url">/moderator-registration</field>
+        <field name="view_id" ref="assessor_moderator_register"/>
+        <field name="website_id" ref="website.default_website" />
+    </record>
+    <record id="menu_moderator_registration" model="website.menu">
+        <field name="name">Moderator registration</field>
+        <field name="url">/moderator-registration</field> 
+        <field name="page_id" ref="moderator_register_page"/>
+        <field name="parent_id" ref="theme_inseta.menu_applications" />
+        <field name="website_id" ref="website.default_website" />
+        <field name="sequence" type="int">5</field>
+    </record>
+</odoo>

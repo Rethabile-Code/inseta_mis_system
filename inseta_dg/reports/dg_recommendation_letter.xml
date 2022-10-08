@@ -1,0 +1,171 @@
+<odoo>
+  <data>
+
+
+    <record id="paperformat_inseta_letter" model="report.paperformat">
+        <field name="name">INSETA Letter Format</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">16.00</field>
+        <field name="margin_bottom">8.00</field>
+        <field name="margin_left">12</field>
+        <field name="margin_right">12</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">64</field>
+        <field name="dpi">84</field>
+    </record>
+
+    <record id="action_dgapplication_recommendation_letter_report" model="ir.actions.report">
+        <field name="name">DG Recommendation Letter</field>
+        <field name="model">inseta.dgevaluation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_dg.dgapplication_recommendation_letter</field>
+        <field name="report_file">inseta_dg.dgapplication_recommendation_letter</field>
+        <field name="print_report_name">(object.dgapplication_id.organisation_id.sdl_no +'_'+(object.name).replace('/','_')+'_recommendation_letter_'+time.strftime('%Y-%m-%d-%H:%M:%S'))</field>
+        <field name="attachment">((object.name).replace('/','_')+'_recommendation_letter.pdf')</field>
+        <field name="binding_type">report</field>
+        <!-- <field name="paperformat_id" ref="inseta_dg.paperformat_inseta_letter" /> -->
+
+    </record>
+
+    <template id="dgapplication_recommendation_letter">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-offset-2 text-right">
+                    <img src='/inseta_skills/static/description/icon.png' style="max-height: 70px;"/>
+                </div>
+            </div>
+            <hr/>
+        </div>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <!-- <t t-call="web.external_layout"> -->
+                    <t t-set="o" t-value="o.with_context(lang=lang)" />
+                    <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+
+                    <div class="page">
+
+                       <style>
+                            body {
+                                
+                                font-family: Ubuntu, Calibri, Arial, Cambria, Georgia, Roboto, 'Open Sans';
+                                font-size:14px;
+                            }
+                            h4 {
+                                text-align: center; font-size:16px; font-weight:bold
+                            }
+                            .bold {
+                                font-weight:bold !important
+                            }
+
+                            p {
+                                text-align: justify;
+                            }
+                            mt-8{
+                                margin-top:8px !important;
+                            }
+                            mt-16{
+                                margin-top:16px !important;
+                            }
+                            ml-8{
+                                margin-left:8px !important;
+                            }
+                            .list-indented li{
+                                margin-left:8px !important;
+                                margin-top:8px !important;
+                            }
+                        </style>
+
+                        <t t-set="dg" t-value="o.dgapplication_id" />
+                        <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /> <br/></p>
+
+                        <span t-field="dg.organisation_id.name" /><br/>
+                        <span t-field="dg.organisation_id.sdl_no"/><br/>
+                        <span t-field="o.dgapplicationdetails_id.contact_person_name" /><br/>
+                        <span t-field="dg.organisation_id.postal_address1"/> <span t-field="o.organisation_id.postal_address2"/> <span t-field="o.organisation_id.postal_address3"/><br/>
+                        <span t-field="dg.organisation_id.postal_suburb_id.name"/> <br/> 
+                        <span t-field="dg.organisation_id.postal_code"/><br/>
+
+                        <p align="justify" class="mt-16 bold">
+                            Reference Number: <span t-field="o.name"/><br/>
+                        </p>
+
+                        <h4 class="mt-8"><b>INSETA Discretionary Grant Recommendation Confirmation: 
+                            <span t-esc="dg.financial_year_id.date_from.year"/>/<span t-esc="dg.financial_year_id.date_to.year"/>  
+                            <span t-field="dg.dgtype_id.name"/> </b>
+                            <br/>
+                        </h4>
+
+                        <t t-call="inseta_dg.dg_letter_body"/>
+
+                        <p>             
+                            <table class="table" style="border:none" >
+                                <tbody>
+                                    <tr style="border:none">
+                                        <td  style="width:50%">
+                                            <p t-if="o.signed_by_mgr">
+                                                    Recommended By <br/>
+                                                <div widget="html" t-field="o.signed_by_mgr.signature"/>
+                                                <span t-esc="o.signed_by_mgr.name or '' " /> <br/>
+                                                <t t-if="o.signed_by_mgr.is_learning_mgr_youth">
+                                                    Learning Manager: Youth Programmes
+                                                </t>
+                                                <t t-else="">
+                                                    Learning Division Manager
+                                                </t>
+                                                <br/>
+                                                INSETA
+                                            </p>
+                                        </td>
+                                        <td style="width:50%;">
+                                            <p t-if="o.signed_by_coo" style="text-align:right">
+                                                <p style="float:right"> Approved By </p>
+                                                <div class="clearfix"/>
+                                                <div style="width:60%;float:right" widget="html" t-field="o.signed_by_coo.signature"/>
+                                                <div class="clearfix"/>
+                                                <p style="float:right">
+                                                    <span t-esc="o.signed_by_coo.name or '' " /> <br/>
+                                                    Chief Operations Officer <br/>
+                                                    INSETA <br/>
+                                                </p>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border:none">
+                                        <td>
+                                            <t t-if="o.signed_mgr_date">
+                                            <p> Date: <span t-esc="o.signed_mgr_date.strftime('%B %d, %Y')"/> </p>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="o.signed_coo_date">
+                                                <p style="float:right"> Date: <span t-esc="o.signed_coo_date.strftime('%B %d, %Y')"/> </p>
+                                                <div class="clearfix"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </p>  
+                        <!-- <div class="footer">
+                            <div class="text-center" style="border-top: 1px solid black;">
+                                <ul >
+                                    <li>
+                                        Board Members: Mr. J.S. Ngubane (Chairperson), Ms. V. Pearson (Business), Ms. L. van der Merwe (Business), Ms. R.G. Govender (Business), Ms. P. Mendes (Business), Ms. Z. Motsa (Business), Mr. M. Soobramoney (Labour), Mr. J.J.M. Mabena (Labour), Ms. S.A. Anders (Labour), Mr. C.B. Botha (Labour), Ms. S.T. Dinyake (Labour),
+                                        Ms. F. Mabaso (Government), Mr. S.M. Mpuru (Community Organisation)
+                                        CEO: G. Mkhize
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>   -->
+                    </div>
+                    </div>
+                <!-- </t> -->
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

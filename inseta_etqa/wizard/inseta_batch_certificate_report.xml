@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- <record id="inseta_batch_certificate_wizard_action2" model="ir.actions.act_window">
+        <field name="name">Batch certification</field>
+        <field name="res_model">inseta.batch_certificate.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="help" type="html">
+        <field name="target">'new'</field>
+          <p class="o_view_nocontent_smiling_face">
+            -
+          </p><p>
+            -
+          </p>
+        </field>
+    </record> -->
+
+    <record id="inseta_batch_certificate_wizard_action3" model="ir.actions.act_window">
+        <field name="name">Batch-certification</field>
+        <field name="res_model">inseta.batch_certificate.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <!-- <field name="context">{'default_request_id': active_id, 'name_only': True}</field> -->
+    </record>
+
+    <record id="inseta_batch_certificate_search_view" model="ir.ui.view">
+        <field name="name">Batch certification Search</field>
+        <field name="model">inseta.batch_certificate.wizard</field>
+        <field name="arch" type="xml">
+            <search string="Batch certification &amp; Report">
+                <field name="financial_year_id" required="0"/>
+                <field name="learner_programmes_id"/>
+                <field name="skill_programmes_id"/>
+                <field name="bursary_type_id"/>
+                <field name="qualification_id"/>
+                <field name="unit_standard_id"/>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="batch_learner_certification_menu" action="inseta_etqa.inseta_batch_certificate_wizard_action3" name="Learner Batch Certification" sequence="30" parent="inseta_etqa.learner_verification_main_menu"
+		groups="base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system"/>
+		     
+    <record id="inseta_batch_certificate_wizard_tree_view" model="ir.ui.view">
+        <field name="name">Batch certification tree</field>
+        <field name="model">inseta.batch_certificate.wizard</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="programme_type"/>
+                <field name="financial_year_id" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="inseta_batch_certificate_wizard_form_view" model="ir.ui.view">
+        <field name="name">Batch certification form</field>
+        <field name="model">inseta.batch_certificate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Wizard">
+                <header> 
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="programme_type" required="1"/>
+                            <field name="action_type" invisible="1"/>
+                            <field name="certificate_action" required="1"/>
+                            <field name="limit" invisible="0"/>
+                            <field name="financial_year_id" required="0"/>
+                            
+                        </group>
+                        <group>
+                            <field name="learner_programmes_id" attrs="{'invisible': [('programme_type', '!=', 'Learnership')]}"/>
+                            <field name="learner_id" attrs="{'required': [('certificate_action', '=', 'Reprint')]}"/>
+                            <field name="provider_id"/>
+                            <field name="provider_sdl" string="Provider SDL NO" readonly="1"/>
+                            <field name="skill_programmes_id" attrs="{'invisible': [('programme_type', '!=','Skill')]}"/>
+                            <field name="qualification_id" attrs="{'invisible': [('programme_type', 'not in', ['Qualification','Internship','Candidacy','Wiltvet'])]}"/>
+                            <field name="unit_standard_id" attrs="{'invisible': [('programme_type', '!=', 'Unit')]}"/>
+                            <field name="bursary_type_id" attrs="{'invisible': [('programme_type', '!=', 'Bursary')]}"/>
+                            <!-- <field name="num_of_records" readonly="1" invisible="0"/> -->
+
+                        </group>
+                    </group>
+                    <!-- <notebook>
+                        <page string="Learners">
+                            <field name="learner_ids">
+                                <tree string="Learner Details" delete="true">
+                                    <field name="name"/>
+                                    <field name="id_no"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook> -->
+                    <footer>
+                        <!-- <button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight" /> -->
+                        <!-- <button name="action_fetch_records" string="Fetch Records" type="object" default_focus="1" class="oe_highlight" /> -->
+                        <button name="action_generate_certified_records" string="Generate &amp; Print certificate(s)" type="object" default_focus="1" class="oe_highlight" />
+                        or 
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </sheet> 
+            </form>
+        </field>
+    </record> 
+
+    <record id="inseta_certified_programmes_action1" model="ir.actions.act_window">
+        <field name="name">Batch Report &amp; certification</field>
+        <field name="res_model">inseta.certified.programmes</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+        <field name="target">current</field>
+          <p class="o_view_nocontent_smiling_face">
+            -
+          </p><p>
+            -
+          </p>
+        </field>
+    </record>
+    <record id="inseta_certified_programmes_search_view" model="ir.ui.view">
+        <field name="name">Batch Report &amp; certification</field>
+        <field name="model">inseta.certified.programmes</field>
+        <field name="arch" type="xml">
+            <search string="Batch certification &amp; Report">
+                <field name="learner_id"/>
+                <field name="name"/>
+                <field name="nqf_level"/>
+                <field name="provider_id"/>
+                
+            </search>
+        </field>
+    </record>
+    <record id="inseta_certified_programmes_tree_view" model="ir.ui.view">
+        <field name="name">Batch Report &amp; certification tree</field>
+        <field name="model">inseta.certified.programmes</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="learner_id"/>
+                <field name="name" required="1"/>
+                <field name="nqf_level" required="1"/>
+                <field name="provider_id"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="inseta_certified_programmes_form_view" model="ir.ui.view">
+        <field name="name">Batch Report &amp; certification form</field>
+        <field name="model">inseta.certified.programmes</field>
+        <field name="arch" type="xml">
+            <form string="Batch certification">
+                <header> 
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="learner_id"/>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field name="nqf_level" required="1"/>
+                            <field name="provider_id"/>
+                        </group>
+                    </group>
+                </sheet> 
+            </form>
+        </field>
+    </record>
+</odoo>

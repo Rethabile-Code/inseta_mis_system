@@ -1,0 +1,53 @@
+<odoo>
+    <data noupdate="0">
+        <record id="sdf_action_res_users" model="ir.actions.act_window">
+            <field name="name">Non Inseta Users</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="base.view_users_tree"/>
+            <field name="domain">[('is_external_user','=', True)]</field>
+            <field name="search_view_id" ref="base.view_users_search"/>
+            <field name="context">{'search_default_no_share': 1}</field>
+            <field name="help">Create and manage users INSETA External users
+            </field>
+        </record>
+
+        <!--Users Inherit form view-->
+        <record id="view_users_form_ext" model="ir.ui.view">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <data>
+
+                    <!-- <xpath expr="//field[@name='name']" position="attributes">
+                        <attribute name="readonly">True</attribute>
+                        <attribute name="required">False</attribute>
+                    </xpath> -->
+                    <!-- <xpath expr="//field[@name='email']" position="after">
+                        <group>
+                            <field
+                                name="last_name"
+                                attrs="{'required': [('first_name', '=', False)]}"
+                            />
+                            <field
+                                name="first_name"
+                                attrs="{'required': [('last_name', '=', False)]}"
+                            />
+                        </group>
+                    </xpath> -->
+                    <xpath expr="//field[@name='active']" position="after">
+                        <field name="is_pmo_mgr" />
+                        <field name="is_ceo"  string="Is CEO?"/>
+                        <field name="is_coo"  string="Is COO?"/>
+                        <field name="is_learning_mgr_youth" />
+
+                        <field name="is_external_user" invisible="0"/>
+                        <field name="id_no" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

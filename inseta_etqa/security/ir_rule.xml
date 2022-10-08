@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <!--moderator View only partner records he created-->
+    <!-- relax rules for now  -->
+    <!-- <record id="res_moderator_rule_partner" model="ir.rule">
+        <field name="name">Moderator Rule Partner</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'))]"/>
+    </record> -->
+
+    <!--Moderator View only His registered records that he is the user or he created -->
+    <record id="res_rule_moderator_register" model="ir.rule">
+        <field name="name">Moderator Register Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_moderator_register"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('user_id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_moderator_access_user'), ref('inseta_skills.group_sdf_user'), ref('inseta_skills.group_sdf_secondary'))]"/>
+    </record>
+
+    <record id="res_rule_admin_moderatorregister_record" model="ir.rule">
+        <field name="name">Admin See all Moderator register Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_moderator_register"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('base.user_admin'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager')])]"/>
+    </record>
+    
+    <!-- Enable moderator view only moderator record he created -->
+    <!-- relax rules for now  -->
+    <record id="rule_moderator_id" model="ir.rule">
+        <field name="name">Moderator Record Rule.</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_moderator"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', '|', '|',('user_id', '=', user.id), ('create_uid','=', user.id), ('user_ids', 'in', user.id),('provider_moderator_ids.provider_id.user_id.id', '=', user.id)]</field>
+        <field name="groups" eval="[(6, 0,
+        [ref('inseta_etqa.group_approved_moderator'), 
+        ref('inseta_etqa.group_approved_assesor'), 
+        ref('inseta_etqa.group_accessor_access_user'),
+        ref('inseta_etqa.group_moderator_access_user'),
+        ref('inseta_etqa.group_provider_access_user'),
+        ref('inseta_etqa.group_provider_access_user'),
+        ref('inseta_etqa.group_approved_provider'),
+        ref('inseta_skills.group_sdf_secondary')])
+        ]"/>
+    </record>
+
+    <record id="rule_admin_moderator_record_id" model="ir.rule">
+        <field name="name">Admin See all Moderator Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_moderator"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('base.user_admin'),ref('base.group_system'),ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_accreditation_admin'),ref('inseta_etqa.group_etqa_verifiers'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_user'), ref('inseta_etqa.group_admin_audit_access_user'), ref('inseta_etqa.group_it_admin'), ref('inseta_etqa.group_etqa_admin_dataclean'), ref('inseta_etqa.group_approved_assesor'),ref('inseta_etqa.group_accessor_moderator_reg'),ref('inseta_etqa.group_it_admin'),ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager')])]"/>
+    </record> 
+
+    <!--assessor View only partner records he created-->
+    <!-- relax rules for now  -->
+    <!-- <record id="res_assessor_rule_partner" model="ir.rule">
+        <field name="name">Assessor Rule Partner</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'))]"/>
+    </record> -->
+
+    <!--assessor View only His registered records that he is the user or he created -->
+    <record id="res_rule_assessor_register" model="ir.rule">
+        <field name="name">assessor Register Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_assessor_register"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('user_id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_accessor_access_user'), ref('inseta_skills.group_sdf_user'), ref('inseta_skills.group_sdf_secondary')])]"/>
+    </record>
+
+    <record id="res_rule_admin_assessor_register_record" model="ir.rule">
+        <field name="name">Admin See all Assessor register Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_assessor_register"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('base.user_admin'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager')])]"/>
+    </record>
+    
+    <!-- Enable assessor view only assessor record he created -->
+    <!-- relax rules for now  -->
+    <record id="rule_assessor_model_id" model="ir.rule">
+        <field name="name">Assessor Record Rule.</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_assessor"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', '|', '|',('user_id', '=', user.id), ('create_uid','=', user.id), ('user_ids', 'in', user.id),('provider_assessor_ids.provider_id.user_id.id', '=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_approved_moderator'), ref('inseta_etqa.group_approved_assesor'), ref('inseta_etqa.group_accessor_access_user'),ref('inseta_etqa.group_moderator_access_user'),ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider'),ref('inseta_skills.group_sdf_secondary')])]"/>
+    </record>
+    <!-- relax rules for now  -->
+    <record id="rule_admin_assessor_record" model="ir.rule">
+        <field name="name">Admin See all Assessor Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_assessor"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('base.user_admin'),ref('base.group_system'),ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_accreditation_admin'),ref('inseta_etqa.group_etqa_verifiers'),ref('inseta_etqa.group_pmo_specialist'),ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_admin_audit_access_user'), ref('inseta_etqa.group_it_admin'), ref('inseta_etqa.group_etqa_admin_dataclean'),ref('inseta_etqa.group_approved_assesor'),ref('inseta_etqa.group_accessor_moderator_reg'),ref('inseta_etqa.group_it_admin'),ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager')])
+        ]"/>
+    </record>
+
+    <!--provider View only partner records he created-->
+    <!-- relax rules for now  -->
+    <!-- <record id="res_provider_rule_partner" model="ir.rule">
+        <field name="name">Provider Rule Partner</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('create_uid', '=', user.id), ('user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'))]"/>
+    </record> -->
+
+    <record id="res_rule_admin_partner_record" model="ir.rule">
+        <field name="name">Admin See all Partner Rule</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('base.user_admin'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager')])]"/>
+    </record>
+
+    <!--provider View only registered records that he is the user or he created -->
+    <record id="res_rule_provider_accreditation" model="ir.rule">
+        <field name="name">Provider Register Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">['|', ('user_id.id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider'), ref('inseta_skills.group_sdf_user'), ref('inseta_skills.group_sdf_secondary')])]"/>
+    </record>
+    <record id="res_rule_admin_provider_accreditation" model="ir.rule">
+        <field name="name">Admin See all provider accreditation Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_provider_accreditation"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('base.user_admin'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_verifiers'),ref('inseta_etqa.group_etqa_evaluating_manager')])]"/>
+    </record>
+    <!-- Enable provider view only provider record he created -->
+    <!-- relax rules for now  -->
+    <record id="res_rule_provider" model="ir.rule">
+        <field name="name">Provider Record Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_provider"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', '|',  ('linked_user_ids','in', user.id), ('user_id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_provider_access_user'), ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <!-- <record id="res_rule_learner_see_own_inseta_learner_view" model="ir.rule">
+        <field name="name">See own learner view Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">['|', '|', ('create_uid','=', user.id),('provider_id.user_id','=', False), ('provider_id.user_id','=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_etqa_verifiers'),ref('inseta_skills.group_sdf_user'), ref('inseta_skills.group_sdf_secondary'), ref('inseta_etqa.group_provider_access_user'), ref('inseta_etqa.group_approved_provider')])]"/>
+    </record> -->
+
+    <record id="res_rule_admin_provider" model="ir.rule">
+        <field name="name">Admin See all provider Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_provider"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <!-- <field name="groups" eval="[(6, 0, [ref('base.user_admin'), ref('inseta_skills.group_sdf_user'), ref('inseta_skills.group_sdf_secondary'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager')])]"/> -->
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('base.user_admin'), ref('inseta_etqa.group_etqa_verifiers'),ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager')])]"/>
+    </record>
+
+    <!--learner View only His registered records that he is the user or he created -->
+    <record id="res_rule_learner_see_own_inseta_learner_register" model="ir.rule">
+        <field name="name">See own learner register Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">['|', '|', ('provider_id.user_id','=', user.id),('create_uid','=', user.id), ('user_id','=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'), ref('inseta_skills.group_sdf_user'), ref('inseta_skills.group_sdf_secondary'), ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+    <record id="res_rule_admin_learner_register" model="ir.rule">
+        <field name="name">Admin See all learner register Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_register"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('base.user_admin'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager')])]"/>
+    </record>
+
+    
+    <record id="res_rule_admin_learner_view" model="ir.rule">
+        <field name="name">Admin See all learner register Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'), ref('base.user_admin'),ref('inseta_etqa.group_etqa_verifiers'),ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager'), ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers')])]"/>
+    </record>
+
+    <!-- PROGRAMME LINES DOMAIN RULE -->
+    <record id="provider_rule_unit_standard_programme_line" model="ir.rule">
+        <field name="name">Provider Record Rule Unit Standard</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_unit_standard_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('provider_id.user_id.id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <record id="provider_rule_learnership_programme_line" model="ir.rule">
+        <field name="name">Provider Record Rule learnership</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('provider_id.user_id.id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6,0,[ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <record id="provider_rule_skill_programme_line" model="ir.rule">
+        <field name="name">Provider Record Rule Skills</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_skill_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('provider_id.user_id.id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6,0,[ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <record id="provider_rule_qualification_programme_line" model="ir.rule">
+        <field name="name">Provider Record Rule Qualification</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_qualification_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('provider_id.user_id.id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6,0,[ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <record id="provider_rule_internship_programme_line" model="ir.rule">
+        <field name="name">Provider Record Rule internship</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_internship_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('provider_id.user_id.id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <record id="provider_rule_bursary_programme_line" model="ir.rule">
+        <field name="name">Provider Record Rule bursary</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_bursary_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('provider_id.user_id.id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6,0,[ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <record id="provider_rule_wiltvet_programme_line" model="ir.rule">
+        <field name="name">Provider Record Rule wiltvet</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_wiltvet_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('provider_id.user_id.id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6,0,[ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <record id="provider_rule_candidacy_programme_line" model="ir.rule">
+        <field name="name">Provider Record Rule candidacy</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_candidacy_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('provider_id.user_id.id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <!-- PROGRAMME LINES DOMAIN RULE for ETQA Managers -->
+    <record id="etqa_user_rule_unit_standard_programme_line" model="ir.rule">
+        <field name="name">ETQA User Record Rule Unit Standard</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_unit_standard_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="etqa_user_rule_learnership_programme_line" model="ir.rule">
+        <field name="name">ETQA User Record Rule learnership</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'),ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="etqa_rule_skill_programme_line" model="ir.rule">
+        <field name="name">ETQA User Record Rule Skills Learnership</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_skill_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_etqa.group_etqa_user'), ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="etqa_user_rule_qualification_programme_line" model="ir.rule">
+        <field name="name">ETQA USER Record Rule Qualification Learnership</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_qualification_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="etqa_rule_internship_programme_line" model="ir.rule">
+        <field name="name">ETQA User Record Rule internship</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_internship_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'),ref('base.group_system'),ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="etqa_user_rule_bursary_programme_line" model="ir.rule">
+        <field name="name">ETQA Record Rule bursary</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_bursary_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'),ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="etqa_rule_wiltvet_programme_line" model="ir.rule">
+        <field name="name">ETQA User Record Rule wiltvet</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_wiltvet_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_etqa.group_etqa_user'), ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="etqa_user_rule_candidacy_programme_line" model="ir.rule">
+        <field name="name">ETQA User Record Rule candidacy</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_candidacy_learnership"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'),ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="res_rule_employer_see_own_inseta_assessment_view" model="ir.rule">
+        <field name="name">See related assessment verification view Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">['|', '|', '|', '|',('create_uid', '=', user.id), ('etqa_verifier_ids','in', user.id), ('provider_id.linked_user_ids','in', user.id), ('provider_id.user_id','=', user.id), ('provider_id.provider_user_ids.user_id.id', '=', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_etqa_verifiers'),ref('inseta_skills.group_sdf_user'), ref('inseta_skills.group_sdf_secondary'), ref('inseta_etqa.group_provider_access_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+    <record id="res_rule_admin_assessment_view" model="ir.rule">
+        <field name="name">Admin See all assessment Rule</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_assessment"/>
+        <field name="global" eval="True"/> 
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('base.user_admin'),ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'),ref('inseta_etqa.group_etqa_evaluating_committee'),ref('inseta_etqa.group_etqa_evaluating_manager'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'),ref('inseta_etqa.group_accessor_moderator_reg')])]"/>
+    </record>
+
+    <record id="rule_inseta_learner_assessment_detail" model="ir.rule">
+        <field name="name">INSETA LEARNER ASSESSMENT DETAIL PROVIDER USER</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_assessment_detail"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', '|', '|', ('provider_id.provider_user_ids.user_id.id', '=', user.id), ('provider_id.user_id.id', '=', user.id), ('create_uid','=', user.id),('provider_id.linked_user_ids','in', user.id)]</field>
+        <field name="groups" eval="[(6, 0, [ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_provider_access_user'), ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_approved_provider')])]"/>
+    </record>
+
+    <record id="rule_inseta_learner_assessment_detail_super_admin" model="ir.rule">
+        <field name="name">INSETA LEARNER ASSESSMENT DETAIL INTERNAL USER</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_assessment_detail"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'),ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'), ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'),ref('inseta_etqa.group_accessor_moderator_reg'))]"/>
+    </record>
+
+    <record id="rule_inseta_learner_assessment_line_provider" model="ir.rule">
+        <field name="name">INSETA LEARNER ASSESSMENT LINE PROVIDER USER</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_learnership_assessment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', '|', ('inseta_assessment_detail_id.provider_id.linked_user_ids', 'in', user.id), ('inseta_assessment_detail_id.provider_id.user_id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_etqa_user'), ref('inseta_etqa.group_provider_access_user'), ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_approved_provider'))]"/>
+    </record>
+
+    <record id="rule_inseta_learner_learnership_assessment_line_provider_super_admin" model="ir.rule">
+        <field name="name">INSETA LEARNER ASSESSMENT LINE INTERNAL USER</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_learnership_assessment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_etqa.group_etqa_user'), ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'), ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="rule_inseta_learner_qualification_assessment_provider" model="ir.rule">
+        <field name="name">INSETA LEARNER ASSESSMENT LINE PROVIDER USER</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_qualification_assessment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', '|', ('inseta_assessment_detail_id.provider_id.linked_user_ids', 'in', user.id), ('inseta_assessment_detail_id.provider_id.user_id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_provider_access_user'), ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_approved_provider'))]"/>
+    </record>
+
+    <record id="rule_inseta_learner_qualification_assessment_provider_super_admin" model="ir.rule">
+        <field name="name">INSETA LEARNER QUALIFICATION ASSESSMENT LINE INTERNAL USER</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_learner_qualification_assessment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'), ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+    <record id="rule_inseta_learner_skill_learnership_assessment_provider" model="ir.rule">
+        <field name="name">INSETA LEARNER SKILLS ASSESSMENT LINE PROVIDER USER</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_skill_learnership_assessment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', '|', ('inseta_assessment_detail_id.provider_id.linked_user_ids', 'in', user.id), ('inseta_assessment_detail_id.provider_id.user_id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('inseta_etqa.group_provider_access_user'), ref('inseta_etqa.group_etqa_user'),ref('inseta_etqa.group_approved_provider'))]"/>
+    </record>
+
+    <record id="rule_inseta_learner_skill_learnership_assessment_provider_super_admin" model="ir.rule">
+        <field name="name">INSETA LEARNER SKILLS ASSESSMENT LINE INTERNAL USER</field>
+        <field name="model_id" ref="inseta_etqa.model_inseta_skill_learnership_assessment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'), ref('inseta_etqa.group_etqa_evaluating_admin'), ref('inseta_etqa.group_etqa_assessment_admin'), ref('inseta_etqa.group_etqa_evaluating_manager'), ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'),ref('inseta_etqa.group_etqa_accreditation_admin'), ref('inseta_etqa.group_etqa_accreditation_specialist'), ref('inseta_etqa.group_etqa_assessment_specialist'),ref('inseta_etqa.group_pmo_specialist'), ref('inseta_etqa.group_etqa_verification_admin'),ref('inseta_etqa.group_etqa_verifiers'))]"/>
+    </record>
+
+</odoo>

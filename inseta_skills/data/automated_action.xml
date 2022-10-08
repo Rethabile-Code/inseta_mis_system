@@ -1,0 +1,211 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- Automated Action: Notify SDF After Registration. -->
+        <!-- <record id="rule_set_notify_sdf" model="base.automation">
+            <field name="name">Rule: Notify SDF After Registration</field>
+            <field name="model_id" ref="model_inseta_sdf"/>
+            <field name="template_id" ref="mail_template_notify_sdf"/>
+            <field name="trigger">on_write</field>
+            <field name="filter_domain">[('is_initial_update','=',True)]</field>
+            <field name="state">email</field>
+        </record> -->
+
+        <!-- Automated Action: Nitify SDF Employer After Registration. -->
+        <!-- <record id="rule_set_notify_employer" model="base.automation">
+            <field name="name">Rule: Notify Employer After SDF Registration</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="template_id" ref="mail_template_notify_sdf_employer"/>
+            <field name="trigger">on_create</field>
+            <field name="state">email</field>
+        </record> -->
+
+        <!-- Automated Action: Notify Skill Spec After Registration. -->
+        <!-- <record id="rule_set_notify_skills_specialist" model="base.automation">
+            <field name="name">Rule: Notify Skills Specialist After Registration</field>
+            <field name="model_id" ref="model_inseta_sdf"/>
+            <field name="template_id" ref="mail_template_notify_skills_specialist"/>
+            <field name="trigger">on_create</field>
+            <field name="state">email</field>
+        </record> -->
+
+        <!-- Automated Action: Email SDF 5 days before rework expiration. -->
+        <record id="rule_set_rework_sdf_registration_5d" model="base.automation">
+            <field name="name">Email SDF 5 days before rework expiration.</field>
+            <field name="model_id" ref="model_inseta_sdf"/>
+            <field name="template_id" ref="mail_template_remind_sdf_rework"/>
+            <field name="trigger">on_time</field>
+            <field name="state">email</field>
+            <field name="trg_date_id" ref="field_inseta_sdf__rework_expiration_date"/>
+            <field name="trg_date_range">-5</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','rework')]</field>
+        </record>
+
+        <!-- Automated Action: Email SDF (10 days later) on rework expiration date. -->
+        <record id="rule_set_rework_sdf_registration_10d" model="base.automation">
+            <field name="name">Email SDF on rework expiration date.</field>
+            <field name="model_id" ref="model_inseta_sdf"/>
+            <field name="template_id" ref="mail_template_remind_sdf_rework"/>
+            <field name="trigger">on_time</field>
+            <field name="state">email</field>
+            <field name="trg_date_id" ref="field_inseta_sdf__rework_expiration_date"/>
+            <field name="trg_date_range">0</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','rework')]</field>
+        </record>
+
+
+        <!-- Automated Action: Change State to awaiting_rejection after rework expiration date. -->
+        <record id="rule_set_change_state_sdf_registration_after_10d" model="base.automation">
+            <field name="name">Change SDF state to "Awaiting Rejection" after rework expiration date.</field>
+            <field name="model_id" ref="model_inseta_sdf"/>
+            <field name="trigger">on_time</field>
+            <field name="state">code</field>
+            <field name="trg_date_id" ref="field_inseta_sdf__rework_expiration_date"/>
+            <field name="trg_date_range">1</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','rework')]</field>
+            <field name="code">record.write({'state': 'awaiting_rejection'})</field>
+        </record>
+
+        <!--ORGANISATIONS WORKFLOW-->
+        <!-- Automated Action: Notify organisation contact After Registration. -->
+        <record id="rule_set_notify_nonlevy_organisation_contact" model="base.automation">
+            <field name="name">Rule: Notify Organisation After Registration</field>
+            <field name="model_id" ref="model_inseta_organisation"/>
+            <field name="template_id" ref="mail_template_notify_nonlevy_org_contacts"/>
+            <field name="trigger">on_create</field>
+            <field name="filter_domain">[('register_type','=','non_levy')]</field>
+            <field name="state">email</field>
+        </record>
+
+        <!-- Automated Action: Notify organisation contact After Registration. -->
+        <record id="rule_set_notify_nonlevy_organisation_skilladmin" model="base.automation">
+            <field name="name">Rule: Notify Skill Admin after Organisation Registration</field>
+            <field name="model_id" ref="model_inseta_organisation"/>
+            <field name="template_id" ref="mail_template_notify_nonlevy_org_skilladmin"/>
+            <field name="trigger">on_create</field>
+            <field name="filter_domain">[('register_type','=','non_levy')]</field>
+            <field name="state">email</field>
+        </record>
+
+
+        <!-- Automated Action: Email SDF 5 days before rework expiration. -->
+        <record id="rule_set_rework_org_registration_5d" model="base.automation">
+            <field name="name">Email Organisation 5 days before rework expiration.</field>
+            <field name="model_id" ref="model_inseta_organisation"/>
+            <field name="template_id" ref="mail_template_remind_org_rework"/>
+            <field name="trigger">on_time</field>
+            <field name="state">email</field>
+            <field name="trg_date_id" ref="field_inseta_organisation__rework_expiration_date"/>
+            <field name="trg_date_range">-5</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','rework')]</field>
+        </record>
+
+        <!-- Automated Action: Email SDF (10 days later) on rework expiration date. -->
+        <record id="rule_set_rework_org_registration_10d" model="base.automation">
+            <field name="name">Email Organisation on rework expiration date.</field>
+            <field name="model_id" ref="model_inseta_organisation"/>
+            <field name="template_id" ref="mail_template_remind_org_rework"/>
+            <field name="trigger">on_time</field>
+            <field name="state">email</field>
+            <field name="trg_date_id" ref="field_inseta_organisation__rework_expiration_date"/>
+            <field name="trg_date_range">0</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','rework')]</field>
+        </record>
+
+        <!-- Automated Action: Change State to awaiting_rejection after rework expiration date. -->
+        <record id="rule_set_change_state_org_registration_after_10d" model="base.automation">
+            <field name="name">Change Organisation state to "Awaiting Rejection" after rework expiration date.</field>
+            <field name="model_id" ref="model_inseta_organisation"/>
+            <field name="trigger">on_time</field>
+            <field name="state">code</field>
+            <field name="trg_date_id" ref="field_inseta_organisation__rework_expiration_date"/>
+            <field name="trg_date_range">1</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','rework')]</field>
+            <field name="code">record.write({'state': 'awaiting_rejection'})</field>
+        </record>
+
+        <!--Terminate Link organisation-->
+        <record id="rule_set_terminate_org_link_on_fyexpiry" model="base.automation">
+            <field name="name">Terminate Organisation Linkage on finanncial year expiry.</field>
+            <field name="model_id" ref="model_inseta_organisationlinkages"/>
+            <field name="trigger">on_time</field>
+            <field name="state">code</field>
+            <field name="trg_date_id" ref="field_inseta_organisationlinkages__linkenddate"/>
+            <field name="trg_date_range">1</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="code">record.write({'state': 'terminate'})</field>
+        </record>
+
+        <!-- Automated Action: Email SDF (10 days before)termination date. -->
+        <record id="rule_set_terminate_org_link_10d" model="base.automation">
+            <field name="name">Organisation Link termination reminder.</field>
+            <field name="model_id" ref="model_inseta_organisationlinkages"/>
+            <field name="template_id" ref="mail_template_remind_org_link_termination"/>
+            <field name="trigger">on_time</field>
+            <field name="state">email</field>
+            <field name="trg_date_id" ref="field_inseta_organisationlinkages__linkenddate"/>
+            <field name="trg_date_range">-10</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="filter_domain">[('state','=','active')]</field>
+        </record>
+
+        <!--Deactivate SDF registration-->
+        <record id="rule_set_deactivate_sdf_application_on_reg_end_date" model="base.automation">
+            <field name="name">Deactivate SDF application at the expiration of registration end date.</field>
+            <field name="model_id" ref="model_inseta_sdf_organisation"/>
+            <field name="trigger">on_time</field>
+            <field name="state">code</field>
+            <field name="trg_date_id" ref="field_inseta_sdf_organisation__registration_end_date"/>
+            <field name="trg_date_range">1</field>
+            <field name="trg_date_range_type">day</field>
+            <field name="code">record.action_deactivate()</field>
+        </record>
+
+        <!--Sync Levy History from Sage-->
+        <record id="ir_cron_levy_history" model="ir.cron">
+            <field name="name">Inseta Skills: Sync Levy History</field>
+            <field name="state">code</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="inseta_skills.model_inseta_levy_history"/>
+            <field name="code">model._scheduler_sync_levy_history()</field>
+            <field name="active" eval="False" />
+        </record>
+
+        <!--Sync Levy GL Accounts from Sage-->
+        <record id="ir_cron_gl_account" model="ir.cron">
+            <field name="name">Inseta Skills: Sync Levy History GL Accounts</field>
+            <field name="state">code</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="inseta_skills.model_inseta_levy_glaccount"/>
+            <field name="code">model._scheduler_sync_glaccounts()</field>
+            <field name="active" eval="False" />
+        </record>
+        
+        <!-- Cron that process the wsp payment  queue -->
+        <record id="ir_cron_wsp_payment_queue" model="ir.cron">
+            <field name="name">Inseta Skills: Process WSP Payment queue</field>
+            <field name="model_id" ref="model_inseta_wspatr_payment"/>
+            <field name="state">code</field>
+            <field name="code">model._process_payment_queue()</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">60</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field name="active" eval="False" />
+        </record>
+
+    </data>
+</odoo>

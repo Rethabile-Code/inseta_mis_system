@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="assign_sdlno_wizard_form" model="ir.ui.view">
+        <field name="name">inseta.assignsdlno.wizard.form</field>
+        <field name="model">inseta.assignsdlno.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Assign SDL No">
+                <group>
+                    <group colspan="4">
+                        <field name="organisation_id" readonly="1" force_save="1"/>
+                        <field name="sdl_no" string="T number"/>
+                        <field name="new_sdl_no" required="1"/>
+
+                    </group>
+                </group>
+
+                <footer>
+                    <button string='Submit' name="assign_sdlno" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="assign_sdlno_wizard_action" model="ir.actions.act_window">
+        <field name="name">Assign SDL No</field>
+        <field name="res_model">inseta.assignsdlno.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

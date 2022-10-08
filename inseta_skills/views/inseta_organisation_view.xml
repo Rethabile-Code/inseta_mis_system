@@ -1,0 +1,1596 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <!-- Employer form -->
+		<record id="view_organization_form" model="ir.ui.view">
+			<field name="name">inseta.organisation.form</field>
+			<field name="model">inseta.organisation</field>
+			<field name="arch" type="xml">
+				<form string="Employer">
+					<header>
+                        <button name="action_set_to_draft" 
+							string="Set to Draft" 
+							type="object"
+                            states="approve,reject"
+							groups="base.group_system" />
+
+                        <button name="%(inseta_skills.assign_sdlno_wizard_action)d"  
+							string="Assign Sdl number" 
+                            attrs="{'invisible':[('levy_status','=','Levy Paying')]}"
+							type="action"
+							groups="inseta_skills.group_skills_admin, inseta_skills.group_skills_manager" />
+
+                        <button name="action_submit" string="Submit" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to submit this Registration?"
+							states="rework,draft" 
+                            groups="inseta_skills.group_sdf_user,inseta_skills.group_sdf_secondary,inseta_skills.group_employer"/>
+
+                    	<button name="%(inseta_skills.organisation_rework_wizard_action)d" 
+                            attrs="{'invisible': ['|', ('levy_status','=','Non-Levy Paying'),('state','not in',('pending_approval'))]}"
+							context="{'default_comment_type':'Rework'}" 
+							string="Rework" 
+							type="action" 
+							groups="inseta_skills.group_skills_admin, inseta_skills.group_skills_manager" />
+
+                    	<button name="%(inseta_skills.organisation_rework_wizard_action)d" 
+                            attrs="{'invisible': ['|', ('levy_status','=','Non-Levy Paying'),('state','not in',('submit','pending_approval','rework_skill_admin'))]}"
+							context="{'default_comment_type':'Rework'}" 
+							string="Rework" 
+							type="action" 
+							groups="inseta_skills.group_skills_admin, inseta_skills.group_skills_manager" />
+
+						<!--Skill Admin asks org for rework. 
+						if org does not rework within 10 days, skill admin can submit for Rejection-->
+						<button name="action_request_manager_rejection" 
+							string="SKill Admin. Request Rejection" type="object"
+							class="oe_highlight" groups="inseta_skills.group_skills_admin"
+							confirm="Please confirm"
+							states="awaiting_rejection"
+						/>
+
+                        <button name="action_verify" string="Verify" type="object"
+							class="oe_highlight" 
+							groups="inseta_skills.group_skills_admin"
+							confirm="Are you sure you want to verify this Registration?"
+							states="submit,rework_skill_admin" 
+						/>
+
+                        <button name="action_approve_levy" string="Approve" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to approve this Registration?"
+							groups="inseta_skills.group_skills_admin"
+                            attrs="{'invisible': ['|', ('levy_status','=','Non-Levy Paying'),('state','not in',('pending_approval'))]}"
+                        />
+
+                        <button name="action_approve" string="Approve" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to approve this Registration?"
+							groups="inseta_skills.group_skills_manager"
+                            attrs="{'invisible': ['|', ('levy_status','=','Levy Paying'),('state','!=','pending_approval')]}"
+                        />
+                    	<button name="%(inseta_skills.organisation_rework_wizard_action)d" 
+							states="pending_approval,awaiting_rejection2" 
+							context="{'default_comment_type':'Reject'}" 
+							string="Reject" 
+							type="action" 
+							groups="inseta_skills.group_skills_admin"/>
+
+						<button name="action_print_approval_letter" 
+							string="Print Approval Letter" 
+							type="object"
+							states="approve" 
+							class="oe_highlight"/> 
+
+						<button name="action_print_rejection_letter" 
+							string="Print Rejection Letter" 
+							type="object"
+							states="reject" 
+							class="oe_highlight"/> 
+
+						<field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="draft,pending_approval,approve,reject"
+							statusbar_colors='{"approve":"green","rework":"red"}'
+							/>
+					</header>
+					<sheet>
+
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-check">
+                                <field name="active" widget="toggle_button" options="{&quot;terminology&quot;: &quot;active&quot;}"/>
+                            </button>
+                            <button type="action" 
+                                class="oe_stat_button" 
+                                name="%(inseta_skills.act_window_wsp_atr)d" 
+                                context="{'search_default_organisation_id':active_id, 'default_organisation_id':active_id}" icon="fa-book">
+                                <field string="WSP/ATR Submissions" name="wspatr_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                         
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+
+                        <div class="oe_title">
+							<h2><field name="sdl_no" readonly="1" class="oe_inline" /> </h2>
+                            <h1>
+                                <field name="name" readonly="1" force_save="1" class="oe_inline" placeholder="Trading Name"/>
+                            </h1>
+                        </div>
+
+
+                        <notebook class="dolphin">
+                            <page string="Organisation Details">
+                                <group>
+                                    <group>
+                                        <field name="contact_type" invisible="1"/> 
+                                        <field name="levy_status" invisible="1" />
+                                        <field name="should_be_required" invisible="1" />
+
+                                        <field name="trade_name" attrs="{'required': [('should_be_required','=',True)], 'readonly': [('levy_status','=','Levy Paying')]}"/>
+                                        <field name="legal_name" attrs="{'required': [('should_be_required','=',True)], 'readonly': [('levy_status','=','Levy Paying')]}"/>
+                                        <field name="bee_status_id" string="BEE Status" attrs="{'required': [('should_be_required','=',True)]}"  options="{'no_create': True, 'no_open': True}" />
+                                        <field name="require_bee_status_doc" invisible="1" />
+                                        <!-- <field name="bee_status_document" attrs="{'required': [('require_bee_status_doc','=',True)]}"/> -->
+										<field name="user_id" string="Related User" groups="base.group_system" options="{'no_create': True,'no_open':True}"/>
+										<field name="username" string="Username" groups="base.group_system"/>
+										<field name="password" string="Password" groups="base.group_system"/>
+
+										<separator string="Physical Address"/>
+                                
+                                        <field name="country_id" attrs="{'required': [('should_be_required','=',True)]}" placeholder="Country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                        <field name="street" attrs="{'required': [('should_be_required','=',True)]}" placeholder="Physical Address Line 1"/>
+                                        <field name="street2" attrs="{'required': [('should_be_required','=',True)]}" placeholder="Physical Address Line 2"/>
+                                        <field name="street3" placeholder="Physical Address Line 3"/>
+                                        <field name="physical_code" attrs="{'required': [('should_be_required','=',True)]}"  placeholder="Physical Code"/>
+                                        <field name="physical_suburb_id" readonly="1" force_save="1" attrs="{'required': [('should_be_required','=',True)],}" placeholder="Physical Suburb" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                        <field name="physical_city_id" readonly="1" force_save="1" attrs="{'required': [('should_be_required','=',True)]}" placeholder="Physical City" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                        <field name="physical_province_id" string="Physical Province" readonly="1" force_save="1"  attrs="{'required': [('should_be_required','=',True)]}" placeholder="Physical Province" options="{'no_open': True, 'no_quick_create': True}" />
+
+                                        <!-- <field name="physical_province_id" string="Physical Province" force_save="1"  attrs="{'required': [('should_be_required','=',True)], 'readonly':[('physical_province_id','!=',False)]}" placeholder="Physical Province" options="{'no_open': True, 'no_quick_create': True}" /> -->
+                                        <field name="physical_urban_rural" readonly="1" force_save="1" attrs="{'required': [('should_be_required','=',True)]}"  placeholder="Urban/Rural"/>
+                                        <field name="physical_municipality_id" readonly="1" force_save="1" attrs="{'required': [('should_be_required','=',True)]}" placeholder="Physical Municipality" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                            <!-- <button name="action_work_addr_map" 
+                                                string="Map" type="object"
+                                                icon="fa-map" /> -->
+                                     
+
+                                        <field name="use_physical_for_postal_addr" string="Use Physical for Postal?"  class="oe_inline" modifiers="{}" />
+										<separator string="Postal Address"/>
+                                        <field name="postal_address1"  attrs="{'required': [('should_be_required','=',True)]}" placeholder="Postal Address Line 1"/>
+                                        <field name="postal_address2"  attrs="{'required': [('should_be_required','=',True)]}" placeholder="Postal Address Line 2"/>
+                                        <field name="postal_address3" placeholder="Postal Address Line 3"/>
+                                        <field name="postal_code" placeholder="Postal Code"/>
+
+                                        <field name="postal_suburb_id"  attrs="{'required': [('should_be_required','=',True)]}" readonly="1" force_save="1" placeholder="Postal Suburb"  options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                        <field name="postal_city_id"  attrs="{'required': [('should_be_required','=',True)]}" readonly="1" force_save="1" placeholder="Physical City" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                        <field name="postal_province_id"  attrs="{'required':[('should_be_required','=',True)]}" readonly="1" force_save="1"  placeholder="Postal Province" options="{'no_open': True, 'no_quick_create': True}" />
+                                        <field name="postal_urban_rural"  attrs="{'required':[('should_be_required','=',True)]}" readonly="1" force_save="1" placeholder="Urban/Rural" />
+                                        <field name="postal_municipality_id"  attrs="{'required':[('should_be_required','=',True)]}" readonly="1" force_save="1" placeholder="Postal Municipality" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                        <!-- <button name="action_postal_addr_map" 
+                                            string="Map" type="object"
+                                            icon="fa-map" /> -->
+                                    </group>
+                                    <group>
+                                        <field name="organisation_status" invisible="1"/>
+                                        <field name="levy_status" attrs="{'required' : [('should_be_required','=',True)]}"/>
+                                        <field name="phone"  attrs="{'required' : [('should_be_required','=',True)]}"/>
+                                        <field name="fax_number"/> 
+                                        <field name="email" attrs="{'required' : [('should_be_required','=',True)]}"/>
+                                        <field name="registration_no_type_id" string="Registration No. Type" attrs="{'required' : [('should_be_required','=',True)]}" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="registration_no" attrs="{'required' : [('should_be_required','=',True)]}"/>
+                                        <field name="core_business" required="0"/> 
+                                        <field name="will_submit_wsp" />
+                                        <field name="is_unionized" />
+                                        <field name="current_fy_numberof_employees" string="Number of Employees (Current FY)"  attrs="{'required':[('should_be_required','=',True)]}"/> 
+                                        <field name="no_employees" string="Number of Employees (Employment Profile)" attrs="{'required':[('should_be_required','=',True)]}" /> 
+                                        <field name="organisation_size_id" attrs="{'required':[('should_be_required','=',True)]}" options="{'no_create': True, 'no_open': True}"/> 
+                                        <field name="sub_sector_id" invisible="1" options="{'no_create':True, 'no_open':True}" /> 
+                                        <field name="sic_code_id" attrs="{'required' : [('should_be_required','=',True)]}" options="{'no_create':True, 'no_open':True}" /> 
+                                        <field name="sic_code_desc" /> 
+                                        <field name="fsp_number" string="FSP License" attrs="{'required':[('should_be_required','=',True)]}"/>
+                                        <field name="other_sector" attrs="{'required':[('should_be_required','=',True)]}"/>
+                                        <field name="annual_turnover" attrs="{'required':[('should_be_required','=',True)]}" />
+                                    </group>
+                                </group>
+                                <group string="GPS Cordinates">
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="latitude_degree">
+                                            <b>Latitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="latitude_degree" placeholder="Degree" string="Degree" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_seconds" placeholder="Seconds" string="Seconds" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <button
+                                                string="Get GPS Cordinates"
+                                                name="get_geolocation"
+                                                colspan="2"
+                                                icon="fa-check"
+                                                type="object"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="longitude_degree">
+                                            <b>Longitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="longitude_degree" string="Degree" placeholder="Degree" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_seconds" placeholder="Seconds" string="Seconds" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                        </div>
+                                    </group>
+                                </group>
+								<group>
+									<div>
+										<field name="is_confirmed" required="1" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="is_confirmed" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+                            </page>
+                            <page string="Child Organisations">
+                                <field name="linkage_ids" context="{'default_organisation_id': active_id}">
+                                    <tree>
+                                        <field name="parent_has_submitted_wsp" invisible="1" />
+                                        <field name="organisation_id" invisible="1"/>
+                                        <field name="childorganisation_id"  invisible="1"/>
+										<field name="legal_name"/>
+                                        <field name="trade_name" />
+                                        <field name="sdl_no" />
+                                        <field name="linkstartdate" />
+                                        <field name="linkenddate" />
+                                        <field name="link_request_doc"/>
+                                        <!-- <field name="file_name" /> -->
+										<button name="download_link_request_doc" string="Download" type="object" icon="fa-download" />  
+                                        <field name="termination_date" />
+                                        <field name="link_termination_doc" string="Termination document" />
+										<button name="download_termination_doc" string="Download" type="object" icon="fa-download" />  
+                                        <field name="state" string="Status"/>
+                                    </tree>
+                                    <form string="Linked organisations">
+                                        <header>
+                                            <field name="parent_has_submitted_wsp" invisible="1" />
+                                            <button name="action_reset" 
+                                                string="Reset" 
+                                                states="submit,active,terminate"
+                                                type="object"
+                                                confirm="Are you sure you want to reset?"
+                                                groups="inseta_skills.group_skills_manager, base.group_system"/>
+
+                                            <button name="action_submit" 
+                                                string="Submit" 
+                                                class="oe_highlight"
+                                                states="draft,rework"
+                                                type="object"
+                                                confirm="Are you sure you want to submit?"
+                                                groups="inseta_skills.group_skills_admin, inseta_skills.group_sdf_user"/>
+
+
+											<button name="action_rework" 
+                                                string="Rework" 
+                                                class="oe_highlight"
+                                                states="submit"
+                                                type="object"
+                                                confirm="Are you sure u want to rework?"
+                                                groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager"/>
+
+                                                <!-- attrs="{'invisible':('parent_has_submitted_wsp','=',True)}" -->
+
+                                            <button name="action_link" 
+                                                string="Approve" 
+                                                class="oe_highlight"
+                                                states="submit"
+                                                type="object"
+                                                confirm="Are you sure you want to link this Organisation?"
+                                                groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager"/>
+
+                                            <button name="action_terminate" 
+                                                string="Terminate" 
+                                                states="active"
+                                                type="object"
+                                                confirm="Are you sure you want to terminnate this link?"
+                                                groups="inseta_skills.group_skills_manager"/>
+
+                                            <field name="state" widget="statusbar" clickable="True"
+                                                statusbar_visible="draft,submit,active,terminate"
+                                                statusbar_colors='{"active":"green","terminate":"red"}'
+                                                />
+                                        </header>
+                                        <sheet>
+                                            <div class="oe_title" >
+                                                <h1>
+                                                    <field name="childorganisation_id" readonly="1" force_save="1"/>
+                                                </h1>
+                                            <!-- <div class="alert alert-info col-12" aria-label="Alert Message" role="alert" attrs="{'invisible':('parent_has_submitted_wsp','=',False)}">
+                                                The parent organisation has submitted WSP for the selected Financial Year. 
+                                                This link will be in pending. Only a skill manager can force the link.
+                                            </div> -->
+                                            </div>
+                                            <group>
+                                                <group>
+												<label for="sdl_no">SDL No</label>
+												<div class="o_row">
+													<field name="sdl_no" required="1"/>
+													<button
+														string="Search"
+														name="action_search_organisation"
+														colspan="2"
+														icon="fa-search"
+														class="oe_highlight"
+														type="object"/>
+												</div>
+                                                    <field name="organisation_id" invisible="1"/>
+                                                    <field name="childorganisation_id" readonly="1" force_save="1"/>
+                                                    <field name="link_request_doc" filename="file_name"  attrs="{'readonly': [('state','=','active')], 'required': [('childorganisation_id','!=',False)]}"/>
+                                                    <!-- <field name="file_name" readonly="1" force_save="1"/> -->
+
+                                                    <!-- <field name="financialyearend_id" options="{'no_open': True, 'no_create': True}"/>  -->
+                                                    <field name="is_required_for_skillspec" invisible="1" />
+
+                                                    <field name="financialyear_id"  groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager" string="Financial Year" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': [('state','=','active')]}"/>
+                                                    <field name="linkstartdate" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager" attrs="{'readonly': [('state','=','active')]}"/>
+                                                    <field name="linkenddate" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager" attrs="{'readonly': [('state','=','active')]}"/>
+                                                    <separator string="Approval" attrs="{'invisible': [('is_required_for_skillspec','=',False)]}"/>
+                                                    <field name="action"  attrs="{'invisible': [('is_required_for_skillspec','=',False)],  'readonly': [('state','=','active')]}"/>
+                                                    <field name="rework_comment" attrs="{'required': [('action','=','rework')], 'invisible': [('action','!=','rework')], 'readonly': [('is_required_for_skillspec','=',False)]}" force_save="1" />
+
+                                                    <separator string="Termination" attrs="{'invisible': [('state','!=','active')]}" groups="inseta_skills.group_skills_manager" />
+
+                                                    <field name="link_termination_doc" attrs="{'invisible': [('state','!=','active')]}" groups="inseta_skills.group_skills_manager"/>
+                                                    <field name="termination_date" attrs="{'invisible': [('state','!=','active')]}" groups="inseta_skills.group_skills_manager"/>
+
+                                                    <!-- <field name="link_termination_doc_filename" readonly="1" force_save="1"/> -->
+
+                                                     <!-- attrs="{'required': [('is_required_for_skillspec','=',True)]}" -->
+                                                </group>
+                                                <group/>
+                                            </group>
+                                            <group>
+                                                <!-- <field name="confirm" /> -->
+                                            </group>
+                                        </sheet>
+										<div class="oe_chatter">
+											<field name="message_follower_ids" widget="mail_followers"/>
+											<field name="activity_ids" widget="mail_activity"/>
+											<field name="message_ids" widget="mail_thread"/>
+										</div>
+                                    </form>
+
+                                </field>
+                            </page>
+                            
+                            <page string="Contact Person" name="contact_addresses" >
+                                <field name="child_ids" context="{'default_type':'contact'}">
+                                    <tree>
+                                        <field name="type" invisible="1"/>
+                                        <field name="title"/>
+										<field name="name"/>
+                                        <field name="function"/>
+                                        <field name="email"/>
+                                        <field name="mobile"/>
+                                    </tree>
+                                    <form string="Contact Persons">
+                                        <sheet>
+                                            <!-- parent_id and type fields needed in attrs in base_address_city module which overwrites
+                                            _fields_view_get() of partner. It would be better to put those fields there but the web client
+                                            dosen't support when a field is displayed several times in the same view.-->
+                                            <field name="type" required="1" invisible="1" widget="radio" options="{'horizontal': true}"/>
+                                            <field name="parent_id" invisible="1"/>
+                                            <hr/>
+                                            <group col="12">
+                                                <group colspan="6">
+                                                    <field name="title" placeholder="e.g. Mr." attrs="{'required': [('type','=', 'contact')]}"/>
+                                                    <field name="first_name" string="First Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                                    <field name="last_name" string="Surname" attrs="{'required' : [('type', '=', 'contact')]}"/>
+										            <field name="name" invisible="1"/>
+                                                    <field name="initials"  readonly="1" force_save="1"/>
+                                                    <field name="function" string="Designation" placeholder="e.g. Sales Director" attrs="{'required': [('type','=', 'contact')]}"/>
+                                                    <span class="o_form_label o_td_label" name="postal_address_name">
+                                                        <b>Postal Address</b>
+                                                    </span>
+                                                    <div class="o_address_format" string="Postal Address">
+                                                        <field name="postal_address1" placeholder="Postal Address Line 1" class="o_address_street" required="1" />
+                                                        <field name="postal_address2" placeholder="Postal Address Line 2" class="o_address_street" required="1"/>
+                                                        <field name="postal_address3" placeholder="Postal Address Line 3" class="o_address_street" />
+                                                        <field name="postal_code" required="1" placeholder="Postal Code" class="o_address_street"/>
+                                                        <field name="postal_suburb_id" required="1"  placeholder="Postal Suburb"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                                        <field name="postal_city_id" required="1"  placeholder="Physical City" class="o_address_city" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                                        <field name="postal_province_id" required="1" class="o_address_state" placeholder="Postal Province" options="{'no_open': True, 'no_quick_create': True}"/>
+                                                        <field name="postal_urban_rural" required="1" placeholder="Urban/Rural" class="o_address_zip" />
+                                                        <field name="postal_municipality_id" required="1"  placeholder="Postal Municipality"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                                        <!-- <button name="action_postal_addr_map" 
+                                                            string="Map" type="object"
+                                                            icon="fa-map" /> -->
+                                                    </div>
+                                                </group>
+                                                <group colspan="6">
+                                                    <field name="phone" string="Phone number" required="1" widget="phone"/>
+                                                    <field name="fax_number" string="Fax number" widget="phone"/>
+                                                    <field name="mobile" string="Cell Number" required="1"  widget="phone"/>
+                                                    <field name="email" widget="email" required="1" />
+                                                    <field name="company_id" invisible="1"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <group>
+                                                    <!-- <field name="confirm"  required="1"/> -->
+                                                </group>
+                                            </group>
+                                            <field name="lang" invisible="True"/>
+                                            <field name="user_id" invisible="True"/>
+                                            <field name="image_128" invisible="1"/>
+                                        </sheet>
+                                    </form>
+                                </field>
+								<group>
+									<div>
+										<field name="confirm_contact" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_contact" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+                            </page>
+							<page name="training_committee" string="Training Committee">
+                                <field name="organisation_size_desc" invisible="1" />
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert" attrs="{'invisible':[('organisation_size_desc','!=','Small')]}">
+					                Your organisation is not required to have a training committee.
+								</div>
+								<field name="training_committee_ids" nolabel="1" attrs="{'invisible':[('organisation_size_desc','=','Small')]}" >
+									<tree string="Training Committee" delete="false">
+										<field name="title" options="{'no_create': True, 'no_open': True}" />
+                                        <field name="first_name"/>
+										<field name="last_name"/>
+										<field name="initials"/>
+                                        <field name="member_type" />
+										<field name="designation_id"/>
+										<field name="designation_desc"/>
+									</tree>
+									<form>
+										<group>
+											<group>
+                                                <field name="title" required="1" options="{'no_create': True, 'no_open': True}" />
+                                                <field name="first_name" required="1"/>
+                                                <field name="last_name" required="1"/>
+                                                <field name="initials" readonly="1" force_save="1"/>
+                                                <field name="phone" string="Phone Number" required="1"/>
+                                                <field name="fax_number"/>
+                                                <field name="mobile" string="Cell Number" required="1"/>
+                                                <field name="email" required="1"/>
+											</group>
+											<group>
+												<field name="member_type" required="1"/>
+												<field name="designation_id" required="1" options="{'no_create': True}" />
+                                                <field name="designation_desc" required="1" />
+										        <field name="name_of_union" />
+                                                <field name="position_in_union" />
+											</group>
+										</group>
+                                        <group>
+                                            <!-- <field name="confirm" required="1"/> -->
+                                        </group>
+									</form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_training_committee" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_training_committee" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+                            </page>
+                            <page string="CFO">
+								<field name="cfo_ids" nolabel="1" context="{'default_type':'CFO'}">
+									<tree string="CFO Details" delete="false">
+										<field name="title" required="1" options="{'no_create': True, 'no_open': True}" />
+										<field name="first_name" required="1"/>
+                                        <field name="last_name" required="1" />
+										<field name="email" required="1"/>
+										<field name="mobile" string="Cell Number" required="1"/>
+                                        <field name="fax_number" />
+										<field name="email" string="Email" required="1"/>
+									</tree>
+                                    <form string="CFO">
+                                        <sheet>
+                                            <field name="type" required="1" invisible="1" widget="radio" options="{'horizontal': true}"/>
+                                            <field name="parent_id" invisible="1"/>
+                                            <hr/>
+                                            <group col="12">
+                                                <group colspan="5">
+                                                    <field name="title" placeholder="e.g. Mr." required="1" options="{'no_create': True, 'no_open': True}"/>
+                                                    <field name="first_name" string="First Name" required="1"/>
+                                                    <field name="last_name" string="Surname" required="1"/>
+                                                    <field name="initials"  readonly="1" force_save="1"/>
+                                                    <field name="function" string="Designation" placeholder="e.g. Sales Director" required="1"/>
+                                                </group>
+                                                <group colspan="5">
+                                                    <field name="phone" string="Phone number" required="1" widget="phone"/>
+                                                    <field name="fax_number" string="Fax number" widget="phone"/>
+                                                    <field name="mobile" string="Cell Number" required="1"  widget="phone"/>
+                                                    <field name="email" widget="email" required="1" />
+                                                    <field name="company_id" invisible="1"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <!-- <field name="confirm" required="1"/> -->
+                                            </group>
+                               
+                                        </sheet>
+                                    </form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_cfo" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_cfo" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+							<page string="CEO">
+								<field name="ceo_ids" nolabel="1" context="{'default_type':'CEO'}">
+									<tree >
+										<field name="title" />
+										<field name="name"/>
+										<field name="email"/>
+										<field name="mobile" string="Cell Number" />
+										<field name="phone" string="Telephone Number" />
+										<field name="function" placeholder="Designation" string="Designation" />
+									</tree>
+                                    <form string="Senior Organisation Representative/CEO">
+                                        <sheet>
+                                            <field name="type" required="1" invisible="1" widget="radio" options="{'horizontal': true}"/>
+                                            <field name="parent_id" invisible="1"/>
+                                            <hr/>
+                                            <group col="12">
+                                                <group colspan="5">
+                                                    <field name="title" placeholder="e.g. Mr." required="1" options="{'no_create': True, 'no_open': True}"/>
+                                                    <field name="first_name" string="First Name" required="1"/>
+                                                    <field name="last_name" string="Surname" required="1"/>
+                                                    <field name="initials"  readonly="1" force_save="1"/>
+                                                    <field name="function" string="Designation" placeholder="e.g. Sales Director" required="1"/>
+                                                </group>
+                                                <group colspan="5">
+                                                    <field name="phone" string="Phone number" required="1" widget="phone"/>
+                                                    <field name="fax_number" string="Fax number" widget="phone"/>
+                                                    <field name="mobile" string="Cell Number" required="1"  widget="phone"/>
+                                                    <field name="email" widget="email" required="1" />
+                                                    <field name='id_no' />
+                                                    <field name="company_id" invisible="1"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <!-- <field name="confirm" required="1"/> -->
+                                            </group>
+                               
+                                        </sheet>
+                                    </form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_ceo" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_ceo" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+                            <page string="Banking Details">
+                                <field name="bank_ids"
+                                    context="{'default_organisation_id': active_id}">
+                                    <tree string="Bank Details">
+                                        <field name="bank_id" string="Bank Name" />
+                                        <field name="accounttype_id"  string="Account Type" />
+                                        <field name="accountnumber" />
+                                        <field name="branchname" />
+                                        <field name="branchcode" />
+                                        <field name="verification_status" />
+                                        <!-- <field name="write_date" />
+                                        <field name="write_uid" /> -->
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="organisation_id" invisible="1"/>
+                                                <field name="accountnumber" required="1"/>
+                                                <field name="accounttype_id" required="1" string="Account Type" options="{'no_create': True, 'no_open': True}"/>
+                                                <field name="accountholder" string="Account Holder" required="1"/>
+                                            </group>
+                                            <group>
+                                                <field name="bank_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                                                <field name="branchname" required="1"/>
+                                                <field name="branchcode" required="1" />
+                                                <field name="verification_status" required="1" />
+                                                <field name="write_uid" readonly="1" force_save="1" />
+                                                <field name="write_date" readonly="1" force_save="1"/>
+                                            </group>
+                                        </group>
+                                        <group>
+                                            <!-- <field name="confirm" required="1"/> -->
+                                        </group>
+                                    </form>
+                                </field>
+								<group>
+									<div>
+										<field name="confirm_bank" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_bank" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+                            </page>
+
+                            <page string="Approve SDFs" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager">
+                                <!-- <field name="sdf_ids" nolabel="1" readonly="1"> -->
+                                <field name="sdf_ids" nolabel="1">
+                                    <tree string="SDF" delete="0" create="0">
+										<field name="reference" />
+                                        <field name="sdf_id" string="SDF"/>
+										<field name="appointment_letter" filename="file_name"/>
+										<field name="file_name" invisible="0" readonly="1" force_save="1"/> 
+										<button name="export_appointment_letter" string="Download" type="object" icon="fa-download" />  
+                                        <field name="sdf_role" />
+                                        <field name="approval_date" />
+                                        <field name="registration_start_date" string="Start Date" />
+                                        <field  name="registration_end_date" string="End Date" />
+                                        <field name="state"/>
+                                    </tree>
+									<form string="SDF orgnaisation">
+										<header>
+											<button name="action_draft" 
+												string="Reset to Draft" 
+												type="object"
+												confirm="Are you sure you want to set to draft?"
+												groups="base.group_system"/>
+
+											<button name="action_deactivate" 
+												string="Terminate SDF"
+                                                states="approve"
+												type="object"
+												confirm="Are you sure you want to set to Terminate this SDF?"
+												groups="inseta_skills.group_skills_manager,inseta_skills.group_skills_specialist"/>
+											
+                                            <button name="%(inseta_skills.sdf_extend_reg_wizard_action)d" 
+												states="deactivate" 
+												string="Extend Registration" 
+												class="oe_highlight"
+												type="action" 
+												groups="inseta_skills.group_skills_manager,inseta_skills.group_skills_specialist" />
+
+											<button name="action_submit" 
+												string="Submit" 
+												class="oe_highlight"
+												states="draft"
+												type="object"
+												confirm="Are you sure you want to submit?"
+												groups="inseta_skills.group_sdf_user,inseta_skills.group_sdf_secondary,inseta_skills.group_skills_admin"/>
+
+											<button name="%(inseta_skills.sdf_recommend_wizard_action)d" 
+												states="submit,rework_skill_spec" 
+												context="{'default_stage':'recommend'}" 
+												string="Recommend" 
+												class="oe_highlight"
+												type="action" 
+												groups="inseta_skills.group_skills_specialist" />
+
+											<button name="%(inseta_skills.sdf_recommend_wizard_action)d" 
+												string="Approve" 
+												context="{'default_stage':'approve','default_option2':'Approve'}" 
+												class="oe_highlight"
+												states="pending_approval"
+												type="action"
+												groups="inseta_skills.group_skills_manager"/>
+
+											<!-- <button name="%(inseta_skills.sdf_recommend_wizard_action)d" 
+												string="Reject" 
+												context="{'default_stage':'approve','default_option2':'Reject'}" 
+												class="oe_highlight"
+												states="pending_approval"
+												type="action"
+												groups="inseta_skills.group_skills_manager"/> -->
+
+
+											<button name="action_print_approval_letter" string="Print Approval Letter" type="object"
+												states="approve"
+                                                class="oe_highlight"
+												 groups="inseta_skills.group_skills_manager,inseta_skills.group_skills_specialist"
+												/>
+
+											<button name="action_print_rejection_letter" string="Print Rejection Letter" type="object"
+												states="reject"
+                                                class="oe_highlight"
+												groups="inseta_skills.group_skills_manager,inseta_skills.group_skills_specialist"
+												/> 
+
+											<field name="state" widget="statusbar" clickable="True"
+												statusbar_visible="draft,submit,pending_approval,approve,reject"
+												statusbar_colors='{"approve":"green","reject":"red"}'
+												/>
+										</header>
+										<sheet>
+											<div class="oe_title">
+												<h1>
+													<field name="reference" string="Ref. No" readonly="1" force_save="1"/>
+												</h1>
+											</div>
+											
+											<group>
+												<div/>
+												<field name="sdf_id" string="SDF" readonly="1" force_save="1" />
+												<field name="organisation_id" invisible="1"/>
+												<field name="is_acting_for_employer" class="oe_inline" modifiers="{}" invisible="1"/>
+												<field name="sdf_function_id"  options="{'no_create': True,'no_open':True}" invisible="1"/>
+												<field name="appointment_procedure_id"  options="{'no_create': True,'no_open':True}" invisible="1"/>
+												<field name="require_appointment_procedure_other" invisible="1" />
+												<!-- <field name="appointment_procedure_other" attrs="{'invisible':[('require_appointment_procedure_other','=',False)],'required':[('require_appointment_procedure_other','=',True)]}" /> -->
+												<field name="appointment_procedure_other" invisible="1"/>
+												<field name="sdf_role"  attrs="{'readonly':[('state','in',['reject','approve','deactivate'])], 'required': [('organisation_id','!=',False)]}"/>
+												<field name="appointment_letter" filename="file_name" readonly="1" force_save="1"/> 
+												<field name="file_name" invisible="1"/>
+												<field name="application_date" readonly="1" force_save="1" />
+												<field name="require_registration_date" invisible="1" />
+												<!-- <field name="registration_start_date" string="Start Date" force_save="1" attrs="{'required':[('require_registration_date','=',True)],'readonly':[('state','in',['reject','approve'])]}" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager" /> -->
+												<!-- <field name="registration_end_date" string="End Date" force_save="1"  attrs="{'required':[('require_registration_date','=',True)],'readonly':[('state','in',['reject','approve'])]}" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/> -->
+
+												<field name="registration_start_date" string="Start Date" force_save="1" attrs="{'readonly':[('state','in',['reject','approve'])]}" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager" />
+												<field name="registration_end_date" string="End Date" force_save="1"  attrs="{'readonly':[('state','in',['reject','approve'])]}" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/>
+												<field name="recommendation_status" readonly="1" force_save="1" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/>
+												<field name="recommendation_comment" readonly="1" force_save="1" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/>
+											</group>
+										</sheet>
+										<div class="oe_chatter">
+											<field name="message_follower_ids" widget="mail_followers"/>
+											<field name="activity_ids" widget="mail_activity"/>
+											<field name="message_ids" widget="mail_thread"/>
+										</div>
+									</form>
+
+                                </field>
+                             
+                            </page>
+                            <page string="WSP Submissions">
+                                <div class="alert alert-info col-12" aria-label="Alert Message" role="alert">
+                                    <field name="display_child_link_message" /> <br/>
+									List of all WSP/ATR submitted by this Organisation. <br/>
+                                    WSP Submissions by Parent Organisation are listed for Child Organisations
+								</div>
+
+                                <field name="parent_wspatr_ids" nolabel="1" readonly="1" attrs="{'invisible':[('display_child_link_message','=',False)]}">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="organisation_id" />
+                                        <field name="sdl_no" />
+                                        <field name="form_type" />
+                                        <field name="financial_year_id"/>
+                                        <field name="wspatr_period_id" />
+                                        <field name="due_date" />
+                                        <field name="submitted_date"/>
+                                        <field name="approved_date" />
+                                        <field name="rejected_date" />
+                                        <field name="state" />
+                                    </tree>
+                                </field>
+
+                                <field name="wspatr_ids" nolabel="1" readonly="1" attrs="{'invisible':[('display_child_link_message','!=',False)]}">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="organisation_id" />
+                                        <field name="sdl_no" />
+                                        <field name="form_type" />
+                                        <field name="financial_year_id"/>
+                                        <field name="wspatr_period_id" />
+                                        <field name="due_date" />
+                                        <field name="submitted_date"/>
+                                        <field name="approved_date" />
+                                        <field name="rejected_date" />
+                                        <field name="state" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Client Relationship Management">
+                                <group>
+                                    <group>
+                                        <field name="communication_type" />
+                                    </group>
+                                    <group/>
+                                </group>
+                                <group colspan="4">
+                                    <field name="document_ids" nolabel="1" colspan="4"  context="{'default_organisation_id': active_id}" attrs="{'invisible':[('communication_type','!=','Documents')]}">
+                                        <tree>
+                                            <field name="create_uid" string="Uploaded By"/>
+                                            <field name="create_date" string="Upload Date"/>
+                                            <field name="documentrelates_id" />
+                                            <field name="comment" />
+                                            <field name="file_name" invisible=""/>
+                                        </tree>
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="documentrelates_id" string="Document Type" options="{'no_create': True, 'no_open': True}"/>
+                                                    <field name="file" filename="file_name"  required="1"/>
+                                                    <field name="file_name" readonly="1" force_save="1"/> 
+                                                    <field name="comment" />
+                                                </group>
+                                                <group/>
+                                                
+                                            </group>
+                                        </form>
+                                    </field>
+                                    <field name="comment_ids" nolabel="1" colspan="4"  context="{'default_organisation_id': active_id}" attrs="{'invisible':[('communication_type','!=','Comment')]}">
+                                        <tree>
+                                            <field name="create_uid"/>
+                                            <field name="create_date" />
+                                            <field name="comment" />
+                                        </tree>
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="comment" required="1" />
+                                                </group>
+                                                <group/>
+                                            </group>
+                                        </form>
+                                    </field>
+                                    <field name="me_ids" nolabel="1"  colspan="4" context="{'default_organisation_id': active_id}" attrs="{'invisible':[('communication_type','!=','ME')]}">
+                                        <tree>
+                                            <field name="organisation_id" />
+                                            <field name="create_uid"/>
+                                            <field name="create_date" />
+                                            <field name="comment" />
+                                            <field name="metype_id" string="M&amp;E Type"/>
+                                        </tree>
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="comment" required="1" />
+                                                    <field name="metype_id" string="M&amp;E Type"/>
+                                                </group>
+                                                <group/>
+                                            </group>
+                                        </form>
+                                    </field>
+
+                                </group>
+
+                            </page>
+
+                            <page string="Grant Summary" >
+							    <!-- <button  name="get_sage_posted_documents" 
+									type="object" string="Print Grant Summary" 
+									class="oe_highlight" 
+									style="margin-bottom:8px;"
+								/> -->
+                                <group colspan="4">
+                                    <field name="financial_year_id"  options="{'no_create': True,'no_open':True}" />
+                                </group>
+                    
+                                <separator string="Grant Summary" />
+                                <div class="row">
+                                    <div class="col col-md-12">
+                                        <table class="table table-stripped">
+                                            <tbody>
+                                                <tr> 
+                                                    <td> <strong>Organization Name </strong> </td> <td> <field name="legal_name" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong> SDL Number</strong> </td> <td> <field name="sdl_no" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong>Financial Year</strong> </td> <td> <field name="financial_year_id" readonly="1" force_save="1" nolabel="1" /> </td>
+                                                </tr>
+<!-- 
+                                                <tr> 
+                                                    <td> <strong> Physical Address 1</strong> </td> <td> <field name="street" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                                <tr> 
+                                                    <td> <strong> Physical Address 2</strong> </td> <td> <field name="street2" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                                
+                                                <tr> 
+                                                    <td> <strong> Physical Address 3</strong> </td> <td> <field name="street3" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong>Municipality</strong> </td> <td> <field name="postal_municipality_id" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong>Postal Code</strong> </td> <td> <field name="postal_code" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+
+                                                <tr> 
+                                                    <td> <strong> Postal Address 1</strong> </td> <td> <field name="postal_address1" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                                <tr> 
+                                                    <td> <strong> Postal Address 2</strong> </td> <td> <field name="postal_address2" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                                
+                                                <tr> 
+                                                    <td> <strong> Postal Address 3</strong> </td> <td> <field name="postal_address3" readonly="1" nolabel="1" /> </td>
+                                                </tr> -->
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <group colspan="4">
+                                    <field name="grant_history_html" readonly="1" nolabel="1"/>
+                                </group>
+                            </page>
+
+                            <page string="Levy Summary" >
+
+							    <!-- <button  name="action_print_levysummary" 
+									type="object" string="Print Levy Summary" 
+									class="oe_highlight" 
+									style="margin-bottom:8px;"
+								/> -->
+                                <group colspan="4">
+                                    <field name="financial_year_id2" string="Financial Year"  options="{'no_create': True,'no_open':True}" />
+                                </group>
+                    
+                                <separator string="Levy Summary" />
+                                <div class="row">
+                                    <div class="col col-md-12">
+                                        <table class="table table-stripped">
+                                            <tbody>
+                                                <tr> 
+                                                    <td> <strong>Organization Legal Name </strong> </td> <td> <field name="legal_name" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                                <tr> 
+                                                    <td> <strong> Trade Name </strong> </td> <td> <field name="trade_name" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong> SDL Number</strong> </td> <td> <field name="sdl_no" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong>Year of Statement</strong> </td> <td> <field name="financial_year_id2" readonly="1" force_save="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <!-- <tr> 
+                                                    <td> <strong>Postal Code</strong> </td> <td> <field name="postal_code" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong>Contact Telephone Number</strong> </td> <td> <field name="phone" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong>Fax Number</strong> </td> <td> <field name="fax_number" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong>Municipality</strong> </td> <td> <field name="postal_municipality_id" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong>Residential Address</strong> </td> <td> <field name="residential_address" readonly="1" nolabel="1" /> </td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <group colspan="4">
+                                    <field name="levy_history_html" readonly="1" nolabel="1"/>
+                                    <!-- <field name="levy_history_ids" nolabel="1" readonly="1" attrs="{'invisible':[('financial_year_id2','=',False)]}">
+                                        <tree string="Levy History" create="0" delete="0">
+                                            <field name="sars_arrival_date" />
+                                            <field name="date_posted" />
+                                            <field name="stakeholder_levy_cal" sum="Stakeholder Levy" />
+                                            <field name="nsf_cal" sum="NSF"/>
+                                            <field name="total_amt" sum="Total Received by SETA"/>
+                                            <field name="mand_grant_amt" sum="Mandatory Levy" />
+                                            <field name="desc_grant_amt" sum="Discretionary Levy"/>
+                                            <field name="admn_grant_amt" sum="Admin Levy"/>
+                                            <field name="penalties" sum="Penalty"/>
+                                            <field name="interest" sum="Interest" />
+                                        </tree>
+                                    </field> -->
+                                </group>
+
+                                <div class="row" style="margin-top: 20px">
+                                    <div class="col col-md-12">
+                                    <table class="table table-stripped">
+                                        <tbody>
+                                            <tr> 
+                                                <td> <strong>SARS Arrival Date </strong></td> <td> Date received by SARS </td>
+                                            </tr>
+                                            <tr> 
+                                                <td> <strong> Date Posted </strong></td> <td> Date received/ posted on SETA system </td>
+                                            </tr>
+                                            <tr> 
+                                                <td> <strong> Stakeholder Levy Calculated (100%) </strong> </td> <td> Sum of levy received by SETA + NSF calculation + interest + penalty </td>
+                                            </tr>
+                                            <tr> 
+                                                <td> <strong> NSF Calculation (20%)</strong> </td> <td> Levy amount calculated as transferred to National Skills Fund by SARS (20% of total levy) </td>
+                                            </tr>
+                                            <tr> 
+                                                <td> <strong>Total Received by SETA (80%)</strong> </td> <td> Levy amount received by SETA (80% of total levy)</td>
+                                            </tr>
+                                            <tr> 
+                                                <td> <strong>Mandatory Levy (20%)</strong> </td> <td> Levy received by SETA allowable for mandatory grant</td>
+                                            </tr>
+                                            <tr> 
+                                                <td> <strong>Discretionary (49.5%)</strong> </td> <td>Levy received by SETA allowable for discretionary grant</td>
+                                            </tr>
+                                            <tr> 
+                                                <td> <strong>Admin (10.5%)</strong> </td> <td>Levy received by SETA allowable for SETA admin</td>
+                                            </tr>
+                                            <tr> 
+                                                <td> <strong>Penalty (80%)</strong> </td> <td>Interest payable to SETA</td>
+                                            </tr>
+                                            <tr> 
+                                                <td> <strong>Interest (80%)</strong> </td> <td>Penalty payable to SETA</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+
+                            </page>
+                            <page string="Financial Summary" invisible="1" >
+							    <button  name="action_print_grantsummary" 
+									type="object" string="Print Financial Summary" 
+									class="oe_highlight" 
+									style="margin-bottom:8px;"
+								/>
+                                <group colspan="4">
+                                    <field name="financial_year_id3"  string="Financial Year" options="{'no_create': True,'no_open':True}" />
+                                </group>
+                    
+                                <separator string="Financial Summary" />
+                                <div class="row">
+                                    <div class="col col-md-12">
+                                        <table class="table table-stripped">
+                                            <tbody>
+                                                <tr> 
+                                                    <td> <strong>Organization Name </strong> </td> <td> <field name="legal_name" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong> SDL Number</strong> </td> <td> <field name="sdl_no" readonly="1" nolabel="1" /> </td>
+                                                </tr>
+                                               <tr> 
+                                                    <td> <strong>Financial Year</strong> </td> <td> <field name="financial_year_id3" readonly="1" force_save="1" nolabel="1" /> </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- <group colspan="4">
+                                    <field name="grant_history_html" readonly="1" nolabel="1"/>
+                                </group> -->
+
+
+                            </page>
+
+                            <page string="Other Information" invisible="1">
+                                <group string="Other Information" name="other_info">
+                                    <group>
+                                        <field name="levy_number_type_id" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="type_of_organisation_id" options="{'no_create': True, 'no_open': True}" />
+                                        <field name="date_of_registration"/>
+                                        <field name="legal_status_id" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="partnership_id" options="{'no_create': True, 'no_open': True}" />
+                                        <field name="total_annual_payroll" required="0"/>
+                                        <field name="legacy_system_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="sars_number" />
+                                        <field name="cipro_number" />
+                                        <field name="paye_number" />
+                                        <field name="uif_number" />                                   
+                                    </group>
+                                    <group colspan="4">
+                                        <field name="is_interested_in_communication" />
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                        
+                    </sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_organization_address_contact_form" model="ir.ui.view">
+			<field name="name">inseta.organisation.form</field>
+			<field name="model">inseta.organisation</field>
+			<field name="arch" type="xml">
+				<form string="Employer contact details">
+					<header>
+						<!-- <field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="draft,rework,pending_approval,approve"
+							statusbar_colors='{"approve":"green","rework":"red"}'
+							/> -->
+					</header>
+					<sheet>
+                        <!-- <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="image_512" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_128&quot;}"/> -->
+                        <div class="oe_title">
+                            <field name="active" invisible="1"/>
+							<h2><field name="sdl_no" readonly="1" class="oe_inline" /> </h2>
+                            <h1>
+                                <field name="name" readonly="1" force_save="1" class="oe_inline" placeholder="Trading Name"/>
+                            </h1>
+                        </div>
+      
+                        <notebook class="dolphin">
+                            <page string="Organisation Details">
+                                <group>
+                                    <field name="contact_type" invisible="1"/> 
+                                    <field name="levy_status" invisible="1" />
+                                    <field name="should_be_required" invisible="1" />
+                                    <field name="current_fy_numberof_employees" string="Number of Employees (Current FY)" /> 
+                                    <field name="no_employees" string="Number of Employees (Employment Profile)"  readonly="1" force_save="1"/>
+                                    <separator string="Physical Address"/>
+                                    <field name="country_id" required="1"  placeholder="Country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                    <field name="street" required="1"   placeholder="Physical Address Line 1"/>
+                                    <field name="street2" required="1"  placeholder="Physical Address Line 2"/>
+                                    <field name="street3" placeholder="Physical Address Line 3"/>
+                                    <field name="physical_code" required="1"  />
+                                    <field name="physical_suburb_id" required="1"   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                    <field name="physical_city_id" required="1"   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                    <field name="physical_province_id" string="Physical Province" required="1"  attrs="{'readonly':[('physical_province_id','!=',False)]}"  options="{'no_open': True, 'no_quick_create': True}" />
+                                    <field name="physical_urban_rural" readonly="1" force_save="1" attrs="{'required': [('should_be_required','=',True)]}"  placeholder="Urban/Rural"/>
+                                    <field name="physical_municipality_id" required="1"  options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+
+                                    <field name="use_physical_for_postal_addr" string="Use Physical for Postal?"  class="oe_inline" modifiers="{}" />
+                                    <separator string="Postal Address"/>
+                                    <field name="postal_address1"  required="1" />
+                                    <field name="postal_address2"  required="1" />
+                                    <field name="postal_address3" />
+                                    <field name="postal_code" required="1" />
+
+                                    <field name="postal_suburb_id"  required="1"   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                    <field name="postal_city_id"  required="1"   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                    <field name="postal_province_id"  required="1"  options="{'no_open': True, 'no_quick_create': True}" />
+                                    <field name="postal_urban_rural"  required="1"  />
+                                    <field name="postal_municipality_id" required="1"  options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                </group>
+                                <group string="GPS Cordinates">
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="latitude_degree">
+                                            <b>Latitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="latitude_degree" placeholder="Degree" string="Degree" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_seconds" placeholder="Seconds" string="Seconds" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+
+                                            <button
+                                                string="Get Geolocation"
+                                                name="get_geolocation"
+                                                colspan="2"
+                                                icon="fa-check"
+                                                type="object"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="longitude_degree">
+                                            <b>Longitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="longitude_degree" string="Degree" placeholder="Degree" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_seconds" placeholder="Seconds" string="Seconds" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                        </div>
+                                    </group>
+                                </group>
+								<group >
+									<div>
+										<field name="is_confirmed" required="1" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="is_confirmed" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+                            </page>
+                            <page string="Contact Person" name="contact_addresses" >
+                                <field name="child_ids" context="{'default_type':'contact'}">
+                                    <tree>
+                                        <field name="type" invisible="1"/>
+                                        <field name="title"/>
+										<field name="name"/>
+                                        <field name="function"/>
+                                        <field name="email"/>
+                                        <field name="mobile"/>
+                                    </tree>
+                                    <form string="Contact Persons">
+                                        <sheet>
+                                            <!-- parent_id and type fields needed in attrs in base_address_city module which overwrites
+                                            _fields_view_get() of partner. It would be better to put those fields there but the web client
+                                            dosen't support when a field is displayed several times in the same view.-->
+                                            <field name="type" required="1" invisible="1" widget="radio" options="{'horizontal': true}"/>
+                                            <field name="parent_id" invisible="1"/>
+                                            <hr/>
+                                            <group col="12">
+                                                <group colspan="5">
+                                                    <field name="title" placeholder="e.g. Mr." attrs="{'required': [('type','=', 'contact')]}"/>
+                                                    <field name="first_name" string="First Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                                    <field name="last_name" string="Surname" attrs="{'required' : [('type', '=', 'contact')]}"/>
+										            <field name="name" invisible="1"/>
+                                                    <field name="initials" readonly="1" force_save="1" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                                    <field name="function" string="Designation" placeholder="e.g. Sales Director" attrs="{'required': [('type','=', 'contact')]}"/>
+                                                    <span class="o_form_label o_td_label" name="postal_address_name">
+                                                        <b>Postal Address</b>
+                                                    </span>
+                                                    <div class="o_address_format" string="Postal Address">
+                                                        <field name="postal_address1" placeholder="Postal Address Line 1" class="o_address_street" required="1" />
+                                                        <field name="postal_address2" placeholder="Postal Address Line 2" class="o_address_street" required="1"/>
+                                                        <field name="postal_address3" placeholder="Postal Address Line 3" class="o_address_street" />
+                                                        <field name="postal_code" required="1" placeholder="Postal Code" class="o_address_street"/>
+                                                        <field name="postal_suburb_id" required="1"  placeholder="Postal Suburb"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                                        <field name="postal_city_id" required="1"  placeholder="Physical City" class="o_address_city" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                                        <field name="postal_province_id" required="1" class="o_address_state" placeholder="Postal Province" options="{'no_open': True, 'no_quick_create': True}"/>
+                                                        <field name="postal_urban_rural" required="1" placeholder="Urban/Rural" class="o_address_zip" />
+                                                        <field name="postal_municipality_id" required="1"  placeholder="Postal Municipality"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                                        <!-- <button name="action_postal_addr_map" 
+                                                            string="Map" type="object"
+                                                            icon="fa-map" /> -->
+                                                    </div>
+                                                </group>
+                                                <group colspan="5">
+                                                    <field name="phone" string="Phone number" required="1" widget="phone"/>
+                                                    <field name="fax_number" string="Fax number" widget="phone"/>
+                                                    <field name="mobile" string="Cell Number" required="1"  widget="phone"/>
+                                                    <field name="email" widget="email" required="1" />
+                                                    <field name="company_id" invisible="1"/>
+                                                </group>
+                                                <group colspan="1">
+                                                    <!-- <field name="image_1920" widget="image" class="oe_avatar" nolabel="1" options="{'image_preview': 'image_128'}"/> -->
+                                                </group>
+                                            </group>
+                                            <field name="lang" invisible="True"/>
+                                            <field name="user_id" invisible="True"/>
+                                            <field name="image_128" invisible="1"/>
+                                        </sheet>
+                                    </form>
+                                </field>
+								<group>
+									<div>
+										<field name="confirm_contact" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_contact" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+                            </page>
+                            <page string="CFO">
+								<field name="cfo_ids" nolabel="1" context="{'default_type':'CFO'}">
+									<tree string="CFO Details" delete="false">
+										<field name="title" required="1" options="{'no_create': True, 'no_open': True}" />
+										<field name="first_name" required="1"/>
+                                        <field name="last_name" required="1" />
+										<field name="email" required="1"/>
+										<field name="mobile" string="Cell Number" required="1"/>
+                                        <field name="fax_number" />
+										<field name="email" string="Email" required="1"/>
+									</tree>
+                                    <form string="CFO">
+                                        <sheet>
+                                            <field name="type" required="1" invisible="1" widget="radio" options="{'horizontal': true}"/>
+                                            <field name="parent_id" invisible="1"/>
+                                            <hr/>
+                                            <group col="12">
+                                                <group colspan="5">
+                                                    <field name="title" placeholder="e.g. Mr." required="1" options="{'no_create': True, 'no_open': True}"/>
+                                                    <field name="first_name" string="First Name" required="1"/>
+                                                    <field name="last_name" string="Surname" required="1"/>
+                                                    <field name="initials"  readonly="1" force_save="1"/>
+                                                    <field name="function" string="Designation" placeholder="e.g. Sales Director" required="1"/>
+                                                </group>
+                                                <group colspan="5">
+                                                    <field name="phone" string="Phone number" required="1" widget="phone"/>
+                                                    <field name="fax_number" string="Fax number" widget="phone"/>
+                                                    <field name="mobile" string="Cell Number" required="1"  widget="phone"/>
+                                                    <field name="email" widget="email" required="1" />
+                                                    <field name="company_id" invisible="1"/>
+                                                </group>
+                                            </group>
+                               
+                                        </sheet>
+                                    </form>
+								</field>
+								<group>
+									<div>
+										<field name="confirm_cfo" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="confirm_cfo" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+                        </notebook>
+                        
+                    </sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_organisation_tree" model="ir.ui.view">
+			<field name="name">view.inseta.organisation.tree</field>
+			<field name="model">inseta.organisation</field>
+			<field name="arch" type="xml">
+				<tree string="Contacts" sample="1" multi_edit="1">
+                    <field name="sdl_no"/>
+                    <field name="registration_no"/>
+                    <field name="trade_name" string="Trade Name"/>
+                    <field name="legal_name" string="Legal Name"/>
+                    <field name="phone" class="o_force_ltr" optional="show"/>
+                    <field name="fax_number" optional="show" />
+                    <field name="email" optional="show"/>
+                    <field name="organisation_size_id" />
+                    <field name="levy_number_type_id"  optional="hide" invisible="" />
+                    <field name="levy_status" optional="show"/>
+                    <field name="organisation_status" optional="hide" />
+                    <field name="create_date" />
+                    <field name="state" string="Status"/>
+                    <field name="employer_update_id" optional="hide" />
+                </tree>
+			</field>
+		</record>
+
+		<record id="view_organisation_filter" model="ir.ui.view">
+			<field name="name">Organisation</field>
+			<field name="model">inseta.organisation</field>
+			<field name="arch" type="xml">
+				<search string="Search Organization">
+					<field name="sdl_no" />
+					<field name="legal_name" string="Legal Name"/>
+					<field name="trade_name" string="Trade Name"/>
+					<field name="phone" string="Phone"/>
+					<field name="email" string="Email"/>
+					<field name="fax_number" string="Fax Number"/>
+                    <field name="employer_update_id"/>
+                    <field name="state" />
+                    <separator/>
+					<group expand="0" string="Group By">
+						<filter string="Name" name="group_name" domain="[]" context="{'group_by':'legal_name'}"/>
+						<filter string="Levy/Non Levy" name="group_levy_status" domain="[]" context="{'group_by':'levy_status'}"/>
+						<filter string="Levy Number Type" name="group_levy_number_type"  domain="[]" context="{'group_by':'levy_number_type_id'}"/>
+                        <filter string="Organisation Size" name="group_org_size"  domain="[]" context="{'group_by':'organisation_size_id'}"/>
+                        <filter string="Organisation Status" name="group_org_status"  domain="[]" context="{'group_by':'organisation_status'}"/>
+                        <filter string="State" name="group_state"  domain="[]" context="{'group_by':'state'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<!-- SDF Employer Action. -->
+		<record id="action_organisation" model="ir.actions.act_window">
+			<field name="name">Organisations</field>
+			<field name="res_model">inseta.organisation</field>
+			<field name="view_mode">tree,form,kanban</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to create an organisation.
+				</p>
+			</field>
+		</record>
+
+        <!--Organisation DHET update upload-->
+		<record id="view_employer_update_form" model="ir.ui.view">
+			<field name="name">inseta.levypayer.organisation.update.form</field>
+			<field name="model">inseta.levypayer.organisation.update</field>
+			<field name="arch" type="xml">
+				<form string="Inter Seta Transfer">
+					<header>
+                    </header>
+					<sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(action_organisation)d" type="action" context="{'default_employer_update_id': active_id, 'search_default_employer_update_id': active_id}"  class="oe_stat_button" icon="fa-pencil-square-o">
+                                <field name="employer_update_count" widget="statinfo" string="Employers"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" class="oe_inline" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date_imported" required="1" />
+                                <field name="file" filename="file_name"/>
+                                <span class="o_form_label o_td_label" name="file_name">
+                                    <b>File Name</b>
+                                </span>
+                                <div class="o_address_format" string="Postal Address">
+                                    <field name="file_name" readonly="1"/> 
+                                </div>
+                            </group>
+                            <group/>
+                        </group>
+
+                        <notebook>
+                            <page string="Imported/Updated Organisation">
+                                <field name="organisation_ids" nolabel="1" readonly="1" delete="False" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+		<record id="view_employer_update_tree" model="ir.ui.view">
+			<field name="name">inseta.levypayer.organisation.update.tree</field>
+			<field name="model">inseta.levypayer.organisation.update</field>
+			<field name="arch" type="xml">
+				<tree create="0" export_xlsx="0" string="Employer update" >
+                    <field name="name"/>
+                    <field name="file_name" />
+                    <field name="date_imported"/>
+                    <field name="employer_update_count" string="No. Imported" />
+                    <field name="create_uid" />
+                </tree>
+			</field>
+		</record>
+
+        <!--Inter Seta Transfer-->
+		<record id="view_organization_ist_form" model="ir.ui.view">
+			<field name="name">inseta.organisation.ist.form</field>
+			<field name="model">inseta.organisation.ist</field>
+			<field name="arch" type="xml">
+				<form create="0" string="Inter Seta Transfer">
+					<header>
+                        <button name="action_set_to_draft" 
+							string="Set to Draft" 
+							type="object"
+                            states="approve"
+							groups="base.group_system" />
+
+                    	<button name="%(inseta_skills.organisation_rework_wizard_action)d" 
+							states="draft" 
+							context="{
+                                    'default_comment_type':'Rework', 
+                                    'default_organisationist_id': active_id,
+                                    'default_organisation_id': organisation_id
+                                }" 
+							string="Rework" 
+							type="action" 
+							groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin" />
+
+                        <button name="action_approve" string="Approve" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to approve this Registration?"
+							groups="inseta_skills.group_skills_admin"
+							states="draft,rework,pending_approval" />
+
+                        <button name="action_reject" string="Reject" type="object"
+							confirm="Are you sure you want to reject this Registration?"
+							groups="inseta_skills.group_skills_admin"
+							states="rework" />
+
+						<button name="action_print_approval_letter" 
+							string="Print Approval Letter" 
+							type="object"
+							states="approve" 
+							class="oe_highlight"/> 
+
+						<!-- <button name="action_print_rejection_letter" 
+							string="Print Rejection Letter" 
+							type="object"
+							states="reject" 
+							class="oe_highlight"/>  -->
+
+						<field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="draft,approve"
+							statusbar_colors='{"approve":"green","rework":"red"}'
+							/>
+                    </header>
+					<sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" class="oe_inline" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="organisation_id" required="1"  options="{'no_create': True}"/>
+                                <field name="transfer_type" />
+                                <field name="current_seta_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="new_sic_code_id" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                            <group>
+                                <field name="transferstatus_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="transfer_motivation" />
+                                <field name="new_seta_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="changereason_id" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                        </group>
+                        <group string="Requesting Person" invisible="1">
+                            <group>
+                                <field name="requestingperson_titleid"  options="{'no_create': True, 'no_open': True}"/>
+                                <field name="requestingperson_name"  />
+                                <field name="requestingperson_surname" />
+                                <field name="requestingperson_capacity" />
+                            </group>
+                            <group>
+                                <field name="phone" />
+                                <field name="faxnumber"/>
+                                <field name="email"/>
+                            </group>
+                        </group>
+                        <group colspan="4" invisible="1">
+                            <field name="followup_comment" />
+                        </group>
+                    </sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+                </form>
+            </field>
+        </record>
+
+		<record id="view_organisation_ist_tree" model="ir.ui.view">
+			<field name="name">view.inseta.organisation.ist.tree</field>
+			<field name="model">inseta.organisation.ist</field>
+			<field name="arch" type="xml">
+				<tree export_xlsx="0" string="Inter SETA transfer" >
+                    <field name="name"/>
+                    <field name="organisation_id" />
+                    <field name="transfer_type" />
+                    <field name="current_seta_id" />
+                    <field name="new_seta_id"/>
+                    <field name="state" />
+                    <!-- <separator/>
+					<group expand="0" string="Group By">
+                        <filter string="Trasnfer Type" name="group_transfer_type"  domain="[]" context="{'group_by':'transfer_type'}"/>
+                        <filter string="Current SETA" name="group_curr_seta"  domain="[]" context="{'group_by':'current_seta_id'}"/>
+                        <filter string="New SETA" name="group_new_seta"  domain="[]" context="{'group_by':'new_seta_id'}"/>
+                        <filter string="State" name="group_state"  domain="[]" context="{'group_by':'state'}"/>
+					</group> -->
+                </tree>
+			</field>
+		</record>
+
+		<record id="act_window_organisation_ist" model="ir.actions.act_window">
+			<field name="name">Inter SETA Transfer</field>
+			<field name="res_model">inseta.organisation.ist</field>
+			<field name="view_mode">tree,kanban,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To create Inter SETA Transfer.
+				</p>
+			</field>
+		</record>	
+
+		<record id="act_window_organisation_levypayer" model="ir.actions.act_window">
+			<field name="name">Update Levy Payer Employer</field>
+			<field name="res_model">inseta.levypayer.organisation.update</field>
+			<field name="view_mode">tree,kanban,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Upload DHET File for Levy Payer Employer.
+				</p>
+			</field>
+		</record>	
+
+		<!-- <record id="act_window_organisation_nonlevy" model="ir.actions.act_window">
+			<field name="name">Non-Levy Organisations</field>
+			<field name="res_model">inseta.organisation</field>
+			<field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_organisation_filter" />
+            <field name="domain">[('levy_status','=','Non-Levy Paying'),('state','!=','approve')]</field>
+            <field name="context">{"default_levy_status":"Non-Levy Paying"}</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Register an Non Levy employer.
+				</p>
+			</field>
+		</record> -->
+
+        <record id="ir_action_server_organisation" model="ir.actions.server">
+			<field name="name">Organisations</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_inseta_organisation" />
+            <field name="state">code</field>
+            <field name="code">action=model.get_filtered_record()</field>
+        </record>
+
+        <record id="ir_action_server_nonlevy_organisation" model="ir.actions.server">
+			<field name="name">Non-Levy Organisations</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_inseta_organisation" />
+            <field name="state">code</field>
+            <field name="code">action=model.get_filtered_record_nonlevy()</field>
+        </record>
+
+        <menuitem id="skills_sdf_org_menu" name="Organisation" sequence="2" parent="inseta_skills.skills_sdf_menu"/>
+        <menuitem id="skills_sdf_emp_menu1" name="Organisations" sequence="0" parent="inseta_skills.skills_sdf_org_menu" action="inseta_skills.ir_action_server_organisation"/>
+        <menuitem id="menu_organisation_nonlevy" name="Non-Levy Employer" sequence="3" parent="inseta_skills.skills_sdf_org_menu" action="inseta_skills.ir_action_server_nonlevy_organisation"/>
+        <menuitem id="menu_organisation_levy" name="Update Levy Payer Employer" sequence="1" parent="inseta_skills.skills_sdf_org_menu" action="act_window_organisation_levypayer" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/>
+        <menuitem active="True" id="menu_organisation_ist" name="Inter SETA Transfer" sequence="2" parent="inseta_skills.skills_sdf_org_menu" action="act_window_organisation_ist" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/>        
+</odoo>

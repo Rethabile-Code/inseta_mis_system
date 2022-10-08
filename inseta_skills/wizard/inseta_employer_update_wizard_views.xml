@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="employer_update_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.employer.update.wizard.form</field>
+        <field name="model">inseta.employer.update.wizard</field>
+        <field name="arch" type="xml">
+            <form string="DHET Employer Import">
+                <div class="oe_title">
+                    <h1 >Import DHET File</h1>
+                </div>
+                <div class='alert alert-info' role="alert">
+                    Allowed file types: .SDL, .sdl
+                </div>
+                <newline/>
+                <group>
+                    <group>
+                        <field name="date_imported" required="1" />
+                        <field name="file" filename="file_name"/>
+                        <field name="file_name" readonly="1" force_save="1"/> 
+                    </group>
+                    <group></group>
+                </group>
+                <div class="oe_clear"/>
+                <separator colspan="10" />
+                <footer>
+                    <button special="cancel" string="Close" />
+                    <button name="action_import" type="object" class="oe_highlight" string="Import Data" />
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="employer_update_wizard_action" model="ir.actions.act_window">
+        <field name="name">Employer Update Wizard</field>
+        <field name="res_model">inseta.employer.update.wizard</field>
+        <field name="view_mode">form</field>
+        <!-- <field name="view_id" ref="wspatr_validate_wizard_view_form"/> -->
+        <field name="target">new</field>
+    </record>
+</odoo>

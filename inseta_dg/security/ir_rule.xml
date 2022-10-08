@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <!--SDF View only dgapplication records that he is the user or he created or belongs to his organisation-->
+    <record id="rule_dgapplication_own_document" model="ir.rule">
+        <field name="name">SDF Rule DG Application: View Own Documents</field>
+        <field name="model_id" ref="inseta_dg.model_inseta_dgapplication"/>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True" /> 
+        <field name="perm_write" eval="False" /> 
+        <field name="perm_create" eval="False" /> 
+        <field name="perm_unlink" eval="False" /> 
+        <field name="domain_force">['|','|',
+            ('create_uid','=', user.id),
+            ('organisation_id', 'in', [o.organisation_id.id for o in user.sdf_id.organisation_ids]),
+            ('organisation_id', 'in', [o.id for o in user.allowed_organisation_ids])]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_sdf_user')),(4,ref('inseta_skills.group_sdf_secondary'))]"/>
+    </record>
+
+    <record model="ir.rule" id="rule_dgapplication_all_document">
+        <field name="name">Access all DG Applications</field>
+        <field name="model_id" ref="inseta_dg.model_inseta_dgapplication"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[
+            (4,ref('inseta_skills.group_skills_specialist')), 
+            (4,ref('inseta_skills.group_skills_admin')),
+            (4,ref('inseta_skills.group_skills_manager')),
+            (4,ref('inseta_dg.group_ceo')), 
+            (4,ref('inseta_dg.group_coo')), 
+            (4,ref('inseta_dg.group_pmo_manager')),
+            (4,ref('inseta_dg.group_pmo_admin')),
+            (4,ref('inseta_dg.group_adjudication_committee')),
+            (4,ref('inseta_dg.group_evaluation_committee')),
+        ]"/> 
+    </record>
+
+    <!--HEI-->
+    <record id="rule_dgapplication_hei_own_document" model="ir.rule">
+        <field name="name">SDF Rule HEI Rep: View Own DG applications</field>
+        <field name="model_id" ref="inseta_dg.model_inseta_dgapplication"/>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True" /> 
+        <field name="perm_write" eval="False" /> 
+        <field name="perm_create" eval="False" /> 
+        <field name="perm_unlink" eval="False" /> 
+        <field name="domain_force">['|',
+            ('create_uid','=', user.id),
+            ('organisation_id', '=', user.hei_rep_id.organisation_id.id)]
+        </field>
+        <field name="groups" eval="[(4,ref('inseta_dg.group_hei_representative')),]"/>
+    </record>
+
+    <record id="res_rule_hei" model="ir.rule"> 
+        <field name="name">HEI Rule: View Own HEI Rep record</field>
+        <field name="model_id" ref="inseta_dg.model_mis_hei_representative"/>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True" /> 
+        <field name="perm_write" eval="False" /> 
+        <field name="perm_create" eval="False" /> 
+        <field name="perm_unlink" eval="False" /> 
+        <field name="domain_force">['|',('user_id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(4,ref('inseta_dg.group_hei_representative')),]"/>
+    </record>
+
+    <record id="res_rule_heirep_all" model="ir.rule"> 
+        <field name="name">HEI Rule: View ALL HEI Rep records</field>
+        <field name="model_id" ref="inseta_dg.model_mis_hei_representative"/>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True" /> 
+        <field name="perm_write" eval="False" /> 
+        <field name="perm_create" eval="False" /> 
+        <field name="perm_unlink" eval="False" /> 
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_dg.group_ceo')), (4,ref('inseta_dg.group_pmo_manager')),(4,ref('inseta_dg.group_pmo_admin')), (4,ref('inseta_dg.group_dg_view_only'))]"/>
+    </record>
+
+    <record id="res_rule_hei_org" model="ir.rule"> 
+        <field name="name">HEI Rule: View Own HEI organisation</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_organisation"/>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True" /> 
+        <field name="perm_write" eval="False" /> 
+        <field name="perm_create" eval="False" /> 
+        <field name="perm_unlink" eval="False" /> 
+        <field name="domain_force">[('id','=', user.hei_rep_id.organisation_id.id)]</field>
+        <field name="groups" eval="[(4,ref('inseta_dg.group_hei_representative')),]"/>
+    </record>
+
+    <record model="ir.rule" id="rule_organisation_all_org">
+        <field name="name">HEI Rule: View All HEI organisation</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_organisation"/>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True" /> 
+        <field name="perm_write" eval="False" /> 
+        <field name="perm_create" eval="False" /> 
+        <field name="perm_unlink" eval="False" /> 
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_dg.group_ceo')), (4,ref('inseta_dg.group_pmo_manager')),(4,ref('inseta_dg.group_pmo_admin'))]"/>
+    </record>
+
+
+    <!-- <record model="ir.rule" id="rule_wspatr_all_document">
+        <field name="name">PMO: Access all WSP/ATR</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_dg.group_ceo')), (4,ref('inseta_dg.group_pmo_manager')),(4,ref('inseta_dg.group_pmo_admin'))]"/>
+    </record>
+
+    <record model="ir.rule" id="rule_organisation_all_document">
+        <field name="name">PMO: Access all organisation</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_organisation"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_dg.group_ceo')), (4,ref('inseta_dg.group_pmo_manager')),(4,ref('inseta_dg.group_pmo_admin'))]"/>
+    </record> -->
+
+</odoo>

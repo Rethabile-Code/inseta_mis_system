@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_lpro_id" model="ir.module.category">
+        <field name="name">Learning Programme</field>
+        <field name="description">Learning Programme </field>
+        <field name="sequence">35</field>
+    </record>
+
+    <record id="group_learning_programme_user_id" model="res.groups">
+        <field name="name">Learner</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+        <!-- <field name="users" eval="[(4, ref('inseta_etqa.group_provider_access_user'))]"/> -->
+    </record>
+
+
+    <record id="group_learning_specialist_id" model="res.groups">
+        <field name="name">Learnership Specialist</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+
+    <record id="group_learning_manager_id" model="res.groups">
+        <field name="name">Learnership manager</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_learning_programme_cfo_id" model="res.groups">
+        <field name="name">Learning CFO</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+
+    <record id="group_learning_programme_ceo_id" model="res.groups">
+        <field name="name">CEO</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_lp_admin_id" model="res.groups">
+        <field name="name">LP Administrator</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+    </record>
+
+    <record id="group_intern_admin_id" model="res.groups">
+        <field name="name">Internship Administrator</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+    </record>
+
+    <record id="group_programme_coordinator_id" model="res.groups">
+        <field name="name">Programme Coordinator</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_bursary_administrator_id" model="res.groups">
+        <field name="name">Bursary Administrator</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+    </record>
+
+    <record id="group_user_passsword_administrator_id" model="res.groups">
+        <field name="name">User Password Maintenance</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+    </record>
+
+    <record id="group_smme_support_id" model="res.groups">
+        <field name="name">SMME Support</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+    </record>
+
+    <record id="group_financial_service_support_id" model="res.groups">
+        <field name="name">Financial Services Board</field>
+        <field name="category_id" ref="inseta_learning_programme.module_category_lpro_id"/>
+    </record>
+
+</odoo>

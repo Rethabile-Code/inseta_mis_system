@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance1">
+            <field name="name">AgriSETA</field>
+            <field name="code">694</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance2">
+            <field name="name">BANKSETA</field>
+            <field name="code">557</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance3">
+            <field name="name">CATHSSETA</field>
+            <field name="code">755</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance4">
+            <field name="name">CETA</field>
+            <field name="code">577</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance5">
+            <field name="name">CHE</field>
+            <field name="code">621</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance6">
+            <field name="name">CHIETA</field>
+            <field name="code">559</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance7">
+            <field name="name">ETDP</field>
+            <field name="code">581</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance8">
+            <field name="name">FASSET</field>
+            <field name="code">585</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance9">
+            <field name="name">FETMIS</field>
+            <field name="code">N/A</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance10">
+            <field name="name">FIETA</field>
+            <field name="code">589</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance11">
+            <field name="name">FOODBEV</field>
+            <field name="code">587</field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance12">
+            <field name="name">FPMSETA</field>
+            <field name="code">754</field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance13">
+            <field name="name">HWSETA</field>
+            <field name="code">591</field>
+            <field name="legacy_system_id">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance14">
+            <field name="name">IEB</field>
+            <field name="code">N/A</field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance15">
+            <field name="name">INSETA</field>
+            <field name="code">595</field>
+            <field name="legacy_system_id">15</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance16">
+            <field name="name">HPCSA</field>
+            <field name="code">692</field>
+            <field name="legacy_system_id">16</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance17">
+            <field name="name">LGSETA</field>
+            <field name="code">597</field>
+            <field name="legacy_system_id">17</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance18">
+            <field name="name">MERSETA</field>
+            <field name="code">599</field>
+            <field name="legacy_system_id">18</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance19">
+            <field name="name">MICT</field>
+            <field name="code">756</field>
+            <field name="legacy_system_id">19</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance20">
+            <field name="name">SAICA</field>
+            <field name="code">651</field>
+            <field name="legacy_system_id">20</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance21">
+            <field name="name">CTFL</field>
+            <field name="code">561</field>
+            <field name="legacy_system_id">47</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance22">
+            <field name="name">DHET</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">48</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance23">
+            <field name="name">DHET SETA-support</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">49</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance24">
+            <field name="name">DIDTETA</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">50</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance25">
+            <field name="name">ESETA</field>
+            <field name="code">583</field>
+            <field name="legacy_system_id">51</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance26">
+            <field name="name">EWSETA</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">53</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance27">
+            <field name="name">Indlela NAMB</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">54</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance28">
+            <field name="name">ISETT</field>
+            <field name="code">593</field>
+            <field name="legacy_system_id">55</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance29">
+            <field name="name">MAPPP-SETA</field>
+            <field name="code">601</field>
+            <field name="legacy_system_id">56</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance30">
+            <field name="name">MQA</field>
+            <field name="code">629</field>
+            <field name="legacy_system_id">57</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance31">
+            <field name="name">PAB</field>
+            <field name="code">637</field>
+            <field name="legacy_system_id">58</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance32">
+            <field name="name">PSETA</field>
+            <field name="code">607</field>
+            <field name="legacy_system_id">59</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance33">
+            <field name="name">QCTO</field>
+            <field name="code"></field>
+            <field name="legacy_system_id">60</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance34">
+            <field name="name">SABPP</field>
+            <field name="code">639</field>
+            <field name="legacy_system_id">61</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance35">
+            <field name="name">SANC</field>
+            <field name="code">657</field>
+            <field name="legacy_system_id">62</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance36">
+            <field name="name">SAPC</field>
+            <field name="code">631</field>
+            <field name="legacy_system_id">63</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance37">
+            <field name="name">SASSETA</field>
+            <field name="code">695</field>
+            <field name="legacy_system_id">64</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance38">
+            <field name="name">SERVICES SETA</field>
+            <field name="code">611</field>
+            <field name="legacy_system_id">65</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance39">
+            <field name="name">TETA</field>
+            <field name="code">615</field>
+            <field name="legacy_system_id">66</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance40">
+            <field name="name">THETA</field>
+            <field name="code">613</field>
+            <field name="legacy_system_id">67</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance41">
+            <field name="name">UMALUSI</field>
+            <field name="code">541</field>
+            <field name="legacy_system_id">68</field>
+            <field name="active">True</field>
+        </record>
+        <record model="inseta.quality.assurance" id="data_inseta_quality_assurance42">
+            <field name="name">W&amp;RSETA</field>
+            <field name="code">617</field>
+            <field name="legacy_system_id">69</field>
+            <field name="active">True</field>
+        </record> 
+
+    </data>
+</odoo>

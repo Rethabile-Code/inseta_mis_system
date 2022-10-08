@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_id_inseta_utils,access_name_inseta_utils,model_inseta_utils,,1,1,1,0
+access_id_inseta_confirm_dialog,access_name_inseta_confirm_dialog,inseta_utils.model_inseta_confirm_dialog,,1,1,1,1

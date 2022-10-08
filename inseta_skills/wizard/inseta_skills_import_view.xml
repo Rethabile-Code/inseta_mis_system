@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="import_skills_import_form_view" model="ir.ui.view">
+            <field name="name">import_skill_record.wizard</field>
+            <field name="model">import_skill_record.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Import ">
+                    <header>
+                        Import 
+                    </header>
+                    <group>
+                        <field name="data_file" filename="name"/>
+                    </group>
+                    <group>
+                        <field name="filename" invisible="1"/> 
+                        <field name="select_file" invisible="0"/> 
+                        <field name="import_type" required="1"/> 
+                    </group>
+
+                    <footer>
+                        <button name="import_button" string="Import" type="object"  class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_wizard_import_skills_record" model="ir.actions.act_window">
+            <field name="name">Import</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">import_skill_record.wizard</field>
+
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- <menuitem id ="menu_import_skills_records" name="Imports" sequence="4" parent="inseta_skills.skills_configuration_menu"/>
+        <menuitem id ="menu_import_sub_skills_records" name="Import Records" sequence="1" parent="inseta_skills.menu_import_skills_records" action="action_wizard_import_skills_record"/> -->
+
+    </data>
+</odoo>
