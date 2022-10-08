@@ -1,6 +1,5 @@
 
 from dateutil import tz
-
 from odoo import fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval, datetime

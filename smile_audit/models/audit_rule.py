@@ -6,7 +6,6 @@ from ..tools import audit_decorator
 
 _logger = logging.getLogger(__package__)
 
-
 class AuditRule(models.Model):
     _name = 'audit.rule'
     _description = 'Audit Rule'

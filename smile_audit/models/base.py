@@ -1,7 +1,5 @@
 from odoo import api, fields, models
 from odoo.tools.safe_eval import datetime, safe_eval
-
-
 class Base(models.AbstractModel):
     _inherit = "base"
 

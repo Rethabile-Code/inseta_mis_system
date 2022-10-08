@@ -6,7 +6,7 @@
     "category": "Tools",
     "author": "Nkululeko",
     "description": """
-This module allows Inseta administrators to  track all the user actions on the system.
+This module allows Inseta administrators to  track all the user actions on this system.
     """,
     "depends": [
         'base',
