@@ -1,0 +1,606 @@
+<odoo>
+  <data>
+    <!-- SkILLS CERTIFICATE -->
+    <record id="action_report_skill_learnership_certificate" model="ir.actions.report">
+        <field name="name">Skill Programmes certificate</field>
+        <field name="model">inseta.skill.learnership</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_etqa.print_skill_certificate_template</field>
+        <field name="report_file">inseta_etqa.print_skill_certificate_template</field>
+        <field name="binding_model_id" ref="inseta_etqa.model_inseta_skill_learnership"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('inseta_etqa.group_etqa_evaluating_manager'))]"/>
+    </record>
+
+    <template id="print_skill_certificate_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <style>
+                            body {
+                                line-height: 180%;
+                                font-size: 18px;
+                                font-family: 'EB Garamond';
+                            }
+
+                            page {
+                                margin-bottom: -30px;
+                            }
+
+                            p {
+                            text-align: justify;
+                                margin: 0;
+                            }
+
+                            .abc {
+                                    margin-left: 40px;
+                                    list-style-type: lower-alpha;
+                                    }
+
+                            li {
+                            text-align: justify;
+                                padding-top: 2%;
+                                padding-bottom: 20px;
+                            }
+
+                            .signleft {
+                                text-align: left;
+                                margin-right: 10px;
+                            }
+
+                            .signright {
+                                text-align: right;
+                                margin-left: 10px;
+                                margin-top:-40px;
+                            }
+                            .signleft2 {
+                                text-align: left;
+                                margin-left: 200px;
+                            }
+
+                            .signright2 {
+                                text-align: right;
+                                margin-right: 200px;
+                                margin-top:-30px;
+                            }
+                        </style>
+                        <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                        <hr/> 
+                        
+                        <br/><br/><br/>
+                        <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE OF ACHIEVEMENT</strong></h1>
+                        <br/><br/><br/>
+                        <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="o.learner_id.name"/></strong>.</h2> </p>
+                        <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="o.learner_id.id_no"/></strong></h3> </p>
+                        <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                            has satisfy the requirements<br/> for the successful completion of. 
+                        </p>
+
+                        <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="o.skill_programme_id.name"/> </p><br/>
+                        <div>
+                            <div class="signleft2">
+                                <strong>at.<span t-field="o.skill_programme_id.nqflevel_id"/> </strong><br/>
+                            </div>
+                            <div class="signright2">
+                                <strong>NLRD No. 
+                                </strong><br/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="signleft">
+                                _______________________<br/>
+                                CHIEF EXECUTIVE OFFICER<br/>
+                            </div>
+                            <div class="signright">
+                                _______________________<br/>
+                                Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="signleft">
+                                <h6>Provider Accreditation Number: <span t-field="o.provider_id.provider_accreditation_number"/> </h6><br/>
+                            </div>
+                            <div class="signright">
+                                <h6>Name: <span t-field="o.provider_id.name"/> </h6><br/>
+                            </div>
+
+                        </div> 
+                        <p/><p/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <!-- learner CERTIFICATE -->
+    <!-- <record id="action_report_learner_learnership_certificate" model="ir.actions.report">
+        <field name="name">learnership Programmes certificate</field>
+        <field name="model">inseta.learner.learnership</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_etqa.print_learnership_certificate_template</field>
+        <field name="report_file">inseta_etqa.print_learnership_certificate_template</field>
+        <field name="binding_model_id" ref="inseta_etqa.model_inseta_learner_learnership"/>
+        <field name="binding_type">report</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="inseta_etqa.paperformat_moderator_letter"/>
+    </record> -->
+
+    <report 
+        id="action_report_learner_learnership_certificate"
+        model="inseta.learner.learnership"
+        string="Print Certificate"
+        report_type="qweb-pdf"
+        name="inseta_etqa.print_learnership_certificate_template"
+        file="inseta_etqa.print_learnership_certificate_template"
+        menu="True"
+        />
+
+    <template id="print_learnership_certificate_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <style>
+                            body {
+                                line-height: 180%;
+                                font-size: 18px;
+                                font-family: 'EB Garamond';
+                            }
+
+                            page {
+                                margin-bottom: -30px;
+                            }
+
+                            p {
+                            text-align: justify;
+                                margin: 0;
+                            }
+
+                            .abc {
+                                    margin-left: 40px;
+                                    list-style-type: lower-alpha;
+                                    }
+
+                            li {
+                            text-align: justify;
+                                padding-top: 2%;
+                                padding-bottom: 20px;
+                            }
+
+                            .signleft {
+                                text-align: left;
+                                margin-right: 10px;
+                            }
+
+                            .signright {
+                                text-align: right;
+                                margin-left: 10px;
+                                margin-top:-40px;
+                            }
+                            .signleft2 {
+                                text-align: left;
+                                margin-left: 200px;
+                            }
+
+                            .signright2 {
+                                text-align: right;
+                                margin-right: 200px;
+                                margin-top:-30px;
+                            }
+                        </style>
+                        <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                        <hr/> 
+                        
+                        <br/><br/><br/><br/>
+                        <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE OF ACHIEVEMENT</strong></h1>
+                        <br/><br/><br/>
+                        <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="o.learner_id.name"/></strong>.</h2> </p>
+                        <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="o.learner_id.id_no"/></strong></h3> </p>
+                        <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                            has satisfy the requirements<br/> for the successful completion of. 
+                        </p>
+
+                        <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="o.learner_programme_id.name"/> </p><br/>
+                        <div>
+                            <div class="signleft2">
+                                <strong>at.<span t-field="o.learner_programme_id.nqflevel_id"/> </strong><br/>
+                            </div>
+                            <div class="signright2">
+                                <strong>NLRD No. 
+                                </strong><br/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="signleft">
+                                _______________________<br/>
+                                CHIEF EXECUTIVE OFFICER<br/>
+                            </div>
+                            <div class="signright">
+                                _______________________<br/>
+                                Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="signleft">
+                                <h6>Provider Accreditation Number: <span t-field="o.provider_id.provider_accreditation_number"/> </h6><br/>
+                            </div>
+                            <div class="signright">
+                                <h6>Name: <span t-field="o.provider_id.name"/> </h6><br/>
+                            </div>
+
+                        </div> 
+                        <p/><p/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- qualification CERTIFICATE -->
+    <record id="action_report_qual_learnership_certificate" model="ir.actions.report">
+        <field name="name">Qualification Programmes certificate</field>
+        <field name="model">inseta.qualification.learnership</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_etqa.print_qualification_learnership_certificate_template</field>
+        <field name="report_file">inseta_etqa.print_qualification_learnership_certificate_template</field>
+        <field name="binding_model_id" ref="inseta_etqa.model_inseta_qualification_learnership"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('inseta_etqa.group_etqa_evaluating_manager'))]"/>
+
+    </record>
+
+    <template id="print_qualification_learnership_certificate_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <style>
+                            body {
+                                line-height: 180%;
+                                font-size: 18px;
+                                font-family: 'EB Garamond';
+                            }
+
+                            page {
+                                margin-bottom: -30px;
+                            }
+
+                            p {
+                            text-align: justify;
+                                margin: 0;
+                            }
+
+                            .abc {
+                                    margin-left: 40px;
+                                    list-style-type: lower-alpha;
+                                    }
+
+                            li {
+                            text-align: justify;
+                                padding-top: 2%;
+                                padding-bottom: 20px;
+                            }
+
+                            .signleft {
+                                text-align: left;
+                                margin-right: 10px;
+                            }
+
+                            .signright {
+                                text-align: right;
+                                margin-left: 10px;
+                                margin-top:-40px;
+                            }
+                            .signleft2 {
+                                text-align: left;
+                                margin-left: 200px;
+                            }
+
+                            .signright2 {
+                                text-align: right;
+                                margin-right: 200px;
+                                margin-top:-30px;
+                            }
+
+                             .letterP4 {    
+                            -webkit-transform: rotate(-90deg); 
+                                -moz-transform: rotate(-90deg); 
+                                -ms-transform: rotate(-90deg); 
+                                -o-transform: rotate(-90deg); 
+                                    transform: rotate(-90deg);
+                                        color: #000;
+                                        font-size: 12px;                
+                                        height: 20px;
+                                        width: 200px;
+                                
+                                text-align:right;
+                                float: right; 
+                                vertical-align:top;
+                            
+                                
+                            }
+                        </style>
+                        <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                        <hr/> 
+                        
+                        <br/><br/><br/>
+                        <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE OF ACHIEVEMENT</strong></h1>
+                        <br/><br/><br/>
+                        <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="o.learner_id.name"/></strong>.</h2> </p>
+                        <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="o.learner_id.id_no"/></strong></h3> </p>
+                        <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                            has satisfy the requirements<br/> for the successful completion of. 
+                        </p>
+                        <h6 class="letterP4"><t t-if="o.certificate_issued == True">Reprint</t> No: </h6>
+
+                        <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="o.qualification_id.name"/> </p><br/>
+                        <div>
+                            <div class="signleft2">
+                                <strong>at.<span t-field="o.qualification_id.nqflevel_id"/> </strong><br/>
+                            </div>
+                            <div class="signright2">
+                                <strong>NLRD No. 
+                                </strong><br/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="signleft">
+                                _______________________<br/>
+                                CHIEF EXECUTIVE OFFICER<br/>
+                            </div>
+                            <div class="signright">
+                                _______________________<br/>
+                                Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="signleft">
+                                <h6>Provider Accreditation Number: <span t-field="o.provider_id.provider_accreditation_number"/> </h6><br/>
+                            </div>
+                            <div class="signright">
+                                <h6>Name: <span t-field="o.provider_id.name"/> </h6><br/>
+                            </div>
+
+                        </div> 
+                        <p/><p/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- unit_standard CERTIFICATE -->
+    <record id="action_report_unit_standard_learnership_certificate" model="ir.actions.report">
+        <field name="name">Unit standard Programmes certificate</field>
+        <field name="model">inseta.unit_standard.learnership</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_etqa.print_unit_standard_learnership_certificate_template</field>
+        <field name="report_file">inseta_etqa.print_unit_standard_learnership_certificate_template</field>
+        <field name="binding_model_id" ref="inseta_etqa.model_inseta_unit_standard_learnership"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('inseta_etqa.group_etqa_evaluating_manager'))]"/>
+    </record>
+
+    <template id="print_unit_standard_learnership_certificate_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <style>
+                            body {
+                                line-height: 180%;
+                                font-size: 18px;
+                                font-family: 'EB Garamond';
+                            }
+
+                            page {
+                                margin-bottom: -30px;
+                            }
+
+                            p {
+                            text-align: justify;
+                                margin: 0;
+                            }
+
+                            .abc {
+                                    margin-left: 40px;
+                                    list-style-type: lower-alpha;
+                                    }
+
+                            li {
+                            text-align: justify;
+                                padding-top: 2%;
+                                padding-bottom: 20px;
+                            }
+
+                            .signleft {
+                                text-align: left;
+                                margin-right: 10px;
+                            }
+
+                            .signright {
+                                text-align: right;
+                                margin-left: 10px;
+                                margin-top:-40px;
+                            }
+                            .signleft2 {
+                                text-align: left;
+                                margin-left: 200px;
+                            }
+
+                            .signright2 {
+                                text-align: right;
+                                margin-right: 200px;
+                                margin-top:-30px;
+                            }
+                        </style>
+                        <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                        <hr/> 
+                        
+                        <br/><br/><br/>
+                        <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE OF ACHIEVEMENT</strong></h1>
+                        <br/><br/><br/>
+                        <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="o.learner_id.name"/></strong>.</h2> </p>
+                        <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="o.learner_id.id_no"/></strong></h3> </p>
+                        <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                            has satisfy the requirements<br/> for the successful completion of. 
+                        </p>
+
+                        <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="o.unit_standard_id.name"/> </p><br/>
+                        <div>
+                            <div class="signleft2">
+                                <strong>at.<span t-field="o.unit_standard_id.nqflevel_id"/> </strong><br/>
+                            </div>
+                            <div class="signright2">
+                                <strong>NLRD No. 
+                                </strong><br/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="signleft">
+                                _______________________<br/>
+                                CHIEF EXECUTIVE OFFICER<br/>
+                            </div>
+                            <div class="signright">
+                                _______________________<br/>
+                                Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="signleft">
+                                <h6>Provider Accreditation Number: <span t-field="o.provider_id.provider_accreditation_number"/> </h6><br/>
+                            </div>
+                            <div class="signright">
+                                <h6>Name: <span t-field="o.provider_id.name"/> </h6><br/>
+                            </div>
+
+                        </div> 
+                        <p/><p/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+ 
+    <!-- bursary CERTIFICATE -->
+    <record id="action_report_bursary_learnership_certificate" model="ir.actions.report">
+        <field name="name">Bursary Programmes certificate</field>
+        <field name="model">inseta.bursary.learnership</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_etqa.print_bursary_learnership_certificate_template</field>
+        <field name="report_file">inseta_etqa.print_bursary_learnership_certificate_template</field>
+        <field name="binding_model_id" ref="inseta_etqa.model_inseta_bursary_learnership"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('inseta_etqa.group_etqa_evaluating_manager'))]"/>
+    </record>
+
+    <template id="print_bursary_learnership_certificate_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <style>
+                            body {
+                                line-height: 180%;
+                                font-size: 18px;
+                                font-family: 'EB Garamond';
+                            }
+
+                            page {
+                                margin-bottom: -30px;
+                            }
+
+                            p {
+                            text-align: justify;
+                                margin: 0;
+                            }
+
+                            .abc {
+                                    margin-left: 40px;
+                                    list-style-type: lower-alpha;
+                                    }
+
+                            li {
+                            text-align: justify;
+                                padding-top: 2%;
+                                padding-bottom: 20px;
+                            }
+
+                            .signleft {
+                                text-align: left;
+                                margin-right: 10px;
+                            }
+
+                            .signright {
+                                text-align: right;
+                                margin-left: 10px;
+                                margin-top:-40px;
+                            }
+                            .signleft2 {
+                                text-align: left;
+                                margin-left: 200px;
+                            }
+
+                            .signright2 {
+                                text-align: right;
+                                margin-right: 200px;
+                                margin-top:-30px;
+                            }
+                        </style>
+                        <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                        <hr/> 
+                        
+                        <br/><br/><br/>
+                        <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE OF ACHIEVEMENT</strong></h1>
+                        <br/><br/><br/>
+                        <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="o.learner_id.name"/></strong>.</h2> </p>
+                        <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="o.learner_id.id_no"/></strong></h3> </p>
+                        <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                            has satisfy the requirements<br/> for the successful completion of. 
+                        </p>
+
+                        <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="o.bursary_type_id.name"/> </p><br/>
+                        <div>
+                            <div class="signleft2">
+                                <strong>at.<span t-field="o.qualification_id.nqflevel_id"/> </strong><br/>
+                            </div>
+                            <div class="signright2">
+                                <strong>NLRD No. 
+                                </strong><br/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="signleft">
+                                _______________________<br/>
+                                CHIEF EXECUTIVE OFFICER<br/>
+                            </div>
+                            <div class="signright">
+                                _______________________<br/>
+                                Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="signleft">
+                                <h6>Provider Accreditation Number: <span t-field="o.provider_id.provider_accreditation_number"/> </h6><br/>
+                            </div>
+                            <div class="signright">
+                                <h6>Name: <span t-field="o.provider_id.name"/> </h6><br/>
+                            </div>
+
+                        </div> 
+                        <p/><p/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+ 
+  </data>
+</odoo>

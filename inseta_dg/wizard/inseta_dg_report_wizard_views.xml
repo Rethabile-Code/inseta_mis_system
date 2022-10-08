@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+    <record id="wizard_dg_report_form" model="ir.ui.view">
+        <field name="name">wizard.dg.report.filter.form</field>
+        <field name="model">wizard.dg.report.filter</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="DG Report Filter">
+                <group>
+                    <group>
+                        <field name="report_type" required="1"/>
+                        <field name="financial_year_id" required="1" string="Financial Year" options="{'no_create':True, 'no_open':True}" />
+                        <field name="dgfundingwindow_id" options="{'no_create':True, 'no_open':True}"  attrs="{'invisible':[('report_type','=','DGEC')]}"/>
+                        <field name="dgtype_id" options="{'no_create':True, 'no_open':True}"  attrs="{'invisible':[('report_type','in',('DGEC','all_learnership') )]}" />
+                        <field name="state" string="DG Application State" attrs="{'invisible':[('report_type','in',('DGEC','all_learnership') )]}" />
+                        <field name="state2" string="DG Application State" attrs="{'invisible':[('report_type','!=','DGEC')],'required':[('report_type','=','DGEC')]}" />
+                    </group>
+                    <group/>
+                </group>
+        
+                <footer>
+                    <button name="action_view_lines" string="View Lines" type="object" class="btn-primary" />
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_all_learnership_tree">
+        <field name="name">wizard.dg.report.line.learnership</field>
+        <field name="model">wizard.dg.report.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" string="DG Learnership Applications">
+                <field name="financial_year_id" />
+                <field name="organisation_id" string="Employer Name" />
+                <field name="sdl_no" string="SDL Number"/>
+                <field name="organisation_size_id" string="Company Size" />
+                <field name="submitted_date" />
+                <field name="state" string="Application Status"/>
+                <field name="socio_economic_status_id" />
+                <field name="fundingtype_id" />
+                <field name="province_id"/>
+                <!-- <field name="provider_name" /> -->
+                <field name="learnership_id" />
+                <field name="learnership_code" />
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="disabled" />
+                <field name="no_learners" />
+                <field name="total_learners" />
+                <field name="firsttime_applicant" />
+                <field name="contact_person" />
+                <field name="contact_person_email" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dgec_recommendation_line_tree">
+        <field name="name">wizard.dg.report.line.tree</field>
+        <field name="model">wizard.dg.report.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" string="DGEC Recommendation">
+                <field name="currency_id" invisible="1"/>
+                <field name="sn"/>
+                <field name="legal_name" string="Employer Name" />
+                <field name="sdl_no" string="SDL Number"/>
+                <field name="organisation_size_id" string="Company Size" />
+                <field name="province_id" string="Province"/>
+                <field name="curr_fy_no_employees" string="No of Employees in the company" />
+                <field name="no_learners_rural" string="Rural Learnerships" />
+                <field name="no_rural_recommended" string="Rural Learnerships Recomm. No" />
+                <field name="amount_learners_rural_recommended" string="Rural Learnerships Recomm. Amount" />
+
+                <field name="no_disabled_rural" string="Rural Learnerships(PwD)"/>
+                <field name="no_disabled_rural_recommended" string="Rural Learnerships(PwD) Recomm.No." />
+                <field name="amount_disabled_rural_recommended" string="Rural Learnerships(PwD) Recomm. Amount"/>
+                <field name="total_youth" string="Learnerships Youth" />
+                <field name="total_youth_recommended" string="Learnerships Youth Recomm. No." />
+                <field name="amount_youth_recommended" string="Learnerships Youth Recomm. Amount" />
+                <field name="total_pwd" string="Learnerships Youth (PwD)" />
+                <field name="total_pwd_recommended" string="Learnerships Youth (PwD) Recomm.No." />
+                <field name="amount_pwd_recommended" string="Learnerships Youth (PwD) Recomm. Amount" />
+
+                <field name="total_workers" string="Learnerships Workers" />
+                <field name="total_workers_recommended" string="Learnerships Workers Recomm. No." />
+                <field name="amount_workers_recommended" string="Learnerships Workers Recomm. Amount" />
+
+                <field name="total_itmatric" string="Internship (Matric +)" />
+                <field name="total_itmatric_recommended" string="Internship (Matric +) Recomm. No." />
+                <field name="amount_itmatric_recommended" string="Internship (Matric +) Recomm. Amount" />
+
+                <field name="total_itdegree" string="Internship (Diploma/Degreee)" />
+                <field name="total_itdegree_recommended" string="Internship (Diploma/Degreee) Recomm.No." />
+                <field name="amount_itdegree_recommended" string="Internship (Diploma/Degreee) Recomm. Amount" />
+
+
+                <field name="total_skillsprogramme" string="Skills Programs Workers" />
+                <field name="total_skillsprogramme_recommended" string="Skills Programs Workers Recomm. No."/>
+                <field name="amount_skillsprogramme_recommended" string="Skills Programs Workers Recomm. Amount" />
+
+                <field name="total_bursary_workers" string="Bursaries Workers" />
+                <field name="total_bursary_workers_recommended" string="Bursaries Workers Recomm. No."/>
+                <field name="amount_bursary_workers_recommended" string="Bursaries Workers Recomm. Amount" />
+
+                <field name="total_wiltvet" string="WIL TVET" />
+                <field name="total_wiltvet_recommended" string="WIL TVET Recomm. No."/>
+                <field name="amount_wiltvet_recommended" string="WIL TVET Recomm. Amount." />
+
+                <field name="total_unemployed" string="Total Number Unemployed"/>
+                <field name="total_amount_unemployed" string="Total Amount Unemployed" />
+
+                <field name="total_employed" string="Total Number Employed"/>
+                <field name="total_amount_employed" string="Total Amount Employed" />
+                <field name="total_recommended_employer" string="Overall Total Recommended to Employer" />
+
+                <field name="dgec_comments" string="DGEC Comments"/>
+                <field name="has_submitted_wspatr" string="WSP/ATR submitted (YES/NO)"/>
+                <field name="is_fsca_compliant" string="FSCA Compliant (Yes/No)"/>
+                <field name="comments" string="Comments"/>
+                <field name="state" string="DG Application State"/>
+            </tree>
+        </field>
+    </record>
+    
+
+    <record id="action_dg_report" model="ir.actions.act_window">
+        <field name="name">DG Report</field>
+        <field name="res_model">wizard.dg.report.filter</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+        
+
+    <menuitem id="menu_reports" 
+        name="Reports" 
+        sequence="9" 
+        parent="inseta_dg.menu_root" 
+        groups="inseta_dg.group_desktop_evaluation,inseta_dg.group_pmo_manager,inseta_dg.group_ceo,inseta_dg.group_pmo_admin"/> 
+
+
+    <menuitem name="Reports" action="action_dg_report" id="menu_dg_report" parent="inseta_dg.menu_reports" sequence="1"/>   
+
+
+    </data>
+</odoo>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="mis_popi_act.consent" name="POPI Act Consent Form">
+        <t t-name="mis_popi_act.POPIActConsent">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <div class="popiact">
+                        <div id="popiactModal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Protection of Personal Information Act</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5><u>Consent to Process information in terms of the Protection of Personal Information Act, 2013 (POPI)</u></h5>
+                                        <p class="text-secondary">
+                                            The Insurance Sector Education and Training Authority (INSETA) welcomes you to it’s INSETA Management Information System (MIS).  By using the 
+                                            MIS you hereby acknowledge that you have read the following Protection of Personal Information notice.
+                                        </p>
+                                        <h5><u>Collection of Personal Information</u></h5>
+                                        <p class="text-secondary">
+                                            The INSETA will only collect personal information consistent with the purpose for which it is required.  Personal information relating to an 
+                                            identifiable living, natural person, and where it is applicable, an identifiable, existing juristic person, as defined in the Protection of 
+                                            Personal Information Act, 2013 that the INSETA may collect, includes but is not limited to:
+                                            <ul style="margin-left:32px">
+                                                <li>information relating to the race, gender, sex, national, ethnic or social origin, color, age, physical or mental health, well-being, disability, religion, culture, language and birth of the person;</li>
+                                                <li>information relating to the education or the medical, financial, criminal or employment history of the person;</li>
+                                                <li>any identifying number, symbol, email address, physical address, telephone number, location information, online identifier or other particular assignment to the person;</li>
+                                                <li>the biometric information of the person;</li>
+                                                <li>the personal opinions, views or preferences of the person;</li>
+                                                <li>correspondence sent by the person that is implicitly or explicitly of a private or confidential nature or further correspondence that will reveal the contents of the original correspondence;</li>
+                                                <li>the views or opinions of another individual about the person; and</li>
+                                                <li>the name of the person if it appears with other personal information relating to the person or of the disclosure of the name itself will reveal information about the person.</li>
+                                            </ul>
+                                            There is also information about your computer hardware and software that is automatically collected by the INSETA.  This information can include your:  
+                                            IP address, browser type, domain names, access times and referring website addresses, if applicable.
+                                        </p>
+                                        <h5><u>Use of Personal Information</u></h5>
+                                        <p class="text-secondary">
+                                            The INSETA uses personal information primarily to:
+                                            <ul style="margin-left:32px">
+                                                <li>authenticate a user of the MIS;</li>
+                                                <li>provide a user with access to the MIS;</li>
+                                                <li>communicate requested information to the user;</li>
+                                                <li>communicate with the INSETA stakeholders;</li>
+                                                <li>provide services to the User as requested by the user;</li>
+                                                <li>maintain the quality of services provided by the INSETA;</li>
+                                                <li>conduct research about programmes/services offered by the INSETA, and </li>
+                                                <li>provide general statistics regarding use of the MIS.</li>
+                                            </ul>
+                                        </p>
+
+                                        <h5><u>Protection of Personal Information Act</u></h5>
+                                        <p class="text-secondary">
+                                            The INSETA will not sell, rent, or lease personal information to third parties.  
+                                            The INSETA will disclose your personal, without notice, only if required to do so by law or in the good faith belief that such action is necessary to:
+                                            <ul style="margin-left:32px">
+                                                <li>conform to the provisions of any law in force from time to time or comply with legal process served on the INSETA or the website;</li>
+                                                <li>protect and defend the rights or property of the INSETA; and</li>
+                                                <li>to protect the personal safety of users of the INSETA, or the public.</li>
+                                            </ul>
+                                        </p>
+
+                                        <h5><u>Security of Personal Information</u></h5>
+                                        <p class="text-secondary">
+                                            The INSETA will take all reasonable measures in line with any law and/or the INSETA policies to ensure that personal information 
+                                            is protected and secured during collection, storage, transfer, processing and use of personal information.
+                                        </p>
+
+                                        <h5><u>Contact Person Information</u></h5>
+                                        <p class="text-secondary">
+                                            Any questions relating to the INSETA’s treatment of personal information maybe addressed to the  to the Chief Executive Officer below:
+                                            <br/>
+                                            The INSETA Chief Executive Officer<br/>
+                                            Email Address:  Gugum@inseta.org.za<br/>
+                                            Telephone number:  011 381 8900
+                                        </p>
+
+                                        <h5><u>Declaration and informed Consent</u></h5>
+                                        <p class="text-secondary">
+                                            I declare that I am permitted to supply personal information to the INSETA for the purpose of access and 
+                                            use of the MIS, and related legal and operational reasons.   This information is also accurate, up-to-date, 
+                                            and  is not misleading. It  is complete in all respects.  I undertake to immediately advise the INSETA of any changes 
+                                            to personal information should any of these details change.  I furthermore give the INSETA permission to process personal
+                                            information as provided above, and acknowledge that 
+                                            I understand the purposes for which it is required,  as well as for the  purpose  for which it will be used. 
+                                            <br/><br/>
+                                            Please place a tick in the POPI Act Consent check-box indicating your agreement to the above conditions. <br/>
+                                            Finally, please click on the Submit button. 
+                                            <br/><br/>
+                                            <div class="form-check mb-1">
+                                                <input type="checkbox" class="form-check-input" id="checkboxAgree"/>
+                                                <label class="form-check-label" for="checkboxAgree"><b>POPI Act Consent</b></label>
+                                            </div>
+
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="buttonDoNotAgree" type="button" class="btn btn-link text-decoration-none">
+                                            I do not agree
+                                        </button>
+                                        <button id="buttonAgree" type="button" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

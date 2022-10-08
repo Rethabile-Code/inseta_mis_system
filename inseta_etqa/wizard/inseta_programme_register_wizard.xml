@@ -1,0 +1,874 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="inseta_learner_programme_register_wiz_action1" model="ir.actions.act_window">
+        <field name="name">Add learner Programme</field>
+        <field name="res_model">inseta.programme.register</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+        <field name="target">new</field>
+          <p class="o_view_nocontent_smiling_face">
+            -
+          </p><p>
+            -
+          </p>
+        </field>
+    </record>
+
+	<!-- <record id="inseta_learner_programme_register_etqa_wizard_action1" model="ir.actions.act_window">
+        <field name="name">ETQA Add learner Programme</field>
+        <field name="res_model">inseta.programme.register</field>
+        <field name="view_mode">form</field>
+        <field name="help" type="html">
+        <field name="context" eval="{'default_is_from_lp': 'ETQA'}"/>
+          <p class="o_view_nocontent_smiling_face">
+            -
+          </p><p>
+            -
+          </p>
+        </field>
+    </record> -->
+
+	<record id="inseta_learner_programme_register_etqa_wizard_action1" model="ir.actions.act_window">
+        <field name="name">ETQA Add learner Programme</field>
+        <field name="res_model">inseta.programme.register</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+		<field name="context" eval="{'default_is_from_lp': 'ETQA'}"/>
+        <!-- <field name="context">{'default_request_id': active_id, 'name_only': True}</field> -->
+    </record>
+
+	<record id="inseta_learner_programme_register_lp_wizard_action1" model="ir.actions.act_window">
+        <field name="name">ETQA Add learner Programme</field>
+        <field name="res_model">inseta.programme.register</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+		<!-- <field name="context" eval="{'default_is_from_lp': 'ETQA'}"/> -->
+		<field name="context">{'default_is_from_lp': 'LP'}</field>
+        <!-- <field name="context">{'default_request_id': active_id, 'name_only': True}</field> -->
+    </record>
+ 
+	<menuitem id="etqa_learner_programme_registerations_menu" name="Learner Programme Registration" sequence="10" parent="inseta_etqa.learner_registerations_menu" action="inseta_etqa.inseta_learner_programme_register_etqa_wizard_action1"
+		groups="base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_approved_assesor,inseta_etqa.group_moderator_access_user,inseta_etqa.group_approved_moderator,inseta_etqa.group_approved_assesor,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system,inseta_skills.group_employer"/>
+	 
+    
+    <record id="inseta_programme_register_learner_wizard_form_view" model="ir.ui.view">
+        <field name="name">Learner Programme Register wizard Form</field>
+        <field name="model">inseta.programme.register</field>
+        <field name="arch" type="xml">
+            <form string="Wizard">
+                <header> 
+                </header>
+                <sheet>
+                    <div class="oe_title" invisible="1"> Learner ID NO:
+                    <!-- <div class="oe_title" attrs="{'invisible': [('is_from_lp', '=', 'ETQA')]}"> Learner ID NO: -->
+                        <h3>
+                            <field name="learner_id_no" placeholder="Learner ID No." readonly="1" force_save="1" required="0"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                        	<field name="is_from_lp" force_save="1" invisible="1" string="Source"/>
+                        	<field name="is_learner_register" invisible="1" string="Is Learner Register"/>
+                            <field name="learner_id" force_save="1" options="{'no_quick_create': True, 'no_create': True, 'no_open': True}"
+							 attrs="{'required': [('learner_id_no', '!=', None)]}"/>
+                            <field name="learner_id_no" placeholder="Learner ID No." readonly="0" force_save="1" required="0"/>
+
+                            <field name="programme_type" required="1" attrs="{'invisible': [('learner_id', '=', False)]}"/>
+                        </group>
+                        <group>
+							<field name="dgtype_code" force_save="1" readonly="1" invisible="0"/>
+                            <field name="financial_year_id" force_save="1" required="1" attrs="{'invisible': [('programme_type', '=', False)]}" options="{'no_quick_create': True, 'no_create': True, 'no_open': True}"/>
+                            <field name="lpro_id" force_save="1" invisible="1"/>
+                            <field name="dg_number" force_save="1" invisible="0" readonly="1"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+						<page name="learner_ids" string="Learners" invisible="1">
+							<p style="color: red;">* Please add learners and register them to programmes</p>
+							<field name="learner_ids" nolabel="1" readonly="0" attrs="{'invisible': [('is_learner_register', '=', 'Yes')]}">
+								<tree string="Learners" delete="true">
+									<field name="name"/>
+									<field name="id_no"/>
+									<field name="birth_date" string="Birth date"/>
+									<field name="email" string="Email"/>
+									<field name="mobile" string="Phone"/>
+								</tree>
+							</field>
+
+							<field name="learner_register_ids" nolabel="1" readonly="0" attrs="{'invisible': [('is_learner_register', '=', 'No')]}">
+								<tree string="Learner Register" delete="true">
+									<field name="name"/>
+									<field name="id_no"/>
+									<field name="birth_date" string="Birth date"/>
+									<field name="email" string="Email"/>
+									<field name="mobile" string="Phone"/>
+								</tree>
+							</field>
+						</page>
+						<page name="document_ids" string="Compulsory Document" invisible="1">
+						<p style="color: red;">* Please refer below to add compulsory documents</p>
+							<field name="document_ids" nolabel="1" readonly="0">
+								<tree string="Compulsory Documents" editable="bottom" delete="false">
+									<field name="name"/>
+									 <field name="datas" filename="data_name" required="1"/>
+									<field name="data_name" filename="data_name" invisible="1" force_save="1"/>
+									<field name="financial_year_id" required="1" force_save="1"/>
+									<field name="attachment_id" string="Enter Document Name" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" required="0" />
+									<!-- <field name="compliant" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin"/> -->
+								</tree>
+							</field>
+						</page>
+                        <page name="programme_registration" string="Programme registration"  >
+								<separator string="Unit standards" attrs="{'invisible': [('programme_type', '!=', 'Unit')]}"/> 
+								<field name="unit_standard_learnership_line" readonly="0" domain="[('id', '=', None)]"
+								context="{'default_lpro_id': lpro_id,'default_learner_id': learner_id, 'default_dgtype_code': dgtype_code, 'default_financial_year_id': financial_year_id,'default_lga_number': dg_number}" attrs="{'invisible': [('programme_type', '!=', 'Unit')]}">
+									<form string="Unit standards">
+										<group>
+											<group>
+												
+												<field name="is_employed" invisible="1"/>
+												<field name="employer_sdl" attrs="{'required': [('organisation_id', '=', False),('is_employed', '=', True)]}"/>
+												<field name="organisation_id" readonly="1" string="Employer" force_save="1"/> 
+												<field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+												<field name="provider_id" readonly="1" force_save="1"/> 
+												<field name="unit_standard_id" required="1" attrs="{'invisible': [('provider_id', '=', False)]}"/>
+												<field name="financial_year_id" required="1"/>
+												<field name="learner_id" invisible="1"/>
+												<field name="commencement_date" required="1" readonly="0"/>
+												<field name="completion_date" required="1" readonly="0"/>
+											</group>
+											<group>
+												<field name="effective_date" required="1" readonly="0"/>
+												<field name="socio_economic_status_id" required="1" readonly="0"/>
+												<field name="most_recent_registration_date" readonly="0"/>
+											</group>
+										</group>
+									</form>
+									<tree string="Unit standards">
+										<field name="provider_id" required="1"/> 
+										<field name="organisation_id" required="1" string="Employer"/> 
+										<field name="unit_standard_id" required="1"/>
+										<field name="financial_year_id" readonly="0"/>
+										<field name="commencement_date" required="1" readonly="0"/>
+										<field name="completion_date" required="1" readonly="0"/> 
+										<field name="programme_status_id" readonly="0"/>
+									</tree>
+								</field>
+
+								<separator string="Qualification" attrs="{'invisible': [('programme_type', '!=', 'Qualification')]}"/>
+								<field name="qualification_learnership_line" readonly="0" attrs="{'invisible': [('programme_type', '!=', 'Qualification')]}" context="{'default_lpro_id': lpro_id,'default_learner_id': learner_id,'default_dgtype_code': dgtype_code, 'default_financial_year_id': financial_year_id,'default_lga_number': dg_number}" domain="[('id', '=', None)]">
+									<form string="Qualification">
+										<group>
+											<group>
+												<field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+												<field name="provider_id" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="is_employed" invisible="1"/>
+												<field name="employer_sdl" attrs="{'required': [('organisation_id', '=', False),('is_employed', '=', True)]}"/>
+												<field name="organisation_id" readonly="1" string="Employer" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="qualification_id" required="1" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('provider_id', '=', False)]}"/>
+												<field name="qualification_code" string="SAQA Code" readonly="1"/>
+												<field name="learner_id" invisible="1"/>
+												<field name="financial_year_id" required="1" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('qualification_id', '=', False)]}"/>
+												
+											</group>
+											<group>
+											<field name="commencement_date" required="1" readonly="0"/>
+												<field name="completion_date" required="1" readonly="0"/>
+												<field name="project_type_id" invisible="1"/>
+												<field name="socio_economic_status_id" required="1" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+
+												<!-- <field name="funding_type" string="Sponsor" readonly="0"/> -->
+												<field name="most_recent_registration_date" readonly="0"/>
+											</group>
+										</group>
+										<notebook>
+											<page name="unitstandards" string="Qualification Unit Standards line">
+												<separator string="Add Electives"/>
+												<field name="elective_qualification_unit_standard_line_ids" nolabel="1" readonly="0" required="1" options="{'no_create': True}">
+													<tree string="Qualification Unit standards" delete="0">
+														<field name="unit_standard_id" required="1" options="{'no_create': True, 'no_open': True}" readonly="1"/>
+														<field name="unit_standard_type_id" required="1" invisible="0" options="{'no_create': True, 'no_open': True}" readonly="1"/> 
+													</tree>
+													<form string="Electives Unit standards">
+														<group>
+															<group>
+																<field name="unit_standard_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+															</group>
+															<group>
+																<field name="unit_standard_type_id" required="1" invisible="0" options="{'no_create': True, 'no_open': True}"/> 
+															</group>
+														</group>
+
+													</form>
+												</field>
+												<p style="color: red;">*Add electives Unit standards above and it will reflect on the unit standards below</p>
+												<separator string="Programme Unit standards"/>
+												<field name="qualification_unit_standard_ids" nolabel="1" readonly="0" required="0" context="{'default_programme_id': qualification_id}" force_save="1">
+													<tree string="Qualification Unit standards" editable="bottom" delete="0" create="0">
+														<!-- <field name="select"/>  -->
+														<field name="qualification_learnership_id" required="1" invisible="1"/> 
+														<field name="programme_id" required="0" invisible="1"/>
+														<field name="unit_standard_id" readonly="1" required="1" force_save="1" options="{'no_create': True, 'no_open': True}"/>
+														<field name="unit_standard_type" readonly="1" required="1" force_save="1" invisible="0" options="{'no_create': True, 'no_open': True}"/> 
+														<field name="credits" sum="Total Credits"/>
+													</tree>
+												
+												</field>
+											</page>
+											<page name="document_ids" string="Compulsory Document" invisible="0">
+												<p style="color: red;">* Please click on each line to use the upload button</p>
+												<field name="document_ids" nolabel="1" readonly="0">
+													<tree string="Compulsory Documents" editable="bottom" delete="false">
+														<field name="learner_document2_id" force_save="1" readonly="1" invisible="0" options="{'no_create': True, 'no_open': True}"/>
+														<field name="name"/>
+														<field name="lpro_id" force_save="1" readonly="0" invisible="1"/>
+														
+														<field name="datas" filename="data_name" required="1"/>
+														<field name="data_name" filename="data_name" invisible="0" force_save="1"/>
+														<field name="attachment_id" string="Enter Document Name" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" required="0" />
+														<field name="compliant" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin"/>
+													</tree>
+												</field>
+											</page>
+											
+										</notebook>
+									</form>
+									<tree string="Qualification">
+										<field name="provider_id" required="1"/> 
+										<field name="organisation_id" required="1" string="Employer"/> 
+										<field name="qualification_id" required="1"/>
+										<field name="financial_year_id" required="1" readonly="0"/>
+										<field name="commencement_date" required="1" readonly="0"/>
+										<field name="completion_date" required="1" readonly="0"/>
+										<field name="programme_status_id" readonly="0"/> 
+									</tree>
+								</field>
+
+								
+								<separator string="Skills" attrs="{'invisible': [('programme_type', 'not in', ['Skill','Skill-W'])]}"/>
+								<field name="skill_learnership_line" readonly="0" attrs="{'invisible': [('programme_type', 'not in', ['Skill','Skill-W'])]}" context="{'default_lpro_id': lpro_id,'default_learner_id': learner_id, 'default_dgtype_code': dgtype_code, 'default_financial_year_id': financial_year_id,'default_lga_number': dg_number}" domain="[('id', '=', None)]">
+									<form string="Skills Programme">
+										<group>
+											<group>
+												 
+												<field name="is_employed" invisible="1"/>
+												<field name="employer_sdl" attrs="{'required': [('organisation_id', '=', False),('is_employed', '=', True)]}"/>
+												<field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+												<field name="provider_id" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}"/>
+												<field name="organisation_id" readonly="1" string="Employer" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="skill_programme_id" required="1" string="Programme" options="{'no_create': True,'no_open': True}" attrs="{'invisible': [('provider_id', '=', False)]}"/>
+												<field name="qualification_code" string="SAQA Code" readonly="1"/>
+												
+												<field name="effective_date" readonly="0"/>
+												<field name="lga_number" required="0" string="DG Evaluation Number"/>
+												<field name="lpro_id" invisible="1"/>
+												<field name="dgtype_code" invisible="1"/>
+												<!-- <field name="certificate_number"/>
+												<field name="certificate_created_date" readonly="0"/> -->
+												
+											</group>
+											<group>
+												<field name="financial_year_id" readonly="0" required="1" options="{'no_create': True, 'no_open': True}"/>
+												<field name="funding_type" string="Sponsor" required="1" readonly="0" attrs="{'readonly': [('lpro_id', '!=', 0)]}" options="{'no_create': True, 'no_open': True}"/>
+												<field name="commencement_date" required="1" readonly="0"/>
+												<field name="completion_date" required="1" readonly="0"/>
+												<field name="socio_economic_status_id" required="1" readonly="1" options="{'no_create': True, 'no_open': True}"/>
+												<field name="project_type_id" invisible="1"/>
+												<field name="most_recent_registration_date" readonly="0"/>
+											</group>
+										</group>
+										<notebook>
+											<page name="unitstandards" string="Skill Unit Standards line">
+												<separator string="Add Electives"/>
+												<field name="elective_skills_unit_standard_ids" nolabel="1" readonly="0" required="1" options="{'no_create': True}">
+													<tree string="Qualification Unit standards">
+														<field name="unit_standard_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+														<field name="unit_standard_type_id" required="1" invisible="0" options="{'no_create': True, 'no_open': True}"/> 
+													</tree>
+													<form string="Electives Unit standards">
+														<group>
+															<group>
+																<field name="unit_standard_id" required="1" options="{'no_create': True, 'no_open': True}" readonly="1"/>
+															</group>
+															<group>
+																<field name="unit_standard_type_id" required="1" invisible="0" options="{'no_create': True, 'no_open': True}" readonly="1"/> 
+															</group>
+														</group>
+
+													</form>
+												</field>
+												<p style="color: red;">*Add electives Unit standards above and it will reflect on the unit standards below</p>
+												<separator string="Programme Unit standards"/>
+												<field name="skills_unit_standard_ids" nolabel="1" readonly="0" required="0"  context="{'default_programme_id': skill_programme_id}">
+													<tree string="Skill Unit standards" editable="bottom" create="0" delete="0">
+														<!-- <field name="select"/> -->
+                                                        <field name="skill_learnership_id" required="1" invisible="1"/>
+														<field name="programme_id" required="0" invisible="1"/>
+														<field name="unit_standard_id" force_save="1" readonly="1" required="1" options="{'no_create': True, 'no_open': True}"/>
+														<field name="unit_standard_type" force_save="1" readonly="1" required="1" invisible="0" options="{'no_create': True, 'no_open': True}"/>
+														<field name="credits" sum="Total Credits"/>
+													</tree>
+												
+												</field>
+											</page>
+											<page name="document_ids" string="Compulsory Document" invisible="0">
+												<p style="color: red;">* Please click on each line to use the upload button</p>
+												<field name="document_ids" nolabel="1" readonly="0">
+													<tree string="Compulsory Documents" editable="bottom" delete="false">
+														<field name="learner_document2_id" force_save="1" readonly="1" invisible="0" options="{'no_create': True, 'no_open': True}"/>
+														<field name="name"/>
+														<field name="lpro_id" force_save="1" readonly="0" invisible="1"/>
+														<field name="datas" filename="data_name" required="1"/>
+														<field name="data_name" filename="data_name" invisible="0" force_save="1"/>
+														<field name="attachment_id" string="Enter Document Name" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" required="0" />
+														<field name="compliant" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin"/>
+													</tree>
+												</field>
+											</page>
+										</notebook>
+									</form>
+									<tree string="Skills">
+										<field name="provider_id" required="1"/> 
+										<field name="organisation_id" required="1" string="Employer"/> 
+										<field name="skill_programme_id" required="1" string="Programme"/> 
+										<field name="financial_year_id" readonly="0"/>
+										<field name="commencement_date" required="1" readonly="0"/>
+										<field name="completion_date" required="1" readonly="0"/>
+										<field name="programme_status_id" readonly="0"/>
+									</tree>
+								</field>
+
+								<separator string="Learnership" attrs="{'invisible': [('programme_type', 'not in', ['Learnership-Worker', 'Learnership', 'Learnership-Rural'])]}"/>
+								<field name="learner_learnership_line" readonly="0" attrs="{'invisible': [('programme_type', 'not in', ['Learnership-Worker', 'Learnership', 'Learnership-Rural'])]}" 
+								context="{'default_lpro_id': lpro_id,'default_learner_id': learner_id, 
+								'default_dgtype_code': dgtype_code, 'default_financial_year_id': financial_year_id, 'default_lga_number': dg_number}" domain="[('id', '=', None)]">
+									<form string="Learnership">
+										<group>
+											<group>
+												<field name="is_employed" invisible="1"/>
+												<field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+												<field name="provider_id" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="employer_sdl" attrs="{'required': [('organisation_id', '=', False),('is_employed', '=', True)]}"/>
+												<field name="organisation_id" readonly="1" string="Employer" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="learner_programme_id" string="Programme" required="1" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('provider_id', '=', False)]}"/>
+												<field name="qualification_code" string="SAQA Code" readonly="1"/>
+												<field name="lga_number" required="0" force_save="1" readonly="1" string="DG Approval Ref No"/>
+												<field name="secondary_provider_id" invisible="1" required="0" string="Secondary Provider"/> 
+												<field name="secondary_organisation_id" invisible="1" required="0" string="Secondary Employer"/> 
+												<field name="financial_year_id" readonly="0" options="{'no_create': True, 'no_open': True}" required="1"/>
+												<field name="commencement_date" required="1" readonly="0"/>
+												<field name="completion_date" required="1" readonly="0"/>
+											</group>
+											<group>
+												<field name="effective_date" string="Status Effective Date" required="1"/>
+												<field name="funding_type" string="Sponsor" required="1" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+												<field name="socio_economic_status_id" required="1" readonly="1" options="{'no_create': True, 'no_open': True}"/>
+												<field name="project_type_id" invisible="1"/>
+												<field name="most_recent_registration_date" readonly="0"/>
+												<field name="programme_status" invisible="1" readonly="0"/>
+												<field name="status" invisible="1" readonly="0"/>
+												<field name="dgtype_code" invisible="0" readonly="0"/>
+												<field name="learner_id" invisible="1" readonly="0" force_save="1"/>
+											</group>
+										</group>
+										<notebook>
+											<page name="unitstandards" string="Learnership Unit Standards line">
+												<separator string="Add Electives"/>
+												<field name="elective_learnership_unit_standard_line_ids" nolabel="1" readonly="0" required="1" options="{'no_create': True}">
+													<tree string="Unit standards">
+														<field name="unit_standard_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+														<field name="unit_standard_type_id" required="1" invisible="0" options="{'no_create': True, 'no_open': True}"/> 
+													</tree>
+													<form string="Electives Unit standards">
+														<group>
+															<group>
+																<field name="unit_standard_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+															</group>
+															<group>
+																<field name="unit_standard_type_id" required="1" invisible="0" options="{'no_create': True, 'no_open': True}"/> 
+															</group>
+														</group>
+
+													</form>
+												</field>
+												<p style="color: red;">*Add electives Unit standards above and it will reflect on the unit standards below</p>
+
+												<field name="learnership_unit_standard_ids" nolabel="1" readonly="0" required="0"
+												context="{'default_programme_id': learner_programme_id}" force_save="1">
+													<tree string="Learnership Unit standards" editable="bottom" delete="0" create="0">
+														<!-- <field name="select"/> -->
+                                                        <field name="learnership_id" required="1" invisible="1"/>
+														<field name="programme_id" required="0" invisible="1" options="{'no_create': True, 'no_open': True}"/> 
+														<field name="unit_standard_id" force_save="1" readonly="1" required="1" options="{'no_create': True, 'no_open': True}"/>
+														<field name="unit_standard_type" force_save="1" readonly="1" required="1" invisible="0" options="{'no_create': True, 'no_open': True}"/> 
+														<field name="credits"/>
+													</tree>
+												
+												</field>
+											</page>
+											<page name="document_ids" string="Compulsory Document" invisible="0">
+												<p style="color: red;">* Please click on each line to use the upload button</p>
+												<field name="document_ids" nolabel="1" readonly="0">
+													<tree string="Compulsory Documents" editable="bottom" delete="false">
+														<field name="learner_document2_id" force_save="1" readonly="1" invisible="0" options="{'no_create': True, 'no_open': True}"/>
+														<field name="name"/>
+														<field name="lpro_id" force_save="1" readonly="0" invisible="1"/>
+														<field name="datas" filename="data_name" required="1"/>
+														<field name="data_name" filename="data_name" invisible="0" force_save="1"/>
+														<field name="attachment_id" string="Enter Document Name" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" required="0" />
+														<field name="compliant" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin"/>
+													</tree>
+												</field>
+											</page>
+										</notebook>
+									</form>
+									<tree string="Learnership">
+										<field name="provider_id" required="1"/> 
+										<field name="organisation_id" required="1" string="Employer"/> 
+										<field name="learner_programme_id" string="Programme" required="1"/>
+										<field name="financial_year_id" readonly="0"/>
+										<field name="commencement_date" required="1" readonly="0"/>
+										<field name="completion_date" required="1" readonly="0"/>
+										<field name="programme_status_id" readonly="0"/>
+										 
+									</tree>
+								</field>
+
+								<separator string="Internship" attrs="{'invisible': [('programme_type', 'not in', ['Internship','Internship-diploma-degree'])]}"/>
+								<field name="internship_learnership_line" readonly="0" attrs="{'invisible': [('programme_type', 'not in', ['Internship','Internship-diploma-degree'])]}" 
+								context="{'default_learner_id': learner_id, 'default_dgtype_code': dgtype_code, 'default_financial_year_id': financial_year_id, 'default_lga_number': dg_number, 'default_lpro_id': lpro_id}" required="1" domain="[('id', '=', None)]">
+									<form string="Internship">
+										<group>
+											<group>
+												<field name="is_employed" invisible="1"/>
+												<field name="employer_sdl" attrs="{'required': [('organisation_id', '=', False),('is_employed', '=', True)]}"/>
+												
+												<field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+												<field name="provider_id" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												
+												<field name="organisation_id" readonly="1" string="Employer" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="qualification_id" options="{'no_create': True, 'no_open': True}" string="Qualification" required="1" attrs="{'invisible': [('provider_id', '=', False)]}"/> 
+												<field name="lga_number" required="0" string="DG Approval Ref No"/>
+												<field name="lpro_id" readonly="0" force_save="1" invisible="1"/> 
+
+												<field name="programme_id" options="{'no_create': True, 'no_open': True}" string="Internship Type" invisible="1" required="0"/>
+												<field name="qualification_code" string="SAQA Code" readonly="1"/>
+												<field name="ofo_occupation_id" string="OFO Occupation" readonly="0"/> 
+												<field name="sic_code" invisible="1" readonly="0"/>
+												<field name="financial_year_id" required="1" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+												<field name="funding_type" string="Sponsor" readonly="1" options="{'no_create': True, 'no_open': True}"/>
+
+												<!-- <field name="core_business_desc" readonly="0" widget="text" placeholder="Please enter description here ..."/> -->
+											</group>
+											<group>
+												<field name="nqflevel_id" required="1" string="NQF Level" readonly="0"/> 
+												<field name="year_of_study" readonly="0"/>
+												<field name="achievement_date" readonly="0" required="1"/>
+												<field name="highest_edu_level_id" readonly="0"/>
+												<field name="commencement_date" string="Internship Start Date" required="1" readonly="0"/>
+												<field name="completion_date" string="Internship end date" required="1" readonly="0"/>
+												<!-- <field name="qualification_id" string="Qualification" required="0"/> -->
+												
+												<!-- <field name="qualification_achievement_date" string="Achievement Date" readonly="0"/> -->
+											</group>
+											<group>
+												<!-- <field name="verified" readonly="0"/>
+												<field name="verifier_name" readonly="0"/>
+												<field name="verified_date" readonly="0"/> -->
+												<field name="fet" readonly="0" invisible="1"/>
+												<field name="het" readonly="0" invisible="1"/>
+												<field name="cummulative_spend" invisible="1" readonly="0"/>
+												<field name="socio_economic_status_id" readonly="1" force_save="1"/>
+												<field name="dgtype_code" invisible="1" readonly="0"/>
+												
+											</group>
+
+											<group>
+												<field name="effective_date" string="Status Effective Date" required="0"/>
+												<field name="programme_status" invisible="1" string="Internship status" readonly="0"/>
+												<field name="status" invisible="1" string="Enrollment Status" readonly="0"/>
+												<field name="most_recent_registration_date" readonly="0"/> 
+											</group>
+										</group>
+										<notebook>
+											<page name="unitstandards" string="Unit Standards line" invisible="1">
+												<field name="unit_standard_ids" nolabel="1" readonly="0" required="0" options="{'no_create': True, 'no_open': True}">
+													<form string="Inseta Unit Standard">
+														<div class="oe_title">
+															<h1>
+																<field name="name" placeholder="Name" readonly="0"/>
+															</h1>
+														</div>
+														<group> 
+															<group>
+																<field name="unit_standard_type" required="1" invisible="0"/> 
+																<field name="code" required="1"/>
+																<field name="nqflevel_id" required="1"/>
+															</group>
+															<group>
+																<field name="core_credits" invisible="0"/>
+																<field name="elective_credits" required="0"/>
+																<field name="fundamental_credits" invisible="0"/>
+																<field name="credits" required="1"/>
+															</group> 
+														</group>
+													</form>
+													<tree string="Unit standards">
+														<field name="name" required="1" invisible="0"/> 
+														<field name="unit_standard_type" required="1" invisible="0"/> 
+														<field name="code" required="1"/>
+														<field name="nqflevel_id" required="1"/>
+														<field name="core_credits" invisible="0" string="Core"/>
+														<field name="elective_credits" required="0" string="Elective"/>
+														<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+														<field name="credits" required="1"/>
+														
+													</tree>
+												</field>
+											</page>
+											<page name="document_ids" string="Compulsory Document" invisible="0">
+												<p style="color: red;">* Please click on each line to use the upload button</p>
+												<field name="document_ids" nolabel="1" readonly="0">
+													<tree string="Compulsory Documents" editable="bottom" delete="false">
+														<field name="learner_document2_id" force_save="1" readonly="1" invisible="0" options="{'no_create': True, 'no_open': True}"/>
+														<field name="name"/>
+														<field name="lpro_id" force_save="1" readonly="0" invisible="1"/>
+														<field name="datas" filename="data_name" required="1"/>
+														<field name="data_name" filename="data_name" invisible="0" force_save="1"/>
+														<field name="attachment_id" string="Enter Document Name" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" required="0" />
+														<field name="compliant" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin"/>
+													</tree>
+												</field>
+											</page>
+										</notebook>
+									</form>
+									<tree string="Internship">
+										<field name="provider_id" required="1"/> 
+										<field name="organisation_id" required="1" string="Employer"/> 
+										<field name="programme_id" options="{'no_create': True}" string="Programme" invisible="1"/>
+										<field name="qualification_id" options="{'no_create': True}" string="Qualification" required="0"/>
+										<field name="financial_year_id" readonly="0"/>
+										<field name="commencement_date" string="Internship Start Date" required="1" readonly="0"/>
+										<field name="completion_date" string="Internship end date" required="1" readonly="0"/>
+										<field name="status" invisible="0" string="Enrollment Status" readonly="0"/>
+									</tree>
+								</field>
+
+								<separator string="Bursary" attrs="{'invisible': [('programme_type', 'not in', ['Bursary', 'Bursary-W'])]}"/>
+								<field name="bursary_learnership_line" readonly="0" context="{'default_lpro_id': lpro_id,'default_learner_id': learner_id, 'default_dgtype_code': dgtype_code, 'default_financial_year_id': financial_year_id, 'default_lga_number': dg_number}" attrs="{'invisible': [('programme_type', 'not in', ['Bursary', 'Bursary-W'])]}" domain="[('id', '=', None)]">
+									<form string="Bursary">
+										<group>
+											<group>
+												<field name="is_employed" invisible="1"/>
+												<field name="employer_sdl" attrs="{'required': [('organisation_id', '=', False),('is_employed', '=', True)]}"/>
+												<field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+												<field name="provider_id" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="organisation_id" readonly="1" string="Employer" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="programme_id" options="{'no_create': True, 'no_open': True}" invisible="1" string="Bursary type" required="1"/>
+												<field name="bursary_type_id" string="Bursary type" required="0" invisible="1" options="{'no_create': True, 'no_open': True}"/>
+												<field name="contract_number"  invisible="1" required="0"/>
+												<field name="agreement_number" invisible="1" readonly="0"/>
+												<field name="ofo_occupation_id" options="{'no_create': True, 'no_open': True}" string="OFO Occupation" readonly="0"/> 
+												<field name="funding_type" options="{'no_create': True, 'no_open': True}" string="Sponsor" attrs="{'readonly': [('lpro_id', '!=', 0)]}"/>
+												<field name="nqflevel_id" options="{'no_create': True, 'no_open': True}" string="NQF Level" readonly="0"/>
+												<field name="learner_id" invisible="1" force_save="1"/>
+												<field name="dgtype_code" invisible="0" readonly="0"/>
+											</group>
+											<group>
+												<field name="lga_number" required="0" string="DG Approval Ref No"/>
+												<field name="lpro_id" readonly="1" force_save="1" invisible="1"/>
+												<field name="qualification_id" options="{'no_create': True, 'no_open': True}" string="Qualification" required="1" attrs="{'invisible': [('provider_id', '=', False)]}"/> 
+												<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" readonly="0" required="1"/>
+												<field name="institution_id" options="{'no_create': True, 'no_open': True}" readonly="0" invisible="1"/>
+												<field name="amount_due_institution" readonly="0"/>
+												<field name="commencement_date" string="Bursary Start Date" required="1" readonly="0"/>
+												<field name="completion_date" string="Bursary End date" required="1" readonly="0"/>
+											</group>
+											<group>
+												<!-- <field name="verified" readonly="0"/>
+												<field name="verifier_name" readonly="0"/>
+												<field name="verified_date" readonly="0"/> -->
+												<field name="socio_economic_status_id" readonly="1" options="{'no_create': True, 'no_open': True}" required="1"/>
+												
+											</group>
+
+											<group>
+												<field name="effective_date" string="Status Effective Date" required="0"/>
+												<field name="programme_status" invisible="1" string="Bursary status" readonly="0"/>
+												<field name="status" invisible="1" string="Enrollment Status" readonly="0"/>
+												<field name="most_recent_registration_date" readonly="0"/>
+											</group>
+										</group>
+										<notebook>
+											<page name="unitstandards" invisible="1" string="Unit Standards line">
+												<field name="unit_standard_ids" options="{'no_create': True, 'no_open': True}" nolabel="1" readonly="0" required="0">
+													<form string="Inseta Unit Standard">
+														<div class="oe_title">
+															<h1>
+																<field name="name" placeholder="Name" readonly="0"/>
+															</h1>
+														</div>
+														<group> 
+															<group>
+																<field name="unit_standard_type" options="{'no_create': True}" required="1" invisible="0"/> 
+																<field name="code" required="1"/>
+																<field name="nqflevel_id" options="{'no_create': True}" required="1"/>
+															</group>
+															<group>
+																<field name="core_credits" invisible="0"/>
+																<field name="elective_credits" required="0"/>
+																<field name="fundamental_credits" invisible="0"/>
+																<field name="credits" required="1"/>
+															</group> 
+														</group>
+													</form>
+													<tree string="Unit standards">
+														<field name="name" required="1" invisible="0"/> 
+														<field name="unit_standard_type" options="{'no_create': True}" required="1" invisible="0"/> 
+														<field name="code" required="1"/>
+														<field name="nqflevel_id" required="1"/>
+														<field name="core_credits" invisible="0" string="Core"/>
+														<field name="elective_credits" required="0" string="Elective"/>
+														<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+														<field name="credits" required="1"/>
+														
+													</tree>
+												</field>
+											</page>
+											<page name="document_ids" string="Compulsory Document" invisible="0">
+												<p style="color: red;">* Please click on each line to use the upload button</p>
+												<field name="document_ids" nolabel="1" readonly="0">
+													<tree string="Compulsory Documents" editable="bottom" delete="false">
+														<field name="learner_document2_id" force_save="1" readonly="1" invisible="0" options="{'no_create': True, 'no_open': True}"/>
+														<field name="name"/>
+														<field name="lpro_id" force_save="1" readonly="0" invisible="1"/>
+														<field name="datas" filename="data_name" required="1"/>
+														<field name="data_name" filename="data_name" invisible="0" force_save="1"/>
+														<field name="attachment_id" string="Enter Document Name" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" required="0" />
+														<field name="compliant" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin"/>
+													</tree>
+												</field>
+											</page>
+										</notebook>
+									</form>
+									<tree string="Bursary">
+										<field name="provider_id" required="1"/> 
+										<field name="organisation_id" required="1" string="Employer" options="{'no_create': True, 'no_open': True}"/> 
+										<field name="programme_id" options="{'no_create': True, 'no_open': True}" invisible="1" string="Programme" required="0"/>
+										<field name="bursary_type_id" options="{'no_create': True, 'no_open': True}" string="Bursary type" required="0" invisible="0"/>
+										<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" readonly="0"/>
+										<field name="commencement_date" string="Bursary Start Date" required="1" readonly="0"/>
+										<field name="completion_date" string="Bursary End date" required="1" readonly="0"/> 
+										<field name="status" invisible="0" string="Status" readonly="0"/>
+									</tree>
+								</field>
+
+								<separator string="WIL(TVET)" attrs="{'invisible': [('programme_type', '!=', 'Wiltvet')]}"/>
+								<field name="wiltvet_learnership_line" readonly="0" attrs="{'invisible': [('programme_type', '!=', 'Wiltvet')]}" context="{'default_lpro_id': lpro_id,'default_learner_id': learner_id, 'default_dgtype_code': dgtype_code, 'default_financial_year_id': financial_year_id, 'default_lga_number': dg_number}" domain="[('id', '=', None)]">
+									<form string="WIL(TVET)">
+										<group>
+											<group>
+												<field name="reference" force_save="1"/>
+												<field name="is_employed" invisible="1"/>
+												<field name="employer_sdl" attrs="{'required': [('organisation_id', '=', False),('is_employed', '=', True)]}"/>
+												<field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+												<field name="provider_id" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="organisation_id" readonly="1" string="Employer" force_save="1" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="programme_id" options="{'no_create': False, 'no_open': False}" string="WIL type" required="1"/>
+												<field name="funding_type" string="Sponsor" readonly="1" options="{'no_create': True, 'no_open': True}"/>
+												<field name="nqflevel_id" string="NQF Level" readonly="0" required="1" options="{'no_create': True, 'no_open': True}"/>
+												<field name="ofo_occupation_id" string="OFO Occupation" readonly="0" options="{'no_create': True, 'no_open': True}"/> 
+												<field name="qualification_id" string="Qualification" required="1" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('provider_id', '=', False)]}"/> 
+												<field name="financial_year_id" readonly="0" required="1" options="{'no_create': True, 'no_open': True}"/>
+												<field name="learner_id" invisible="1"/>
+											</group>
+											<group>
+												<field name="cummulative_spend" readonly="0"/>
+												<field name="lga_number" required="0" string="DG Approval Ref No"/>
+												<field name="commencement_date" string="WIL Start Date" required="1" readonly="0"/>
+												<field name="completion_date" string="WIL End date" required="1" readonly="0"/>
+												<field name="socio_economic_status_id" required="1" readonly="1" options="{'no_create': True, 'no_open': True}"/>
+												<field name="status" invisible="1" string="Enrollment Status" readonly="0"/>
+												<field name="most_recent_registration_date" readonly="0"/>
+											</group>
+											 
+										</group>
+										<notebook>
+											<page name="unitstandards" string="Unit Standards line" invisible="1">
+												<field name="unit_standard_ids" nolabel="1" readonly="0" required="0" options="{'no_create': True, 'no_open': True}">
+													<form string="Inseta Unit Standard">
+														<div class="oe_title">
+															<h1>
+																<field name="name" placeholder="Name" readonly="0"/>
+															</h1>
+														</div>
+														<group> 
+															<group>
+																<field name="unit_standard_type" required="1" invisible="0"/> 
+																<field name="code" required="1"/>
+																<field name="nqflevel_id" options="{'no_create': True}" required="1"/>
+																
+															</group>
+															<group>
+																<field name="core_credits" invisible="0"/>
+																<field name="elective_credits" required="0"/>
+																<field name="fundamental_credits" invisible="0"/>
+																<field name="credits" required="1"/>
+															</group> 
+														</group>
+													</form>
+													<tree string="Unit standards">
+														<field name="name" required="1" invisible="0"/> 
+														<field name="unit_standard_type" required="1" invisible="0"/> 
+														<field name="code" required="1"/>
+														<field name="nqflevel_id" required="1"/>
+														<field name="core_credits" invisible="0" string="Core"/>
+														<field name="elective_credits" required="0" string="Elective"/>
+														<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+														<field name="credits" required="1"/>
+														
+													</tree>
+												</field>
+											</page>
+											<page name="document_ids" string="Compulsory Document" invisible="0">
+												<p style="color: red;">* Please click on each line to use the upload button</p>
+												<field name="document_ids" nolabel="1" readonly="0">
+													<tree string="Compulsory Documents" editable="bottom" delete="false">
+														<field name="learner_document2_id" force_save="1" readonly="1" invisible="0" options="{'no_create': True, 'no_open': True}"/>
+														<field name="name"/>
+														<field name="lpro_id" force_save="1" readonly="0" invisible="1"/>
+														<field name="datas" filename="data_name" required="1"/>
+														<field name="data_name" filename="data_name" invisible="0" force_save="1"/>
+														<field name="attachment_id" string="Enter Document Name" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" required="0" />
+														<field name="compliant" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin"/>
+													</tree>
+												</field>
+											</page>
+										</notebook>
+									</form>
+									<tree string="WIL(TVET)">
+										<field name="provider_id" options="{'no_create': True, 'no_open': True}" required="1"/> 
+										<field name="organisation_id" options="{'no_create': True, 'no_open': True}" required="1" string="Employer"/> 
+										<field name="programme_id" options="{'no_create': True, 'no_open': True}" invisible="0" string="Programme" required="1"/>
+										<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" required="1" readonly="0"/>
+										<field name="commencement_date" string="WIL Start Date" required="1" readonly="0"/>
+										<field name="completion_date" string="WIL End date" required="1" readonly="0"/>
+										<field name="status" invisible="1" string="Enrollment Status" readonly="0"/> 
+									</tree>
+								</field>
+
+								<separator string="Candidacy" attrs="{'invisible': [('programme_type', '!=', 'Candidacy')]}"/>
+								<field name="candidacy_learnership_line" readonly="0" context="{'default_lpro_id': lpro_id,'default_learner_id': learner_id, 'default_dgtype_code': dgtype_code, 'default_financial_year_id': financial_year_id,'default_lga_number': dg_number}" attrs="{'invisible': [('programme_type', '!=', 'Candidacy')]}" domain="[('id', '=', None)]">
+									<form string="Candidacy">
+										<group>
+											<group>
+												<field name="is_employed" invisible="1"/>
+												<field name="employer_sdl" attrs="{'required': [('organisation_id', '=', False),('is_employed', '=', True)]}"/>
+												<field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+												<field name="provider_id" readonly="1" force_save="1"/> 
+												<field name="organisation_id" readonly="1" string="Employer" force_save="1"/> 
+												<field name="programme_id" options="{'no_create': True, 'no_open': True}" string="Candidacy type" required="0" invisible="1"/>
+												<field name="ofo_occupation_id" options="{'no_create': True, 'no_open': True}" string="OFO Occupation" readonly="0"/> 
+												<field name="funding_type" options="{'no_create': True, 'no_open': True}" readonly="1" string="Sponsor"/>
+												<field name="nqflevel_id" options="{'no_create': True, 'no_open': True}" required="1" string="NQF Level" readonly="0"/>
+												<field name="lga_number" required="0" string="DG Approval Ref No"/>
+												<field name="lpro_id" readonly="1" force_save="1" invisible="1"/>
+											</group>
+											<group>
+												<field name="qualification_id" options="{'no_create': True}" string="Qualification" required="1" attrs="{'invisible': [('provider_id', '=', False)]}"/> 
+												<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" required="1" readonly="0"/> 
+											</group>
+											<group>
+												<field name="socio_economic_status_id" options="{'no_create': True, 'no_open': True}" readonly="1" required="1"/>
+												<field name="commencement_date" string="Candidacy Start Date" required="1" readonly="0"/>
+												<field name="completion_date" string="Candidacy End date" required="1" readonly="0"/>
+												<field name="status" invisible ="1" string="Candidacy status" readonly="0"/>
+												<field name="learner_id" invisible="1"/>
+											</group>
+
+											<group>
+												<field name="effective_date" string="Status Effective Date" required="0"/> 
+												<field name="most_recent_registration_date" readonly="0"/>
+											</group>
+										</group>
+										<notebook>
+											<page name="unitstandards" string="Unit Standards line" invisible="1">
+												<field name="unit_standard_ids" nolabel="1" readonly="0" required="0" options="{'no_create': True, 'no_open': True}">
+													<form string="Inseta Unit Standard">
+														<div class="oe_title">
+															<h1>
+																<field name="name" placeholder="Name" readonly="0"/>
+															</h1>
+														</div>
+														<group> 
+															<group>
+																<field name="unit_standard_type" options="{'no_create': True}" required="1" invisible="0"/> 
+																<field name="code" required="1"/>
+																<field name="nqflevel_id" options="{'no_create': True}" required="1"/>
+																
+															</group>
+															<group>
+																<field name="core_credits" invisible="0"/>
+																<field name="elective_credits" required="0"/>
+																<field name="fundamental_credits" invisible="0"/>
+																<field name="credits" required="1"/>
+															</group> 
+														</group>
+													</form>
+													<tree string="Unit standards">
+														<field name="name" required="1" invisible="0"/> 
+														<field name="unit_standard_type" required="1" invisible="0"/> 
+														<field name="code" required="1"/>
+														<field name="nqflevel_id" options="{'no_create': True}" required="1"/>
+														<field name="core_credits" invisible="0" string="Core"/>
+														<field name="elective_credits" required="0" string="Elective"/>
+														<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+														<field name="credits" required="1"/>
+														
+													</tree>
+												</field>
+											</page>
+											<page name="document_ids" string="Compulsory Document" invisible="0">
+												<p style="color: red;">* Please click on each line to use the upload button</p>
+												<field name="document_ids" nolabel="1" readonly="0">
+													<tree string="Compulsory Documents" editable="bottom" delete="false">
+														<field name="learner_document2_id" force_save="1" readonly="1" invisible="0" options="{'no_create': True, 'no_open': True}"/>
+														<field name="name"/>
+														<field name="lpro_id" force_save="1" readonly="0" invisible="1"/>
+														<field name="datas" filename="data_name" required="1"/>
+														<field name="data_name" filename="data_name" invisible="0" force_save="1"/>
+														<field name="attachment_id" string="Enter Document Name" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" required="0" />
+														<field name="compliant" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin"/>
+													</tree>
+												</field>
+											</page>
+										</notebook>
+									</form>
+									<tree string="Candidacy">
+										<field name="provider_id" required="1"/> 
+										<field name="organisation_id" options="{'no_create': True}" required="1" string="Employer"/> 
+										<field name="programme_id" options="{'no_create': True}" string="Programme" required="0" invisible="1"/>
+										<field name="qualification_id" options="{'no_create': True}" string="Qualification" required="1"/>
+										<field name="financial_year_id" readonly="0"/>
+										<field name="commencement_date" string="Candidacy Start Date" required="1" readonly="0"/>
+										<field name="completion_date" string="Candidacy End date" required="1" readonly="0"/>
+										<field name="status" invisible="0" string="Enrollment Status" readonly="0"/>
+										
+									</tree>
+								</field>
+
+							</page>
+                    </notebook>
+                    <footer>
+                        <button name="post_action" string="Add Programme" type="object" default_focus="1" class="oe_highlight" />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </sheet> 
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+
+		<record id="view_provider_provider_contact_form" model="ir.ui.view">
+			<field name="name">view.inseta.provider.contact.form</field>
+			<field name="model">inseta.provider.contact</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="contact_person_designation" required="0"/>
+							<field name="contact_person_email"/>
+							<field name="contact_person_tel" required="1" />
+							<field name="contact_person_cell"/>
+							<field name="contact_person_fax"/>
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+        <!-- Registration form -->
+		<record id="view_provider_accreditation_form" model="ir.ui.view">
+			<field name="name">view.provider.accreditation.form</field>
+			<field name="model">inseta.provider.accreditation</field>
+			<field name="arch" type="xml">
+				<form string="provider accreditation">
+					<header>
+
+
+						<button name="action_submit_button" string="Submit" type="object"
+							class="oe_highlight"
+							attrs="{'invisible':[('state','not in',['draft'])]}"
+							confirm="Are you sure you want to submit?" groups="inseta_etqa.group_approved_provider,inseta_etqa.group_provider_access_user,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system"/> 
+
+                        <button name="action_evaluating_committee_approve_button" string="Verify" type="object"
+							class="oe_highlight" groups="inseta_etqa.group_etqa_accreditation_admin"
+							confirm="Are you sure you want to Evaluate ?"
+							attrs="{'invisible':[('state','!=','evaluation')]}" help="Only visible to evaluation committe"/>
+ 
+						<button name="action_verify_approve_button" string="Recommend" type="object"
+							class="oe_highlight" groups="inseta_etqa.group_etqa_accreditation_specialist"
+							attrs="{'invisible':[('state','!=','recommend')]}" help="Only visible to ETQA Accreditation specialist"/>
+
+						<button name="action_approve_button" string="Approve" type="object"
+							class="oe_highlight" groups="inseta_etqa.group_etqa_evaluating_manager"
+							attrs="{'invisible':[('state','!=','manager')]}" />
+
+						<!-- <button name="update_existing_provider" string="Update Details" type="object"
+							class="oe_highlight" attrs="{'invisible':[('is_existing_reg','!=',True)]}"/> -->
+ 
+						<button name="action_query" string="Query" type="object"
+							class="oe_highlight" groups="inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_evaluating_committee"
+							attrs="{'invisible':[('state','not in',['evaluation','recommend'])]}"
+							confirm="Are you sure you want to Confirm?"
+							/>
+
+						<button name="action_reject" string="Reject" type="object"
+							class="oe_highlight" groups="inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_evaluating_committee"
+							attrs="{'invisible':[('state','not in',['evaluation','recommend'])]}"
+							confirm="Are you sure you want to reject?"
+							/>
+ 
+						<button name="action_provider_submit_query" string="Submit Query" type="object"
+							class="oe_highlight" attrs="{'invisible':[('state','not in',['queried'])]}"
+							confirm="Are you sure you want to submit a query?"
+							/>
+
+                        <button name="action_print_certficate" string="Print Certificate" class="oe_highlight" type="object" 
+						groups="inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_etqa_accreditation_admin,base.group_system,inseta_etqa.group_it_admin"
+						attrs="{'invisible':[('state','not in',['approved'])]}"/>
+
+						<button name="action_print_accreditation_summary_statement" string="Accreditation Summary Statement" class="oe_highlight" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_approved_provider,inseta_etqa.group_provider_access_user"
+						attrs="{'invisible':[('state','not in',['approved'])]}"/>
+
+						<button name="action_send_provider_accreditation_summary_report" string="Send Statement by Mail" class="oe_highlight" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee"
+						attrs="{'invisible':[('state','not in',['approved'])]}"/>
+
+						<button name="action_send_provider_certficate" string="Send Certficate by Mail" class="btn-primary" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee"
+						attrs="{'invisible':[('state','not in',['approved'])]}"/>
+						<!-- <button name="action_print_appointment_letter" string="Print Appointment" type="object"
+							attrs="{'invisible':[('state','not in', ['done'])]}" groups="inseta_skills.group_skills_specialist, inseta_skills.group_skills_manager"
+							/>
+
+						<button name="action_print_reject_letter" string="Print Rejection Letter" type="object"
+							attrs="{'invisible':[('state','not in',['refuse'])]}" groups="inseta_skills.group_skills_specialist, inseta_skills.group_skills_manager"
+							/>  -->
+ 
+                        <button name="set_to_draft" string="Set to Draft" type="object"
+							attrs="{'invisible':[('state','not in',['denied'])]}"
+							/>
+						<field name="state" widget="statusbar" invisible="1" clickable="True"
+							statusbar_visible="draft,evaluation,queried,approved"
+							statusbar_colors='{"queried":"blue","approved":"green","denied":"red"}'
+							/>
+						<field name="manipulated_state" widget="statusbar" options="{'clickable': 1}"
+							statusbar_visible="draft,evaluation,recommend,approved"/>
+							
+					</header>
+					<sheet>
+					
+						<field name="image_512" widget='image' class="oe_left oe_avatar"
+							attrs="{'readonly':[('state','!=','draft')]}" />
+						<!-- <div class="oe_title" attrs="{'readonly':[('state','!=','draft')]}">
+							<h1>	
+								<field name="provider_name" placeholder="Training Name" required="1"
+								attrs="{'readonly':[('state','!=','draft')]}"/><br/>
+								<field name="provider_id" readonly="1" attrs="{'invisible':[('state','=','draft')]}"/><br/>
+								<field name="approval_date" invisible="0" readonly="1"/><br/>
+								<field name="start_date" attrs="{'required':[('state','=', 'manager')]}"/><br/>
+								<field name="end_date" attrs="{'required':[('state','=', 'manager')]}"/><br/>
+								<field name="accreditation_number" readonly="1"/><br/>
+							</h1>
+						</div> -->
+
+						<div class="oe_title" attrs="{'readonly':[('state','!=','draft')]}">
+							<!-- <label class="oe_edit_only" for="employer_sdl_no" string="SDL NO"/> -->
+							<!-- <h3><field name="employer_sdl_no" readonly="0" string="SDL NO" placeholder="SDL No:" attrs="{'invisible':[('is_existing_reg','=', False)],'required':[('is_existing_reg','=', True)]}"/></h3><br/> -->
+                        	
+							<div name="options">
+								<div>
+									<label class="oe_edit_only" for="provider_name" string="Legal Name"/>
+									<h2><field name="provider_name" placeholder="Legal Name" required="1"
+										attrs="{'readonly':[('state','!=','draft')]}"/></h2><br/>
+										<field name="provider_id" readonly="1" attrs="{'invisible':[('state','=','draft')]}"/><br/>
+								</div>
+								<div>
+									<label for="approval_date"/>
+									<field name="approval_date" invisible="0" readonly="1"/>
+								</div>
+								<div>
+									<label for="start_date"/>
+									<field name="start_date" attrs="{'required':[('state','=', 'manager')], 'readonly':[('state','!=', 'manager')]}"/>
+								</div>
+								<div>
+									<label for="end_date"/>
+									<field name="end_date" attrs="{'required':[('state','=', 'manager')], 'readonly':[('state','!=', 'manager')]}"/>
+									 
+								</div>
+								<div>
+									<label for="saqa_provider_code"/>
+									<field name="saqa_provider_code" attrs="{'required':[('state','=', 'manager')], 'readonly':[('state','!=', 'manager')]}" force_save="1"/>
+								</div>
+								<div attrs="{'invisible':[('state','not in',['manager'])]}">
+									<label for="provider_status"/>
+									<field name="provider_status" force_save="1" 
+									options="{'no_quick_create': True, 'no_create': True, 'no_open': True}"
+									/>
+								</div>
+								<div>
+									<label for="employer_sdl_no"/>
+									<field name="employer_sdl_no" attrs="{'readonly':[('state','!=', 'draft')]}" required="1" string="SDL NO" />
+								</div>
+								<div>
+									<label for="accreditation_number"/>
+									<field name="accreditation_number" readonly="1" force_save="1"/>
+								</div>
+							</div>
+						</div>
+						<p style="color: red;" attrs="{'invisible':[('is_existing_reg','=', False)]}">*Note: Using this will update Existing provider record</p>
+
+						<p style="color: red;" attrs="{'invisible':[('state','not in',['draft'])]}">* 1). Add Programmes, Assessor /Moderator  - 2). Click the Assessor &amp; moderator tab to link programme</p>
+						<p style="color: red;" attrs="{'invisible':[('state','not in',['evaluation'])]}">* ETQA accreditation Admin and Monitoring Clicks the Supporting Documents &amp; Verification tab to evaluate documents</p>
+						<p style="color: red;" attrs="{'invisible':[('state','not in',['recommend'])]}">* ETQA Accreditation Specialist / ETQA Verfiers verifies' the accreditation. Click the Recommendation tab to proceed</p>
+						<p style="color: red;" attrs="{'invisible':[('state','not in',['manager'])]}">* ETQA Manager Clicks Approve button, if provider exists, use the Update Details button </p>
+						
+						<group attrs="{'invisible':[('manipulated_state','!=','draft')]}"> 
+							
+							<group>
+								<field name="is_existing_reg" invisible="1"/>
+								<field name="accreditation_status" invisible="1" required="0" attrs="{'readonly':[('state','!=','draft')]}" options="{'no_quick_create': True, 'no_create': True}"/>
+								<h2><field name="reference" string="Registration. No" readonly="0" invisible="0"/> </h2>
+								<field name="is_already_seta_member" readonly="0"/>
+								<field name="trade_name" placeholder="Trade Name" readonly="0" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="email" string="Email" widget="email" invisible="0" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="registration_no" string="Company Registration Number" readonly="0" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="vat_number" readonly="0" required="0" string="Income Tax No" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="sic_code" readonly="0" required="1" string="Primary Provider focus" attrs="{'readonly':[('state','!=','draft')]}" options="{'no_quick_create': True, 'no_create': True}"/>
+								<field name="saqa_provider_code" readonly="0" required="0"/>
+								<field name="saqa_id" readonly="0" required="0"/>
+								<field name="provider_etqa_id" readonly="0" force_save="1"/>
+								<field name="current_business_years" string="Years in Business" readonly="0" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="training_material_id" readonly="0" required="1" attrs="{'readonly':[('state','!=','draft')]}" options="{'no_quick_create': True, 'no_create': True}"/>
+							</group>
+							<group string="Campus Details" invisible="1">
+								<field name="campus_name" invisible="0" required="0" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="campus_email" invisible="0" required="0" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="campus_phone" invisible="0" required="0" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="fax" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}" />
+								<field name="mobile" invisible="1" required="0"/>
+								<field name="campus_code" invisible="0" required="0"/>
+								<field name="campus_address1" string="Campus Street" invisible="0" required="0"/>
+                                <field name="campus_street_number" invisible="0" required="0"/>
+                                <field name="campus_building" invisible="0" required="0" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="campus_urban_rural" string="Campus location" invisible="0" required="0"/>
+							</group>
+							<group string="Information">
+								<field name="physical_code" placeholder='Physical Code' required="1" force_save="1" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="physical_address1" class="oe_no_button" required="1" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="physical_address2" class="oe_no_button" required="0" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="physical_address3" class="oe_no_button"
+									placeholder="State" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"
+								/>
+								<field name="physical_suburb_id" placeholder='Suburb' required="1" 
+									attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"
+									options="{'no_quick_create': True, 'no_create': True}"/> 
+								
+								<field name="physical_city_id" options="{'no_quick_create': True, 'no_create': True}"
+									attrs="{'readonly':[('state','not in',['draft', 'queried'])]}" required="1"/>
+								<field name="physical_province_id" class="oe_no_button" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"
+								/>
+								<span class="o_form_label o_td_label" name="latitude_degree">
+									<b>Latitude</b>
+								</span>
+								<div class="o_address_format" >
+									<field name="latitude_degree" placeholder="Degree" string="Degree" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+									<field name="latitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+									<field name="latitude_seconds" placeholder="Seconds" string="Seconds" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+									<button
+										string="Get Geolocation"
+										name="get_geolocation"
+										colspan="2"
+										icon="fa-check"
+										type="object"/>
+								</div>
+								<span class="o_form_label o_td_label" name="longitude_degree">
+									<b>Longitude</b>
+								</span>
+								<div class="o_address_format" >
+									<field name="longitude_degree" string="Degree" placeholder="Degree" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+									<field name="longitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+									<field name="longitude_seconds" placeholder="Seconds" string="Seconds" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+								</div>
+								<!-- <field name="longitude_degree" string="Longitude" required="0" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<span class="o_form_label o_td_label" name="latitude_degree">
+									<b>Longitude</b>
+								</span>
+								<field name="latitude_degree" string="Latitude" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<span class="o_form_label o_td_label" name="latitude_degree">
+									<b>Latitude</b>
+								</span>
+								<div class="o_address_format" >
+									<button
+										string="Get Geolocation"
+										name="get_geolocation"
+										colspan="2"
+										icon="fa-check"
+										type="object"/>
+								</div> -->
+							</group>
+							<group>
+								<field name="use_physical_for_postal_addr"/>
+								<field name="postal_code" required="1" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="postal_address1" required="1" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="postal_address2" placeholder="Postal Address Line 2" required="0" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="postal_address3" placeholder="Postal Address Line 3" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="postal_suburb_id" required="1" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="postal_city_id" required="1" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="postal_province_id" required="1" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+							</group>
+							<group>
+								<field name="number_staff_members" required="0" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/> 
+								<field name="bee_status" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="provider_type_id" required="1" readonly="0" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="provider_class_id" required="1" readonly="0" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="provider_category_id" required="1" readonly="0" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="provider_quality_assurance_id" options="{'no_quick_create': True, 'no_create': True}" string="Quality Assurance Body" readonly="0" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+								<field name="quality_assurance_code" invisible="0" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}"/>
+							</group>
+							<group>
+								
+								<field name="provider_id" options="{'no_quick_create': True, 'no_create': True}" invisible="1" required="0" readonly="1"/>
+								<field name="user_id" invisible="1" options="{'no_quick_create': True, 'no_create': True}"/> 
+							</group>
+						</group>
+                        <notebook>
+							<page name="provider_verifier" string="Supporting Documents &amp; Verification" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider">
+								<group groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider">
+									<group>
+										<field name="verifier_ids" options="{'no_quick_create': True, 'no_create': True}" widget="many2many_tags" invisible="1"/>
+										<field name="all_complaint" string="Evidence Compliant"/>
+									</group>
+									<group>
+									</group>
+								</group>
+									
+								<!-- <separator name="letters_page" string="Supporting Documents"/> -->
+								<group>
+									<group string="Supporting Documents &amp; Evidence Available / Submitted" >
+										<field name="business_lease_agreement" string="Business lease agreement" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="lease_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+										<field name="account_business_solvency_letter" string="BUSINESS ACCOUNTANT SOLVENCY LETTER" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="acc_solvency_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+										<field name="bank_account_confirmation" string="Bank Account Confirmation" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="bccount_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+										<field name="bbbeee_affidavit" string = "BBBEEE affidavit" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="bbbeee_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+										<field name="business_occupational_certificate_report" string = "Business occupational certificate report" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="boc_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+									</group>
+									<group string="-">	
+										<field name="it_servicing" string = "IT SERVICING &amp; MAINTAINANCE CONTRACT" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="it_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+										<field name="programme_curriculum" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="pc_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+										<field name="learner_details_achievement_spreadsheet" string="LEARNER ACHIEVEMENT SPREADSHEET" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="ld_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+
+										<field name="quality_management_system" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="qms_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+
+										<field name="qcto_referral_letter" attrs="{'required':[('state','=', 'draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="qcto_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+
+
+										
+										<field name="referral_letter" attrs="{'required':[('is_already_seta_member', '=', True)], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="ld_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+										<field name="company_organogram" attrs="{'required':[('state','=','draft')],'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="ld_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+										<field name="company_profile" attrs="{'required':[('state','=','draft')],'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="ld_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+										<field name="proof_of_ownership" attrs="{'required':[('state','=','draft')],'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="ld_compliant" nolabel="1" attrs="{'invisible':[('manipulated_state','!=','evaluation')]}"/>
+									
+									</group>
+									<separator string="Site Visit"/>
+									<field name="site_visit_ids" nolabel="1" domain="[('id','=',None)]" invisible="0" options="{'no_quick_create': True}" groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_etqa_accreditation_admin" attrs="{'invisible':[('all_complaint','not in', ['yes'])]}">
+										<form>
+											<group>
+												<group>
+													<field name="name" required="1"/>
+													<field name="visit_date"/>
+													<field name="outcome"/>
+													<field name="reasons"/>
+													<field name="complaint_non_complaint"/>
+													<field name="data_name" filename="data_name" invisible="0" force_save="1"/>
+													<field name="upload_document" filename="data_name" required="1"/>
+												</group>
+											</group>
+										</form>
+										<tree string="Site visit" editable="bottom" delete="false">
+											<field name="name" required="1"/>
+											<field name="visit_date"/>
+											<field name="outcome"/>
+											<field name="reasons"/>
+											<field name="upload_document" options="{'no_quick_create': True}"/>
+
+										</tree>
+									</field>
+								</group>
+										 
+							</page>
+							<page name="provider_evaluation" string="Recommendation" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_verifiers,inseta_etqa.group_etqa_accreditation_specialist">
+								<group>
+									<group>
+										<field name="etqa_manager_ids" widget="many2many_tags" invisible="1"/>
+										<field name="application_compliance" string="Application Compliance Status" placeholder="Enter Compliance Status"/>
+									</group>
+									<group>
+										<field name="accreditation_recommended" string="Accreditation Recommended"/>
+										
+									</group>
+								</group>
+
+							</page>
+							<page name="provider_programmes" string="Programmes">
+								<separator string="Unit standard"/>
+
+								<field name="unit_standard_ids" nolabel="1" required="0" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}">
+									<tree string="Unit standards" editable="bottom" delete="true">
+										<field name="name" required="1" invisible="0"/> 
+										<field name="unit_standard_type" required="1" invisible="1" options="{'no_quick_create': True, 'no_create': True}" /> 
+										<field name="code" required="1"/>
+										<field name="nqflevel_id" required="1" options="{'no_quick_create': True, 'no_create': True}"/>
+										<!-- <field name="core_credits" invisible="0" string="Core"/>
+										<field name="elective_credits" required="0" string="Elective"/>
+										<field name="fundamental_credits" invisible="0" string="Fundamental"/> -->
+										<field name="credits" required="1"/>
+										
+									</tree>
+								</field>
+								<field name="skill_programmes_ids" required="0" invisible="1" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}">
+									<tree string="Programmes" editable="bottom" delete="true">
+										<field name="name" required="1" />
+										<field name="programme_type_id" required="1" />
+										<field name="qualification_id" required="1" />
+										<field name="nqflevel_id" required="1" />
+										<field name="credits" required="1" />
+										<!-- <field name="programme_unit_id" required="1" /> -->
+									</tree>
+								</field>
+								<separator string="Learnership Programmes"/>
+								<field name="learner_programmes_ids" required="1" options="{'no_quick_create': True,'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}">
+									<tree string="Programmes" editable="bottom" delete="true">
+										<field name="name" required="1" />
+										<field name="programme_type_id" required="1" />
+										<field name="qualification_id" required="1" />
+										<field name="nqflevel_id" required="1" />
+										<field name="credits" required="1" />
+										<!-- <field name="programme_unit_id" required="1" /> -->
+									</tree>
+								</field>
+								<separator string="Qualification Programmes"/>
+								<field name="qualification_ids" required="1" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}">
+									<tree string="Qualifications">
+										<field name="name" required="1" readonly="1"/>
+										<field name="saqa_id" required="0" readonly="1"/>
+										<field name="nqflevel_id" options="{'no_quick_create': True, 'no_create': True}" required="0" readonly="1"/>
+										<field name="credits" readonly="1"/>
+										<!-- <field name="elective_credits" readonly="1"/>
+										<field name="core_credits" required="1" readonly="1"/> -->
+										<!-- <field name="registration_start_date" readonly="1"/>
+										<field name="registration_end_date" required="1" readonly="1"/> -->
+									</tree>
+									<form string="Qualifications">
+										<group>
+											<group>
+												<field name="name" required="1" readonly="1"/>
+												<field name="saqa_id" required="0" readonly="1"/>
+												<field name="nqflevel_id" required="0" readonly="1" options="{'no_quick_create': True, 'no_create': True}" />
+												<field name="credits" readonly="1"/>
+												<field name="elective_credits" readonly="1"/>
+												<field name="core_credits" required="1" readonly="1"/>
+												<field name="registration_start_date" readonly="1"/>
+											</group>
+											<group>
+												<field name="registration_end_date" required="1"/>
+												<field name="last_achievement_date" readonly="1"/>
+												<field name="last_enroll_date" readonly="1"/>
+												<field name="quality_assurance_id" readonly="1" options="{'no_quick_create': True, 'no_create': True}" />
+												<field name="qualification_type_id" readonly="1"/>
+											</group>
+										</group>
+										<notebook>
+											<page name="unitstandards" string="Unit Standards line">
+												<field name="unit_standard_ids" nolabel="1" readonly="1" required="0" options="{'no_quick_create': True, 'no_create': True}" >
+													<form string="Inseta Unit Standard">
+														<div class="oe_title">
+															<h1>
+																<field name="name" placeholder="Name" readonly="0"/>
+															</h1>
+														</div>
+														<group> 
+															<group>
+																<field name="unit_standard_type" required="1" invisible="0" options="{'no_quick_create': True, 'no_create': True}" /> 
+																<field name="code" required="1"/>
+																<field name="nqflevel_id" required="1" options="{'no_quick_create': True, 'no_create': True}" />
+																
+															</group>
+															<group>
+																<field name="core_credits" invisible="0"/>
+																<field name="elective_credits" required="0"/>
+																<field name="fundamental_credits" invisible="0"/>
+																<field name="credits" required="1"/>
+															</group> 
+														</group>
+													</form>
+													<tree string="Unit standards">
+														<field name="name" required="1" invisible="0"/> 
+														<field name="unit_standard_type" required="1" invisible="0" options="{'no_quick_create': True, 'no_create': True}" /> 
+														<field name="code" required="1"/>
+														<field name="nqflevel_id" required="1" options="{'no_quick_create': True, 'no_create': True}"/>
+														<field name="core_credits" invisible="0" string="Core"/>
+														<field name="elective_credits" required="0" string="Elective"/>
+														<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+														<field name="credits" required="1"/>
+														
+													</tree>
+												</field>
+											</page>
+										</notebook>
+									</form>
+								</field>
+							</page>
+							<page name="assess_moderator_pages" string="Assessor &amp; Moderator">
+								<separator string="Moderators"/>
+								<field name="moderator_ids" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+									<tree string="Moderators" delete="true">
+										<field name="name" string="Name" required="1" />
+										<field name="id_no" string="Identification" required="1" />
+									</tree>
+								</field>
+								<separator string="Assessors"/>
+								<field name="assessor_ids" options="{'no_quick_create': True, 'no_create': True}" attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+									<tree string="Assessors" delete="true">
+										<field name="name" string="Name" required="1" />
+										<field name="id_no" string="Identification" required="1" />
+									</tree>
+								</field>
+
+								<separator string="Facilitators"/>
+								<field name="facilitator_ids" options="{'no_quick_create': True, 'no_create': True}">
+									<tree string="Facilitators" delete="true">
+										<field name="name" string="Name" required="1" />
+										<field name="id_no" string="Identification" required="1" />
+									</tree>
+								</field>
+							</page>
+							
+							<page name="assess_moderator_link" string="Assessor &amp; Moderator linking">
+
+								<p style="color: red;">* Use identification or registration number to link, ensure the assessor and moderator exists on the moderator and assessors tab</p>
+								<separator string="Learnership Accreditation"/>
+								<field name="provider_learnership_accreditation_ids" required="1" nolabel="1" attrs="{'readonly': [('state', 'not in', ['draft', 'evaluation'])]}">
+									<tree string="Learnership" editable="bottom" delete="true">
+										<!-- <field name="parent_id" string="Parent ID" invisible="0" groups="base.group_system"/> -->
+										<field name="programme_id" string="Programme" required="1" options="{'no_create': True}" />
+										<field name="saqa_id" string="SAQA ID" required="0" />
+										<!-- <field name="assessor_no" string="Assessor ID." force_save="1"/>
+										<field name="moderator_no" string="Moderator ID." force_save="1"/>
+										<field name="assessors_id" required="1" readonly="0" options="{'no_create': True}"/>
+										<field name="assessor_sla_document" required="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="moderators_id" required="1" readonly="0" options="{'no_create': True}"/>
+										<field name="moderator_sla_document" required="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/> -->
+										
+									</tree>
+								</field>
+
+								<field name="provider_unit_standard_ids" required="1" nolabel="1" attrs="{'readonly': [('state', 'not in', ['draft', 'evaluation'])]}">
+									<tree string="Unit Standard" editable="bottom" delete="true">
+										<!-- <field name="parent_id" string="Parent ID" invisible="0" groups="base.group_system"/> -->
+										<field name="programme_id" string="Programme" required="1" options="{'no_create': True}" />
+										<field name="saqa_id" string="SAQA ID" required="0" />
+										<!-- <field name="assessor_no" string="Assessor ID." force_save="1"/>
+										<field name="moderator_no" string="Moderator ID." force_save="1"/>
+										<field name="assessors_id" required="1" readonly="0" options="{'no_create': True}"/>
+										<field name="assessor_sla_document" required="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="moderators_id" required="1" readonly="0" options="{'no_create': True}"/>
+										<field name="moderator_sla_document" required="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/> -->
+										
+									</tree>
+								</field>
+								<separator string="Skills Programme Accreditation"/>
+                                <field name="provider_skill_accreditation_ids" invisible="1" nolabel="1" attrs="{'readonly': [('state', 'not in', ['draft', 'evaluation'])]}">
+									<tree string="Learnership" editable="bottom" delete="true">
+										<field name="programme_id" string="Programme" required="1" options="{'no_create': True}"/>
+										<field name="saqa_id" string="SAQA ID" required="0" />
+										<!-- <field name="assessor_no" string="Assessor No."/>
+										<field name="moderator_no" string="Moderator No."/>
+										<field name="assessors_id" required="1" readonly="0" options="{'no_create': True}"/>
+										<field name="assessor_sla_document" required="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="moderators_id" required="1" readonly="0" options="{'no_create': True}"/>
+										<field name="moderator_sla_document" required="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/> -->
+										
+									</tree>
+								</field>
+
+								<separator string="Qualification Programme Accreditation"/>
+								<!-- <field name="provider_qualification_ids" required="1" attrs="{'readonly':[('state','not in',['draft', 'queried'])]}" nolabel="1"
+								context="{}" > -->
+								<field name="provider_qualification_ids" context="{'default_provider_accreditation_qualification_id': active_id}" attrs="{'readonly': [('state', 'not in', ['draft', 'evaluation'])]}">
+									<tree string="Qualifications" editable="bottom" delete="true">
+										<field name="provider_accreditation_qualification_id" invisible="1"/>
+										<field name="qualification_id" string="Programme" required="1" options="{'no_create': True}"/>
+										<field name="saqa_id" string="SAQA ID" required="0"/>
+										<field name="assessor_no" string="Assessor ID" required="0" invisible="1"/>
+										<field name="moderator_no" string="Moderator ID" required="0" invisible="1"/>
+										<field name="assessors_id" required="0" invisible="1" readonly="0" options="{'no_create': True}"/>
+										<field name="assessor_sla_document" required="0" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="moderators_id" required="0" invisible="1" readonly="0" options="{'no_create': True}"/>
+										<field name="moderator_sla_document" required="0" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+									</tree>
+									<form>
+										<sheet>
+											<group>
+												<group>
+													<field name="provider_accreditation_qualification_id"/>
+													<field name="qualification_id" string="Programme" required="0" invisible="1"/>
+													<!-- <field name="saqa_id" string="SAQA No." required="0"/> -->
+													<field name="assessor_no" string="Assessor No." required="0" invisible="1"/>
+													<field name="assessors_id" required="0" invisible="1" readonly="1" domain="[('id','=',None)]" options="{'no_quick_create': True, 'no_create': True}"/>
+													<field name="assessor_sla_document" required="0" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+													 
+												</group>
+
+												<group>
+													 
+													<field name="moderator_no" string="Moderator No." required="0" invisible="1"/>
+													<field name="moderators_id" required="0" invisible="1" readonly="1" domain="[('id','=',None)]" options="{'no_quick_create': True, 'no_create': True}"/>
+													<field name="moderator_sla_document" required="0" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+									
+												</group>
+											</group>
+										</sheet>
+									</form>
+								</field>
+								 
+							</page>
+							<page name="documents" string="Certificates">
+								<!-- <field name="qualification_certificate_copy_ids" attrs="{'required':[('state','=','draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}">
+									<tree string="Certificate Copy" editable="bottom">
+										<field name="name" required="1"/> 
+									</tree>
+								</field> -->
+								<separator string="Director CVs"/>
+								<field name="director_cv_ids" attrs="{'required':[('state','=','draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}">
+									<tree string="Director CVs" editable="bottom">
+										<field name="name" required="1"/> 
+									</tree>
+								</field>
+								<separator string="CIPC"/>
+								<field name="cipc_dsd_ids" attrs="{'required':[('state','=','draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}">
+									<tree string="CIPC" editable="bottom">
+										<field name="name" required="1"/> 
+									</tree>
+								</field>
+								<separator string="Tax Clearance"/>
+								<field name="tax_clearance_ids" attrs="{'required':[('state','=','draft')], 'readonly':[('state','not in',['draft', 'queried'])]}" domain="[('id','=',None)]" options="{'no_quick_create': True}">
+									<tree string="Tax Clearance" editable="bottom">
+										<field name="name" required="1"/> 
+									</tree>
+								</field>
+								 
+							</page>
+ 	
+							<page name="cntperson" string="Contact persons &amp; Delivery Center">
+								 
+								<!-- <separator string="Contact person"/> -->
+								<!-- <field name="contact_person_id" required="0" options="{'no_quick_create': True}"/> -->
+ 								<!-- <field name="contact_person_ids" nolabel="1" domain="[('id','=',None)]" invisible="0" options="{'no_quick_create': True}">
+									<form>
+										<group>
+											<group>
+												<field name="name" required="1"/>
+												<field name="contact_person_designation" required="0"/>
+												<field name="contact_person_tel" required="0" />
+												<field name="contact_person_cell"/>
+												<field name="contact_person_fax"/>
+											</group>
+										</group>
+									</form>
+									<tree string="Contact persons" editable="bottom" delete="false">
+										<field name="name" required="1"/>
+										<field name="contact_person_designation" required="0"/>
+										<field name="contact_person_tel" required="0" />
+										<field name="contact_person_cell"/>
+										<field name="contact_person_fax"/>
+
+									</tree>
+
+								</field>
+								
+								<separator string="Campus information 2" invisible="1"/>
+								<form>
+									<group>
+										<group>
+											<field name="campus2_name"/>
+											<field name="campus2_phone"/>
+											<field name="campus2_email"/>
+											<field name="campus2_building"/>
+										</group>
+										<group>
+											<field name="campus2_address1"/>
+											<field name="campus2_address2"/>
+											<field name="campus2_street_number"/>
+											<field name="campus2_urban_rural"/>
+										</group>
+									</group>
+								</form> -->
+								<separator string="Delivery Center"/>
+ 								<field name="delivery_center_ids" nolabel="1" invisible="0" options="{'no_quick_create': True}" attrs="{'readonly':[('state','!=','draft')]}">
+									<form>
+										<group>
+											<group>
+												<field name="name" required="1"/>
+												<field name="contact_person_name"/>
+												<field name="contact_person_tel"/>
+												<field name="contact_person_cell"/>
+												<field name="contact_person_email"/>
+												<field name="contact_person_fax"/>
+											</group>
+										</group>
+									</form>
+									<tree string="Contact persons" editable="bottom" delete="false">
+										<field name="name" required="1"/>
+										<field name="contact_person_name" required="0"/>
+										<field name="contact_person_tel" required="1" />
+										<field name="contact_person_cell"/>
+										<field name="contact_person_fax"/>
+
+									</tree>
+
+								</field>
+								<separator string="Provider contact person"/>
+ 								<field name="provider_contact_person_ids" nolabel="1" invisible="0" options="{'no_quick_create': True}" attrs="{'readonly':[('state','!=','draft')]}">
+									<form>
+										<group>
+											<group>
+												<field name="name" required="1"/>
+												<field name="contact_person_surname"/>
+												<field name="contact_person_tel"/>
+												<field name="contact_person_cell"/>
+												<field name="contact_person_email"/>
+												<field name="contact_person_fax"/>
+											</group>
+										</group>
+									</form>
+									<tree string="Contact persons" editable="bottom" delete="false">
+										<field name="name" required="1"/>
+										<field name="contact_person_surname" required="0"/>
+										<field name="contact_person_tel" required="1" />
+										<field name="contact_person_cell"/>
+										<field name="contact_person_fax"/>
+
+									</tree>
+
+								</field>
+                                <field name="campus_details" widget="text" readonly="1"/>
+
+							</page>
+							
+                            <page name="general_comment" string="General Comments">
+                                <field name="comments" readonly="1" placeholder="Comments..."/>
+                            </page>
+                            <page name="refusal_comment" string="Refusal Comments">
+                                <field name="refusal_comment" readonly="1" placeholder="Refusal Comments..."/>
+                            </page>
+                        </notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+		<!-- Provider accreditation Form Ends -->
+
+		<!--  Provider accreditation Tree Starts -->
+		<record id="view_provider_accreditation_tree" model="ir.ui.view">
+			<field name="name">view.inseta.provider.accreditation.tree</field>
+			<field name="model">inseta.provider.accreditation</field>
+			<field name="arch" type="xml">
+				<tree string="Provider Accreditation">
+					<field name="employer_sdl_no" string="SDL NO" readonly="0"/>
+					<field name="provider_name" />
+					<field name="start_date" />
+					<field name="end_date" />
+                    <field name="provider_status" />
+                    <field name="state" string="Application Status"/>
+				</tree>
+			</field>
+		</record>
+		<!-- SDF Registration Tree Ends -->
+
+		<record id="view_provider_accreditation_filter" model="ir.ui.view">
+			<field name="name">Provider Accreditation</field>
+			<field name="model">inseta.provider.accreditation</field>
+			<field name="arch" type="xml">
+				<search string="Provider Accreditation">
+					<field name="provider_id" />
+					<field name="trade_name" />
+					<field name="email" />
+					<field name="provider_id" />
+					<field name="is_already_seta_member" />
+					<!-- <group expand="0" string="Group By">
+						<filter string="Status" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Work Province" icon="terp-personal" domain="[]" context="{'group_by':'physical_province_id'}"/>
+						<filter string="Postal Province" icon="terp-personal" domain="[]" context="{'group_by':'postal_province_id'}"/>
+					</group> -->
+				</search>
+			</field>
+		</record>
+
+		<!-- SDF Registration Action. -->
+		<record id="action_provider_accreditation" model="ir.actions.act_window">
+			<field name="name">Provider Accreditation</field>
+			<field name="res_model">inseta.provider.accreditation</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_provider_accreditation_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Register Provider Accreditation. 
+				</p>
+			</field>
+		</record>
+
+        <record id="provider_accreditation_existing_action1" model="ir.actions.act_window">
+			<field name="name">Existing Provider Accreditation</field>
+			<field name="res_model">inseta.provider.accreditation</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_provider_accreditation_filter" />
+            <field name="context">{'default_is_existing_reg': 1}</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Register Provider Accreditation.
+				</p>
+			</field>
+		</record> 
+        
+		<record id="action_provider_class" model="ir.actions.act_window">
+			<field name="name">Provider Class</field>
+			<field name="res_model">res.provider.class</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+				</p>
+			</field>
+		</record>
+
+		<record id="action_provider_type" model="ir.actions.act_window">
+			<field name="name">Provider Type</field>
+			<field name="res_model">res.provider.type</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+				</p>
+			</field>
+		</record>
+
+		<record id="action_provider_category" model="ir.actions.act_window">
+			<field name="name">Provider category</field>
+			<field name="res_model">res.provider.category</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+				</p>
+			</field>
+		</record>
+
+		<record id="action_training_material" model="ir.actions.act_window">
+			<field name="name">Training Material</field>
+			<field name="res_model">inseta.training.material</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+				</p>
+			</field>
+		</record>
+
+        <menuitem id="etqa_root_menu" name="ETQA" sequence="6" 
+		groups="inseta_etqa.group_accessor_moderator_reg,base.user_admin,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_accessor_access_user,inseta_etqa.group_moderator_access_user,inseta_etqa.group_etqa_verifiers,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,base.group_system,inseta_etqa.group_etqa_accreditation_specialist,inseta_skills.group_employer,inseta_etqa.group_etqa_user"
+		/>
+		<menuitem id="provider_registration_menu" name="Providers"
+		groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_user,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_provider_access_user,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_etqa_verifiers"
+		sequence="2" parent="etqa_root_menu" />
+			<menuitem id="provider_accreditation_menu" name="Provider Accreditation"
+			sequence="2" parent="provider_registration_menu" action="action_provider_accreditation" 
+			groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_user,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist"/>
+			
+			<menuitem id="existing_provider_accreditation_menu" name="Existing Provider Accreditation"
+			sequence="3" parent="provider_registration_menu" action="provider_accreditation_existing_action1" 
+			groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_user,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system"/>
+		
+		<!-- Main ETQA Menu -->
+		<menuitem id="etqa_configuration_menu" name="Programme Setup" sequence="20" parent="etqa_root_menu"
+		groups="base.user_admin,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_etqa_user"/>
+		
+		<menuitem id="etqa_configuration_main_menu" name="Configuration" sequence="22" parent="etqa_root_menu"
+		groups="base.user_admin,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verifiers"/>
+		
+
+		<menuitem id="inseta_provider_config_menu_id" name="Provider &amp; Materials"
+		sequence="6" parent="inseta_etqa.etqa_configuration_main_menu" groups="base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verifiers"/> 
+		<menuitem id="inseta_provider_class_menu_id" name="Provider Class"
+		sequence="1" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_provider_class" groups="base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verifiers"/> 
+		<menuitem id="inseta_provider_type_menu_id" name="Provider Type"
+		sequence="2" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_provider_type" groups="base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verifiers"/> 
+
+		<menuitem id="inseta_provider_category_menu_id" name="Provider Category"
+		sequence="3" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_provider_category" groups="base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verifiers"/>
+
+		<menuitem id="inseta_training_material_menu_id" name="Training material"
+		sequence="5" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_training_material" groups="base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verifiers"/>
+</odoo>

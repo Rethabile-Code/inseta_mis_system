@@ -1,0 +1,225 @@
+<odoo>
+  <data>
+    
+    <report 
+            id="learning_youth_funding_agreement_report"
+            model="inseta.lpro"
+            string="Youth Funding Aggrement Letter"
+            report_type="qweb-pdf"
+            name="inseta_learning_programme.learning_youth_funding_agreement_template"
+            file="inseta_learning_programme.learning_youth_funding_agreement_template"
+            paperformat="inseta_etqa.paperformat_moderator_letter"
+
+        />
+
+    <template id="learning_youth_funding_agreement_template">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-3">
+                    <!-- <img src='/inseta_etqa/static/description/icon.png' style="max-height: 70px;"/> -->
+                </div>
+                <div class="col-xs-offset-2 text-right">
+                    .
+                </div>
+            </div>
+            <hr/> 
+        </div>
+        
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="max-width: 800px; margin: auto;">
+
+                    <style>
+                        body {
+                            line-height: 180%;
+                            font-size: 18px;
+                            font-family: 'EB Garamond';
+                        }
+
+                        page {
+                            margin-bottom: -30px;
+                        }
+
+                        p {
+                        text-align: justify;
+                            margin: 0;
+                        }
+
+                        .abc {
+                                margin-left: 40px;
+                                list-style-type: lower-alpha;
+                                }
+
+                        li {
+                        text-align: justify;
+                            padding-top: 2%;
+                            padding-bottom: 20px;
+                        }
+                        .signleft {
+                            text-align: left;
+                            margin-right: 10px;
+                        }
+
+                        .signright {
+                            text-align: right;
+                            margin-left: 10px;
+                            margin-top:-40px;
+                        }
+                        .signleft2 {
+                            text-align: left;
+                            margin-left: 200px;
+                        }
+
+                        .signright2 {
+                            text-align: right;
+                            margin-right: 200px;
+                            margin-top:-30px;
+                        }
+                        table,
+                        th,
+                        td {
+                            padding: 10px;
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                        }
+                    </style>
+
+                    
+                    <br/><br/>
+                    <br/><br/>
+                    <span t-field="o.organisation_id.name"/>,<br/>
+                    <span t-field="o.organisation_id.sdl_no"/> <br/>
+                    <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')"/></p>
+                    <br/><br/>
+                    <h4 style="text-align: center;"><strong><u>RE: Learnership Funding Agreement <t t-esc="o.financial_year_id.name"/>-<t t-esc="o.dg_evaluation_id.name"/></u></strong></h4>
+                    <p>The INSETA is pleased to confirm that you have been allocated Discretionary Grants as outlined below according to <br/>
+                    to the number of the learner documents submitted in line with the recommendation letter.<br/>
+                    </p><br/>
+                    <div class="row" style="font-size: 16px;">		
+						<table>
+                            <thead>  
+                            <!-- <table style="width: 100%; text-align: left;"> -->
+                                <tr>
+                                    <th>Learnership Title</th>
+                                    <th>Level</th>
+                                    <th>LGA Number</th>
+                                    <th>Start&amp; End Date</th>
+                                    <th>No. of Employed Learners</th>
+                                    <th>No. of Unemployed Learners</th>
+                                    <th>No. of Unemployed Disabled</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <t t-foreach="o.evaluation_ids" t-as="dg_line">
+                                <tbody>
+                                    <tr>
+                                        <td> <span t-esc="dg_line.learnership_id.name"/></td>
+                                        <td><span t-esc="dg_line.learnership_id.nqflevel_id.name"/> </td>
+                                        <td> <span t-esc="dg_line.name"/></td>
+                                        <td> <span t-esc="dg_line.dgapplicationdetails_id.start_date"/> -  <span t-esc="dg_line.dgapplicationdetails_id.end_date"/></td>
+                                        <td> <span t-esc="dg_line.total_employed"/></td>
+                                        <td> <span t-esc="dg_line.total_unemployed"/></td>
+                                        <td> <span t-esc="dg_line.disabled_approved"/></td>
+                                        <td> <span t-esc="dg_line.amount_total_approved" t-options='{"widget": "monetary", "display_currency": o.create_uid.company_id.currency_id}'/></td>
+                                    </tr>
+                                </tbody>
+                            </t> 
+                        </table>
+                    </div>
+                    <p style="padding-left: 25px;text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;" >
+                        <p><strong>In order to retain this funding you will be required to comply with the following terms and conditions:  </strong></p>
+                        1.	Read and understood the Learnership Guidelines for Unemployed Youth and/or Learnership Guidelines for Employed, as applicable<br/>
+                        2.	Read and understood the Discretionary Grant Monitoring  and Evaluation Policy and Guidelines<br/>
+                        3.	Accommodate any site visit from any INSETA official as per the Discretionary Grant Monitoring and Evaluation Policy and Guidelines<br/>
+                        4.	Ensure that you receive approval from INSETA for any changes/deviations from the approved application<br/>
+                    </p>
+                    <p style="padding-left: 25px;text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;" >
+                        <strong>In addition, you will be required to submit the following to the Learning Division.  Failure to submit to the Learning Division at the agreed<br/> 
+                        time will result in the cancellation of the Learnership
+                        </strong>
+                    </p>
+                    <p style="padding-left: 25px;text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;" >
+                        5.	This letter must be signed by the authorised signatory and returned to INSETA within 10 working days of receipt<br/>
+                        6.	Invoice in accordance with Learnership Guidelines for Unemployed Youth and/or Learnership Guidelines for Employed, <br/>
+                        whichever is applicable, and submit the first tranche invoice on request<br/>
+                        7.	Progress reports at midpoint of learnership<br/>
+                        8.	Payslips (for unemployed learners, if applicable) at midpoint of learnership<br/>
+                        9.	Closure report 14 days after closure of the programme<br/>
+                        10.	Payslips (for unemployed learners, if applicable) at closure of learnership<br/>
+                        11.	Termination reports within 14 days of learner termination from the programme<br/>
+                    </p>
+                    <br/>
+                    <div class="row">
+                        <p style="text-align: left; font-family: 'Times New Roman', Times, serif; font-size: 20px;"><strong>SPECIAL CONDITIONS:</strong></p>
+                            The funding for the Work Readiness Programme and Regulatory Examination will be disbursed as per below:<br/>
+                            1.	Work Readiness Programme fee R7 500,00 per learner (payment will be done upon receipt of Statement of Result or Certificate of Completion from the Skills Development Provider)<br/>
+                            2.	RE Exam R1 700,00 per learner (payment will be done upon receipt of booking confirmation for the exam)<br/>
+                    </div><br/>
+                    <div class="row">
+                        <p style="text-align: left; font-family: 'Times New Roman', Times, serif; font-size: 20px;"><strong>GENERAL TERMS AND CONDITIONS:</strong></p>
+                            <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                                <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                                    1.	This funding agreement terminates upon  discharge by INSETA and the Employer, of the obligations contained in this document<br/>
+                                    2.	Any termination of learners within the period of this funding agreement will result in the automatic adjustment of the funding value<br/>
+                                    3.	INSETA may terminate the commitment at any time in part or in full without prejudice to any rights to which it is entitled in terms of the law or by virtue of this Agreement if the Employer:<br/>
+                                        <li>Deviates substantially from the aims and objectives of the programme without consulting INSETA and obtaining prior approval</li><br/>
+                                        <li>Fails to meet any of its obligations arising from relevant legislation, the Learnership Guidelines for Unemployed/Employed and those appearing in this Agreement</li> <br/>
+                                        <li>Breaches any terms of this agreement and those arising from relevant legislation and fails to rectify the breach within 14 days of receipt of the INSETA’s written notice.</li><br/>
+
+                                    4.	In the case of breach or termination of this contract, INSETA may, without further notice to Employer:
+                                        <li>Discontinue any further payment</li><br/>
+                                        <li>Reclaim in full or in part any amount already paid</li><br/>
+                                        <li>Decline any further funding applications from the employer</li><br/>
+
+                                    5.	In the event that any of the parties to this agreement is unable to perform any of their respective obligations in terms of this agreement, and such non-performance results from<br/>
+                                         occurrences beyond the reasonable control of the parties concerned, such failure shall not constitute a breach of this contract<br/>
+
+                                    6.	Note all administration and Invoices must be submitted to INSETA by due date, failing which all funds not utilised for the purposes allocated will revert to INSETA automatically,<br/>
+                                        without further notification. <br/>
+
+                                    Please note that any portion of the Discretionary Grant not used for purposes allocated during the period of the programme will revert to INSETA<br/>
+                                    Kindly quote reference number <span t-field="o.dg_evaluation_id.name"/>,<br/> for all correspondence regarding this recommendation<br/>
+
+                                </p><br/>
+                            </p>
+                    </div>
+                    <div class="row">
+                        <center><strong>Accepted and signed on behalf of the Employer by</strong></center><br/>
+                        <!-- ON THIS DAY <t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /><br/> -->
+                        <div class="row">
+                    
+                            _______________________ON THIS, _______________________ DAY OF _______________________ <br/>
+                            NAME<br/>
+                        </div><br/>
+                        <div>
+                            <div class="signleft">
+                                _______________________<br/>
+                                DESIGNATION<br/>
+                            </div>
+                            <div class="signright">
+                            AS WITNESS:<br/>
+                                1. _______________________<br/><br/><br/>
+                                2. _______________________<br/>
+                            </div>
+                        </div><br/>
+
+                        <center><strong>Accepted and signed on behalf of INSETA by:</strong></center><br/>
+                        ON THIS DAY <t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /><br/>
+                        <div>
+                            <div class="signleft">
+                                _______________________<br/>
+                                DESIGNATION<br/>
+                            </div>
+                            <div class="signright">
+                            AS WITNESS:<br/>
+                                1. _______________________<br/><br/><br/>
+                                2. _______________________<br/>
+                            </div>
+                        </div><br/>
+                    </div><br/>
+                </div>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

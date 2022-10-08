@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mis_environment" model="ir.config_parameter">
+            <field name="key">mis_environment</field>
+            <field name="value">development</field>
+        </record>
+
+        <record id="sage_base_url" model="ir.config_parameter">
+            <field name="key">sage.base.url</field>
+            <field name="value">https://ess.inseta.org.za/Sage300WebApi/v1.0/-/PHADAT</field>
+        </record>
+
+        <record id="sage_username" model="ir.config_parameter">
+            <field name="key">sage.username</field>
+            <field name="value">MIS</field>
+        </record>
+
+        <record id="sage_username" model="ir.config_parameter">
+            <field name="key">sage.password</field>
+            <field name="value">MIS123</field>
+        </record>
+    </data>
+</odoo>

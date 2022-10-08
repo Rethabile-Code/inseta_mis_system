@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_etqa" model="ir.module.category">
+        <field name="name">ETQA</field>
+        <field name="description">ETQA </field>
+        <field name="sequence">34</field>
+    </record>
+
+    <record id="group_learner" model="res.groups">
+        <field name="name">Learner</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+    <record id="group_etqa_evaluating_committee" model="res.groups">
+        <field name="name">ETQA accreditation and Monitoring</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_etqa_evaluating_admin" model="res.groups">
+        <field name="name">ETQA Administrator</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_etqa_verifiers" model="res.groups">
+        <field name="name">ETQA Verification (Verifiers)</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+    <record id="group_etqa_verification_admin" model="res.groups">
+        <field name="name">ETQA Verification Admin</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_etqa_assessment_admin" model="res.groups">
+        <field name="name">ETQA Assessment Admin</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_etqa_assessment_specialist" model="res.groups">
+        <field name="name">ETQA Assessment Specialist</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_pmo_specialist" model="res.groups">
+        <field name="name">PMO View Only</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+    <record id="group_etqa_accreditation_specialist" model="res.groups">
+        <field name="name">ETQA Accreditation Specialist</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_etqa_accreditation_admin" model="res.groups">
+        <field name="name">ETQA Accreditation Admin</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_etqa_evaluating_manager" model="res.groups">
+        <field name="name">ETQA Manager</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_etqa_user" model="res.groups">
+        <field name="name">ETQA View Only</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+        <!-- <field name="users" eval="[(4, ref('base.user_admin'))]"/> -->
+    </record>
+
+    <record id="group_provider_access_user" model="res.groups">
+        <field name="name">Provider</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+    <record id="group_approved_provider" model="res.groups">
+        <field name="name">Registered Provider</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+    <record id="group_admin_audit_access_user" model="res.groups">
+        <field name="name">Administrator Audit View</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+    <record id="group_accessor_moderator_reg" model="res.groups">
+        <field name="name">Assessor &amp; Moderator Reg. Admin</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+    <record id="group_accessor_access_user" model="res.groups">
+        <field name="name">ASSESSOR</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+    <record id="group_moderator_access_user" model="res.groups">
+        <field name="name">MODERATOR</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+    <record id="group_etqa_admin_dataclean" model="res.groups">
+        <field name="name">ETQA Data CleanUp Administrator</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record> 
+    <record id="group_approved_assesor" model="res.groups">
+        <field name="name">Approved Assessor</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+    <record id="group_approved_moderator" model="res.groups">
+        <field name="name">Approved Moderator</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+    <record id="group_it_admin" model="res.groups">
+        <field name="name">ETQA IT Admin</field>
+        <field name="category_id" ref="inseta_etqa.module_category_etqa"/>
+    </record>
+
+
+</odoo>

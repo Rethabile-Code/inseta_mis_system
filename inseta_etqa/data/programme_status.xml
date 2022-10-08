@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- <record model="inseta.program.status" id="id_programme_status_01">
+            <field name="name">Registered</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_02">
+            <field name="name">Completed</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">0</field>
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_03">
+            <field name="name">Uncompleted</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_04">
+            <field name="name">Dropped</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">3</field>
+        </record>
+
+        <record model="inseta.program.status" id="id_programme_status_05">
+            <field name="name">Dropped</field>
+            <field name="active">True</field>
+            <field name="legacy_system_id">3</field>
+        </record> -->
+    </data>
+</odoo>

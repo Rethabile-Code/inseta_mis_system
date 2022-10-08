@@ -1,0 +1,192 @@
+<odoo>
+  <data>
+    
+    <report 
+            id="internship_funding_agreement_report_old"
+            model="inseta.lpro"
+            string="Funding Aggrement Letter"
+            report_type="qweb-pdf"
+            name="inseta_learning_programme.internship_funding_agreement_template_old"
+            file="inseta_learning_programme.internship_funding_agreement_template_old"
+            paperformat="inseta_etqa.paperformat_moderator_letter"
+
+        />
+
+    <template id="internship_funding_agreement_template_old">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-3">
+                    <img src='/inseta_etqa/static/description/icon.png' style="max-height: 70px;"/>
+                </div>
+                <div class="col-xs-offset-2 text-right">
+                    .
+                </div>
+            </div>
+            <hr/> 
+        </div>
+        
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="max-width: 660px; margin: auto;">
+
+                    <style>
+                        body {
+                            line-height: 180%;
+                            font-size: 18px;
+                            font-family: 'EB Garamond';
+                        }
+
+                        page {
+                            margin-bottom: -30px;
+                        }
+
+                        p {
+                        text-align: justify;
+                            margin: 0;
+                        }
+
+                        .abc {
+                                margin-left: 40px;
+                                list-style-type: lower-alpha;
+                                }
+
+                        li {
+                        text-align: justify;
+                            padding-top: 2%;
+                            padding-bottom: 20px;
+                        }
+                        .signleft {
+                            text-align: left;
+                            margin-right: 10px;
+                        }
+
+                        .signright {
+                            text-align: right;
+                            margin-left: 10px;
+                            margin-top:-40px;
+                        }
+                        .signleft2 {
+                            text-align: left;
+                            margin-left: 200px;
+                        }
+
+                        .signright2 {
+                            text-align: right;
+                            margin-right: 200px;
+                            margin-top:-30px;
+                        }
+                    </style>
+
+                    
+                    <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /></p>
+                    <br /><br/>
+                    <span t-field="o.organisation_id.name"/>,<br/>
+                    <span t-field="o.organisation_id.street"/>,<br/>
+                    <span t-field="o.physical_city_id.name"/>,<span t-field="o.organisation_id.state_id.name"/>,<br/>
+                    <span t-field="o.organisation_id.country_id.name"/> <br/>
+
+                    <p align="justify">
+                        Dear <span t-field="o.organisation_id.name"/>,
+                    </p>
+
+                    <h4 style="text-align: center;"><strong><u>Final Internship Funding Allocation Letter</u></strong></h4>
+ 
+                    <p>The INSETA is pleased to confirm that you have been allocated Discretionary Grants as <br/>
+                    follows against the internships outlined below according to the number of the internships Agreements <br/>
+                    and other required documents submitted in line with the recommendation letter. <br/>
+                    </p>
+                    
+                    
+                    You may now access the system using the following link  <br/>
+                    http://indicium.inseta.org.za/web/login <br/>
+
+                    
+                    
+                    <p style="padding-left: 25px;text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;" >
+                        <p><strong>In order to retain this funding you will be required to comply with the following terms and conditions: </strong></p>
+                        1. Acknowledge to have read and understood the guidelines for Internships programme<br/>
+                        2. Read and understand the monitoring and Evaluation policy<br/>
+                        3. Submit 1st Tranche invoice in accordance with guideline upon request<br/>
+                        4. Submit progress reports at midpoint <br/>
+                        5. Submit payslips at midpoint if applicable<br/>
+                        6. Accommodate any site visit from any INSETA official as per the Discretionary Guide Policy<br/>
+                        7. Submit closure report and payslips if applicable 7 days after closure of the programme <br/>
+                        8. Submit all invoices in accordance with guideline<br/>
+                        9. Please ensure that you receive approval from INSETA if any changes/deviations<br/>
+                        10.Note that all administration and invoices must be submitted to INSETA by 01/03/2022<br/>
+                    </p>
+
+                    <div class="row">
+                        <p style="text-align: left; font-family: 'Times New Roman', Times, serif; font-size: 24px;"><strong><u>GENERAL TERMS AND CONDITIONS:</u></strong></p>
+                            <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                                <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                                    This funding commitment terminates upon discharge by INSETA and the Employer, of the obligations contained in this document.<br/>
+
+                                    1.  INSETA may terminate this commitment at any time in part or in full without<br/>
+                                        prejudice to any rights to which it is entitled in terms of the law or by virtue of this<br/>
+                                        Agreement if the Employer:
+
+                                        <li>Deviates substantially from the aims and objectives of the programme without consulting INSETA and obtaining approval;</li><br/>
+                                        <li>Fails to meet any of its obligations arising from relevant legislation and those appearing in the Internship Agreement.</li> <br/>
+                                        <li>Breaches any terms of this agreement and those appearing in the Internship Agreement and fails to rectify the breach within 14 days of receipt of the INSETA’s written notice.</li><br/>
+
+                                    2.  In the case of breach or termination of this contract, INSETA may, without further notice to the Employer:<br/>
+
+                                        <li>discontinue any further payment;</li> 
+                                        <li>relocate the Intern(s) to another employer;</li> 
+                                        <li>reclaim in full or in part any amount already paid;</li> 
+                                        <li>charge compound interest as prescribed in the Prescribed Rate of Interest Act, <br/>
+                                        1975 (Act No. 55 of 1975), calculated from the date of cancellation or final <br/>
+                                        date of performance of this Agreement and may recover from the Employer, any <br/>
+                                        legal costs incurred by INSETA, including collection commission on an attorney <br/>
+                                        and client scale.
+                                        <li>Decline any further funding applications from the employer.
+
+                                    3.  In the event that any of the parties to this agreement is unable to perform any <br/>
+                                        of their respective obligations in terms of this agreement, and such non-performance <br/>
+                                        results from occurrences beyond the reasonable control of the parties concerned, <br/>
+                                        such failure shall not constitute a breach of this contract.
+
+                                    Please note that any portion of the Discretionary Grant not used for purposes allocated <br/>
+                                    during the period of the programme will revert to INSETA.<br/>
+                                    Kindly quote the reference number with all correspondence regarding this recommendation<br/>
+                                    This letter must be signed by delegated official and returned to INSETA within 10 working days of receipt.<br/>
+
+                                </p><br/>
+                            </p>
+                    </div>
+                    <div class="row">
+                        <center><strong>Accepted and signed on behalf of the Employer: Northwood Financial Services</strong></center><br/>
+                        ON THIS DAY <t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /><br/>
+                        <div>
+                            <div class="signleft">
+                                _______________________<br/>
+                                DESIGNATION<br/>
+                            </div>
+                            <div class="signright">
+                            AS WITNESS:<br/>
+                                1. _______________________<br/><br/><br/>
+                                2. _______________________<br/>
+                            </div>
+                        </div><br/>
+
+                        <center><strong>Accepted and signed on behalf of INSETA by:</strong></center><br/>
+                        ON THIS DAY <t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /><br/>
+                        <div>
+                            <div class="signleft">
+                                _______________________<br/>
+                                DESIGNATION<br/>
+                            </div>
+                            <div class="signright">
+                            AS WITNESS:<br/>
+                                1. _______________________<br/><br/><br/>
+                                2. _______________________<br/>
+                            </div>
+                        </div><br/>
+                    </div><br/>
+                </div>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

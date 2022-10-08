@@ -1,0 +1,161 @@
+<odoo>
+    <data>
+      <record id="view_wspatr_payment_tree" model="ir.ui.view">
+			<field name="name">inseta.wspatr.payment.tree</field>
+			<field name="model">inseta.wspatr.payment</field>
+			<field name="arch" type="xml">
+				<tree string="WSP/ATR Payment"> 
+					<field name="name"/>
+					<field name="financial_year_id"/>
+					<field name="wspatr_period_id"/>
+                    <field name="create_uid" string="Created By" />
+                    <field name="create_date" string="Created Date" />
+                    <field name="approved_by" string="Approved by" />
+                    <field name="approved_date" string="Approved Date" />
+					<field name="count_lines" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_wspatr_payment_filter" model="ir.ui.view">
+			<field name="name">inseta.wspatr.payment.filter</field>
+			<field name="model">inseta.wspatr.payment</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="financial_year_id"/>
+					<field name="wspatr_period_id"/>
+                    <field name="create_uid" string="Created By" />
+                    <field name="approved_by" string="Approved by" />
+					<field name="state" />
+					<field name="name"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="view_wspatr_payment_form" model="ir.ui.view">
+			<field name="name">inseta.wspatr.payment.form</field>
+			<field name="model">inseta.wspatr.payment</field>
+			<field name="arch" type="xml">
+				<form string="WSP/ATR Payment"> 
+                    <header>
+
+                        <button name="action_draft"
+							states="approve" 
+							string="Reset" 
+							confirm="Are you sure you want to reset to draft?"
+							type="object"
+							groups="base.group_system" />
+
+                        <button name="action_submit"
+							states="draft"
+                            confirm="Are you sure you want to submit for approval?"
+							string="Submit" 
+							type="object"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_specialist" />
+
+                        <button name="action_approve"
+							states="submit"
+                            confirm="Are you sure you want to approve?"
+							string="Approve" 
+							type="object"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_manager" />
+
+                        <button name="action_schedule_payment"
+							states="approve"
+                            confirm="Are you sure you want to schedule the payment?"
+							string="Schedule Payment" 
+							type="object"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_manager,inseta_skills.group_skills_specialist" />
+
+						<field name="state" widget="statusbar" clickable="False"
+							statusbar_visible="draft,submit,approve"/>
+                    </header>
+					<sheet>
+						<div class="oe_title" >
+							<h1>
+								<field name="name" readonly="1"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+								<field name="wspatr_period_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="schedule_date" states="approve" />
+
+							</group>
+							<group/>
+
+							<group>
+								<button  name="action_pull" type="object" string="Pull Records" class="oe_highlight pull-right" attrs="{'invisible':[('state','!=','draft')]}"/>
+								<div class="clearfix"/>
+							</group>
+							<group/>
+						</group>
+					
+                         <notebook>
+                            <page string="WSP Approval List" >
+								<field name="line_ids" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
+									<tree create="0">
+										<field name="financial_year_id"/>
+										<field name="organisation_id"/>
+                                        <field name="sdl_no" />
+                                        <field name="dhet_sdl_no" />
+                                        <field name="province_id" />
+										<field name="organisation_size_desc"/>
+                                        <field name="parent_sdl_no" />
+                                        <field name="parent_dhet_sdl_no" />
+                                        <field name="wsp_status" />
+                                        <field name="wsp_form_type" />
+                                        <field name="wsp_due_date" />
+                                        <field name="wsp_create_date" />
+                                        <field name="wsp_submitted_date" />
+                                        <field name="wsp_submitted_by" />
+                                        <field name="wsp_approved_date" />
+                                        <field name="wsp_approved_by" />
+                                        <field name="wsp_rejected_date" />
+                                        <field name="wsp_rejected_by" />
+                                        <field name="sdf_id" />
+                                        <field name="sdf_idno" />
+                                        <field name="sdf_mobile" />
+                                        <field name="sdf_phone" />
+                                        <field name="sdf_email" />
+                                        <field name="no_employees_current_fy" />
+                                        <field name="no_employees_previous_wsp" />
+									</tree>
+								</field>
+                            </page>
+                         </notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+
+        <record id="act_window_wspatr_payment" model="ir.actions.act_window">
+			<field name="name">WSP/ATR Payment</field>
+			<field name="res_model">inseta.wspatr.payment</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create"></p>
+			</field>
+		</record>
+
+        <!-- <menuitem id="menu_wspatr_payment" 
+            name="WSP/ATR Payment" 
+            sequence="2" 
+			parent="menu_parent_wsp_atr" 
+			action="act_window_wspatr_payment"
+			groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager" 
+		/> -->
+
+    </data>
+</odoo>

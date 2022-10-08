@@ -1,0 +1,254 @@
+<odoo>
+    <data>
+
+        <record id="action_authorization_page" model="ir.actions.report">
+            <field name="name">Authorization Page</field>
+            <field name="model">inseta.wspatr</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">inseta_skills.report_authorization_page</field>
+            <field name="report_file">inseta_skills.report_authorization_page</field>
+            <field name="print_report_name">(object.organisation_id.sdl_no +'_'+(object.name or '').replace('/','_')+'_authorizationpage')</field>
+            <field name="attachment">((object.name or '').replace('/','_')+'authorizationpage.pdf')</field>
+            <field name="binding_model_id" ref="model_inseta_wspatr"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="inseta_skills.wsp_paperformat_landscape" />
+        </record>
+
+        <template id="authorization_page">
+            <div class="col-lg-12 col-md-12" id="org-details">
+                <h2 style="text-align:center">Authorization</h2>
+
+                <t t-set="approved_sdfs" t-value="o.organisation_id.sdf_ids and o.organisation_id.sdf_ids.filtered(lambda x: x.state == 'approve')" />
+                <t t-set="pri_sdfs" t-value="approved_sdfs and approved_sdfs.filtered(lambda x: x.sdf_role == 'primary') or False" />
+                <t t-set="pri_sdf" t-value="pri_sdfs and pri_sdfs[0].sdf_id or False" />
+                <t t-set="sec_sdfs" t-value="approved_sdfs and approved_sdfs.filtered(lambda x: x.sdf_role == 'secondary') or False" />
+
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="4">
+                                We, the undersigned, submit this information in fulfilment of this entity’s legal obligation in terms of the skills 
+                                development legislation and regulations. We declare that, to the best of our knowledge, the information contained 
+                                in this WSP /ATR /Pivotal Report is accurate and up to date. We recognise that any inaccurate statement in this 
+                                document may constitute fraud and be subject to the full penalty of the law.
+                            </th>
+                        </tr>
+                        <tr style="background-color:#163683; color:#ffffff">
+                            <th>
+                                <b>*FULL NAME</b>
+                            </th>
+                            <th>
+                                <b>DESIGNATION</b>
+                            </th>
+                            <th>
+                                <b>DATE SIGNED</b>
+                            </th>
+                            <th>
+                                <b>*SIGNATURE</b>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span t-esc="pri_sdf and pri_sdf.name or '' "/>
+                            </td>
+                            <td>
+                                <b>Primary Skills Development Facilitator*</b>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td class="style1">
+                            </td>
+                        </tr>
+                        <tr t-foreach="sec_sdfs" t-as="sec">
+                            <td>
+                                <span t-esc="sec.sdf_id and sec.sdf_id.name or '' " />
+                            </td>
+                            <td>
+                                <b>Secondary Skills Development Facilitator(s)</b>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td class="style1">
+                            </td>
+                        </tr>
+                        <tr t-foreach="o.organisation_id.cfo_ids" t-as="cfo">
+                            <td>
+                                <span t-esc="cfo.name"/>
+                            </td>
+                            <td>
+                                <b>Financial Manager/Director</b>
+                            </td>
+                            <td>
+                                <span/>
+                            </td>
+                            <td class="style1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="ctl686_lblCP"></span>
+                            </td>
+                            <td>
+                                <b>Training Committee Chairperson*</b>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td class="style1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <b>i.  Employer Representative<span>*</span></b>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td class="style1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <b>ii. Employee Representative<span>*</span></b>
+                            </td>
+                            <td>
+                                <span id="ctl686_lblEmployeeRDate"></span>
+                            </td>
+                            <td class="style1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td>
+                                <b>HR Manager/Director</b>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td class="style1">
+                            </td>
+                        </tr>
+                        <tr t-foreach="o.organisation_id.ceo_ids" t-as="ceo">
+                            <td>
+                                <span t-esc="ceo.name"/>
+                            </td>
+                            <td>
+                                <b>CEO/Managing Director*</b>
+                            </td>
+                            <td>
+                                <span></span>
+                            </td>
+                            <td class="style1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="ctl686_lblO"></span>
+                            </td>
+                            <td>
+                                <b>Other (Please specify)</b>
+                            </td>
+                            <td>
+                                <span id="ctl686_lblODate"></span>
+                            </td>
+                            <td class="style1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                * Compulsory to fill in the full names of the persons signing this report.<br/>
+                                * Compulsory signatures i.e. these persons must authorize this Report.<br/>
+                                * It is imperative for companies with more than 50 employees to have a Training Committee.<br/>
+                                * Employer &amp; Employee representatives must be two different people.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                After Successful Submission:<br/>
+                                <br/>
+                                - The INSETA intends sending Approval Letters for all fully completed, duly signed, correct submissions within the month of <span>July</span> <span t-esc="o.wsp_year" /><br/>
+                                <span>- Beginning of 1st Disbursement - September </span> <span t-esc="o.wsp_year" /><br/>
+                                <span>- Beginning of 2nd Disbursement - December </span> <span t-esc="o.wsp_year" /><br/>
+                                <span>- Beginning of 3rd Disbursement - March </span> <span t-esc="o.wsp_next_year" /><br/>
+                                <span>- Beginning of 4th Disbursement - June </span> <span t-esc="o.wsp_next_year" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+
+        <template id="report_authorization_page">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-offset-2 text-right">
+                        <img src='/inseta_skills/static/description/icon.png' style="max-height: 50px;"/>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.with_context(lang=lang)" />
+                    <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+                        <div class="page">
+                            <style>
+                                body {
+                                    
+                                    font-family: Ubuntu, Calibri, Arial, Cambria, Georgia, Roboto, 'Open Sans';
+                                }
+
+                                page {
+                                    margin-top: 2em;
+                                }
+
+                                #header{
+                                    text-align:center;
+                                }
+                                .title{
+                                    font-weight:bold
+                                }
+                                ol.note{
+                                    margin-top: 4em;
+                                    text-align:left!important;
+                                }
+                                ol.note li{
+                                    margin-top:1.3em;
+                                }
+                                p.due{
+                                    text-align:center,
+                                    margin-top: 2em;
+                                }
+                            </style>
+                            <t t-call="inseta_skills.wspatr_report_header" />
+                            <t t-call="inseta_skills.authorization_page"/>
+                        </div>
+                    </div>
+                    <div t-attf-class="o_company_#{o.create_uid.company_id.id}_layout footer o_background_footer">
+                        <div class="text-right">
+                            <div t-field="o.create_uid.company_id.report_footer"/>
+                            <div t-if="report_type == 'pdf'">
+                                Page
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

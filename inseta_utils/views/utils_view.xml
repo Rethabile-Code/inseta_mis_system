@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="inseta_utils_action1" model="ir.actions.act_window">
+        <field name="name">Dialog</field>
+        <field name="res_model">inseta.utils</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+        <field name="target">new</field>
+          <p class="o_view_nocontent_smiling_face">
+            -
+          </p><p>
+            -
+          </p>
+        </field>
+    </record>
+    <!-- <menuitem id="inseta_discretionary_grant_dg_utils_wizard_menu1" name="Logs/ Utils"
+        sequence="4" parent="discretionary_grant.inseta_discretionary_grant_menu_config"/> -->
+    <record id="inseta_utils_view_tree1" model="ir.ui.view">
+        <field name="name">inseta.utils.tree</field>
+        <field name="model">inseta.utils</field>
+        <field name="arch" type="xml">
+            <tree string="Logs">
+                <field name="subject"/>
+                <field name="resp" readonly="1"/>
+                <field name="action" required="1"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="inseta_utils_main_view_form" model="ir.ui.view">
+        <field name="name">inseta utils Form</field>
+        <field name="model">inseta.utils</field>
+        <field name="arch" type="xml">
+            <form string="Wizard">
+                <header> 
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="Add message..."/>
+                            <field name="action" required="1"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="follower_ids" widget="many2many_tags"/>
+                            <field name="resp" readonly="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="post_action" string="Post" type="object" default_focus="1" class="oe_highlight" />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </sheet> 
+            </form>
+        </field>
+    </record>
+
+      <record id="inseta_utils_view_search1" model="ir.ui.view">
+        <field name="name">inseta.utils.search</field>
+        <field name="model">inseta.utils</field>
+        <field name="arch" type="xml">
+            <search string="Log search">
+                <field name="resp" readonly="1"/>
+                <field name="action" required="1"/>
+                <field name="date"/>
+                <filter string="By Current User" domain="[('resp','=',uid)]" name="by_me"/>
+                <separator/>
+                <filter string="Refusals" domain="[('action','=','refuse')]" name="is_refuse"/>
+                <filter string="Queries" domain="[('action','=','query')]" name="is_queried"/>
+                <separator/>
+            </search>
+        </field>
+    </record>
+    
+</odoo>

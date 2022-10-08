@@ -1,0 +1,107 @@
+<odoo>
+  <data>
+    
+    <report 
+            id="emp_rejection_letter_report"
+            model="inseta.organization.register"
+            string="Rejection Letter"
+            report_type="qweb-pdf"
+            name="inseta_skills.emp_rejection_letter"
+            file="inseta_skills.emp_rejection_letter"
+            attachment_use="True"
+            paperformat="inseta_skills.paperformat_letter"
+        />
+
+    <template id="emp_rejection_letter">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-3">
+                    .<!-- <img src="https://imgur.com/gLIZY9S.jpg" style="max-height: 150px;" /> -->
+                </div>
+                <div class="col-xs-offset-2 text-right">
+                    <img src='/inseta_skills/static/description/icon.png' style="max-height: 70px;"/>
+                </div>
+            </div>
+            <hr/><br/><br/>
+        </div>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="max-width: 660px; margin: auto;">
+                    <style>
+                        body {
+                            line-height: 180%;
+                            font-size: 18px;
+                            font-family: 'EB Garamond';
+                        }
+
+                        page {
+                            margin-bottom: -30px;
+                        }
+
+                        p {
+                        text-align: justify;
+                            margin: 0;
+                        }
+
+                        .abc {
+                                margin-left: 40px;
+                                list-style-type: lower-alpha;
+                                }
+
+                        li {
+                        text-align: justify;
+                            padding-top: 2%;
+                            padding-bottom: 20px;
+                        }
+                    </style>
+
+                     
+                    <!-- <p><t t-esc="o.date_order" /></p> -->
+
+                    <br />
+                    <br /><br />
+                    <span t-field="o.legal_name"/>,<br/>
+                    <span t-field="o.physical_address1"/>,<br/>
+                    <span t-field="o.physical_city_id.name"/>,<span t-field="o.physical_province_id.name"/>,<br/>
+                    <span t-field="o.nationality_id.name"/> <br/>
+                    <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /></p>
+
+                    <p align="justify">
+                        Dear <span t-field="o.legal_name"/>,
+                    </p>
+
+                    <h4 style="text-align: center;"><strong><u>REJECTION LETTER FOR EMPLOYER REGISTERATION </u></strong></h4>
+
+                    <p>Following your satisfactory evaluation to register as a employer on the <strong><span t-esc="o.write_date" /></strong> </p>
+                    we hereby offer you this rejection letter because of the following reasons <br/>
+
+                    <p><strong>See details</strong></p>
+                    <br/>
+                    
+                    <div class="row">
+                        <p style="text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 24px;"><strong><u>REJECTION REASONS</u></strong></p>
+                            <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                                <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;"><span t-esc="o.refusal_comment" /></p><br/>
+                            </p>
+                    </div>
+
+                    <div class="row">
+                        <p style="padding-left: 15px; text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">Please contact the skills Manager for more Information.</p>
+                        <br/><br/>
+                        <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">Yours Sincerely,<br/><br/><br/></p>
+                        <p><br/></p>
+                        <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                            <strong style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">INSETA SKILLS DIVISION</strong>
+                            <br/> 
+                                <img src='/inseta_skills/static/description/icon.png' style="max-height: 120px;"/>
+                            <br/>
+                             
+                            <strong style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;"> MANAGER</strong>
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

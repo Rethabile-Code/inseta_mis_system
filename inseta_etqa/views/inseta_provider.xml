@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <!-- provider form -->
+		<record id="view_provider_form" model="ir.ui.view">
+			<field name="name">Inseta provider form</field>
+			<field name="model">inseta.provider</field>
+			<field name="arch" type="xml">
+				<form string="Provider form" create="0">
+                    <header>
+                        <button name="set_to_edit" string="Toggle Edit Mode" class="oe_highlight" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,base.group_system"/>
+                        <button name="action_print_certficate" string="Print Certificate" class="oe_highlight" type="object" groups="inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_accreditation_specialist,base.group_system,inseta_etqa.group_it_admin"/>
+                        <button name="see_related_learner" string="View related Learners" class="oe_highlight" type="object"/>
+					</header>
+					<sheet>
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h4>
+                                <strong>Legal Name: </strong><field name="name" default_focus="1" placeholder="E.g Maduka Chris" attrs="{'required' : [('type', '=', 'contact')],'readonly': [('edit_mode', '=', False)]}"/><br/>
+								<strong>Trade Name: </strong><field name="trade_name" placeholder="Training As Name" attrs="{'readonly': [('edit_mode', '=', False)]}" required="0"/><br/>
+                            </h4>
+                        </div>
+                        <group>
+                            <group>
+                                <separator string="Provider Details"/>
+								<field name="edit_mode" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/>
+                                <field name="type" groups="base.group_no_one" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="contact_type" invisible="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="approval_date" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="accreditation_start_date" attrs="{'readonly': [('edit_mode', '=', False)]}" required="0"/>
+                                <field name="accreditation_end_date" attrs="{'readonly': [('edit_mode', '=', False)]}" required="0"/>
+								<field name="provider_status" readonly="0" force_save="1" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+								<field name="employer_sdl_no" string="SDL No" attrs="{'readonly': [('edit_mode', '=', False)]}" required="1"/>
+								<field name="saqa_provider_code" attrs="{'readonly': [('edit_mode', '=', False)]}" force_save="1" required="1"/>
+								<field name="saqa_id" attrs="{'readonly': [('edit_mode', '=', False)]}" force_save="1"/>
+								<field name="provider_etqa_id" readonly="0" force_save="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="provider_accreditation_number" attrs="{'readonly': [('edit_mode', '=', False)]}" string="Accreditation No."/>
+								<!-- <field name="accreditation_status" invisible="0" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/> -->
+								
+                            </group>
+                            <group>
+								<separator string="Other Details"/>
+								<field name="city" placeholder="City" class="o_address_city" attrs="{'readonly': [('edit_mode', '=', False)]}" required="0"/>
+								<field name="state_id" class="o_address_state" placeholder="Province" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"
+								 required="0"/>
+								<field name="country_id" invisible="1" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="nationality_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="phone" widget="phone" attrs="{'readonly': [('edit_mode', '=', False)]}" required="0"/>
+                                <field name="mobile" widget="phone" attrs="{'readonly': [('edit_mode', '=', False)]}" required="0"/>
+                                <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="fax_number" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="vat" placeholder="e.g. BE0477472701" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+
+							</group>
+                            <group>
+								<field name="start_date" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="end_date" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="certificate_number" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="certificate_date" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								
+                            </group>
+                            <group>
+								<!-- <field name="website" widget="url" placeholder="e.g. https://www.odoo.com"/> -->
+								<field name="provider_type_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_open': True, 'no_quick_create': True}"/>
+                                <field name="provider_class_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_open': True, 'no_quick_create': True}"/>
+                                <field name="sic_code" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_open': True, 'no_quick_create': True}"/>
+                                <field name="number_staff_members" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            </group>
+							<group>
+								<separator string="System Related Info"/>
+								<field name="partner_id" string="Related partner" readonly="1" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                <field name="user_id" string="Related User" invisible="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<!-- <field name="user_ids" invisible="1" string="Related Users" /> -->
+								<field name="linked_user_ids" invisible="0" string="Related Users" widget="many2many_tags" force_save="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="provider_user_ids" invisible="0" string="Provider Users" widget="many2many_tags" force_save="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="reference" string="Reference" readonly="1"/>
+								<!-- <field name="edit_mode" string="Edit Mode" invisible="0" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/> -->
+                                
+							</group>
+							<group>
+                                <field name="create_date" readonly="1" string = "Created date" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                <field name="write_date" readonly="1" string = "Updated date" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                <field name="write_uid" readonly="1" string = "Last Updated by" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="provider_public_information" string="Public Information" autofocus="autofocus">
+                                <group name="container_row_2">
+                                    <group name="moderator_hm_detail" >
+                                    	<separator string="Contact Address Details"/>
+                                        <field name="zip" string="Physical Code" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                                        <field name="street" string="Physical Address" required="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="street2" string="Physical Address Line 2" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="street3" string="Physical Address Line 3" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+										<field name="physical_city_id" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="physical_municipality_id" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="physical_province_id" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="physical_suburb_id" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="user_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_open': True, 'no_quick_create': True}"/>
+                                    </group>
+                                    <group>
+										<label for="use_physical_for_postal_addr"/>
+										<field name="use_physical_for_postal_addr" nolabel="1"/>
+										<field name="postal_code" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+										<field name="postal_address1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+										<field name="postal_address2" placeholder="Postal Address Line 2" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+										<field name="postal_address3" placeholder="Postal Address Line 3" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+										<field name="postal_suburb_id" placeholder="Suburb" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+										<field name="postal_city_id" placeholder="City" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+										<field name="postal_province_id" placeholder="Province" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                    </group>
+                                </group>
+								<group string="GPS Cordinates">
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="latitude_degree">
+                                            <b>Latitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="latitude_degree" placeholder="Degree" string="Degree" attrs="{'readonly': [('edit_mode', '=', False)]}" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_minutes" placeholder="Minutes" string="Minutes" attrs="{'readonly': [('edit_mode', '=', False)]}" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_seconds" placeholder="Seconds" string="Seconds" attrs="{'readonly': [('edit_mode', '=', False)]}" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <button
+                                                string="Get Geolocation"
+                                                name="get_geolocation"
+                                                colspan="2"
+                                                icon="fa-check"
+                                                type="object"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="longitude_degree">
+                                            <b>Longitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="longitude_degree" string="Degree" placeholder="Degree"  attrs="{'readonly': [('edit_mode', '=', False)]}" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_minutes" placeholder="Minutes" string="Minutes" attrs="{'readonly': [('edit_mode', '=', False)]}" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_seconds" placeholder="Seconds" string="Seconds" attrs="{'readonly': [('edit_mode', '=', False)]}" class="o_address_zip" style="padding:2px; border:solid 1px #DDDDDD"/>
+                                        </div>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page name="provider_programmes" string="Programme Scope">
+								<separator string="Unit standard"/>
+									<field name="unit_standard_ids" nolabel="1" attrs="{'readonly': [('edit_mode', '=', False)]}" required="0" options="{'no_quick_create': True, 'no_create': True}" >
+										<tree string="Unit standards" editable="bottom" delete="true">
+											<field name="unit_standard_id" required="1" />
+											<field name="training_end_date" required="1" />
+											<field name="certificate_number" required="0" />
+											
+										</tree>
+									</field>
+								<separator string="Skill Programmes"/>
+								<field name="skill_programmes_ids" required="1" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Programmes" editable="bottom" delete="true">
+										<field name="skill_programme_id" required="1" />
+										<field name="training_end_date" required="1" />
+										<field name="certificate_number" required="0" />
+									</tree>
+								</field>
+								<separator string="Learnership Programmes"/>
+								<field name="learner_programmes_ids" required="1" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Programmes" editable="bottom" delete="true">
+										<field name="learner_programme_id" required="1" options="{'no_open': True, 'no_quick_create': True}"/>
+										<field name="training_end_date" required="1" />
+										<field name="certificate_number" required="0" />
+										<!-- <field name="name" required="1" />
+										<field name="programme_type_id" required="1" />
+										<field name="qualification_id" required="1" />
+										<field name="nqflevel_id" required="1" />
+										<field name="credits" required="1" /> -->
+										<!-- <field name="programme_unit_id" required="1" /> -->
+									</tree>
+								</field>
+								<separator string="Qualification Programmes"/>
+								<field name="qualification_ids" required="1" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Qualifications" editable="bottom">
+										<field name="qualification_id" required="1" options="{'no_open': True, 'no_quick_create': True}"/>
+										<field name="training_end_date" required="1" />
+										<field name="certificate_number" required="0" />
+										<!-- <field name="name" required="1" readonly="1"/>
+										<field name="saqa_id" required="0" readonly="1"/>
+										<field name="nqflevel_id" required="0" readonly="1"/>
+										<field name="credits" readonly="1"/> -->
+										<!-- <field name="elective_credits" readonly="1"/>
+										<field name="core_credits" required="1" readonly="1"/> -->
+										<!-- <field name="registration_start_date" readonly="1"/>
+										<field name="registration_end_date" required="1" readonly="1"/> -->
+									</tree>
+									<!-- <form string="Qualifications">
+										<group>
+											<group>
+												<field name="name" required="1" readonly="1"/>
+												<field name="saqa_id" required="0" readonly="1"/>
+												<field name="nqflevel_id" required="0" readonly="1"/>
+												<field name="credits" readonly="1"/>
+												<field name="elective_credits" readonly="1"/>
+												<field name="core_credits" required="1" readonly="1"/>
+												<field name="registration_start_date" readonly="1"/>
+											</group>
+											<group>
+												<field name="registration_end_date" required="1"/>
+												<field name="last_achievement_date" readonly="1"/>
+												<field name="last_enroll_date" readonly="1"/>
+												<field name="quality_assurance_id" readonly="1"/>
+												<field name="qualification_type_id" readonly="1"/>
+											</group>
+										</group>
+										<notebook>
+											<page name="unitstandards" string="Unit Standards line">
+												<field name="unit_standard_ids" nolabel="1" readonly="1" required="0">
+													<form string="Inseta Unit Standard">
+														<div class="oe_title">
+															<h1>
+																<field name="name" placeholder="Name" readonly="0"/>
+															</h1>
+														</div>
+														<group> 
+															<group>
+																<field name="unit_standard_type" required="1" invisible="0"/> 
+																<field name="code" required="1"/>
+																<field name="nqflevel_id" required="1"/>
+																
+															</group>
+															<group>
+																<field name="core_credits" invisible="0"/>
+																<field name="elective_credits" required="0"/>
+																<field name="fundamental_credits" invisible="0"/>
+																<field name="credits" required="1"/>
+															</group> 
+														</group>
+													</form>
+													<tree string="Unit standards">
+														<field name="name" required="1" invisible="0"/> 
+														<field name="unit_standard_type" required="1" invisible="0"/> 
+														<field name="code" required="1"/>
+														<field name="nqflevel_id" required="1"/>
+														<field name="core_credits" invisible="0" string="Core"/>
+														<field name="elective_credits" required="0" string="Elective"/>
+														<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+														<field name="credits" required="1"/>
+														
+													</tree>
+												</field>
+											</page>
+											
+										</notebook>
+									</form> -->
+								</field>
+							</page>
+							<page name="assess_moderator_pages" string="Assessor &amp; Moderator">
+								<button name="action_add_amf_or_link_programme" class="oe_highlight" type="object" string="Add Moderator /Assessor/ Facilitators" groups="base.group_system,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_manager"/>
+								<separator string="Provider Moderators"/>
+								<field name="provider_moderator_ids" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Moderators" delete="true" editable="bottom">
+										<field name="moderator_id" string="Moderator" required="1" />
+										<field name="moderator_end_date" string="Moderation End date"/>
+										<field name="active" string="Active"/>
+
+									</tree>
+								</field>
+								<separator string="Provider Assessors"/>
+								<field name="provider_assessor_ids" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Assessors" delete="true" editable="bottom">
+										<field name="assessor_id" string="Assessor Name" required="1" />
+										<field name="assessment_end_date" string="Assessment End date"/>
+										<field name="active" string="Active"/>
+
+									</tree>
+								</field>
+								<!-- <field name="moderator_ids" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Moderators" delete="true">
+										<field name="name" string="Name" required="1" />
+										<field name="id_no" string="Identification" required="1" />
+									</tree>
+								</field>
+								<separator string="Assessors"/>
+								<field name="assessor_ids" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Assessors" delete="true">
+										<field name="name" string="Name" required="1" />
+										<field name="id_no" string="Identification" required="1" />
+									</tree>
+								</field> -->
+
+								<separator string="Facilitators"/>
+								<field name="facilitator_ids" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Facilitators" delete="true">
+										<field name="name" string="Name" required="1" />
+										<field name="id_no" string="Identification" required="1" />
+									</tree>
+								</field>
+							</page>
+
+                            <page name="assess_moderator_link" string="Assessor &amp; Moderator linking">
+								<button name="action_add_amf_or_link_programme" class="oe_highlight" type="object" string="Link Moderator /Assessor to Programme" groups="base.group_system,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_manager"/>
+								<separator string="Link to Learnership"/>
+								<field name="provider_learnership_accreditation_ids" required="1" nolabel="1" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Learnership" editable="bottom" delete="true">
+										<field name="programme_id" required="1" />
+										<field name="assessor_no" string="Assessor No." required="0" invisible="1"/>
+										<field name="moderator_no" string="Moderator No." required="0" invisible="1"/>
+										<field name="assessors_id" required="0" invisible="0"/>
+										<field name="assessor_sla_document" required="0" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="moderators_id" required="0" invisible="0"/>
+										<field name="moderator_sla_document" required="0" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										
+									</tree>
+								</field>
+								<separator string="Link to Skills Programme"/>
+                                <field name="provider_skill_accreditation_ids" nolabel="1" readonly="1" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Learnership" editable="bottom" delete="true">
+										<field name="programme_id" required="1" />
+										<field name="assessor_no" string="Assessor No." required="0" invisible="1"/>
+										<field name="moderator_no" string="Moderator No." required="0" invisible="1"/>
+										<field name="assessors_id" required="0" invisible="0"/>
+										<field name="assessor_sla_document" required="0" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="moderators_id" required="0" invisible="0" />
+										<field name="moderator_sla_document" required="0" invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										
+									</tree>
+								</field>
+
+								<separator string="Qualification"/>
+								<field name="provider_qualification_ids" required="1" nolabel="1" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Qualifications" editable="bottom" delete="true">
+										<field name="qualification_id" required="1" />
+										<!-- <field name="saqa_id" string="SAQA No." required="0"/> -->
+										<!-- <field name="assessor_no" string="Assessor No."/>
+										<field name="moderator_no" string="Moderator No."/> -->
+										<field name="assessors_id" required="0" invisible="0"/>
+										<field name="assessor_sla_document" required="0"  invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="moderators_id" required="0"  invisible="0"/>
+										<field name="moderator_sla_document" required="0"  invisible="1" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										
+									</tree>
+								</field>
+								
+							</page>
+
+							<page name="provider_verifier" string="Verification" groups="base.group_system,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_accreditation_specialist">
+								 
+								<group>
+									<group string="Supporting Documents &amp; Evidence Available / Submitted">
+										<field name="business_lease_agreement" attrs="{'readonly': [('edit_mode', '=', False)]}" string="Business lease agreement" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="account_business_solvency_letter" attrs="{'readonly': [('edit_mode', '=', False)]}" string="BUSINESS ACCOUNTANT SOLVENCY LETTER" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										
+										<field name="bank_account_confirmation" attrs="{'readonly': [('edit_mode', '=', False)]}" string="Bank Account Confirmation" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="bbbeee_affidavit" attrs="{'readonly': [('edit_mode', '=', False)]}" string = "BBBEEE affidavit" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="business_occupational_certificate_report" string = "Business occupational certificate report" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+									</group>
+									<group string="-">	
+										<field name="it_servicing" attrs="{'readonly': [('edit_mode', '=', False)]}" string = "IT SERVICING &amp; MAINTAINANCE CONTRACT" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="programme_curriculum" attrs="{'readonly': [('edit_mode', '=', False)]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="learner_details_achievement_spreadsheet" attrs="{'readonly': [('edit_mode', '=', False)]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="quality_management_system" attrs="{'readonly': [('edit_mode', '=', False)]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+
+										<field name="qcto_referral_letter" attrs="{'readonly': [('edit_mode', '=', False)]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="referral_letter" attrs="{'readonly': [('edit_mode', '=', False)]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="company_organogram" attrs="{'readonly': [('edit_mode', '=', False)]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="company_profile" attrs="{'readonly': [('edit_mode', '=', False)]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="proof_of_ownership" attrs="{'readonly': [('edit_mode', '=', False)]}" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+									</group>
+									<separator string="Site Visit"/>
+									<field name="site_visit_ids" nolabel="1" domain="[('id','=',None)]" invisible="0" options="{'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}">
+										<form>
+											<group>
+												<group>
+													<field name="name" required="1"/>
+													<field name="visit_date"/>
+													<field name="outcome"/>
+													<field name="reasons"/>
+													<field name="complaint_non_complaint"/>
+													<field name="data_name" filename="data_name" invisible="0" force_save="1"/>
+													<field name="upload_document" filename="data_name" required="1"/>
+												</group>
+											</group>
+										</form>
+										<tree string="Site visit" editable="bottom" delete="false">
+											<field name="name" required="1"/>
+											<field name="visit_date"/>
+											<field name="outcome"/>
+											<field name="reasons"/>
+											<field name="upload_document" options="{'no_quick_create': True}"/>
+										</tree>
+									</field>
+								</group>
+										 
+							</page>
+							<page name="certificate" string="Certificate" groups="base.group_system,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_manager">
+								<separator string="Accreditation Certificate "/>
+								<field name="qualification_certificate_copy_ids" readonly="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Certificate Copy" editable="bottom">
+										<field name="name" required="1"/> 
+									</tree>
+								</field>
+								<separator string="Director CVs" readonly="1"/>
+								<field name="director_cv_ids" domain="[('id','=',None)]" options="{'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Director CVs" editable="bottom">
+										<field name="name" required="1"/> 
+									</tree>
+								</field>
+								<separator string="CIPC"/>
+								<field name="cipc_dsd_ids" readonly="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="CIPC" editable="bottom">
+										<field name="name" required="1"/> 
+									</tree>
+								</field>
+								<separator string="Tax Clearance"/>
+								<field name="tax_clearance_ids" readonly="1" domain="[('id','=',None)]" options="{'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Tax Clearance" editable="bottom">
+										<field name="name" required="1"/> 
+									</tree>
+								</field>
+								<group>
+									<group>
+										<field name="company_organogram" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="company_profile" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="proof_of_ownership" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="workplace_agreement" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+									</group>
+									<group>	
+										<field name="appointment_letter" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="skills_registration_letter" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="learning_approval_report"/>
+										<field name="referral_letter" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="primary_accreditation_letter" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+								 	</group>
+								</group>
+							</page>
+
+							<page name="cntperson" string="Contact persons">
+								<separator string="Campus / Delivery Center"/>
+ 								<field name="delivery_center_ids" nolabel="1" domain="[('id','=',None)]" invisible="0" options="{'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<form>
+										<group>
+											<group>
+												<field name="name" required="1"/>
+												<field name="contact_person_name"/>
+												<field name="contact_person_tel"/>
+												<field name="contact_person_cell"/>
+												<field name="contact_person_email"/>
+												<field name="contact_person_fax"/>
+											</group>
+										</group>
+									</form>
+									<tree string="Contact persons" editable="bottom" delete="false">
+										<field name="name" required="1"/>
+										<field name="contact_person_name" required="0"/>
+										<field name="contact_person_tel" required="1" />
+										<field name="contact_person_cell"/>
+										<field name="contact_person_fax"/>
+									</tree>
+
+								</field>
+								<field name="campus_details" widget="text" invisible ="1" readonly="1"/>
+								<field name="provider_contact_person_ids">
+									<tree string="Contact persons" editable="bottom" delete="true">
+										<field name="name" required="1"/>
+										<field name="contact_person_surname" required="1"/>
+										<field name="contact_person_tel" required="1" />
+										<field name="contact_person_cell"/>
+										<field name="contact_person_fax"/>
+										<field name="contact_person_email"/>
+										<field name="contact_person_designation"/>
+									</tree>
+								</field>
+							</page> 
+							<page name="letters_page" string="Letter &amp; Documents" groups="base.group_system,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_accreditation_specialist">
+								<separator string="letters "/>
+								<group>
+									<group>
+										<field name="appointment_letter" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="skills_registration_letter" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="learning_approval_report" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+									</group>
+									<group>	
+										<field name="referral_letter" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+										<field name="primary_accreditation_letter" domain="[('id','=',None)]" options="{'no_quick_create': True}"/>
+								 	</group>
+								</group>
+							</page>
+
+							<page name="provider_learner_ids" string="Learners">
+								<field name="provider_learner_ids">
+									<tree string="Provider Learners">
+										<field name="id_no"/>
+										<field name="learner_id"/>
+										<field name="active"/>
+									</tree>
+								</field>
+							</page>
+							<!-- <page name="learner_ids" string="Learners">
+								<tree string="">
+									<field name="learner_ids">
+										<field name="id_no"/>
+										<field name="name"/>
+									</field>
+								</tree>
+							</page> -->
+
+							<page name="page_provider_accreditation_ids" string="Accreditation History">
+								<div class="oe_button_box" name="buttons_result" style="box-shadow: none;">
+									<button type="object" class="oe_inline oe_stat_button" name="action_provider_history" style="width: 215px !important;margin-right: 1%;margin-top: 3%;border:none;" string="Refresh History" icon="fa-refresh" aria-label="Refresh" title="Refresh"/>
+								</div>
+								<field name="accreditation_ids">
+									<tree string="Provider Accreditation">
+										<field name="accreditation_number" />
+										<field name="start_date" string="Start Date"/>
+										<field name="end_date" string="End Date"/>
+										<field name="provider_status"/>
+										<field name="approval_date"/>
+									</tree>
+								</field>
+
+								<field name="accreditation_history_ids">
+									<tree string="Provider Accreditation History">
+										<field name="provider_accreditation_id" />
+										<field name="provider_id" />
+										<field name="provider_status_id"/>
+										<field name="accreditation_start_date"/>
+										<field name="accreditation_end_date"/>
+										<field name="active"/>
+									</tree>
+								</field>
+							</page>
+                        </notebook>
+                    </sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+						<field name="message_ids" widget="mail_thread" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_provider_tree" model="ir.ui.view">
+			<field name="name">view.inseta.provider.tree</field>
+			<field name="model">inseta.provider</field>
+			<field name="arch" type="xml">
+				<tree string="Contacts" sample="1" multi_edit="1" create="0">
+					<field name="employer_sdl_no" string="SDL NO" readonly="0"/>
+					<field name="name" string="Provider"/>
+					<field name="accreditation_start_date" />
+					<field name="accreditation_end_date" />
+                    <field name="provider_accreditation_number" />
+                    <field name="provider_status" />
+
+                    <!-- <field name="name" string="Name"/>
+					<field name="employer_sdl_no" string="SDL NO"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="contact_type" invisible="0"/>
+                    <field name="phone" class="o_force_ltr" optional="show"/>
+                    <field name="email" optional="show"/>
+                    <field name="provider_accreditation_number" />
+                    <field name="nationality_id" optional="show" readonly="1"/>   -->
+                </tree>
+			</field>
+		</record>
+
+		<record id="view_provider_filter" model="ir.ui.view">
+			<field name="name">Inseta provider search</field>
+			<field name="model">inseta.provider</field>
+			<field name="arch" type="xml">
+				<search string="Search providrr"> 
+					<field name="name" />
+					<field name="employer_sdl_no"/>
+					<field name="mobile" />
+					<field name="phone" />
+					<field name="email" />
+					<field name="provider_accreditation_number" />
+					<!-- <group expand="0" string="Group By">
+						<filter string="Status" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Work Province" icon="terp-personal" domain="[]" context="{'group_by':'physical_province_id'}"/>
+						<filter string="Postal Province" icon="terp-personal" domain="[]" context="{'group_by':'postal_province_id'}"/>
+					</group> -->
+				</search>
+			</field>
+		</record>
+ 
+
+        <!-- provider moderator. -->
+		<record id="action_provider_view" model="ir.actions.act_window">
+			<field name="name">Provider</field>
+			<field name="res_model">inseta.provider</field>
+			<field name="view_mode">tree,kanban,form</field>
+             <!-- <field name="domain">[]</field> -->
+             <!-- <field name="context">{'default_contact_type': 'provider'}</field> -->
+             <field name="search_view_id" ref="inseta_etqa.view_provider_filter" />
+			<field name="view_id" eval="False" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Register a Provider.
+				</p>
+			</field>
+		</record>
+        <menuitem id="provider_menu_id" name="Approved Provider(s)" sequence="1" 
+        parent="inseta_etqa.provider_registration_menu" action="action_provider_view"/>
+</odoo>

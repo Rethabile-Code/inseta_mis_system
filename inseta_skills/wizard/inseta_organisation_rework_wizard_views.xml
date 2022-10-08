@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="organisation_rework_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.organisation.rework.wizard.form</field>
+        <field name="model">inseta.organisation.rework.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Organisation Rework reason">
+                <h4  attrs="{'invisible':[('comment_type','=', 'Reject')]}">Reasons to ask for rework</h4>
+                <h4 attrs="{'invisible':[('comment_type','=', 'Rework')]}">Reasons for rejection</h4>
+
+                <group>
+                    <group colspan="4">
+                        <field name="organisation_id" invisible="1"/>
+                        <field name="organisationist_id" invisible="1"/>
+                        <field name="comment_type" string="Type" required="1" force_save="1" />
+                        <field string="Comment" name="comment" required="1"/>
+                    </group>
+                </group>
+
+                <footer>
+                    <button string='Submit Rework' name="organisation_refuse_reason" type="object" class="oe_highlight"
+						attrs="{'invisible':[('comment_type','=', 'Reject')]}"
+                    />
+
+                    <button string='Submit' name="organisation_refuse_reason" type="object" class="oe_highlight"
+						attrs="{'invisible':[('comment_type','=', 'Rework')]}"
+                    />
+
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="organisation_rework_wizard_action" model="ir.actions.act_window">
+        <field name="name">Rework/Reject Organisation Registration</field>
+        <field name="res_model">inseta.organisation.rework.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="organisation_rework_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

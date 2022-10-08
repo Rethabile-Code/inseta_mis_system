@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+
+        <record id="server_action_organisation" model="ir.actions.server">
+			<field name="name">Organisations</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_inseta_organisation" />
+            <field name="state">code</field>
+            <field name="code">action=model.get_filtered_record()</field>
+        </record>
+
+    </odoo>

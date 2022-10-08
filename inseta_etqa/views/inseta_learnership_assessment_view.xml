@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        
+        <record id="view_inseta_learner_assessment_detail_form_new" model="ir.ui.view">
+				<field name="name">view.inseta.learner.assessment.detailform</field>
+				<field name="model">inseta.learner.assessment.detail</field>
+				<field name="arch" type="xml">
+					<form string="Inseta Assessment">
+                        <header>
+                            <button name="action_verification_signoff" string="Submit Assessment" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to Submit ? All followers will be notified!"
+							groups="inseta_etqa.group_provider_access_user,inseta_etqa.group_etqa_user,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin"
+							states="draft,verified"/>
+
+                            <button name="action_done" string="Approve" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to Approve? All followers will be notified!"
+							groups="inseta_etqa.group_etqa_evaluating_admin"
+							states="manager"/>
+
+                            <button name="action_reject_assesment_submit" string="Reject" type="object"
+							confirm="Are you sure you want to reject? All followers will be notified!"
+							groups="inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"
+							states="manager" />
+
+                            <button name="action_print_all_certficate" string="Print Certificates" type="object" class="oe_highlight"
+							attrs="{'invisible':[('state','not in', ['done'])]}"
+							groups="inseta_etqa.group_etqa_assessment_specialist,base.group_system"
+							/>
+
+						    <button name="action_print_result_statement" string="Print Result Statements" type="object" class="oe_highlight"
+							attrs="{'invisible':[('state','not in',['done'])]}"/>
+                            <!-- groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_approved_provider,inseta_etqa.group_provider_access_user,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_admin_audit_access_user,inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_it_admin"
+							/>  -->
+                            <field name="state" widget="statusbar" clickable="True"
+                                statusbar_visible="draft,manager,done"
+                                statusbar_colors='{"rework":"blue","done":"green","reject":"red"}'
+                                />
+                        </header>
+                        <sheet> 
+							<p style="color: red;">* For partial Assessment, check the box below</p>
+                            <div class="oe_title" > Learner ID NO:
+                                <h1>                                     
+                                    <field name="learner_id_no" placeholder="Learner ID No." string="Learner ID No." attrs="{'readonly': [('state', 'not in', ['draft'])]}" required="1"/>
+                                </h1>
+                            </div>
+							<p style="color: red;" attrs="{'invisible': [('state', 'not in', ['manager'])]}">* ETQA Administrator role is responsible to approve at this stage </p>
+							<p style="color: red;" attrs="{'invisible': [('state', 'not in', ['done'])]}">* Certificates can only be printed at this stage by ETQA Assessment Specialist</p>
+                            <group> 
+                                <group>
+                                    <field name="is_partial_assessment"/>
+                                    <field name="assessment_reference" force_save="1" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}" invisible="1"/> 
+                                    <field name="learner" force_save="1" required="0" string="Learner Name" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}" options="{'no_create': True,'no_open': True}"/>
+                                    <field name="provider_sdl" required="0" invisible="0" attrs="{'readonly': [('state', 'not in', ['verified','draft'])],'required': [('provider_id', '=', False)]}"/>
+                                    <field name="provider_id" invisible="0" force_save="1" readonly="1" options="{'no_create': True,'no_open': True}"/>
+                                    <field name="financial_year_id" required="1" force_save="1" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}"  options="{'no_create': True,'no_open': True}"/>
+                                    <field name="approved_date" readonly="1"/>
+                                    <field name="lenght_of_line" invisible="1"/>
+
+                                </group>
+                                <group>
+                                    <p style="color: red;">* To view previous assessment click on the highlighted qualification code and description</p><br/>
+                                    <field name="learner_qualification_id" readonly="0" string='Qualification' attrs="{'invisible': ['|',('qualification_assessment_type', '=', False), ('financial_year_id', '=', False)], 'required': [('qualification_assessment_type', '=', True)],'readonly': [('state', 'not in', ['verified','draft'])]}" 
+                                    options="{'no_create': True,'no_open': True}"/>
+                                    <field name="learner_learnership_id" readonly="0" string='Learner learnership' attrs="{'invisible': ['|', ('financial_year_id', '=', False),('learnership_assessment_type', '=', False)], 'required': [('learnership_assessment_type', '=', True)],'readonly': [('state', 'not in', ['verified','draft'])]}"
+                                    options="{'no_create': True,'no_open': True}"/>
+                                    <field name="unit_standard_learnership_id" invisible="1" readonly="0" string='Unit Standard learnership'/>
+                                    <field name="learner_skill_learnership_id" readonly="0" string='Skills learnership'  attrs="{'invisible': ['|', ('financial_year_id', '=', False),('skill_assessment_type', '=', False)], 'required': [('skill_assessment_type', '=', True)],'readonly': [('state', 'not in', ['verified','draft'])]}"
+                                     options="{'no_create': True,'no_open': True}"/>
+
+                                    <field name="verification_date" required="0" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}" />
+                                    <field name="assessor_id" required="1" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}" options="{'no_create': True,'no_open': True}"/> 
+                                    <field name="assessment_date" required="1" attrs="{'invisible': [('assessor_id', '=', False)],'readonly': [('state', 'not in', ['verified','draft'])]}"/> 
+                                    <field name="moderator_id" readonly="0" required="0" attrs="{'invisible': [('assessment_date', '=', False)],'readonly': [('state', 'not in', ['verified','draft'])]}" options="{'no_create': True,'no_open': True}"/>
+                                    <field name="moderator_date" required="0" attrs="{'invisible': [('moderator_id', '=', False)],'required': [('moderator_id', '!=', False)],'readonly': [('state', 'not in', ['verified','draft'])]}"/>
+                                </group> 
+                                <group> 
+                                    <separator string="Programme Credits"/>
+                                    <field name="programme_core_credits" readonly="1" force_save="1"/>
+                                    <field name="programme_fundamental_credits" readonly="1" force_save="1"/>
+                                    <field name="programme_elective_credits" readonly="1" force_save="1"/>
+                                    <field name="programme_total_credits" readonly="1" force_save="1"/>
+                                </group> 
+                                <group> 
+                                    <separator string="Achieved Credits"/>
+
+                                    <field name="core_credits" readonly="1" force_save="1"/>
+                                    <field name="fundamental_credits" readonly="1" force_save="1"/>
+                                    <field name="elective_credits" readonly="1" force_save="1"/>
+                                    <field name="total_credits" readonly="1" force_save="1"/>
+                                </group> 
+                                 
+                            </group>
+                            <div class="oe_title">
+								<h3>	
+									Assessment type<br/>
+								</h3>
+                                <div class="oe_title row">
+									Qualification : <field name="qualification_assessment_type" readonly="1"/>
+                                     <!-- attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}"/> -->
+									Learnership : <field name="learnership_assessment_type" readonly="1"/>
+                                     <!-- attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}"/> -->
+									Skill : <field name="skill_assessment_type"  readonly="1"/>
+                                    <!-- attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}"/> -->
+								</div>
+
+								<div class="oe_title row" invisible="1">
+									Unit Standard : <field name="unit_assessment_type" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}"/>
+									<!-- Qualification : <field name="qualification_assessment_type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+									Learnership : <field name="learnership_assessment_type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+									Skill : <field name="skill_assessment_type" invisible="0" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/> -->
+									Internship : <field name="internship_assessment_type" invisible="0" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}"/>
+									Bursary : <field name="bursary_assessment_type" invisible="0" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}"/>
+									Candidacy : <field name="candidacy_assessment_type" invisible="0" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}"/>
+									Wiltvet : <field name="wiltvet_assessment_type" invisible="0" attrs="{'readonly': [('state', 'not in', ['verified','draft'])]}"/>
+								</div>
+							</div>
+							<br/>
+                            <div class="oe_left" attrs="{'invisible': [('assessor_id', '=', False)]}">
+                                <button name="action_select_all" string="Select All" type="object" class="btn-primary btn-sm" attrs="{'invisible': [('state', 'not in', ['verified', 'draft'])]}"/> - 
+                                <button name="action_deselect_all" string="Deselect All" type="object" class="btn-primary btn-sm" attrs="{'invisible': [('state', 'not in', ['verified', 'draft'])]}"/> -  
+                                <button name="action_update_assessors" string="Update Assessors / Moderator" type="object" class="btn-primary btn-sm" attrs="{'invisible': [('state', 'not in', ['verified', 'draft'])]}"/> - 
+                                <button name="action_mark_all_competent" string="Mark Select as Competent" type="object" class="btn-primary btn-sm" attrs="{'invisible': [('state', 'not in', ['verified', 'draft'])]}"/> - 
+                                <button name="action_mark_all_not_competent" string="Mark Select as InCompetent" type="object" class="btn-primary btn-sm" attrs="{'invisible': [('state', 'not in', ['verified', 'draft'])]}"/>
+                            </div>
+                            <notebook>
+                                <page name="new_programme_assessment" string="Qualification &amp; Programmes">
+                                    <separator string="Qualification" attrs="{'invisible': [('learner_qualification_id', '=', False)]}"/>
+                                    <field name="qualification_learnership_line" domain="[('id','=',None)]" 
+                                    attrs="{'invisible': [('learner_qualification_id', '=', False)],'readonly': [('state', 'not in', ['draft', 'verified'])]}" 
+                                    context="{'default_learner_id': learner, 'default_inseta_assessment_detail_id': active_id,
+                                    'default_learner_qualification_id': learner_qualification_id, 'default_verification_date': verification_date}"
+                                    options="{'no_create': True, 'no_create_edit': True}">
+                                        <tree string="Qualification" editable="bottom" delete="false" create="false">
+                                            <field name="id" invisible="1"/>
+                                            <field name="completed" invisible="1"/>
+                                            <field name="select" readonly="0" force_save="0"/>
+                                            <field name="learner_qualification_id" readonly="1" force_save="1" invisible="1"/>
+                                            <field name="inseta_assessment_detail_id" force_save="1" invisible="1"/>
+                                            <field name="learner_id" force_save="1" invisible="1"/>
+                                            <field name="unit_standard_id" required="1" string="Unit Standard Title" readonly="1" colspan="3" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                            <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            <field name="code" readonly="1" force_save="1"/>
+                                            <field name="credits" readonly="1" force_save="1"/>
+                                            <field name="verification_date" readonly="1" force_save="1"/> 
+                                            <field name="assessor_id" required="0" string="Assessor" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                            <field name="assessment_date" required="0" string="Assessment Date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            <field name="moderator_id" required="0" readonly="0" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                            <field name="moderator_date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            <field name="assessment_status_id" readonly="0" required="0" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        </tree>
+                                        <!-- <form>
+                                            <group>
+                                                <group>
+                                                    <field name="completed" invisible="1"/>
+                                                    <field name="select" readonly="0" force_save="0"/>
+                                                    <field name="learner_qualification_id" readonly="1" force_save="1" invisible="1"/>
+                                                    <field name="inseta_assessment_detail_id" force_save="1" invisible="1"/>
+                                                    <field name="learner_id" force_save="1" invisible="1"/>
+                                                    <field name="unit_standard_id" required="1" string="Unit Standard Title" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                                    <field name="unit_standard_type_id" readonly="1" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                    <field name="code" readonly="1" force_save="1"/>
+                                                    <field name="credits" readonly="1" force_save="1"/>
+                                                    <field name="assessor_id" required="0" string="Assessor" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                                    <field name="assessment_date" required="0" string="Assessment Date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                    
+                                                </group>
+                                                <group>
+                                                    <field name="moderator_id" required="0" readonly="0" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                                    <field name="moderator_date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                    <field name="assessment_status_id" readonly="0" required="0" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                </group>
+                                            </group>
+                                            
+                                        </form> -->
+                                    </field>
+
+                                    <separator string="Learnership" attrs="{'invisible': [('learner_learnership_id', '=', False)]}"/>
+                                    <field name="learnership_learnership_line" domain="[('id','=',None)]" 
+                                    attrs="{'invisible': [('learner_learnership_id', '=', False)],'readonly': [('state', 'not in', ['draft','verified'])]}" 
+                                    context="{'default_learner_id': learner, 'default_inseta_assessment_detail_id': active_id,
+                                    'default_learner_learnership_id': learner_learnership_id, 'default_verification_date': verification_date}"
+                                    options="{'no_create': True, 'no_create_edit': True}">
+                                        <!-- <form string="Learnership">
+                                            <p style="color: red;">*NOTE: Programme registered for the learner <br/> 
+                                                only displays in the dropdown</p>
+                                            <group> 
+                                                <group>
+                                                    <field name="inseta_assessment_detail_id" force_save="1"/>
+                                                    <field name="unit_standard_id" required="1" options="{'no_create': True,'no_open': True}"/> 
+                                                    <field name="assessor_id" required="1" attrs="{'invisible': [('unit_standard_id', '=', False)]}"/> 
+                                                    <field name="assessment_date" required="1" attrs="{'invisible': [('assessor_id', '=', False)]}"/> 
+                                                    <field name="learner_id" readonly="0" invisible="1"/>
+                                                    <field name="learner_learnership_id" readonly="1" force_save="1" invisible="0"/>
+                                                </group>
+                                                <group>
+                                                    <field name="moderator_id" readonly="0" required="0" attrs="{'invisible': [('assessment_date', '=', False)]}"/>
+                                                    <field name="moderator_date" required="0" attrs="{'invisible': [('moderator_id', '=', False)],'required': [('moderator_id', '!=', False)]}"/>
+                                                    <field name="programme_status_id" readonly="0" invisible="0" required="0"/>
+                                                </group>
+                                            </group>
+                                        </form> -->
+                                        <tree string="Learnership" editable="bottom" delete="0" create="0">
+                                            <field name="completed" invisible="1"/>
+                                            <field name="select" readonly="0" force_save="0"/>
+                                            <field name="learner_learnership_id" readonly="1" force_save="1" invisible="1"/>
+                                            <field name="inseta_assessment_detail_id" force_save="1" invisible="1"/>
+                                            <field name="learner_id" force_save="1" invisible="1"/>
+                                            <field name="unit_standard_id" required="1" string="Unit Standard Title" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                            <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            <field name="code" readonly="1" force_save="1"/>
+                                            <field name="credits" readonly="1" force_save="1"/>
+                                            <field name="verification_date" readonly="1" force_save="1"/> 
+                                            <field name="assessor_id" required="0" string="Assessor" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                            <field name="assessment_date" required="0" string="Assessment Date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            <field name="moderator_id" required="0" readonly="0" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                            <field name="moderator_date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            <field name="assessment_status_id" readonly="0" required="0" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        </tree>
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="completed" invisible="1"/>
+                                                    <field name="select" readonly="0" force_save="0"/>
+                                                    <field name="learner_learnership_id" readonly="1"  options="{'no_create': True,'no_open': True}" force_save="1" invisible="1"/>
+                                                    <field name="inseta_assessment_detail_id" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="learner_id" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="unit_standard_id" required="1" string="Unit Standard Title" options="{'no_create': True,'no_open': True}"/> 
+                                                    <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="code" readonly="1" force_save="1"/>
+                                                    <field name="credits" readonly="1" force_save="1"/>
+                                                    <field name="assessor_id" required="0" string="Assessor" options="{'no_create': True,'no_open': True}" attrs="{'readonly': [('completed', '=', True)]}"/> 
+                                                    <field name="assessment_date" required="0" string="Assessment Date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                    
+                                                </group>
+                                                <group>
+                                                    <field name="moderator_id" required="0" readonly="0" options="{'no_create': True,'no_open': True}"/> 
+                                                    <field name="moderator_date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                    <field name="assessment_status_id" readonly="0" required="0" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/>
+                                                </group>
+                                            </group>
+                                            
+                                        </form>
+                                    </field>
+                                 
+
+                                    <separator string="Skills" attrs="{'invisible': [('learner_skill_learnership_id', '=', False)]}"/>
+                                    <field name="skills_learnership_line" domain="[('id','=',None)]" 
+                                    attrs="{'invisible': [('learner_skill_learnership_id', '=', False)],'readonly': [('state', 'not in', ['draft','verified'])]}" 
+                                    context="{'default_learner_id': learner, 'default_inseta_assessment_detail_id': active_id,
+                                    'default_learner_skill_learnership_id': learner_skill_learnership_id, 'default_verification_date': verification_date}"
+                                    options="{'no_create': True, 'no_create_edit': True}">
+                                        <!-- <form string="Skills Learnership">
+                                            <p style="color: red;">*NOTE: Programme registered for the learner <br/> 
+                                                only displays in the dropdown</p>
+                                            <group> 
+                                                <group>
+                                                    <field name="inseta_assessment_detail_id" force_save="1"/>
+                                                    <field name="unit_standard_id" required="1" options="{'no_create': True,'no_open': True}"/> 
+                                                    <field name="assessor_id" required="1" attrs="{'invisible': [('unit_standard_id', '=', False)]}"/> 
+                                                    <field name="assessment_date" required="1" attrs="{'invisible': [('assessor_id', '=', False)]}"/> 
+                                                    <field name="learner_id" readonly="0" invisible="1"/>
+                                                    <field name="learner_skill_learnership_id" readonly="1" force_save="1" invisible="0"/>
+                                                </group>
+                                                <group>
+                                                    <field name="moderator_id" readonly="0" required="0" attrs="{'invisible': [('assessment_date', '=', False)]}"/>
+                                                    <field name="moderator_date" required="0" attrs="{'invisible': [('moderator_id', '=', False)],'required': [('moderator_id', '!=', False)]}"/>
+                                                    <field name="programme_status_id" readonly="0" invisible="0" required="0"/>
+                                                </group>
+                                            </group>
+                                        </form> -->
+                                         
+                                        <tree string="Skills" editable="bottom" delete="0" create="0">
+                                            <field name="completed" invisible="1"/>
+                                            <field name="select" readonly="0" force_save="0"/>
+                                            <field name="learner_skill_learnership_id" readonly="1" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                            <field name="inseta_assessment_detail_id" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                            <field name="learner_id" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                            <field name="unit_standard_id" required="1" string="Unit Standard Title" readonly="1"/> 
+                                            <field name="unit_standard_type_id" readonly="1" force_save="1"/>
+                                            <field name="code" readonly="1" force_save="1"/>
+                                            <field name="credits" readonly="1" force_save="1"/>
+                                            <field name="verification_date" readonly="1"/> 
+                                            <field name="assessor_id" required="0" string="Assessor" options="{'no_create': True,'no_open': True}" attrs="{'readonly': [('completed', '=', True)]}" /> 
+                                            <field name="assessment_date" required="0" string="Assessment Date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            <field name="moderator_id" required="0" readonly="0" options="{'no_create': True,'no_open': True}" attrs="{'readonly': [('completed', '=', True)]}" /> 
+                                            <field name="moderator_date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                            <field name="assessment_status_id" readonly="0" required="0" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/>
+                                        </tree>
+
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="completed" invisible="1"/>
+                                                    <field name="select" readonly="0" force_save="0"/>
+                                                    <field name="learner_skill_learnership_id" readonly="1" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="inseta_assessment_detail_id" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="learner_id" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="unit_standard_id" required="1" string="Unit Standard Title" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="code" readonly="1" force_save="1"/>
+                                                    <field name="credits" readonly="1" force_save="1"/>
+                                                    <field name="assessor_id" required="0" string="Assessor" options="{'no_create': True,'no_open': True}"/> 
+                                                    <field name="assessment_date" required="0" string="Assessment Date"/>
+                                                        
+                                                </group>
+                                                <group>
+                                                    <field name="moderator_id" required="0" readonly="0" options="{'no_create': True,'no_open': True}" attrs="{'readonly': [('completed', '=', True)]}"/> 
+                                                    <field name="moderator_date" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                                    <field name="assessment_status_id" readonly="0" required="0" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/>
+                                                </group>
+                                            </group>
+                                            
+                                        </form>
+                                    </field>
+                                     
+                                    <separator string="Unit standard" attrs="{'invisible': [('unit_standard_learnership_id', '=', False)]}"/>
+                                    <field name="unit_standard_learnership_line" domain="[('id','=',None)]" 
+                                    attrs="{'invisible': [('unit_standard_learnership_id', '=', False)],'readonly': [('state', 'not in', ['draft','verified'])]}" 
+                                    context="{'default_learner_id': learner, 'default_inseta_assessment_detail_id': active_id,
+                                    'default_unit_standard_learnership_id': unit_standard_learnership_id, 'default_verification_date': verification_date}">
+                                        <form string="Unit standard Learnership">
+                                            <p style="color: red;">*NOTE: Programme registered for the learner <br/> 
+                                                only displays in the dropdown</p>
+                                            <group> 
+                                                <group>
+                                                    <field name="completed" invisible="1"/>
+                                                    <field name="inseta_assessment_detail_id" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="unit_standard_learnership_id" readonly="1" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="assessor_id" required="1" options="{'no_create': True,'no_open': True}"/> 
+                                                    <field name="assessment_date" required="1" attrs="{'invisible': [('assessor_id', '=', False)]}"/> 
+                                                    <field name="learner_id" readonly="0" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                                </group>
+                                                <group>
+                                                    <field name="moderator_id" readonly="0" required="0" attrs="{'invisible': [('assessment_date', '=', False)]}" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="moderator_date" required="0" attrs="{'invisible': [('moderator_id', '=', False)],'required': [('moderator_id', '!=', False)]}"/>
+                                                    <field name="assessment_status_id" readonly="1" invisible="1" required="0" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                                                    <field name="temp_programme_status_id" readonly="0" invisible="1" required="1" options="{'no_create': True,'no_open': True}"/>
+                                                </group>
+                                            </group>
+                                        </form>
+                                        <tree string="" delete="0" create="0">
+                                            <field name="completed" invisible="1"/>
+                                            <field name="unit_standard_learnership_id" readonly="1" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+                                            <field name="verification_date" readonly="1"/> 
+                                            <field name="assessor_id" required="1" options="{'no_create': True,'no_open': True}"/> 
+                                            <field name="assessment_date" required="1"/>
+                                            <field name="moderator_id" required="1" readonly="0" options="{'no_create': True,'no_open': True}"/> 
+                                            <field name="assessment_status_id" readonly="0" required="0" options="{'no_create': True,'no_open': True}"/>
+                                        </tree>
+                                    </field>
+                                </page>
+ 
+                                <page string="Refusal Comment" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee">
+									<field name="refusal_comment" string="Add Verification report" widget="text" placeholder="Start typing refusal note"/>
+								</page>
+
+                                <page string="User Manual">
+                                    <p style="color: blue;">*
+                                        <strong>HOW TO DO ASSESSMENT</strong>
+                                        <ul> 
+                                            <li>1. Open the menu learner -> learner programme registration<br/>    
+                                            Capture learner to a programme (eg Qualification programme)</li>
+
+                                            <li>2. Then go to menu verification and assessment => Qualification Programme assessment <br/>
+                                            Create an assessment.</li>
+
+                                            <li>3. Ensure you select the captured Qualification and financial year</li>
+
+                                            <li>Set the assessors and moderators</li>
+                                            <li>Select about two unit standard assessment line and mark all selected as competent</li>
+                                            <li>If there is any Incompetent line, the system generates a partial assessment line for <br/> 
+                                            those unit standards and attach it to the programme partial assessment line</li><br/>
+
+                                            <strong>To complete the partial assessment</strong>: 
+                                            <li>Create another assessment, check the field; is partial assessment checkbox</li>
+                                            <li>Select the learner, financial year and then the qualification id, <br/>
+                                            system will pull both competent and incompetent unit standard assessments but you cannot modify the competent ones<br/>
+                                            because it is already assessed and approved.<br/>
+                                            The incompetent ones can be modified, simply check the select box and mark them as competent or so.<br/>
+                                            </li>
+                                            <li>Then proceed with submitting the assessment for approval.</li>
+                                        </ul>
+                                    </p>
+                                    <br/>    
+                                </page>
+                            </notebook>
+                            
+                        </sheet>
+                    </form>
+				</field>
+			</record>
+			<record id="view_inseta_learner_assessment_detail_tree" model="ir.ui.view">
+				<field name="name">view inseta.learner.assessment.detail tree</field>
+				<field name="model">inseta.learner.assessment.detail</field>
+				<field name="arch" type="xml">
+					<tree string="Inseta Assessment">
+						<!-- <field name="learner_id" required="0"/> -->
+                        <field name="learner_id_no" string="Learner ID" invisible="0" required="0"/>
+						<field name="learner_register_id" invisible="1" required="0"/>
+                        <field name="learner" force_save="1" required="0" string="Learner Name" readonly="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="financial_year_id" required="1" force_save="1"/>
+                        <field name="provider_id" invisible="0" force_save="1" readonly="1"/>
+                        <field name="assessment_date" readonly="1"/>
+                        <field name="approved_date" readonly="1"/>
+                        <field name="state" readonly="1"/>
+
+					</tree>
+				</field>
+			</record>
+
+			<record id="view_inseta_learner_assessment_detail_filter" model="ir.ui.view">
+				<field name="name">Inseta learnership Assessment</field>
+				<field name="model">inseta.learner.assessment.detail</field>
+				<field name="arch" type="xml">
+					<search string="Inseta learnership Details">
+                        <field name="learner_id_no" invisible="0" required="0"/>
+						<field name="learner_id" invisible="0"/> 
+                        <field name="financial_year_id" required="1" force_save="1"/>
+                        <field name="provider_sdl" required="1" invisible="0"/>
+                        <field name="provider_id" force_save="1"/>
+                        <field name="assessment_date"/>
+                        <field name="approved_date"/>
+                        <field name="state"/>
+					</search>
+				</field>
+			</record>
+
+            <record id="view_inseta_learner_assessment_learnership_detail_tree" model="ir.ui.view">
+				<field name="name">view inseta.learner.assessment.detail tree</field>
+				<field name="model">inseta.learner.assessment.detail</field>
+				<field name="arch" type="xml">
+					<tree string="Inseta Assessment">
+						<!-- <field name="learner_id" required="0"/> -->
+                        <field name="learner_id_no" string="Learner ID" invisible="0" required="0"/>
+						<field name="learner_register_id" invisible="1" required="0"/>
+						<field name="learner_learnership_id" required="0"/>
+                        <field name="learner" force_save="1" required="0" string="Learner Name" readonly="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="financial_year_id" required="1" force_save="1"/>
+                        <field name="provider_id" invisible="0" force_save="1" readonly="1"/>
+                        <field name="assessment_date" readonly="1"/>
+                        <field name="approved_date" readonly="1"/>
+                        <field name="state" readonly="1"/>
+
+					</tree>
+				</field>
+			</record>
+
+            <record id="view_inseta_learner_assessment_qualification_detail_tree" model="ir.ui.view">
+				<field name="name">view inseta.learner.assessment.qualification.detail tree</field>
+				<field name="model">inseta.learner.assessment.detail</field>
+				<field name="arch" type="xml">
+					<tree string="Inseta Assessment">
+						<!-- <field name="learner_id" required="0"/> -->
+                        <field name="learner_id_no" string="Learner ID" invisible="0" required="0"/>
+						<field name="learner_register_id" invisible="1" required="0"/>
+						<field name="learner_qualification_id" required="0"/>
+                        <field name="learner" force_save="1" required="0" string="Learner Name" readonly="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="financial_year_id" required="1" force_save="1"/>
+                        <field name="provider_id" invisible="0" force_save="1" readonly="1"/>
+                        <field name="assessment_date" readonly="1"/>
+                        <field name="approved_date" readonly="1"/>
+                        <field name="state" readonly="1"/>
+
+					</tree>
+				</field>
+			</record>
+
+            <record id="view_inseta_learner_assessment_skill_learnership_detail_tree" model="ir.ui.view">
+				<field name="name">view inseta.learner.assessment.skill.detail tree</field>
+				<field name="model">inseta.learner.assessment.detail</field>
+				<field name="arch" type="xml">
+					<tree string="Inseta Assessment">
+						<!-- <field name="learner_id" required="0"/> -->
+                        <field name="learner_id_no" string="Learner ID" invisible="0" required="0"/>
+						<field name="learner_register_id" invisible="1" required="0"/>
+						<field name="learner_skill_learnership_id" required="0"/>
+                        <field name="learner" force_save="1" required="0" string="Learner Name" readonly="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="financial_year_id" required="1" force_save="1"/>
+                        <field name="provider_id" invisible="0" force_save="1" readonly="1"/>
+                        <field name="assessment_date" readonly="1"/>
+                        <field name="approved_date" readonly="1"/>
+                        <field name="state" readonly="1"/>
+
+					</tree>
+				</field>
+			</record>
+
+
+            <record id="view_inseta_qualification_unit_standard_assessment_filter" model="ir.ui.view">
+				<field name="name">Inseta qualification unit standard Assessment</field>
+				<field name="model">inseta.learner_qualification.assessment</field>
+				<field name="arch" type="xml">
+					<search string="Inseta learnership Details">
+                        <field name="completed" invisible="1"/>
+                        <field name="learner_qualification_id" readonly="1" force_save="1" invisible="1"/>
+                        <field name="inseta_assessment_detail_id" force_save="1" invisible="1"/>
+                        <field name="learner_id" force_save="1" invisible="1"/>
+                        <field name="unit_standard_id" required="1" string="Unit Standard Title" readonly="1" colspan="3" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                        <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="code" readonly="1" force_save="1"/>
+                        <field name="credits" readonly="1" force_save="1"/>
+                        <field name="verification_date" readonly="1" force_save="1"/> 
+                        <field name="assessor_id" required="0" string="Assessor" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                        <field name="assessment_date" required="0" string="Assessment Date" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="moderator_id" required="0" readonly="0" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                        <field name="moderator_date" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="assessment_status_id" readonly="0"/>
+                        <filter name="learner_qualification_unit_standard_assessment_grp" string="Qualification unit standard Assessment"
+                            domain="[('learner_qualification_id', '!=', False)]"/>
+                            <group  expand='0' string='Group by...'>
+                                <filter name ="learner_qualification_unit_standard_assessment_filter" string='Learner' domain="[]" context="{'group_by' : 'learner_id'}"/>
+                                <filter name ="programme_qualification_unit_standard_assessment_filter" string='Qualification' domain="[]" context="{'group_by' : 'learner_qualification_id'}"/>
+                            </group>
+					</search>
+				</field>
+			</record>
+
+            <record id="view_inseta_qualification_unit_standard_assessment_tree" model="ir.ui.view">
+				<field name="name">Inseta qualification unit standard Assessment</field>
+				<field name="model">inseta.learner_qualification.assessment</field>
+				<field name="arch" type="xml">
+					<tree string="Inseta qualification unit standard Assessment" create="0" edit="0">
+                        <field name="completed" invisible="1"/>
+                        <field name="learner_id" force_save="1" invisible="1"/>
+                        <field name="learner_qualification_id" readonly="1" force_save="1" invisible="1"/>
+                        <field name="inseta_assessment_detail_id" force_save="1" invisible="1"/>
+                        <field name="unit_standard_id" required="1" string="Unit Standard Title" readonly="1" colspan="3" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                        <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="code" readonly="1" force_save="1"/>
+                        <field name="credits" readonly="1" force_save="1"/>
+                        <field name="verification_date" readonly="1" force_save="1"/> 
+                        <field name="assessor_id" required="0" string="Assessor" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                        <field name="assessment_date" required="0" string="Assessment Date" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="moderator_id" required="0" readonly="0" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                        <field name="moderator_date" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="assessment_status_id" readonly="0"/>
+					</tree>
+				</field>
+			</record>
+
+            <record id="view_inseta_qualification_unit_standard_assessment_form" model="ir.ui.view">
+				<field name="name">Inseta qualification unit standard Assessment</field>
+				<field name="model">inseta.learner_qualification.assessment</field>
+				<field name="arch" type="xml">
+					<form create="0" edit="0">
+                        <group>
+                            <group>
+                                <field name="completed" invisible="1"/>
+                                <field name="select" readonly="0" force_save="0"/>
+                                <field name="learner_qualification_id" readonly="1" force_save="1" invisible="1"/>
+                                <field name="inseta_assessment_detail_id" force_save="1" invisible="1" readonly="1"/>
+                                <field name="learner_id" force_save="1" invisible="1"/>
+                                <field name="unit_standard_id" required="1" readonly="1" string="Unit Standard Title" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                <field name="code" readonly="1" force_save="1"/>
+                                <field name="credits" readonly="1" force_save="1"/>
+                                <field name="assessor_id" required="0" string="Assessor" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                <field name="assessment_date" required="0" string="Assessment Date" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                
+                            </group>
+                            <group>
+                                <field name="moderator_id" required="0" readonly="1"  options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/> 
+                                <field name="moderator_date" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                <field name="assessment_status_id" readonly="1" required="0" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                            </group>
+                        </group>
+                        
+                    </form>
+				</field>
+			</record>
+
+            <record id="view_inseta_learnership_unit_standard_assessment_filter" model="ir.ui.view">
+				<field name="name">Inseta learner_learnership unit standard Assessment</field>
+				<field name="model">inseta.learner_learnership.assessment</field>
+				<field name="arch" type="xml">
+					<search string="Inseta learnership Details">
+                        <field name="completed" invisible="1"/>
+                        <field name="select" readonly="0" force_save="0"/>
+                        <field name="learner_learnership_id" readonly="1" force_save="1" invisible="0"/>
+                        <field name="inseta_assessment_detail_id" force_save="1" invisible="1" readonly="1"/>
+                        <field name="learner_id" invisible="0" force_save="1" readonly="1"/>
+                        <field name="unit_standard_id" required="1" string="Unit Standard Title" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/> 
+                        <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                        <field name="code" readonly="1" force_save="1"/>
+                        <field name="credits" readonly="1" force_save="1"/>
+                        <field name="assessor_id" required="0" string="Assessor" force_save="1" readonly="1" options="{'no_create': True,'no_open': True}"/> 
+                        <field name="assessment_date" required="0" string="Assessment Date" force_save="1" attrs="{'readonly': [('completed', '=', True)]}"/>
+                        <field name="moderator_id" required="0" force_save="1" readonly="1" options="{'no_create': True,'no_open': True}"/> 
+                        <field name="moderator_date" force_save="1" readonly="1" />
+                        <field name="assessment_status_id" required="0" force_save="1" readonly="1" options="{'no_create': True,'no_open': True}"/>
+                        <filter name="learnership_unit_standard_assessment_grp" string="Learnership unit standard Assessment"
+                            domain="[('learner_learnership_id', '!=', False)]"/>
+                            <group  expand='0' string='Group by...'>
+                                <filter name ="learnership_unit_standard_assessment_filter" string='Learner' domain="[]" context="{'group_by' : 'learner_id'}"/>
+                                <filter name ="programme_learnership_unit_standard_assessment_filter" string='Learnership' domain="[]" context="{'group_by' : 'learner_learnership_id'}"/>
+                            </group>
+                    </search>
+				</field>
+			</record>
+
+            <record id="view_inseta_learnership_unit_standard_assessment_tree" model="ir.ui.view">
+				<field name="name">Inseta learnership unit standard Assessment</field>
+				<field name="model">inseta.learner_learnership.assessment</field>
+				<field name="arch" type="xml">
+					<tree string="Learnership" create="0" edit="0">
+                        <field name="learner_id" invisible="0" force_save="1" readonly="1"/>
+                        <field name="inseta_assessment_detail_id" force_save="1" invisible="0" readonly="1"/>
+                        <field name="completed" invisible="0" readonly="1"/>
+                        <field name="learner_learnership_id" readonly="1" force_save="1" invisible="0"/>
+                        <field name="unit_standard_id" required="1" string="Unit Standard Title" force_save="1" readonly="1" options="{'no_create': True,'no_open': True}"/> 
+                        <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                        <field name="code" readonly="1" force_save="1"/>
+                        <field name="credits" readonly="1" force_save="1"/>
+                        <field name="assessor_id" required="0" string="Assessor" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/> 
+                        <field name="assessment_date" required="0" string="Assessment Date" force_save="1" readonly="1"/>
+                        <field name="moderator_id" required="0" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/> 
+                        <field name="moderator_date" force_save="1" readonly="1" />
+                        <field name="assessment_status_id" readonly="1" required="0" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                    </tree>
+				</field>
+			</record>
+
+            <record id="view_inseta_learnership_unit_standard_assessment_form" model="ir.ui.view">
+				<field name="name">Inseta learnership unit standard Assessment</field>
+				<field name="model">inseta.learner_learnership.assessment</field>
+				<field name="arch" type="xml">
+					<form create="0" edit="0">
+                        <group>
+                            <group>
+                                <field name="completed" invisible="0"/>
+                                <field name="select" readonly="1" force_save="0"/>
+                                <field name="learner_learnership_id" readonly="1" options="{'no_create': True,'no_open': True}" force_save="1" invisible="0"/>
+                                <field name="inseta_assessment_detail_id" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}" readonly="1"/>
+                                <field name="learner_id" force_save="1" readonly="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                                <field name="unit_standard_id" required="1" readonly="1" string="Unit Standard Title" options="{'no_create': True,'no_open': True}"/> 
+                                <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                                <field name="code" readonly="1" force_save="1"/>
+                                <field name="credits" readonly="1" force_save="1"/>
+                                <field name="assessor_id" required="0" string="Assessor" options="{'no_create': True,'no_open': True}" readonly="1"/> 
+                                <field name="assessment_date" required="0" string="Assessment Date" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                            </group>
+                            <group>
+                                <field name="moderator_id" required="0" readonly="1" options="{'no_create': True,'no_open': True}"/> 
+                                <field name="moderator_date" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                <field name="assessment_status_id" readonly="1" required="0" options="{'no_create': True,'no_open': True}"/>
+                            </group>
+                        </group>
+                    </form>
+				</field>
+			</record> 
+            <record id="view_inseta_skill_unit_standard_assessment_filter" model="ir.ui.view">
+				<field name="name">Inseta  skill unit standard Assessment</field>
+				<field name="model">inseta.skill_learnership.assessment</field>
+				<field name="arch" type="xml">
+					<search string="Inseta skill learnership assessment">
+                        <field name="completed" invisible="0"/>
+                        <field name="select" readonly="0" force_save="0"/>
+                        <field name="learner_skill_learnership_id" readonly="1" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="inseta_assessment_detail_id" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="learner_id" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="unit_standard_id" required="1" string="Unit Standard Title" readonly="1"/> 
+                        <field name="unit_standard_type_id" readonly="1" force_save="1"/>
+                        <field name="code" readonly="1" force_save="1"/>
+                        <field name="credits" readonly="1" force_save="1"/>
+                        <field name="verification_date" readonly="1"/> 
+                        <field name="assessor_id" required="0" string="Assessor" options="{'no_create': True,'no_open': True}" readonly="1"/> 
+                        <field name="assessment_date" required="0" string="Assessment Date" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="moderator_id" required="0" readonly="1" options="{'no_create': True,'no_open': True}" attrs="{'readonly': [('completed', '=', True)]}" /> 
+                        <field name="moderator_date" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="assessment_status_id" readonly="1" required="0" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                        <filter name="skill_unit_standard_assessment_grp" string="Skill unit standard Assessment"
+                            domain="[('learner_skill_learnership_id', '!=', False)]"/>
+                            <group expand='0' string='Group by...'>
+                                <filter name ="skill_unit_standard_assessment_filter" string='Learner' domain="[]" context="{'group_by' : 'learner_id'}"/>
+                                <filter name ="programme_skill_unit_standard_assessment_filter" string='Skills ' domain="[]" context="{'group_by' : 'learner_skill_learnership_id'}"/>
+                            </group>
+                    </search>
+				</field>
+			</record> 
+            <record id="view_inseta_skill_unit_standard_assessment_tree" model="ir.ui.view">
+				<field name="name">Inseta skill unit standard Assessment</field>
+				<field name="model">inseta.skill_learnership.assessment</field>
+				<field name="arch" type="xml">
+					<tree string="Skills" delete="0" create="0">
+                        <field name="learner_id" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="learner_skill_learnership_id" readonly="1" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="inseta_assessment_detail_id" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                        <field name="unit_standard_id" required="1" string="Unit Standard Title" readonly="1"/> 
+                        <field name="unit_standard_type_id" readonly="1" force_save="1"/>
+                        <field name="completed" invisible="1"/>
+                        <field name="code" readonly="1" force_save="1"/>
+                        <field name="credits" readonly="1" force_save="1"/>
+                        <field name="verification_date" readonly="1"/> 
+                        <field name="assessor_id" readonly="1" required="0" string="Assessor" options="{'no_create': True,'no_open': True}" /> 
+                        <field name="assessment_date" required="0" string="Assessment Date" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="moderator_id" required="0" readonly="1" options="{'no_create': True,'no_open': True}" /> 
+                        <field name="moderator_date" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="assessment_status_id" readonly="1" required="0" force_save="1"  options="{'no_create': True,'no_open': True}"/>
+                    </tree>
+				</field>
+			</record>
+
+            <record id="view_inseta_skill_unit_standard_assessment_form" model="ir.ui.view">
+				<field name="name">Inseta skill unit standard Assessment</field>
+				<field name="model">inseta.skill_learnership.assessment</field>
+				<field name="arch" type="xml">
+					<form create="0" edit="0">
+                        <group>
+                            <group>
+                                <field name="completed" invisible="0" readonly="1"/>
+                                <field name="select" readonly="0" force_save="0"/>
+                                <field name="learner_skill_learnership_id" readonly="1" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                                <field name="inseta_assessment_detail_id" force_save="1" invisible="0" readonly="1" options="{'no_create': True,'no_open': True}"/>
+                                <field name="learner_id" force_save="1" invisible="0" options="{'no_create': True,'no_open': True}"/>
+                                <field name="unit_standard_id" required="1" string="Unit Standard Title" readonly="1" options="{'no_create': True,'no_open': True}"/>
+                                <field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/>
+                                <field name="code" readonly="1" force_save="1"/>
+                                <field name="credits" readonly="1" force_save="1" />
+                                <field name="assessor_id" required="0" string="Assessor" readonly="1" options="{'no_create': True,'no_open': True}"/> 
+                                <field name="assessment_date" required="0" readonly="1" string="Assessment Date"/>
+                                    
+                            </group>
+                            <group>
+                                <field name="moderator_id" required="0" readonly="1" options="{'no_create': True,'no_open': True}"/> 
+                                <field name="moderator_date" readonly="1" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                <field name="assessment_status_id" readonly="1" required="0" options="{'no_create': True,'no_open': True}"/>
+                            </group>
+                        </group>
+                        
+                    </form>
+				</field>
+			</record>
+
+			<record id="action_learnership_assessment_details_2" model="ir.actions.act_window">
+				<field name="name">Inseta Learners Assessment</field>
+				<field name="res_model">inseta.learner.assessment.detail</field>
+				<field name="view_mode">tree,form</field>
+                <field name="context">{'default_learnership_assessment_type': True}</field>
+                <field name="domain">[('learnership_assessment_type', '=', True)]</field>
+				<field name="view_id" eval="view_inseta_learner_assessment_learnership_detail_tree" />
+				<field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						
+					</p>
+				</field>
+			</record>
+
+            <!-- <record model="ir.actions.act_window.view" id="action_jobapplication_application_tree">
+                <field name="sequence" eval="1"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="jobapplication_tree"/>
+                <field name="act_window_id" ref="action_jobapplication_application"/>
+            </record> -->
+
+            <record id="action_qualification_assessment_details" model="ir.actions.act_window">
+				<field name="name">Inseta qualification assessment</field>
+				<field name="res_model">inseta.learner.assessment.detail</field>
+				<field name="view_mode">tree,form</field>
+                <field name="context">{'default_qualification_assessment_type': True}</field>
+                <field name="domain">[('qualification_assessment_type', '=', True)]</field>
+				<field name="view_id" eval="view_inseta_learner_assessment_qualification_detail_tree" />
+                <field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						
+					</p>
+				</field>
+			</record>
+
+            <record id="action_skill_assessment_details" model="ir.actions.act_window">
+				<field name="name">Inseta skill assessment</field>
+				<field name="res_model">inseta.learner.assessment.detail</field>
+				<field name="view_mode">tree,form</field>
+                <field name="context">{'default_skill_assessment_type': True}</field>
+                <field name="domain">[('skill_assessment_type', '=', True)]</field>
+
+				<field name="view_id" eval="view_inseta_learner_assessment_skill_learnership_detail_tree" />
+				<field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						
+					</p>
+				</field> 
+
+			</record>
+
+            <record id="view_assessment_bulk_orders_form" model="ir.ui.view">
+                <field name="name">inseta.assessment.bulk.order.form</field>
+                <field name="model">inseta.assessment.bulk.order</field>
+                <field name="arch" type="xml">
+                    <form string="Approve">
+                        <p>
+                            Are you sure you want to Approve Applications ?
+                        </p>
+                        <footer>
+                            <button name="confirm_bulk_approval" string="Confirm" type="object" class="oe_highlight"/>
+                            <button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </form>
+                </field>
+            </record>
+
+
+            <act_window name="Bulk Assessment Approval"
+                id="action_bulk_approval"
+                res_model="inseta.assessment.bulk.order"
+                binding_model="inseta.learner.assessment.detail"
+                binding_views="list"
+                view_mode="form"
+                target="new"
+            /> 
+
+                <!-- <record id="ir_action_server_bulk_assessment_approval" model="ir.actions.server">
+                    <field name="name">Bulk Assessment Approval</field>
+                    <field name="type">ir.actions.server</field>
+                    <field name="model_id" ref="model_inseta_learner_assessment_detail"/>
+                    <field name="state">code</field>
+                    <field name="code">action = env.get('inseta.learner.assessment.detail').action_bulk_approval()</field>
+                </record> -->
+
+            <record id="action_learnership_unitstandard_assessment_details" model="ir.actions.act_window">
+				<field name="name">Inseta learnership unit standard</field>
+				<field name="res_model">inseta.learner_learnership.assessment</field>
+				<field name="view_mode">tree,form</field>
+                <!-- <field name="context">{'default_learnership_assessment_type': True}</field> -->
+                <!-- <field name="domain">[('learnership_assessment_type', '=', True)]</field> -->
+				<field name="view_id" eval="view_inseta_learnership_unit_standard_assessment_filter" />
+				<field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						
+					</p>
+				</field>
+			</record>
+
+            <record id="action_qualification_unitstandard_assessment_details" model="ir.actions.act_window">
+				<field name="name">Inseta Qualification unit standard</field>
+				<field name="res_model">inseta.learner_qualification.assessment</field>
+				<field name="view_mode">tree,form</field>
+                <!-- <field name="context">{'default_learnership_assessment_type': True}</field> -->
+                <!-- <field name="domain">[('learnership_assessment_type', '=', True)]</field> -->
+				<field name="view_id" eval="view_inseta_qualification_unit_standard_assessment_filter" />
+				<field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						
+					</p>
+				</field>
+			</record>
+
+            <record id="action_skill_unitstandard_assessment" model="ir.actions.act_window">
+				<field name="name">Inseta skill unit standard assessment</field>
+				<field name="res_model">inseta.skill_learnership.assessment</field>
+				<field name="view_mode">tree,form</field>
+                <!-- <field name="context">{'default_learnership_assessment_type': True}</field> -->
+                <!-- <field name="domain">[('learnership_assessment_type', '=', True)]</field> -->
+				<field name="view_id" eval="view_inseta_skill_unit_standard_assessment_filter" />
+				<field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						
+					</p>
+				</field>
+			</record>
+
+            <record id="action_skill_unit_standard_assessment_details" model="ir.actions.act_window">
+				<field name="name">Inseta Skill unit standard Assessment</field>
+				<field name="res_model">inseta.skill_learnership.assessment</field>
+				<field name="view_mode">tree,form</field>
+                <!-- <field name="context">{'default_learnership_assessment_type': True}</field> -->
+                <!-- <field name="domain">[('learnership_assessment_type', '=', True)]</field> -->
+				<field name="view_id" eval="view_inseta_learner_assessment_detail_filter" />
+				<field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						
+					</p>
+				</field>
+			</record>
+
+
+			<menuitem id="inseta_learnership_assessment_menu_id" name="Learnership Programme Assessment"
+			sequence="5" parent="inseta_etqa.learner_verification_main_menu" action="inseta_etqa.action_learnership_assessment_details_2" 
+            groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_user,inseta_etqa.group_etqa_accreditation_specialist,base.group_system,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verifiers"/> 
+            
+            <menuitem id="inseta_qualification_learnership_assessment_menu_id" name="Qualification Programme Assessment"
+			sequence="6" parent="inseta_etqa.learner_verification_main_menu" action="inseta_etqa.action_qualification_assessment_details" 
+            groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_user,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system,inseta_etqa.group_etqa_verifiers"/> 
+
+            <menuitem id="inseta_skill_learnership_assessment_menu_id" name="Skill Programme Assessment"
+			sequence="7" parent="inseta_etqa.learner_verification_main_menu" action="inseta_etqa.action_skill_assessment_details" 
+            groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_user,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system,inseta_etqa.group_etqa_verifiers"/> 
+
+            <menuitem id="inseta_learnership_unit_standard_assessment_menu_id" name="Learnership Unit standard Assessments"
+			sequence="9" parent="inseta_etqa.learner_verification_main_menu" action="inseta_etqa.action_learnership_unitstandard_assessment_details" 
+            groups="base.group_system"/> 
+            <!-- groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system"/>  -->
+            
+            <menuitem id="inseta_qualification_unit_standard_assessment_menu_id" name="Qualification Unit standard Assessments"
+			sequence="10" parent="inseta_etqa.learner_verification_main_menu" action="inseta_etqa.action_qualification_unitstandard_assessment_details" 
+            groups="base.group_system"/> 
+            <!-- groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system"/>  -->
+            
+            <menuitem id="inseta_skills_unit_standard_assessment_menu_id" name="Skill Unit standard Assessments"
+			sequence="11" parent="inseta_etqa.learner_verification_main_menu" action="inseta_etqa.action_skill_unitstandard_assessment" 
+            groups="base.group_system"/> 
+            <!-- groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system"/>  -->
+            
+
+            <!-- FOR LEARNERS ASSESSMENT -->
+		<record id="view_inseta_learnership_assessment_form" model="ir.ui.view">
+				<field name="name">view.inseta.learnership.assessment.form</field>
+				<field name="model">inseta.learnership.assessment</field>
+				<field name="arch" type="xml">
+					<form string="Inseta Learnership Assessment">
+						<header>
+                         
+						</header>
+						<sheet>
+							 
+							<group> 
+								<group>
+                                 
+									<field name="reference" readonly="1" invisible="0"/> 
+									<field name="learner_assessment_detail_id" invisible="0" required="0"/>
+									<field name="unit_standard_type" options="{'no_create': True}" required="1"/>
+									<field name="unit_standard_id" options="{'no_create': True}" required="1"/>
+									<field name="credits" required="1"/>
+									<field name="previously_achieved" required="0"/>
+									<field name="status" required="1"/>
+                                    
+								</group>
+								<group>
+                                
+									<field name="assessor_id" options="{'no_create': True}" required="0"/>
+                                    <field name="assessment_date" required="1"/>
+									<field name="moderator_id" options="{'no_create': True}" required="0"/>
+                                    <field name="moderator_date" options="{'no_create': True}" required="1"/>
+									<field name="document_upload_id" options="{'no_quick_create': True}" required="0"/>
+								</group> 
+							</group>
+                            <notebook>
+                                <field name="unit_standard_ids">
+                                    <tree string="Learning Programme">
+                                        <field name="name"/> 
+                                        <field name="code"/> 
+                                        <field name="unit_standard_type" options="{'no_create': True}"/>
+                                        <field name="nqflevel_id" options="{'no_create': True}" readonly="0"/>
+                                        <field name="credits"/>
+                                    </tree>
+                                </field>
+                            </notebook>
+							 
+						</sheet>
+					</form>
+				</field>
+			</record>
+			<record id="view_inseta_learnership_assessment_tree" model="ir.ui.view">
+				<field name="name">view inseta learnership Assessment tree</field>
+				<field name="model">inseta.learnership.assessment</field>
+				<field name="arch" type="xml">
+					<tree string="Inseta Assessment">
+						<field name="reference" readonly="1" invisible="0"/> 
+                        <field name="unit_standard_type" required="1"/>
+                        <field name="unit_standard_id" required="1"/>
+                        <field name="credits" required="1"/>
+                        <field name="status" required="1"/>
+                        <field name="assessor_id" required="0"/>
+                        <field name="assessment_date" required="1"/>
+                        <field name="moderator_id" required="0"/>
+                        <field name="moderator_date" required="1"/>
+					</tree>
+				</field>
+			</record>
+<!-- # consider removing -->
+			<record id="view_inseta_learnership_assessment_filter" model="ir.ui.view">
+				<field name="name">Inseta learnership Assessment</field>
+				<field name="model">inseta.learnership.assessment</field>
+				<field name="arch" type="xml">
+					<search string="Inseta learnership Assessment">
+						<field name="reference" invisible="0"/> 
+						<field name="moderator_date" invisible="0"/> 
+					</search>
+				</field>
+			</record>
+			<record id="action_inseta_learnership_assessment" model="ir.actions.act_window">
+				<field name="name">Inseta Learnership Assessment</field>
+				<field name="res_model">inseta.learnership.assessment</field>
+				<field name="view_mode">tree,form</field>
+				<field name="view_id" eval="view_inseta_learnership_assessment_filter" />
+				<field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						
+					</p>
+				</field>
+			</record>
+	</odoo>
+
+
+

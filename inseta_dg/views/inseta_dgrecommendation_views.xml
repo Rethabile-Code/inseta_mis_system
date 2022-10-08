@@ -1,0 +1,176 @@
+<odoo>
+    <data>
+      <record id="view_dgrecommendation_tree" model="ir.ui.view">
+			<field name="name">inseta.dgrecommendation.form</field>
+			<field name="model">inseta.dgrecommendation</field>
+			<field name="arch" type="xml">
+				<tree string="DG Approval"> 
+					<field name="name"/>
+					<field name="financial_year_id"/>
+                    <field name="dgec_recommendation_date" string="DGEC Recommendation Date" />
+                    <field name="dgac_recommendation_date" string="DGAC Recommendation Date" />
+					<field name="count_dgapplications" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_dgrecommendation_filter" model="ir.ui.view">
+			<field name="name">inseta.dgrecommendation.filter</field>
+			<field name="model">inseta.dgrecommendation</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="name"/>
+					<field name="financial_year_id"/>
+                    <field name="dgec_recommendation_date" />
+                    <field name="dgac_recommendation_date" />
+					<field name="state" />
+				</search>
+			</field>
+		</record>
+
+		<record id="view_dgrecommendation_form" model="ir.ui.view">
+			<field name="name">inseta.dgrecommendation.form</field>
+			<field name="model">inseta.dgrecommendation</field>
+			<field name="arch" type="xml">
+				<form string="DG Approval"> 
+                    <header>
+
+                        <button name="action_draft"
+							states="pending_adjudication,pending_approval2" 
+							string="Reset" 
+							confirm="Are you sure you want to reset to draft?"
+							type="object"
+							groups="base.group_system" />
+
+                        <button name="%(inseta_dg.dgbulkrecommend_wizard_action)d"
+							context='{"default_stage": "evaluation"}'
+							states="pending_approval"
+							string="DGEC Recommend" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_dg.group_evaluation_committee" />
+
+                        <button name="%(inseta_dg.dgbulkrecommend_wizard_action)d"
+							context='{"default_stage": "adjudication"}'
+							states="pending_adjudication"
+							string="DGAC Recommend" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_dg.group_adjudication_committee" />
+
+						<field name="state" widget="statusbar" clickable="False"
+							statusbar_visible="pending_approval,pending_adjudication,pending_approval2"/>
+                    </header>
+					<sheet>
+						<div class="oe_title" >
+							<h1>
+								<field name="name" readonly="1"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" required="1" attrs="{'readonly':[('state','=','pending_approval2')]}"/>
+								<field name="dgtype_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','=','pending_approval2')]}"/>
+							</group>
+							<group/>
+
+							<group>
+								<button  name="action_pull" type="object" string="Search Records" class="oe_highlight pull-right" attrs="{'invisible':[('state','=','pending_approval2')]}"/>
+								<div class="clearfix"/>
+							</group>
+							<group/>
+						</group>
+					
+                         <notebook>
+                            <page string="DG Applications">
+								<field name="dgapplication_ids" nolabel="1" attrs="{'readonly':[('state','=','pending_approval2')]}">
+									<tree create="0">
+										<field name="is_dgec_recommended" attrs="{'column_invisible':[('parent.state','!=','pending_approval')]}"/>
+										<field name="is_dgac_recommended" attrs="{'column_invisible':[('parent.state','!=','pending_adjudication')]}"/>
+										<field name="name" invisible="1"/>
+										<field name="organisation_id"/>
+										<field name="financial_year_id"/>
+										<field name="dgtype_id"/>
+										<field name="due_date" />
+										<field name="submitted_date" />
+										<field name="approved_date" />
+										<field name="rejected_date" />
+										<field name="dgec_recommendation" string="DGEC Recommendation" />
+										<field name="dgac_recommendation" string="DGAC Recommendation" />
+										<field name="state" />
+
+									</tree>
+								</field>
+                            </page>
+                            <page string="Uploads">
+								<group colspan="2">
+									<field name="dgec_recommendation_sheet" string="DGEC Recomm. Sheet" filename="file_name" attrs="{'readonly':[('state','=','pending_approval2')]}" />
+									<field name="file_name" invisible="1"  /> 
+									<field name="dgac_recommendation_sheet" string="DGAC Recomm. Sheet"  filename="file_name2" attrs="{'readonly':[('state','=','pending_approval2')]}"/>
+									<field name="file_name2" invisible="1" string="Filename"/> 
+								</group>
+                            </page>
+                         </notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+        <!-- <record id="act_window_dgrecommendation1" model="ir.actions.act_window"> 
+			<field name="name">DGEC &amp; DGAC Recommendations</field>
+			<field name="res_model">inseta.dgrecommendation</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create"></p>
+			</field>
+		</record>
+
+        <record id="act_window_dgrecommendation2" model="ir.actions.act_window"> 
+			<field name="name">DGAC Recommendation</field>
+			<field name="res_model">inseta.dgrecommendation</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create"></p>
+			</field>
+		</record> -->
+
+        <record id="act_window_dgrecommendation" model="ir.actions.act_window">
+			<field name="name">DGEC &amp; DGAC Recommendations</field>
+			<field name="res_model">inseta.dgrecommendation</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create"></p>
+			</field>
+		</record>
+
+        <menuitem id="menu_dgrecommendation_parent" 
+            name="DGEC &amp; DGAC" 
+            sequence="2" 
+            parent="inseta_dg.menu_root"
+			action="act_window_dgrecommendation"
+			groups="inseta_dg.group_pmo_manager,inseta_dg.group_evaluation_committee,inseta_dg.group_adjudication_committee"
+		/>
+
+        <!-- <menuitem id="menu_dgrecommendation1" 
+            name="DGEC Recommendation" 
+            sequence="0" 
+            parent="inseta_dg.menu_dgrecommendation_parent"
+			groups="inseta_dg.group_pmo_manager,inseta_dg.group_evaluation_committee"
+			action="act_window_dgrecommendation1"
+		/>
+       <menuitem id="menu_dgrecommendation2" 
+            name="DGAC Recommendation" 
+            sequence="0" 
+            parent="inseta_dg.menu_dgrecommendation_parent"
+			groups="inseta_dg.group_pmo_manager,inseta_dg.group_adjudication_committee"
+			action="act_window_dgrecommendation2"
+		/> -->
+
+    </data>
+</odoo>

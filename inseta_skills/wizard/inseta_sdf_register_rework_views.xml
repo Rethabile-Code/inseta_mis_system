@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sdf_register_rework_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.sdf.register.rework.wizard.form</field>
+        <field name="model">inseta.sdf.register.rework.wizard</field>
+        <field name="arch" type="xml">
+            <form string="SDF Register Rework/Reject reason">
+                <h4  attrs="{'invisible':[('comment_type','=', 'Reject')]}">Reasons to ask for rework</h4>
+                <h4 attrs="{'invisible':[('comment_type','=', 'Rework')]}">Reasons for rejection</h4>
+
+                <group>
+                    <group colspan="4">
+                        <field name="sdf_register_id" invisible="1"/>
+                        <field name="comment_type" string="Type" required="1" force_save="1" />
+                        <field string="Comment" name="comment" required="1"/>
+                    </group>
+                </group>
+
+                <footer>
+                    <button string='Submit Rework' name="sdf_register_refuse_reason" type="object" class="oe_highlight"
+						attrs="{'invisible':[('comment_type','=', 'Reject')]}"
+                    />
+
+                    <button string='Submit' name="sdf_register_refuse_reason" type="object" class="oe_highlight"
+						attrs="{'invisible':[('comment_type','=', 'Rework')]}"
+                    />
+
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="sdf_register_rework_wizard_action" model="ir.actions.act_window">
+        <field name="name">Rework/Reject SDF Registration</field>
+        <field name="res_model">inseta.sdf.register.rework.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sdf_register_rework_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

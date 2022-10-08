@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_inseta_wspatr_report_wizard" model="ir.ui.view">
+            <field name="name">inseta.wspatr.report.wizard.form</field>
+            <field name="model">inseta.wspatr.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Import ">
+                    <header>
+                        WSP/ATR Report
+                    </header>
+                    <group>
+                        <group>
+                            <field name="organisation_ids" invisible="1" />
+                            <field name="financial_year_id"  options="{'no_create':True, 'no_open':True}"/> 
+                            <field name="organisation_id" domain="[('id','in',organisation_ids)]" options="{'no_create':True, 'no_open':True}"/> 
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="action_print" string="Print Report" type="object"  class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="act_window_inseta_wspatr_report_wizard" model="ir.actions.act_window">
+            <field name="name">WSP/ATR Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inseta.wspatr.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- <menuitem id ="menu_wspatr_report_wizard" 
+            name="WSP Report" sequence="1" 
+            parent="inseta_skills.menu_reports" 
+            action="act_window_inseta_wspatr_report_wizard"/> -->
+
+    </data>
+</odoo>

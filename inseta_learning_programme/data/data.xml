@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="inseta.employer.learner.intervention" id="data_intervention_bursaries_1">
+            <field name="name">Bursaries</field>
+            
+            <field name="legacy_system_id">1</field>
+        </record>
+
+        <record model="inseta.employer.learner.intervention" id="data_intervention_internship_1">
+            <field name="name">Internship</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+
+        <record model="inseta.employer.learner.intervention" id="data_intervention_learnership_1">
+            <field name="name">Learnership</field>
+            <field name="legacy_system_id">3</field>
+        </record>
+
+        <record model="inseta.employer.learner.intervention" id="data_intervention_skills_programmes_1">
+            <field name="name">Skills Programme</field>
+            
+            <field name="legacy_system_id">4</field>
+        </record>
+
+        <record model="inseta.employer.learner.intervention" id="data_intervention_qualification_1">
+            <field name="name">Qualification</field>
+            
+            <field name="legacy_system_id">5</field>
+        </record>
+
+    </data>
+</odoo>

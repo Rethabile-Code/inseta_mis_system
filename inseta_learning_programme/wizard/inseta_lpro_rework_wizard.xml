@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="inseta_lpro_reject_wiz_action1" model="ir.actions.act_window">
+        <field name="name">Dialog</field>
+        <field name="res_model">inseta.lpro.main.wizard</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+        <field name="target">new</field>
+          <p class="o_view_nocontent_smiling_face">
+            -
+          </p><p>
+            -
+          </p>
+        </field>
+    </record>
+     
+    <record id="inseta_lpro_reject_wiz_view_tree1" model="ir.ui.view">
+        <field name="name">inseta.lpro.main.wizard.tree</field>
+        <field name="model">inseta.lpro.main.wizard</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="user_id" readonly="1"/>
+                <field name="action" required="1"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="inseta_lpro_reject_wizard_form_view" model="ir.ui.view">
+        <field name="name">inseta lpro wizard Form</field>
+        <field name="model">inseta.lpro.main.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Wizard">
+                <header> 
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="Add message..."/>
+                            <field name="action" readonly="1"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="model_name" invisible="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="post_action" string="Post" type="object" default_focus="1" class="oe_highlight" />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </sheet> 
+            </form>
+        </field>
+    </record>
+
+</odoo>

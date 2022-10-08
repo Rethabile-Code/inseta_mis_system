@@ -1,0 +1,169 @@
+<odoo>
+    <data>
+
+        <record id="action_wspatr_submission_report" model="ir.actions.report">
+            <field name="name">WSP &amp; ATR Report</field>
+            <field name="model">inseta.wspatr</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">inseta_skills.report_wspatr</field>
+            <field name="report_file">inseta_skills.report_wspatr</field>
+            <field name="print_report_name">(object.organisation_id.sdl_no +'_'+(object.name or '').replace('/','_')+'_'+time.strftime('%Y-%m-%d-%H:%M:%S'))</field>
+            <field name="attachment">((object.name or '').replace('/','_')+time.strftime('%Y-%m-%d-%H:%M:%S').replace('-','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="model_inseta_wspatr"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="inseta_skills.wsp_paperformat_landscape" />
+            <!-- <field name="attachment_use">True</field> -->
+        </record>
+
+
+        <template id="report_wspatr">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-offset-2 text-right">
+                        <img src='/inseta_skills/static/description/icon.png' style="max-height: 50px;"/>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.with_context(lang=lang)" />
+                    <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+
+                    <div class="page">
+                        <style>
+                            body {
+                                
+                                font-family: Ubuntu, Calibri, Arial, Cambria, Georgia, Roboto, 'Open Sans';
+                            }
+
+                            page {
+                                margin-top: 2em;
+                            }
+
+                            p {
+                                text-align: justify;
+                                margin: 0;
+                                
+                            }
+                            li {
+                                text-align: justify;
+                                margin-top:8px;
+                                
+                            }
+                            ol.list-table-content li{
+                                margin-top:8px;
+                                
+                            }
+                            ol.list-table-content span{
+                                
+                                font-weight:bold;
+                                padding-bottom:16px;
+                                
+                            }
+                            table tfoot tr td {
+                                font-weight:bold !important;
+                            }
+                        
+                            #header{
+                                text-align:center;
+                                padding-top:50px;
+                                font-size:1.4em;
+                                font-weight:bold
+                            }
+                            .title{
+                                font-weight:bold
+                            }
+                            ol.note{
+                                margin-top: 4em;
+                            }
+                            ol.note li{
+                                margin-top:1.3em;
+                            }
+                            p.due{
+                                text-align:center,
+                                margin-top: 2em;
+                            }
+                            
+                            #table-content ol > li, #table-content ol li ul > li  {
+                                margin-top:1.3em;
+                                font-size:1.4em;
+                                font-weight:bold
+                            }
+                            #org-details table{
+                                font-size:1.5em;
+                            }
+                            .report-details{
+                                font-size:1.3em;
+                            }
+                        </style>
+                        <t t-call="inseta_skills.wspatr_report_header" />
+
+                        <div class="col-lg-12 col-md-12" id="table-content">
+                            <ol class="list-table-content">
+                                <h1>Table of Contents</h1>
+                                <li>ORGANISATION DETAILS</li>
+                                <li>SKILLS DEVELOPMENT FACILITATOR</li>
+                                <li>ATR AND WSP FORMS
+                                    <ul style="list-style-type: none;" t-if="o.form_type == 'Large' ">
+                                        <li>3.1. ATR Form 1 : Trained Beneficiaries Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.2. ATR Form 2 : Learning Programmes Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.3. ATR Form 3 : Variance Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.4. ATR Form 4 : Trained Adult Education &amp; Training for <span t-field="o.atr_period"/></li>
+                                        <li>3.5. ATR Form 5 : Hard to Fill Vacancies Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.6. ATR Form 5A : Skills Gaps Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.7. ATR Form 6 : Pivotal Trained Beneficiaries Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.8. WSP Form 1 : Skills Development Consultation &amp; Planning for <span t-field="o.wsp_period"/></li>
+                                        <li>3.9. WSP Form 2 : Current Employment Profile for <span t-field="o.wsp_period"/> </li>
+                                        <li>3.10. WSP Form 3 : Highest Educational Profile for <span t-field="o.wsp_period"/> </li>
+                                        <li>3.11. WSP Form 4 : Provincial Breakdown for <span t-field="o.wsp_period"/> </li>
+                                        <li>3.12. WSP Form 5 : Planned AET Training for <span t-field="o.wsp_period"/> </li>
+                                        <li>3.13. WSP Form 6 : Planned Beneficiaries of Training for <span t-field="o.wsp_period"/> </li>
+                                        <li>3.14. WSP Form 7 : Pivotal Planned Beneficiaries for <span t-field="o.wsp_period"/> </li>
+                                    </ul>
+                                    <ul style="list-style-type: none;" t-if="o.form_type == 'Small' ">
+                                        <li>3.1. ATR Form 1 : Trained Beneficiaries Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.2. ATR Form 2 : Pivotal Trained Beneficiaries Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.3. ATR Form 3 : Hard to Fill Vacancies Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.4. ATR Form 4 : Skills Gaps Report for <span t-field="o.atr_period"/></li>
+                                        <li>3.5. WSP Form 1 : Skills Development Consultation &amp; Planning for <span t-field="o.wsp_period"/></li>
+                                        <li>3.6. WSP Form 2 : Current Employment Profile for <span t-field="o.wsp_period"/> </li>
+                                        <li>3.7. WSP Form 3 : Highest Educational Profile for <span t-field="o.wsp_period"/> </li>
+                                        <li>3.8. WSP Form 4 : Pivotal Planned Beneficiaries for <span t-field="o.wsp_period"/> </li>
+                                        <li>3.9. WSP Form 5 : Provincial Breakdown for <span t-field="o.wsp_period"/> </li>
+                                        <li>3.10. WSP Form 6 : Planned Beneficiaries of Training for <span t-field="o.wsp_period"/> </li>
+                                    </ul>
+                                </li>
+                                <li>CHILD ORGANISATIONS</li>
+                            </ol>
+                        </div>
+                 
+                        <p style="page-break-before:always;"> </p>
+
+                        <t t-call="inseta_skills.wspatr_org_details" />
+
+                        <p style="page-break-before:always;"> </p>
+
+                        <t t-call="inseta_skills.atr_page" />
+                        <t t-call="inseta_skills.wsp_page" />
+
+                        <p style="page-break-before:always;"></p>
+                        <t t-call="inseta_skills.authorization_page" />
+                    </div>
+                    </div>
+                    <div t-attf-class="o_company_#{o.create_uid.company_id.id}_layout footer o_background_footer">
+                        <div class="text-right">
+                            <div t-field="o.create_uid.company_id.report_footer"/>
+                            <div t-if="report_type == 'pdf'">
+                                Page
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

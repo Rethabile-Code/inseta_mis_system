@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="ListView.buttons">
+        <!-- <t t-jquery="button.o_list_button_add" t-operation="after">
+            <button name="action_import" type="button" t-if='widget.modelName == "inseta.organisation.ist"'
+                    class="btn btn-primary dhet_import_button">Import DHET File
+            </button>
+        </t> -->
+        <t t-jquery="button.o_list_button_save" t-operation="after">
+            <button name="action_import" type="button" t-if='widget.modelName == "inseta.levypayer.organisation.update"'
+                    class="btn btn-primary dhet_import_button">Import DHET File
+            </button>
+        </t>
+
+    </t>
+</templates>

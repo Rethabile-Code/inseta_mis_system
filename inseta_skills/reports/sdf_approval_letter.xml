@@ -1,0 +1,84 @@
+<odoo>
+  <data>
+    <record id="paperformat_letter" model="report.paperformat">
+        <field name="name">Letter</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+
+    </record>
+
+    <record id="action_sdf_approval_letter_report" model="ir.actions.report">
+        <field name="name">Approval Letter</field>
+        <field name="model">inseta.sdf.organisation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">inseta_skills.sdf_approval_letter</field>
+        <field name="report_file">inseta_skills.sdf_approval_letter</field>
+        <field name="print_report_name">((str(object.reference))+'_'+(object.sdf_id.name).replace('/','_')+'_decline_letter_'+time.strftime('%Y-%m-%d-%H:%M:%S'))</field>
+        <field name="attachment">((object.sdf_id.name).replace('/','_')+'_decline_letter.pdf')</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="inseta_skills.paperformat_letter" />
+    </record>
+
+    <template id="sdf_approval_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=lang)" />
+                    <div class="page">
+                        <br />
+                        <br />
+                        <br />
+                        <span t-field="o.sdf_id.name"/><br/>
+                        <span t-field="o.sdf_id.street"/> <span t-field="o.sdf_id.street2"/> <span t-field="o.sdf_id.street3"/><br/>
+                        <span t-field="o.sdf_id.physical_city_id.name"/> <span t-field="o.sdf_id.physical_province_id.name"/><br/>
+                        <span t-field="o.sdf_id.country_id.name"/> <br/>
+                        Cell: <span t-field="o.sdf_id.mobile"/> <br/>
+                        Email: <span t-field="o.sdf_id.email"/> <br/>
+                        <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /></p>
+
+                        <p align="justify">
+                            Dear <span t-field="o.sdf_id.first_name"/>,
+                        </p>
+
+                        <h4 style="text-align: center;"><b>SDF Registration</b></h4>
+                        <p>
+                            Please be advised that your application to be registered as an SDF on INSETA's system has been approved.
+                           <br/><br/>
+ 
+                            You may now access the system using the following link
+                            https://InSETAMIS.inseta.org.za/web/login <br/><br/>
+                            For any queries please contact the INSETA Call Centre on 086 113 0013.
+                        </p>
+                                           
+                        <p>Yours in Skills Development
+                            <br/><br/>
+                            <t t-set="mgr" t-value="o.sdf_id.get_skills_mgr() and o.sdf_id.get_skills_mgr()[0] or False "/>
+                           <b> <span t-esc="mgr and mgr.name or 'Adeline Singh' " />
+                            <br/>
+                            <table border="1" style="width:100%;" t-if="mgr">
+                                <tr style="font-weight:bold;">
+                                    <td>
+                                        <div widget="html" t-field="mgr.signature"/>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            Manager: Skills Planning </b>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

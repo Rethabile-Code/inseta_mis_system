@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="module_category_DG" model="ir.module.category">
+        <field name="name">DG</field>
+        <field name="description">Discretionary Grant</field>
+        <field name="sequence">34</field>
+    </record>
+
+    <record id="group_ceo" model="res.groups">
+        <field name="name">INSETA CEO</field>
+        <field name="comment">INSETA CEO</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <record id="group_coo" model="res.groups">
+        <field name="name">COO</field>
+        <field name="comment">INSETA COO</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <record id="group_pmo_manager" model="res.groups">
+        <field name="name"> SP Project Office Manager2</field>
+        <field name="comment">SP Project Office Manager - legacy system grp</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <record id="group_spo_manager" model="res.groups">
+        <field name="name">SP Project Manager</field>
+        <field name="comment">SP Project Manager</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <record id="group_pmo_cordinator" model="res.groups">
+        <field name="name">SP Project Co-Ordinator</field>
+        <field name="comment">SP Project Co-Ordinator  - legacy system grp</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+
+    <record id="group_pmo_admin" model="res.groups">
+        <field name="name">SP Project Administrator</field>
+        <field name="comment">SP Project Administrator</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <record id="group_evaluation_committee" model="res.groups">
+        <field name="name">DGEC</field>
+        <field name="comment">DG Evaluation Committee</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <record id="group_adjudication_committee" model="res.groups">
+        <field name="name">DGAC</field>
+        <field name="comment">DG Adjudication Committee</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <!-- <record id="group_dgec_chairperson" model="res.groups">
+        <field name="name">DGEC Chairperson</field>
+        <field name="comment">DG Evaluation Committee Chairperson</field>
+        <field name="implied_ids" eval="[(4, ref('group_evaluation_committee'))]"/>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <record id="group_dgac_chairperson" model="res.groups">
+        <field name="name">DGAC Chairperson</field>
+        <field name="comment">DG Adjudication Committee</field>
+        <field name="implied_ids" eval="[(4, ref('group_adjudication_committee'))]"/>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record> -->
+
+    <record id="group_dg_view_only" model="res.groups">
+        <field name="name">DG view only</field>
+        <field name="comment">DG view only</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <record id="group_desktop_evaluation" model="res.groups">
+        <field name="name">Desktop Evaluation</field>
+        <field name="comment">DG Desktop Evaluation Role</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+
+    <record id="group_hei_representative" model="res.groups">
+        <field name="name">HEI Representative</field>
+        <field name="comment">HEI Representative</field>
+        <field name="category_id" ref="inseta_dg.module_category_DG"/>
+    </record>
+     
+</odoo>

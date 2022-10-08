@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <record id="view_inseta_unit_standard_learnership_form" model="ir.ui.view">
+            <field name="name">view.inseta.unit_standard.learnership.form</field>
+            <field name="model">inseta.unit_standard.learnership</field>
+            <field name="arch" type="xml">
+                <form string="Unit standards" create="false">
+                    <header>
+                        <button name="set_to_edit" string="Toggle Edit Mode" class="btn-primary" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                    </header>
+                    <group>
+                        <group>
+							<field name="edit_mode" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                            <field name="learner_id" required="0" readonly="0" force_save="1" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                            <field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)],'readonly': [('edit_mode', '=', False)]}"/> 
+                            <field name="provider_id" readonly="0" force_save="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                            <field name="employer_sdl" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="organisation_id" readonly="0" string="Employer" force_save="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                            <field name="unit_standard_id" required="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            <field name="financial_year_id" required="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            
+                            <field name="commencement_date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            <field name="completion_date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            </group>
+                            <group>
+                            <field name="effective_date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            <field name="socio_economic_status_id" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            <field name="most_recent_registration_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            <field name="programme_status_id" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+					        <field name="edit_mode" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_inseta_unit_standard_learnership_tree" model="ir.ui.view">
+            <field name="name">Inseta unit_standard learnership</field>
+            <field name="model">inseta.unit_standard.learnership</field>
+            <field name="arch" type="xml">
+                <tree string="Unit standards" create="false">
+                    <field name="learner_id" invisible="0"/>
+                    <field name="provider_id" required="1"/> 
+                    <field name="organisation_id" required="1" string="Employer" options="{'no_create': True, 'no_open': True}"/> 
+                    <field name="unit_standard_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="financial_year_id" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="commencement_date" required="1" readonly="0"/>
+                    <field name="completion_date" required="1" readonly="0"/> 
+                    <field name="programme_status_id" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_inseta_unit_standard_learnership_pivot" model="ir.ui.view">
+            <field name="name">Inseta Unit standard learnership pivot</field>
+            <field name="model">inseta.unit_standard.learnership</field>
+            <field name="arch" type="xml">
+                <pivot string="Unit standards">
+                    <field name="learner_id" type="col"/>
+                    <field name="organisation_id" type="col"/>
+                    <field name="unit_standard_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_inseta_unit_standard_learnership_graph" model="ir.ui.view">
+            <field name="name">Inseta qualifications learnership graph</field>
+            <field name="model">inseta.unit_standard.learnership</field>
+            <field name="arch" type="xml">
+                <graph string="Unit standards">
+                    <field name="financial_year_id" type="measure"/>
+                    <field name="learner_id" type="measure"/>
+                    <field name="unit_standard_id" type="col"/>
+                </graph>
+            </field>
+        </record>
+ 
+        <!-- <record id="view_inseta_unit_standard_learnership_filter" model="ir.ui.view">
+            <field name="name">Inseta Unit standard</field>
+            <field name="model">inseta.unit_standard.learnership</field>
+            <field name="arch" type="xml">
+                <search string="Inseta qualification learnership">
+                    <field name="learner_id" required="0" /> 
+                    <field name="provider_id" required="1" options="{'no_create': True, 'no_open': True}"/> 
+                    <field name="organisation_id" required="1" string="Employer" options="{'no_create': True, 'no_open': True}"/> 
+                    <field name="unit_standard_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="financial_year_id" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="commencement_date" required="1" readonly="0"/>
+                    <field name="completion_date" required="1" readonly="0"/> 
+                    <field name="programme_status_id" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                </search>
+                <filter name="unit_standard_grp" string="Unit standards"
+                    domain="[('unit_standard_id', '=', True)]"/>
+                <group  expand='0' string='Group by...'>
+                    <filter name ="rec_unit_standard_grp" string='Unit standard' domain="[]" context="{'group_by' : 'unit_standard_id'}"/>
+                </group>
+            </field>
+        </record> -->
+
+        <record id="action_inseta_unit_standard_learnership" model="ir.actions.act_window">
+            <field name="name">Inseta Unit standard</field>
+            <field name="res_model">inseta.unit_standard.learnership</field>
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="context">{'search_default_rec_unit_standard_grp': 1}</field>
+            <!-- <field name="view_id" eval="view_inseta_unit_standard_learnership_filter" /> -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record>
+
+
+
+        <record id="inseta_bursary_learnership_form" model="ir.ui.view">
+            <field name="name">view.inseta.bursary.learnership.form</field>
+            <field name="model">inseta.bursary.learnership</field>
+            <field name="arch" type="xml">
+            <form string="Bursary" create="false">
+                <header>
+                    <button name="set_to_edit" string="Toggle Edit Mode" class="btn-primary" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                </header>
+                <group>
+                    <group>
+						<field name="edit_mode" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                        <field name="learner_id" required="0" readonly="0" force_save="1" options="{'no_open':True, 'no_create':True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)],'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="provider_id" readonly="0" force_save="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="employer_sdl" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="organisation_id" readonly="0" string="Employer" force_save="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="programme_id" options="{'no_create': True, 'no_open': True}" invisible="1" string="Bursary type" required="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="bursary_type_id" string="Bursary type" required="0" invisible="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="contract_number"  invisible="1" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="agreement_number" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="ofo_occupation_id" options="{'no_create': True, 'no_open': True}" string="OFO Occupation" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="funding_type" options="{'no_create': True, 'no_open': True}" string="Sponsor" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="nqflevel_id" options="{'no_create': True, 'no_open': True}" string="NQF Level" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="dgtype_code" invisible="0" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    </group>
+                    <group>
+                        <field name="qualification_id" options="{'no_create': True, 'no_open': True}" string="Qualification" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="financial_year_id" options="{'no_create': True, 'no_open': True}" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="institution_id" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="amount_due_institution" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="commencement_date" string="Bursary Start Date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="completion_date" string="Bursary End date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    </group>
+                    <group>
+                        <!-- <field name="verified" readonly="0"/>
+                        <field name="verifier_name" readonly="0"/>
+                        <field name="verified_date" readonly="0"/> -->
+                        <field name="socio_economic_status_id" options="{'no_create': True, 'no_open': True}" required="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    
+                    </group> 
+                    <group>
+                        <field name="effective_date" string="Status Effective Date" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="programme_status" invisible="1" string="Bursary status" readonly="0"/>
+                        <field name="programme_status_id" invisible="1" string="Enrollment Status" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="most_recent_registration_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page name="unitstandards" invisible="1" string="Unit Standards line">
+                    <field name="unit_standard_ids" options="{'no_create': True, 'no_open': True}" nolabel="1" readonly="0" required="0">
+                        <form string="inseta Bursary learnership">
+                        <div class="oe_title">
+                            <h1>
+                            <field name="name" placeholder="Name" readonly="0"/>
+                            </h1>
+                        </div>
+                        <group> 
+                            <group>
+                            <field name="unit_standard_type" options="{'no_create': True, 'no_open': True}" required="1" invisible="0"/> 
+                            <field name="code" required="1"/>
+                            <field name="nqflevel_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                            </group>
+                            <group>
+                            <field name="core_credits" invisible="0"/>
+                            <field name="elective_credits" required="0"/>
+                            <field name="fundamental_credits" invisible="0"/>
+                            <field name="credits" required="1"/>
+                            </group> 
+                        </group>
+                        </form>
+                        <tree string="Unit standards">
+                        <field name="name" required="1" invisible="0"/> 
+                        <field name="unit_standard_type" options="{'no_create': True, 'no_open': True}" required="1" invisible="0"/> 
+                        <field name="code" required="1"/>
+                        <field name="nqflevel_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="core_credits" invisible="0" string="Core"/>
+                        <field name="elective_credits" required="0" string="Elective"/>
+                        <field name="fundamental_credits" invisible="0" string="Fundamental"/>
+                        <field name="credits" required="1"/>
+                        
+                        </tree>
+                    </field>
+                    </page>
+                    
+                </notebook>
+            </form>
+            </field>
+        </record>
+        <record id="inseta_bursary_learnership_tree" model="ir.ui.view">
+            <field name="name">inseta Bursary learnership</field>
+            <field name="model">inseta.bursary.learnership</field>
+            <field name="arch" type="xml">
+                <tree string="Unit standards" create="false">
+                    <field name="learner_id" invisible="0"/>
+                    <field name="provider_id" required="1"/>
+                    <field name="organisation_id" required="1" string="Employer" options="{'no_create': True, 'no_open': True}"/> 
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" invisible="1" string="Programme" required="0"/>
+                    <field name="bursary_type_id" string="Bursary type" required="0" invisible="0" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="financial_year_id" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="commencement_date" string="Bursary Start Date" required="1" readonly="0"/>
+                    <field name="completion_date" string="Bursary End date" required="1" readonly="0"/> 
+                    <field name="programme_status_id" invisible="0" string="Status" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="inseta_bursary_learnership_filter" model="ir.ui.view">
+            <field name="name">inseta Bursary learnership</field>
+            <field name="model">inseta.bursary.learnership</field>
+            <field name="arch" type="xml">
+                <search string="Bursary">
+                    <field name="learner_id" required="0" /> 
+                    <field name="provider_id" required="1"/> 
+                    <field name="bursary_type_id" readonly="0"/>
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" invisible="1" string="Programme" required="0"/>
+                    <field name="organisation_id" required="1" string="Employer"/> 
+                    <field name="financial_year_id" readonly="0"/>
+                    <field name="commencement_date" required="1" readonly="0"/>
+                    <field name="completion_date" required="1" readonly="0"/> 
+                    <field name="programme_status_id" readonly="0"/>
+                </search>
+                <!-- <filter name="bursary_grp" string="Bursary"
+                    domain="[('bursary_type_id', '!=', False)]"/>
+                <group expand='0' string='Group by...'>
+                    <filter name ="rec_bursary_grp" string='Bursary' domain="[]" context="{'group_by' : 'bursary_type_id'}"/>
+                </group> -->
+            </field>
+        </record>
+
+        <record id="action_inseta_bursary_learnership" model="ir.actions.act_window">
+            <field name="name">Inseta Bursary Report</field>
+            <field name="res_model">inseta.bursary.learnership</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="context">{'search_default_rec_bursary_grp': 1}</field>
+            <field name="view_id" eval="inseta_bursary_learnership_filter" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record>
+
+        <record id="view_inseta_bursary_learnership_pivot" model="ir.ui.view">
+            <field name="name">inseta Bursary learnership</field>
+            <field name="model">inseta.bursary.learnership</field>
+            <field name="arch" type="xml">
+                <pivot string="Bursary">
+                    <field name="organisation_id" type="col"/>
+                    <field name="programme_id" type="row"/>
+                    <field name="learner_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_inseta_bursary_learnership_graph" model="ir.ui.view">
+            <field name="name">inseta Bursary learnership</field>
+            <field name="model">inseta.bursary.learnership</field>
+            <field name="arch" type="xml">
+                <graph string="Bursary">
+                    <field name="programme_id" type="row"/>
+                    <field name="financial_year_id" type="measure"/>
+                    <field name="learner_id" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="inseta_wiltvet_learnership_form" model="ir.ui.view">
+            <field name="name">view.inseta.wiltvet.learnership.form</field>
+            <field name="model">inseta.wiltvet.learnership</field>
+            <field name="arch" type="xml">
+            <form string="WIL(TVET)" create="false" >
+                <header>
+                    <button name="set_to_edit" string="Toggle Edit Mode" class="btn-primary" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="reference" force_save="1"/> 
+                        <field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+                        <field name="provider_id" readonly="0" force_save="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="employer_sdl" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="organisation_id" readonly="0" string="Employer" force_save="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="programme_id" options="{'no_create': True, 'no_open': True}" string="WIL type" required="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="funding_type" string="Sponsor" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="nqflevel_id" string="NQF Level" readonly="0" required="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="ofo_occupation_id" string="OFO Occupation" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="qualification_id" string="Qualification" required="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                        <field name="financial_year_id" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+						<field name="edit_mode" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                        <field name="learner_id" required="0" readonly="0" force_save="1" options="{'no_open':True, 'no_create':True}"/> 
+                    </group>
+                    <group>
+                        <field name="cummulative_spend" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="commencement_date" string="WIL Start Date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="completion_date" string="WIL End date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="socio_economic_status_id" required="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="programme_status_id" invisible="1" string="Enrollment Status" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                        <field name="most_recent_registration_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    </group>
+                    
+                </group>
+                <notebook>
+                    <page name="unitstandards" string="Unit Standards line" invisible="1">
+                    <field name="unit_standard_ids" nolabel="1" readonly="0" required="0" options="{'no_create': True, 'no_open': True}" >
+                        <form string="Inseta Unit Standard">
+                        <div class="oe_title">
+                            <h1>
+                            <field name="name" placeholder="Name" readonly="0"/>
+                            </h1>
+                        </div>
+                        <group> 
+                            <group>
+                            <field name="unit_standard_type" required="1" invisible="0" options="{'no_create': True, 'no_open': True}"/> 
+                            <field name="code" required="1"/>
+                            <field name="nqflevel_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                            
+                            </group>
+                            <group>
+                            <field name="core_credits" invisible="0"/>
+                            <field name="elective_credits" required="0"/>
+                            <field name="fundamental_credits" invisible="0"/>
+                            <field name="credits" required="1"/>
+                            </group> 
+                        </group>
+                        </form>
+                        <tree string="Unit standards">
+                            <field name="name" required="1" invisible="0"/> 
+                            <field name="unit_standard_type" required="1" invisible="0"/> 
+                            <field name="code" required="1"/>
+                            <field name="nqflevel_id" required="1"/>
+                            <field name="core_credits" invisible="0" string="Core"/>
+                            <field name="elective_credits" required="0" string="Elective"/>
+                            <field name="fundamental_credits" invisible="0" string="Fundamental"/>
+                            <field name="credits" required="1"/>
+                        
+                        </tree>
+                    </field>
+                    </page>
+                    
+                </notebook>
+                </form>
+            </field>
+        </record>
+        <record id="inseta_wiltvet_learnership_tree" model="ir.ui.view">
+            <field name="name">inseta wiltvet learnership</field>
+            <field name="model">inseta.wiltvet.learnership</field>
+            <field name="arch" type="xml">
+                <tree string="Wiltvet" create="false">
+                    <field name="learner_id" invisible="0" readonly="1" force_save="1"/>
+                    <field name="provider_id" required="1"/> 
+                    <field name="organisation_id" required="1" string="Employer" options="{'no_create': True, 'no_open': True}"/> 
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" invisible="0" string="Programme" required="1"/>
+                    <field name="financial_year_id" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="commencement_date" string="WIL Start Date" required="1" readonly="0"/>
+                    <field name="completion_date" string="WIL End date" required="1" readonly="0"/>
+                    <field name="programme_status_id" invisible="1" string="Enrollment Status" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="inseta_wiltvet_learnership_filter" model="ir.ui.view">
+            <field name="name">inseta wiltvet learnership</field>
+            <field name="model">inseta.wiltvet.learnership</field>
+            <field name="arch" type="xml">
+                <search string="wiltvet">
+                    <field name="learner_id" invisible="0"/>
+                    <field name="provider_id" required="1"/> 
+                    <field name="organisation_id" required="1" string="Employer"/> 
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" invisible="0" string="Programme" required="1"/>
+                    <field name="financial_year_id" readonly="0" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="commencement_date" string="WIL Start Date" required="1" readonly="0"/>
+                    <field name="completion_date" string="WIL End date" required="1" readonly="0"/>
+                    <field name="programme_status_id" invisible="1" string="Enrollment Status" readonly="0"/>
+                    <!-- <filter name="wiltvet_grp" string="WILTVET"
+                    domain="[('programme_id', '!=', False)]"/>
+                    <group  expand='0' string='Group by...'>
+                        <filter name ="rec_wiltvet_grp" string='Wiltvet' domain="[]" context="{'group_by' : 'programme_id'}"/>
+                    </group> -->
+                </search>
+            </field>
+        </record>
+
+        <record id="action_inseta_wiltvet_standard_learnership" model="ir.actions.act_window">
+            <field name="name">Wiltvet Report</field>
+            <field name="res_model">inseta.wiltvet.learnership</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="context">{'search_default_rec_wiltvet_grp': 1}</field>
+            <field name="view_id" eval="inseta_wiltvet_learnership_filter" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record>
+
+        <record id="view_inseta_wiltvet_learnership_pivot" model="ir.ui.view">
+            <field name="name">inseta wiltvet pivot</field>
+            <field name="model">inseta.wiltvet.learnership</field>
+            <field name="arch" type="xml">
+                <pivot string="Bursary">
+                    <field name="organisation_id" type="col"/>
+                    <field name="programme_id" type="row"/>
+                    <field name="learner_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_inseta_wiltvet_learnership_graph" model="ir.ui.view">
+            <field name="name">inseta wiltvet graph</field>
+            <field name="model">inseta.wiltvet.learnership</field>
+            <field name="arch" type="xml">
+                <graph string="Candidacy">
+                    <field name="qualification_id" type="row"/>
+                    <field name="programme_id" type="row"/>
+
+                    <field name="financial_year_id" type="measure"/>
+                    <field name="learner_id" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="inseta_candidacy_learnership_form" model="ir.ui.view">
+            <field name="name">view.inseta.candidacy.learnership.form</field>
+            <field name="model">inseta.candidacy.learnership</field>
+            <field name="arch" type="xml">
+            <form string="Candidacy" create="false" >
+                <header>
+                    <button name="set_to_edit" string="Toggle Edit Mode" class="btn-primary" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                </header>
+                <group>
+                    <group>
+                    <field name="learner_id" invisible="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="provider_sdl" readonly="0" attrs="{'required': [('provider_id', '=', False)],'readonly': [('edit_mode', '=', False)]}"/> 
+                    <field name="provider_id" readonly="0" force_save="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                    <field name="employer_sdl" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_create': True, 'no_open': True}" />
+                    <field name="organisation_id" readonly="0" string="Employer" force_save="1"/> 
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" string="Candidacy type" required="0" invisible="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="ofo_occupation_id" options="{'no_create': True, 'no_open': True}" string="OFO Occupation" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                    <field name="funding_type" options="{'no_create': True, 'no_open': True}" string="Sponsor" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="nqflevel_id" options="{'no_create': True, 'no_open': True}" string="NQF Level" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+					<field name="edit_mode" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                    
+                    </group>
+                    <group>
+                    <field name="qualification_id" options="{'no_create': True, 'no_open': True}" string="Qualification" required="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                    <field name="financial_year_id" options="{'no_create': True, 'no_open': True}" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                    </group>
+                    <group>
+                    <field name="socio_economic_status_id" options="{'no_create': True, 'no_open': True}" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="commencement_date" string="Candidacy Start Date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="completion_date" string="Candidacy End date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="status" invisible ="1" string="Candidacy status" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="learner_id" invisible="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    </group>
+
+                    <group>
+                    <field name="effective_date" string="Status Effective Date" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="programme_status_id" string="Enrollment Status" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="most_recent_registration_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page name="unitstandards" string="Unit Standards line" invisible="1">
+                    <field name="unit_standard_ids" nolabel="1" readonly="0" required="0" options="{'no_create': True, 'no_open': True}" >
+                        <form string="Inseta Unit Standard">
+                        <div class="oe_title">
+                            <h1>
+                            <field name="name" placeholder="Name" readonly="0"/>
+                            </h1>
+                        </div>
+                        <group> 
+                            <group>
+                            <field name="unit_standard_type" options="{'no_create': True, 'no_open': True}" required="1" invisible="0"/> 
+                            <field name="code" required="1"/>
+                            <field name="nqflevel_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                            
+                            </group>
+                            <group>
+                            <field name="core_credits" invisible="0"/>
+                            <field name="elective_credits" required="0"/>
+                            <field name="fundamental_credits" invisible="0"/>
+                            <field name="credits" required="1"/>
+                            </group> 
+                        </group>
+                        </form>
+                        <tree string="Unit standards">
+                        <field name="name" required="1" invisible="0"/> 
+                        <field name="unit_standard_type" required="1" invisible="0"/> 
+                        <field name="code" required="1"/>
+                        <field name="nqflevel_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                        <field name="core_credits" invisible="0" string="Core"/>
+                        <field name="elective_credits" required="0" string="Elective"/>
+                        <field name="fundamental_credits" invisible="0" string="Fundamental"/>
+                        <field name="credits" required="1"/>
+                        
+                        </tree>
+                    </field>
+                    </page>
+                    
+                </notebook>
+                </form>
+            </field>
+        </record>
+        <record id="inseta_candidacy_learnership_tree" model="ir.ui.view">
+            <field name="name">inseta candidacy learnership</field>
+            <field name="model">inseta.candidacy.learnership</field>
+            <field name="arch" type="xml">
+                <tree string="candidacy" create="false">
+                    <field name="learner_id" invisible="0" readonly="1" force_save="1"/>
+                    <field name="provider_id" required="1"/> 
+                    <field name="organisation_id" options="{'no_create': True, 'no_open': True}" required="1" string="Employer"/> 
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" string="Programme" required="0" invisible="1"/>
+                    <field name="qualification_id" options="{'no_create': True, 'no_open': True}" string="Qualification" required="1"/>
+                    <field name="financial_year_id" readonly="0"/>
+                    <field name="commencement_date" string="Candidacy Start Date" required="1" readonly="0"/>
+                    <field name="completion_date" string="Candidacy End date" required="1" readonly="0"/>
+                    <field name="programme_status_id" invisible="0" string="Enrollment Status" readonly="0"/>
+                    
+                </tree>
+            </field>
+        </record>
+
+        <record id="inseta_candidacy_learnership_filter" model="ir.ui.view">
+            <field name="name">inseta candidacy learnership</field>
+            <field name="model">inseta.candidacy.learnership</field>
+            <field name="arch" type="xml">
+                <search string="candidacy">
+                    <field name="learner_id" invisible="0"/>
+                    <field name="provider_id" required="1"/> 
+                    <field name="organisation_id" options="{'no_create': True, 'no_open': True}" required="1" string="Employer"/> 
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" string="Programme" required="0" invisible="1"/>
+                    <field name="qualification_id" options="{'no_create': True, 'no_open': True}" string="Qualification" required="1"/>
+                    <field name="financial_year_id" readonly="0"/>
+                    <field name="commencement_date" string="Candidacy Start Date" required="1" readonly="0"/>
+                    <field name="completion_date" string="Candidacy End date" required="1" readonly="0"/>
+                    <field name="programme_status_id" invisible="0" string="Enrollment Status" readonly="0"/>
+                    <!-- <filter name="candidacy_grp" string="Candidacy"
+                    domain="['|', ('qualification_id', '!=', False),('programme_id', '!=', False)]"/>
+                    <group  expand='0' string='Group by...'>
+                        <filter name ="rec_candidacy_grp" string='Candidacy' domain="[]" context="{'group_by' : 'qualification_id'}"/>
+                    </group> -->
+                </search>
+            </field>
+        </record>
+
+        <record id="action_inseta_candidacy_standard_learnership" model="ir.actions.act_window">
+            <field name="name">Inseta candidacy Report</field>
+            <field name="res_model">inseta.candidacy.learnership</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="context">{'search_default_rec_candidacy_grp': 1}</field>
+            <field name="view_id" eval="inseta_candidacy_learnership_filter" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record>
+
+        <record id="view_inseta_candidacy_learnership_pivot" model="ir.ui.view">
+            <field name="name">inseta candidacy pivot</field>
+            <field name="model">inseta.candidacy.learnership</field>
+            <field name="arch" type="xml">
+                <pivot string="Bursary">
+                    <field name="organisation_id" type="col"/>
+                    <field name="programme_id" type="row"/>
+                    <field name="learner_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_inseta_candidacy_learnership_graph" model="ir.ui.view">
+            <field name="name">inseta candidacy graph</field>
+            <field name="model">inseta.candidacy.learnership</field>
+            <field name="arch" type="xml">
+                <graph string="Candidacy">
+                    <field name="qualification_id" type="row"/>
+                    <field name="programme_id" type="row"/>
+                    <field name="financial_year_id" type="measure"/>
+                    <field name="learner_id" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record id="inseta_internship_learnership_form" model="ir.ui.view">
+            <field name="name">view.inseta.internship.learnership.form</field>
+            <field name="model">inseta.internship.learnership</field>
+            <field name="arch" type="xml">
+            <form string="Internship" >
+                <header>
+                    <button name="set_to_edit" string="Toggle Edit Mode" class="btn-primary" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                </header>
+                <group>
+                    <group>
+                    <field name="learner_id" invisible="0" readonly="0" force_save="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="provider_sdl" attrs="{'required': [('provider_id', '=', False)]}"/> 
+                    <field name="provider_id" readonly="0" force_save="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                    <field name="employer_sdl" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="organisation_id" readonly="0" string="Employer" force_save="1"/> 
+                    <field name="qualification_id" options="{'no_create': True, 'no_open': True}" string="Qualification" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                    <field name="lga_number" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" string="Internship Type" invisible="1" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="qualification_code" string="SAQA Code" readonly="1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="ofo_occupation_id" string="OFO Occupation" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                    <field name="sic_code" invisible="1" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="financial_year_id" required="1" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="funding_type" string="Sponsor" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+					<field name="edit_mode" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,base.group_system"/>
+                    <!-- <field name="core_business_desc" readonly="0" widget="text" placeholder="Please enter description here ..."/> -->
+                    </group>
+                    <group>
+                    <field name="nqflevel_id" required="1" string="NQF Level" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+                    <field name="year_of_study" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="highest_edu_level_id" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="commencement_date" string="Internship Start Date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="completion_date" string="Internship end date" required="1" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    
+                    <!-- <field name="qualification_id" string="Qualification" required="0"/> -->
+                    
+                    <!-- <field name="qualification_achievement_date" string="Achievement Date" readonly="0"/> -->
+                    </group>
+                    <group>
+                    <!-- <field name="verified" readonly="0"/>
+                    <field name="verifier_name" readonly="0"/>
+                    <field name="verified_date" readonly="0"/> -->
+                    <field name="fet" readonly="0" invisible="1"/>
+                    <field name="het" readonly="0" invisible="1"/>
+                    <field name="cummulative_spend" invisible="1" readonly="0"/>
+                    <field name="socio_economic_status_id" readonly="0" force_save="1" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="dgtype_code" invisible="1" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    
+                    </group>
+
+                    <group>
+                    <field name="effective_date" string="Status Effective Date" required="0"/>
+                    <field name="programme_status_id" invisible="0" string="Internship status" readonly="0" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="status" invisible="1" string="Enrollment Status" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                    <field name="most_recent_registration_date" readonly="0" attrs="{'readonly': [('edit_mode', '=', False)]}"/> 
+
+                    </group>
+                </group>
+                <notebook>
+                    <page name="unitstandards" string="Unit Standards line" invisible="1">
+                    <field name="unit_standard_ids" nolabel="1" readonly="0" required="0" options="{'no_create': True, 'no_open': True}" >
+                        <form string="Inseta Unit Standard">
+                        <div class="oe_title">
+                            <h1>
+                            <field name="name" placeholder="Name" readonly="0"/>
+                            </h1>
+                        </div>
+                        <group> 
+                            <group>
+                            <field name="unit_standard_type" required="1" invisible="0"/> 
+                            <field name="code" required="1"/>
+                            <field name="nqflevel_id" required="1"/>
+                            
+                            </group>
+                            <group>
+                            <field name="core_credits" invisible="0"/>
+                            <field name="elective_credits" required="0"/>
+                            <field name="fundamental_credits" invisible="0"/>
+                            <field name="credits" required="1"/>
+                            </group> 
+                        </group>
+                        </form>
+                        <tree string="Unit standards">
+                            <field name="name" required="1" invisible="0"/> 
+                            <field name="unit_standard_type" required="1" invisible="0"/> 
+                            <field name="code" required="1"/>
+                            <field name="nqflevel_id" required="1"/>
+                            <field name="core_credits" invisible="0" string="Core"/>
+                            <field name="elective_credits" required="0" string="Elective"/>
+                            <field name="fundamental_credits" invisible="0" string="Fundamental"/>
+                            <field name="credits" required="1"/>
+                        
+                        </tree>
+                    </field>
+                    </page>
+                    
+                </notebook>
+                </form>
+            </field>
+        </record>
+        <record id="inseta_internship_learnership_tree" model="ir.ui.view">
+            <field name="name">inseta internship learnership</field>
+            <field name="model">inseta.internship.learnership</field>
+            <field name="arch" type="xml">
+                <tree string="Unit standards" create="0">
+                    <field name="provider_id" required="1"/>
+                    <field name="learner_id" readonly="0"/> 
+
+                    <field name="organisation_id" required="1" string="Employer"/> 
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" string="Programme" invisible="1"/>
+                    <field name="qualification_id" options="{'no_create': True, 'no_open': True}" string="Qualification" required="0"/>
+                    <field name="financial_year_id" readonly="0"/>
+                    <field name="commencement_date" string="Internship Start Date" required="1" readonly="0"/>
+                    <field name="completion_date" string="Internship end date" required="1" readonly="0"/>
+                    <field name="programme_status_id" invisible="0" string="Status" readonly="0"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="inseta_internship_learnership_filter" model="ir.ui.view">
+            <field name="name">inseta internship learnership</field>
+            <field name="model">inseta.internship.learnership</field>
+            <field name="arch" type="xml">
+                <search string="internship">
+                    <field name="learner_id" invisible="0"/>
+                    <field name="provider_id" required="1"/> 
+                    <field name="organisation_id" required="1" string="Employer"/> 
+                    <field name="programme_id" options="{'no_create': True, 'no_open': True}" string="Programme" invisible="1"/>
+                    <field name="qualification_id" options="{'no_create': True, 'no_open': True}" string="Qualification" required="0"/>
+                    <field name="financial_year_id" readonly="0"/>
+                    <field name="commencement_date" string="Internship Start Date" required="1" readonly="0"/>
+                    <field name="completion_date" string="Internship end date" required="1" readonly="0"/>
+                    <field name="programme_status_id" invisible="0" string="Status" readonly="0"/>
+                    <!-- <filter name="intern_grp" string="Internship"
+                    domain="[('qualification_id', '!=', False)]"/>
+                    <group  expand='0' string='Group by...'>
+                        <filter name ="rec_intern_grp" string='Internship' domain="[]" context="{'group_by' : 'qualification_id'}"/>
+                    </group> -->
+
+                </search>
+                
+            </field>
+        </record>
+
+        <record id="action_inseta_internship_standard_learnership" model="ir.actions.act_window">
+            <field name="name">Inseta internship Report</field>
+            <field name="res_model">inseta.internship.learnership</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="context">{'search_default_rec_intern_grp': 1}</field>
+            <field name="view_id" eval="inseta_internship_learnership_filter" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    
+                </p>
+            </field>
+        </record>
+
+        <record id="view_inseta_internship_learnership_pivot" model="ir.ui.view">
+            <field name="name">inseta internship pivot</field>
+            <field name="model">inseta.internship.learnership</field>
+            <field name="arch" type="xml">
+                <pivot string="Bursary">
+                    <field name="organisation_id" type="col"/>
+                    <field name="qualification_id" type="row"/>
+                    <field name="learner_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_inseta_internship_learnership_graph" model="ir.ui.view">
+            <field name="name">inseta internship graph</field>
+            <field name="model">inseta.internship.learnership</field>
+            <field name="arch" type="xml">
+                <graph string="Candidacy">
+                    <field name="qualification_id" type="row"/>
+                    <field name="programme_id" type="row"/>
+                    <field name="financial_year_id" type="measure"/>
+                    <field name="learner_id" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <menuitem id="view_unit_standard_programme_report_menu" name="Unit standard Report" sequence="5" action="action_inseta_unit_standard_learnership" parent="inseta_etqa.view_learner_programme_main_report_menu"/>
+        <menuitem id="view_bursary_programme_report_menu" name="Bursary Report" sequence="8" action="action_inseta_bursary_learnership" parent="inseta_etqa.view_learner_programme_main_report_menu"/>
+        <menuitem id="view_wiltvet_programme_report_menu" name="WILTVET Report" sequence="9" action="action_inseta_wiltvet_standard_learnership" parent="inseta_etqa.view_learner_programme_main_report_menu"/>
+        <menuitem id="view_candidacy_programme_report_menu" name="Candidacy Report" sequence="10" action="action_inseta_candidacy_standard_learnership" parent="inseta_etqa.view_learner_programme_main_report_menu"/>
+        <menuitem id="view_internship_programme_report_menu" name="Internship Report" sequence="18" action="action_inseta_internship_standard_learnership" parent="inseta_etqa.view_learner_programme_main_report_menu"/>
+
+        <menuitem id="menu_provider_see_unit_standard_programme" name="Unit standard Report" sequence="5" action="action_inseta_unit_standard_learnership" parent="inseta_etqa.view_learner_programme_user_report_menu"/>
+        <menuitem id="view_bursary_provider_see_menu" name="Bursary Report" sequence="8" action="action_inseta_bursary_learnership" parent="inseta_etqa.view_learner_programme_user_report_menu"/>
+        <menuitem id="view_wiltvet_provider_see_menu" name="WILTVET Report" sequence="9" action="action_inseta_wiltvet_standard_learnership" parent="inseta_etqa.view_learner_programme_user_report_menu"/>
+        <menuitem id="view_candidacy_provider_see_menu" name="Candidacy Report" sequence="10" action="action_inseta_candidacy_standard_learnership" parent="inseta_etqa.view_learner_programme_user_report_menu"/>
+        <menuitem id="view_internship_provider_see_menu" name="Internship Report" sequence="18" action="action_inseta_internship_standard_learnership" parent="inseta_etqa.view_learner_programme_user_report_menu"/>
+
+</odoo>

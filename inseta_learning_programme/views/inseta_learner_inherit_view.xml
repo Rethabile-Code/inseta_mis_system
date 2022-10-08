@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <record model="ir.ui.view" id="view_learner_register_inherited_form_view" >
+            <field name="name">inseta.learner.register</field>
+            <field name="model">inseta.learner.register</field>
+            <field name="inherit_id" ref="inseta_etqa.view_learner_registration_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='learner_programmes_line_assessment']" position="after">
+                    <page name="financial_budget_ids" string="Financial Bugdet lines">
+                        <separator string="Financial Bugdet lines"/>
+                        <field name="financial_budget_ids" >
+                            <tree string="Financial Bugdet lines">
+                                <field name="financial_year_id" /> 
+                                <field name="approved_amount" /> 
+                                <field name="funding_type" />
+                                <!-- <field name="dgbursary_detail_id" /> -->
+
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </odoo>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <!--  form -->
+
+		<record id="view_inseta_qualification_form" model="ir.ui.view">
+			<field name="name">view.inseta.qualification.form</field>
+			<field name="model">inseta.qualification</field>
+			<field name="arch" type="xml">
+				<form string="Inseta Qualification">
+					<header>
+					</header>
+					<sheet>
+						<div class="oe_title">
+							<h1> Title <br/>
+								<field name="name" placeholder="Title" readonly="0"/>
+							</h1>
+						</div>
+						<group> 
+							<group>
+								<field name="unit_standard_id" invisible="1" required="0"/> 
+								<field name="saqa_id" string="SAQA Qualification ID" required="1"/>
+								<field name="nqflevel_id" required="1"/>
+								<field name="programme_type_id" required="0" invisible="1"/>
+								<field name="qualification_type_id" required="1"/>
+								<field name="qualification_programme_type_id"/>
+								<!-- <field name="unit_standard_type" required="1"/> -->
+
+								<field name="quality_assurance_id" required="1" invisible="0" readonly="0" />
+								<field name="ofo_occupation_id" required="0" invisible="1"/>
+								<field name="is_replaced" readonly="0"/>
+								<field name="replaced_qualification_id" readonly="0" attrs="{'required': [('is_replaced', '=', True)]}"/>
+								<field name="fundamental_credits" invisible="0"/>
+								<field name="elective_credits" required="0"/>
+								<field name="core_credits" invisible="0"/>
+								<field name="is_south_african_programme" invisible="1"/>
+								<field name="active" />
+								
+							</group>
+							<group>
+								<field name="registration_start_date" readonly="0" required="1"/>
+								<field name="registration_end_date" readonly="0" required="1"/>
+								<field name="last_enroll_date" readonly="0" required="1"/>
+								<field name="last_achievement_date" readonly="0" required="1"/>
+								<field name="is_registered" readonly="0"/>
+								<field name="new_registration_start_date" readonly="0" attrs="{'required': [('is_registered', '=', True)]}"/>
+								<field name="new_registration_end_date" readonly="0" attrs="{'required': [('is_registered', '=', True)]}"/>
+								<field name="new_last_enroll_date" readonly="0" attrs="{'required': [('is_registered', '=', True)]}"/>
+								<field name="new_last_achievement_date" readonly="0" attrs="{'required': [('is_registered', '=', True)]}"/>
+								<field name="minimum_credits" required="0" readonly="0"/>
+								<field name="credits" required="1"/>
+								<field name="is_unit_base" invisible="1"/>
+							</group> 
+						</group> 
+                        <notebook>
+							<page name="qualification_unit_standard_ids" string="Qualification Unit Standards line" attrs="{'invisible': [('is_unit_base', '=', False)]}">
+								<field name="qualification_unit_standard_ids" nolabel="1" readonly="0" required="0" context="{'default_qualification_id': active_id}" force_save="1">
+									<form string="Inseta Qualification Unit Standard">
+										<!-- <div class="oe_title">
+											<h1> Qualification <br/>
+											</h1>
+										</div> -->
+										<group> 
+											<group>
+
+												<!-- <field name="code" required="0"/> -->
+												<field name="qualification_id" required="0" invisible="1"/>
+												<field name="unit_standard_id" required="1" force_save="1"/>
+												<field name="unit_standard_type_id" required="1" invisible="0" force_save="1"/> 
+
+											</group>
+											<group>
+												<field name="active"/>
+												<field name="legacy_system_id" invisible="0"/>
+											</group> 
+										</group>
+									</form>
+									<tree string="Qualification Unit standards">
+										<field name="qualification_id" required="0" invisible="1"/>
+										<!-- <field name="code" required="1"/> -->
+										<field name="unit_standard_id" required="1"/>
+										<field name="unit_standard_type_id" required="1" invisible="0"/>
+										<field name="credits" required="1"/> 
+									</tree>
+								</field>
+							</page>
+							<page name="unitstandards" string="Unit Standards line" autofocus="autofocus" invisible="1">
+								<field name="unit_standard_ids" nolabel="1" readonly="0" required="0" options="{'no_create': True}">
+									<form string="Inseta Unit Standard">
+										<div class="oe_title">
+											<h1> Title <br/>
+												<field name="name" placeholder="" readonly="0"/>
+											</h1>
+										</div>
+										<group> 
+											<group>
+												<field name="unit_standard_type" required="1" invisible="0"/> 
+												<field name="code" required="1"/>
+												<field name="nqflevel_id" required="1"/>
+												<field name="active"/>
+											</group>
+											<group>
+												<field name="fundamental_credits" invisible="0"/>
+												<field name="elective_credits" required="0"/>
+												<field name="core_credits" invisible="0"/>
+												<field name="credits" required="1"/>
+
+											</group> 
+										</group>
+									</form>
+									<tree string="Unit standards">
+										<field name="name" required="1" invisible="0"/> 
+										<field name="unit_standard_type" required="1" invisible="0"/> 
+										<field name="code" required="1"/>
+										<field name="nqflevel_id" required="1"/>
+										<!-- <field name="fundamental_credits" invisible="0" string="Fundamental"/>
+										<field name="core_credits" invisible="0" string="Core"/>
+										<field name="elective_credits" required="0" string="Elective"/> -->
+										<field name="credits" required="1"/>
+									</tree>
+								</field>
+							</page>
+							 
+                        </notebook>
+					</sheet>
+					
+				</form>
+			</field>
+		</record>
+		 
+		<record id="view_inseta_qualification_tree" model="ir.ui.view">
+			<field name="name">view.inseta_qualification.tree</field>
+			<field name="model">inseta.qualification</field>
+			<field name="arch" type="xml">
+				<tree string="Inseta Qualification">
+					<field name="name"/>
+					<field name="unit_standard_id" invisible="1"/> 
+					<field name="saqa_id" required="1"/>
+					<field name="nqflevel_id" required="1"/>
+					<field name="credits" required="1"/>
+					<field name="registration_start_date" readonly="0" />
+					<field name="registration_end_date" readonly="0" />
+				</tree>
+			</field>
+		</record> 
+
+		<record id="view_inseta_qualification_filter" model="ir.ui.view">
+			<field name="name">Inseta Qualification</field>
+			<field name="model">inseta.qualification</field>
+			<field name="arch" type="xml">
+				<search string="Inseta Qualification">
+					<field name="name"/>
+					<field name="unit_standard_id" invisible="0"/> 
+					<field name="saqa_id" required="1"/>
+					<field name="nqflevel_id" required="1"/>
+					<!-- <group expand="0" string="Group By">
+						<filter string="Status" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Work Province" icon="terp-personal" domain="[]" context="{'group_by':'physical_province_id'}"/>
+						<filter string="Postal Province" icon="terp-personal" domain="[]" context="{'group_by':'postal_province_id'}"/>
+					</group> -->
+				</search>
+			</field>
+		</record>
+
+		<record id="view_res_nqflevel_form" model="ir.ui.view">
+			<field name="name">view.res.nqflevel.form</field>
+			<field name="model">res.nqflevel</field>
+			<field name="arch" type="xml">
+				<form string=""> 
+					<sheet>
+						<field name="name"/>
+                        <field name="saqacode"/>
+                        <field name="active"/>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_res_nqflevel_tree" model="ir.ui.view">
+			<field name="name">view.res.nqflevel.tree</field>
+			<field name="model">res.nqflevel</field>
+			<field name="arch" type="xml">
+				<tree string="NQF Level"> 
+                    <field name="name"/>
+                    <field name="saqacode"/>
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_res_nqflevel_filter" model="ir.ui.view">
+			<field name="name">res.nqflevel</field>
+			<field name="model">res.nqflevel</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="name"/>
+                    <field name="saqacode"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="view_inseta_quality_assurance_form" model="ir.ui.view">
+			<field name="name">view.inseta.quality.assurance.form</field>
+			<field name="model">inseta.quality.assurance</field>
+			<field name="arch" type="xml">
+				<form string="Quality Assurance"> 
+					<sheet>
+						<group>
+							<group>
+								<field name="name" string="Name"/>
+								<field name="code" string="Code"/>
+							</group>
+						</group>
+							
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_inseta_quality_assurance_tree" model="ir.ui.view">
+			<field name="name">view.inseta.quality.assurance.form</field>
+			<field name="model">inseta.quality.assurance</field>
+			<field name="arch" type="xml">
+				<tree string=""> 
+                    <field name="name"/>
+                    <field name="code"/>
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_inseta_quality_assurance_filter" model="ir.ui.view">
+			<field name="name">inseta.quality.assurance</field>
+			<field name="model">inseta.quality.assurance</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="name"/>
+                    <field name="code"/>
+				</search>
+			</field>
+		</record>
+
+		<!-- Action. -->
+		<record id="action_inseta_qualification" model="ir.actions.act_window">
+			<field name="name">Inseta Qualification</field>
+			<field name="res_model">inseta.qualification</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_inseta_qualification_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Register Inseta Qualification. 
+				</p>
+			</field>
+		</record>
+
+		<record id="action_nqflevel" model="ir.actions.act_window">
+			<field name="name">NQF level</field>
+			<field name="res_model">res.nqflevel</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+				</p>
+			</field>
+		</record>
+ 
+		<record id="action_inseta_qualification_type" model="ir.actions.act_window">
+			<field name="name">Inseta Qualification Type</field>
+			<field name="res_model">inseta.qualification.type</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="view_id" eval="view_inseta_qualification_filter" /> -->
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create Inseta Qualification. 
+				</p>
+			</field>
+		</record>
+
+		<record id="action_quality_assurance" model="ir.actions.act_window">
+			<field name="name">Inseta Quality Assurance</field>
+			<field name="res_model">inseta.quality.assurance</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_inseta_quality_assurance_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+				</p>
+			</field>
+		</record>
+		  
+		<record id="view_inseta_qualification_unit_standards_tree" model="ir.ui.view">
+			<field name="name">view.inseta.qualification.unit.standard.tree</field>
+			<field name="model">inseta.qualification.unit.standard</field>
+			<field name="arch" type="xml">
+				<tree string="">
+					<field name="unit_standard_id"/> 
+					<field name="unit_standard_type_id" required="1"/>
+					<field name="qualification_id"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_inseta_learnership_unit_standard_tree" model="ir.ui.view">
+			<field name="name">view.inseta.learnership.unit.standard.tree</field>
+			<field name="model">inseta.learnership.unit.standard</field>
+			<field name="arch" type="xml">
+				<tree string="">
+					<field name="unit_standard_id"/> 
+					<field name="unit_standard_type_id" required="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_inseta_skill_unit_standard_tree" model="ir.ui.view">
+			<field name="name">view.inseta.skill.unit.standard.tree</field>
+			<field name="model">inseta.skill.unit.standard</field>
+			<field name="arch" type="xml">
+				<tree string="">
+					<field name="unit_standard_id"/> 
+					<field name="unit_standard_type_id" required="1"/>
+				</tree>
+			</field>
+		</record>
+		
+		<menuitem id="inseta_qualifications_add_menu_id" name="Qualifications"
+		sequence="1" parent="inseta_etqa.etqa_configuration_menu" action="action_inseta_qualification" groups="inseta_etqa.group_accessor_moderator_reg,base.user_admin,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system"/> 
+		
+		<menuitem id="inseta_qualification_type_menu_id" name="Qualification Type"
+		sequence="3" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_inseta_qualification_type" groups="base.user_admin,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_accreditation_specialist,base.group_system"/>
+
+		<menuitem id="inseta_provider_action_nqflevel_menu_id" name="NQF Level"
+		sequence="4" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_nqflevel" groups="base.group_system,base.user_admin"/> 
+		<menuitem id="inseta_provider_action_nqflevel_menu_id" name="Quality Assurance"
+		sequence="5" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_quality_assurance" groups="base.group_system,base.user_admin"/> 
+</odoo>

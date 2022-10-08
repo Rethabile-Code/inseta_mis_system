@@ -1,0 +1,1066 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+
+        <!--Banks-->
+        <record model="res.bank" id="data_bank_ABSA">
+            <field name="name">Absa Bank</field>
+            <field name="bic">ABSA</field>
+            <field name="country" ref="base.za"/>
+            <field name="active">True</field>
+        </record>
+        <record model="res.bank" id="data_bank_AB">
+            <field name="name">African Bank</field>
+            <field name="bic">AB</field>
+            <field name="country" ref="base.za"/>
+            <field name="active">True</field>
+        </record>
+
+        <!--WSP status-->
+        <record model="res.wspstatus" id="data_wspstatus1">
+            <field name="name">Pending</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus2">
+            <field name="name">Submitted</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus3">
+            <field name="name">Approved</field>
+            <field name="legacy_system_id">3</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus4">
+            <field name="name">Rejected</field>
+            <field name="legacy_system_id">4</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus5">
+            <field name="name">Query</field>
+            <field name="legacy_system_id">5</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus6">
+            <field name="name">Accepted</field>
+            <field name="legacy_system_id">6</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus7">
+            <field name="name">Interim Approval</field>
+            <field name="legacy_system_id">7</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus8">
+            <field name="name">Created</field>
+            <field name="legacy_system_id">8</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus9">
+            <field name="name">T-Number Accepted</field>
+            <field name="legacy_system_id">9</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus10">
+            <field name="name">T Number - IST pending</field>
+            <field name="legacy_system_id">10</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus11">
+            <field name="name">NLP Accepted</field>
+            <field name="legacy_system_id">11</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus12">
+            <field name="name">Deactivated</field>
+            <field name="legacy_system_id">12</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus13">
+            <field name="name">Incomplete</field>
+            <field name="legacy_system_id">13</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus14">
+            <field name="name">Late Submission - Accepted</field>
+            <field name="legacy_system_id">14</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus15">
+            <field name="name">NLP Rejected</field>
+            <field name="legacy_system_id">15</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus16">
+            <field name="name">Accepted-Late</field>
+            <field name="legacy_system_id">16</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus17">
+            <field name="name">Recommended for Approval</field>
+            <field name="legacy_system_id">17</field>
+        </record>
+        <record model="res.wspstatus" id="data_wspstatus18">
+            <field name="name">Evaluation In Progress</field>
+            <field name="legacy_system_id">18</field>
+        </record>
+
+        <!--Inter seta transfer status-->
+        <record model="res.isttransferstatus" id="data_isttransferstatus1">
+            <field name="name">In Successful (DHET)</field>
+            <field name="saqacode">IN</field>
+            <field name="legacy_system_id">1</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus2">
+            <field name="name">In Pending (Other Seta)</field>
+            <field name="saqacode">IN</field>
+            <field name="legacy_system_id">2</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus3">
+            <field name="name">In Declined (Other Seta)</field>
+            <field name="saqacode">IN</field>
+            <field name="legacy_system_id">3</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus4">
+            <field name="name">On Hold</field>
+            <field name="saqacode">IN</field>
+            <field name="legacy_system_id">4</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus5">
+            <field name="name">Cancelled (by Employer)</field>
+            <field name="saqacode">IN</field>
+            <field name="legacy_system_id">5</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus6">
+            <field name="name">Company no longer exist</field>
+            <field name="saqacode">IN</field>
+            <field name="legacy_system_id">6</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus7">
+            <field name="name">Out Successful (DHET)</field>
+            <field name="saqacode">OUT</field>
+            <field name="legacy_system_id">7</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus8">
+            <field name="name">Out Pending (INSeta)</field>
+            <field name="saqacode">OUT</field>
+            <field name="legacy_system_id">8</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus9">
+            <field name="name">Out Declined (INSeta)</field>
+            <field name="saqacode">OUT</field>
+            <field name="legacy_system_id">9</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus10">
+            <field name="name">On Hold (OUT)</field>
+            <field name="saqacode">OUT</field>
+            <field name="legacy_system_id">10</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus11">
+            <field name="name">Cancelled (by Employer)</field>
+            <field name="saqacode">OUT</field>
+            <field name="legacy_system_id">11</field>
+        </record>
+        <record model="res.isttransferstatus" id="data_isttransferstatus12">
+            <field name="name">Company no longer exist</field>
+            <field name="saqacode">OUT</field>
+            <field name="legacy_system_id">12</field>
+        </record>
+
+        <!--Inter seta change reason-->
+        <record model="res.istchangereason" id="data_istreason1">
+            <field name="name">Core Business Change</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+        </record>
+        <record model="res.istchangereason" id="data_istreason2">
+            <field name="name">Incorrectly Registered</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+        </record>
+        <record model="res.istchangereason" id="data_istreason3">
+            <field name="name">Falls within more than one SETA</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+        </record>
+        
+        <!--Document relates-->
+        <record model="res.wspdocument.relates" id="data_doctype1">
+            <field name="name">BEE Certificate</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.wspdocument.relates" id="data_doctype2">
+            <field name="name">Cancelled Cheque</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">False</field>
+        </record>
+        <record model="res.wspdocument.relates" id="data_doctype3">
+            <field name="name">Authorisation Page</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.wspdocument.relates" id="data_doctype4">
+            <field name="name">Banking Details</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.wspdocument.relates" id="data_doctype5">
+            <field name="name">FSP License</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.wspdocument.relates" id="data_doctype6">
+            <field name="name">CIPC</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.wspdocument.relates" id="data_doctype7">
+            <field name="name">CIPC</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">False</field>
+        </record>
+        <record model="res.wspdocument.relates" id="data_doctype8">
+            <field name="name">Financial Statements</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--Financial Years-->
+        <record model="res.financial.year" id="data_fy1">
+            <field name="name">01 April 2001 - 31 March 2002</field>
+            <field name="saqacode">2001</field>
+            <field name="date_from">2001-04-01</field>
+            <field name="date_to">2002-03-31</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy2">
+            <field name="name">01 April 2002 - 31 March 2003</field>
+            <field name="saqacode">2002</field>
+            <field name="date_from">2002-04-01 00:00:00+02</field>
+            <field name="date_to">2003-03-31 23:59:59+02</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy3">
+            <field name="name">01 April 2003 - 31 March 2004</field>
+            <field name="saqacode">2003</field>
+            <field name="date_from">2003-04-01 00:00:00+02</field>
+            <field name="date_to">2004-03-31 23:59:59+02</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy4">
+            <field name="name">01 April 2004 - 31 March 2005</field>
+            <field name="saqacode">2004</field>
+            <field name="date_from">2004-04-01 00:00:00+02</field>
+            <field name="date_to">2005-03-31 23:59:59+02</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.financial.year" id="data_fy5">
+            <field name="name">01 April 2005 - 31 March 2006</field>
+            <field name="saqacode">2005</field>
+            <field name="date_from">2005-04-01 00:00:00+02</field>
+            <field name="date_to">2006-03-31 23:59:59+02</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy6">
+            <field name="name">01 April 2006 - 31 March 2007</field>
+            <field name="saqacode">2006</field>
+            <field name="date_from">2006-04-01 00:00:00+02</field>
+            <field name="date_to">2007-03-31 23:59:59+02</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy7">
+            <field name="saqacode">2007</field>
+            <field name="legacy_system_id">7</field>
+            <field name="name">01 April 2007 - 31 March 2008</field>
+            <field name="date_from">2007-04-01 00:00:00+02</field>
+            <field name="date_to">2008-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy8">
+            <field name="saqacode">2008</field>
+            <field name="legacy_system_id">8</field>
+            <field name="name">01 April 2008 - 31 March 2009</field>
+            <field name="date_from">2008-04-01 00:00:00+02</field>
+            <field name="date_to">2009-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy9">
+            <field name="saqacode">2009</field>
+            <field name="legacy_system_id">9</field>
+            <field name="name">01 April 2009 - 31 March 2010</field>
+            <field name="date_from">2009-04-01 00:00:00+02</field>
+            <field name="date_to">2010-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy10">
+            <field name="saqacode">2010</field>
+            <field name="legacy_system_id">10</field>
+            <field name="name">01 April 2010 - 31 March 2011</field>
+            <field name="date_from">2010-04-01 00:00:00+02</field>
+            <field name="date_to">2011-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy11">
+            <field name="saqacode">2011</field>
+            <field name="legacy_system_id">11</field>
+            <field name="name">01 April 2011 - 31 March 2012</field>
+            <field name="date_from">2011-04-01 00:00:00+02</field>
+            <field name="date_to">2012-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy12">
+            <field name="saqacode">2012</field>
+            <field name="legacy_system_id">12</field>
+            <field name="name">01 April 2012 - 31 March 2013</field>
+            <field name="date_from">2012-04-01 00:00:00+02</field>
+            <field name="date_to">2013-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.financial.year" id="data_fy13">
+            <field name="saqacode">2013</field>
+            <field name="legacy_system_id">15</field>
+            <field name="name">01 April 2013 - 31 March 2014</field>
+            <field name="date_from">2013-04-01 00:00:00+02</field>
+            <field name="date_to">2014-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy14">
+            <field name="saqacode">2014</field>
+            <field name="legacy_system_id">16</field>
+            <field name="name">01 April 2014 - 31 March 2015</field>
+            <field name="date_from">2014-04-01 00:00:00+02</field>
+            <field name="date_to">2015-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy15">
+            <field name="saqacode">2015</field>
+            <field name="legacy_system_id">17</field>
+            <field name="name">01 April 2015 - 31 March 2016</field>
+            <field name="date_from">2015-04-01 00:00:00+02</field>
+            <field name="date_to">2016-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy16">
+            <field name="saqacode">2016</field>
+            <field name="legacy_system_id">18</field>
+            <field name="name">01 April 2016 - 31 March 2017</field>
+            <field name="date_from">2016-04-01 00:00:00+02</field>
+            <field name="date_to">2017-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy17">
+            <field name="saqacode">2017</field>
+            <field name="legacy_system_id">19</field>
+            <field name="name">01 April 2017 - 31 March 2018</field>
+            <field name="date_from">2017-04-01 00:00:00+02</field>
+            <field name="date_to">2018-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy18">
+            <field name="saqacode">2018</field>
+            <field name="legacy_system_id">20</field>
+            <field name="name">01 April 2018 - 31 March 2019</field>
+            <field name="date_from">2018-04-01 00:00:00+02</field>
+            <field name="date_to">2019-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy19">
+            <field name="saqacode">2019</field>
+            <field name="legacy_system_id">21</field>
+            <field name="name">01 April 2019 - 31 March 2020</field>
+            <field name="date_from">2019-04-01 00:00:00+02</field>
+            <field name="date_to">2020-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy20">
+            <field name="saqacode">2020</field>
+            <field name="legacy_system_id">22</field>
+            <field name="name">01 April 2020 - 31 March 2021</field>
+            <field name="date_from">2020-04-01 00:00:00+02</field>
+            <field name="date_to">2021-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financial.year" id="data_fy21">
+            <field name="saqacode">2021</field>
+            <field name="legacy_system_id">23</field>
+            <field name="name">01 April 2021 - 31 March 2022</field>
+            <field name="date_from">2021-04-01 00:00:00+02</field>
+            <field name="date_to">2022-03-31 23:59:59+02</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--Financial Year Link end-->
+        <record model="res.financialyearlinkend" id="data_fylinkend1">
+            <field name="name">01 April 2001 - 31 March 2002</field>
+            <field name="saqacode">2001</field>
+            <field name="date_from">2001-04-01</field>
+            <field name="date_to">2002-03-31</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend2">
+            <field name="name">01 April 2002 - 31 March 2003</field>
+            <field name="saqacode">2002</field>
+            <field name="date_from">2002-04-01</field>
+            <field name="date_to">2003-03-31</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend3">
+            <field name="name">01 April 2003 - 31 March 2004</field>
+            <field name="saqacode">2003</field>
+            <field name="date_from">2003-04-01</field>
+            <field name="date_to">2004-03-31</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend4">
+            <field name="name">01 April 2004 - 31 March 2005</field>
+            <field name="saqacode">2004</field>
+            <field name="date_from">2004-04-01</field>
+            <field name="date_to">2005-03-31</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend5">
+            <field name="name">01 April 2005 - 31 March 2006</field>
+            <field name="saqacode">2005</field>
+            <field name="date_from">2005-04-01</field>
+            <field name="date_to">2006-03-31</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend6">
+            <field name="name">01 April 2006 - 31 March 2007</field>
+            <field name="saqacode">2006</field>
+            <field name="date_from">2006-04-01</field>
+            <field name="date_to">2007-03-31</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend7">
+            <field name="name">01 April 2007 - 31 March 2008</field>
+            <field name="saqacode">2007</field>
+            <field name="date_from">2007-04-01</field>
+            <field name="date_to">2008-03-31</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend8">
+            <field name="name">01 April 2008 - 31 March 2009</field>
+            <field name="saqacode">2008</field>
+            <field name="date_from">2008-04-01</field>
+            <field name="date_to">2009-03-31</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend9">
+            <field name="name">01 April 2009 - 31 March 2010</field>
+            <field name="saqacode">2009</field>
+            <field name="date_from">2009-04-01</field>
+            <field name="date_to">2010-03-31</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend10">
+            <field name="name">01 April 2010 - 31 March 2011</field>
+            <field name="saqacode">2010</field>
+            <field name="date_from">2010-04-01</field>
+            <field name="date_to">2011-03-31</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend11">
+            <field name="name">01 April 2011 - 31 March 2012</field>
+            <field name="saqacode">2011</field>
+            <field name="date_from">2011-04-01</field>
+            <field name="date_to">2012-03-31</field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend12">
+            <field name="name">01 April 2012 - 31 March 2013</field>
+            <field name="saqacode">2012</field>
+            <field name="date_from">2012-04-01</field>
+            <field name="date_to">2013-03-31</field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend13">
+            <field name="name">01 April 2013 - 31 March 2014</field>
+            <field name="saqacode">2013</field>
+            <field name="date_from">2013-04-01</field>
+            <field name="date_to">2014-03-31</field>
+            <field name="legacy_system_id">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend14">
+            <field name="name">01 April 2014 - 31 March 2015</field>
+            <field name="saqacode">2014</field>
+            <field name="date_from">2014-04-01</field>
+            <field name="date_to">2015-03-31</field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend15">
+            <field name="name">01 April 2015 - 31 March 2016</field>
+            <field name="saqacode">2015</field>
+            <field name="date_from">2015-04-01</field>
+            <field name="date_to">2016-03-31</field>
+            <field name="legacy_system_id">15</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend16">
+            <field name="name">01 April 2016 - 31 March 2017</field>
+            <field name="saqacode">2016</field>
+            <field name="date_from">2016-04-01</field>
+            <field name="date_to">2017-03-31</field>
+            <field name="legacy_system_id">16</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend17">
+            <field name="name">01 April 2017 - 31 March 2018</field>
+            <field name="saqacode">2017</field>
+            <field name="date_from">2017-04-01</field>
+            <field name="date_to">2018-03-31</field>
+            <field name="legacy_system_id">17</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend18">
+            <field name="name">01 April 2018 - 31 March 2019</field>
+            <field name="saqacode">2018</field>
+            <field name="date_from">2018-04-01</field>
+            <field name="date_to">2019-03-31</field>
+            <field name="legacy_system_id">18</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend19">
+            <field name="name">01 April 2019 - 31 March 2020</field>
+            <field name="saqacode">2019</field>
+            <field name="date_from">2019-04-01</field>
+            <field name="date_to">2020-03-31</field>
+            <field name="legacy_system_id">19</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend20">
+            <field name="name">01 April 2020 - 31 March 2021</field>
+            <field name="saqacode">2020</field>
+            <field name="date_from">2020-04-01</field>
+            <field name="date_to">2021-03-31</field>
+            <field name="legacy_system_id">20</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend21">
+            <field name="name">01 April 2021 - 31 March 2022</field>
+            <field name="saqacode">2021</field>
+            <field name="date_from">2021-04-01</field>
+            <field name="date_to">2022-03-31</field>
+            <field name="legacy_system_id">21</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend22">
+            <field name="name">01 April 2022 - 31 March 2023</field>
+            <field name="saqacode">2022</field>
+            <field name="date_from">2022-04-01</field>
+            <field name="date_to">2023-03-31</field>
+            <field name="legacy_system_id">22</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend23">
+            <field name="name">01 April 2023 - 31 March 2024</field>
+            <field name="saqacode">2023</field>
+            <field name="date_from">2023-04-01</field>
+            <field name="date_to">2024-03-31</field>
+            <field name="legacy_system_id">23</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend24">
+            <field name="name">01 April 2024 - 31 March 2025</field>
+            <field name="saqacode">2024</field>
+            <field name="date_from">2024-04-01</field>
+            <field name="date_to">2025-03-31</field>
+            <field name="legacy_system_id">24</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend25">
+            <field name="name">01 April 2025 - 31 March 2026</field>
+            <field name="saqacode">2025</field>
+            <field name="date_from">2025-04-01</field>
+            <field name="date_to">2026-03-31</field>
+            <field name="legacy_system_id">25</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend26">
+            <field name="name">01 April 2026 - 31 March 2027</field>
+            <field name="saqacode">2026</field>
+            <field name="date_from">2026-04-01</field>
+            <field name="date_to">2027-03-31</field>
+            <field name="legacy_system_id">26</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend27">
+            <field name="name">01 April 2027 - 31 March 2028</field>
+            <field name="saqacode">2027</field>
+            <field name="date_from">2027-04-01</field>
+            <field name="date_to">2028-03-31</field>
+            <field name="legacy_system_id">27</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.financialyearlinkend" id="data_fylinkend28">
+            <field name="name">01 April 2028 - 31 March 2029</field>
+            <field name="saqacode">2028</field>
+            <field name="date_from">2028-04-01</field>
+            <field name="date_to">2029-03-31</field>
+            <field name="legacy_system_id">28</field>
+            <field name="active">True</field>
+        </record>
+        <!--Vacancy Reasons-->
+
+        <record model="res.vacancyreason" id="data_vacancy_reason1">
+            <field name="name">Lack of relevant qualification</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.vacancyreason" id="data_vacancy_reason2">
+            <field name="name">Lack of relevant experience</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.vacancyreason" id="data_vacancy_reason3">
+            <field name="name">Poor remuneration</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.vacancyreason" id="data_vacancy_reason4">
+            <field name="name">Unsuitable job location</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.vacancyreason" id="data_vacancy_reason5">
+            <field name="name">Unsuitable working hours</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.vacancyreason" id="data_vacancy_reason6">
+            <field name="name">Equity considerations</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--Skills Gaps-->
+        <record model="res.formskillsgap" id="data_skillsgap1">
+            <field name="name">Management and Leadership</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap2">
+            <field name="name">Supervisory</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap3">
+            <field name="name">Office Administration</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap4">
+            <field name="name">Production</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap5">
+            <field name="name">Project Management</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap6">
+            <field name="name">Planning and Organising</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap7">
+            <field name="name">Problem-solving</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap8">
+            <field name="name">Team working</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap9">
+            <field name="name">Financial and accounting</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap10">
+            <field name="name">Marketing and sales</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap11">
+            <field name="name">Legal,governance and risk</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap12">
+            <field name="name">Reading, writing and numeracy</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap13">
+            <field name="name">Technical (job specific)</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap14">
+            <field name="name">Communication (oral and written)</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap15">
+            <field name="name">Foreign language</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">15</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap16">
+            <field name="name">Interpersonal</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">16</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap17">
+            <field name="name">Basic Computer (IT)</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">17</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap18">
+            <field name="name">Advanced IT and Software</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">18</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap19">
+            <field name="name">Customer service skills</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">19</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap20">
+            <field name="name">Occupational health &amp; safety skills</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">20</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgap" id="data_skillsgap21">
+            <field name="name">First-aid</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">21</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--Skills Gaps reason-->
+        <record model="res.formskillsgapreasons" id="data_skillsgapreason1">
+            <field name="name">Lack of relevant qualifications</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgapreasons" id="data_skillsgapreason2">
+            <field name="name">Lack of relevant experience</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgapreasons" id="data_skillsgapreason3">
+            <field name="name">New Technology</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgapreasons" id="data_skillsgapreason4">
+            <field name="name">New work processes</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgapreasons" id="data_skillsgapreason5">
+            <field name="name">New products being produced</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formskillsgapreasons" id="data_skillsgapreason6">
+            <field name="name">New policy</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--Variance Reason-->
+        <record model="res.variancereason" id="data_variancereason1">
+            <field name="name">Lack of Budget</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.variancereason" id="data_variancereason2">
+            <field name="name">Company Restructure</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.variancereason" id="data_variancereason3">
+            <field name="name">Change of strategic direction</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.variancereason" id="data_variancereason4">
+            <field name="name">Resignation of participant</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.variancereason" id="data_variancereason5">
+            <field name="name">Termination</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.variancereason" id="data_variancereason6">
+            <field name="name">Retrenchment</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.variancereason" id="data_variancereason7">
+            <field name="name">Other</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--formclass-->
+       <record model="res.formclass" id="data_formclass1">
+            <field name="name">Short-Term Insurance</field>
+            <field name="saqacode">2018</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass2">
+            <field name="name">Life Insurance</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass3">
+            <field name="name">Investment</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass4">
+            <field name="name">Lips</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">False</field>
+        </record>
+        <record model="res.formclass" id="data_formclass5">
+            <field name="name">Re-Insurance</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass6">
+            <field name="name">Funeral Insurance</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass7">
+            <field name="name">Reinsurance</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass8">
+            <field name="name">Financial Planning</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass9">
+            <field name="name">Employee Benefits (Including Pension Funding)</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass10">
+            <field name="name">Risk Management</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass11">
+            <field name="name">Other</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass12">
+            <field name="name">Healthcare Benefits Administration</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass13">
+            <field name="name">Long term insurance</field>
+            <field name="saqacode">2018</field>
+            <field name="legacy_system_id">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass14">
+            <field name="name">Collective Investments</field>
+            <field name="saqacode">2018</field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.formclass" id="data_formclass15">
+            <field name="name">Insurance Administration</field>
+            <field name="saqacode">2018</field>
+            <field name="legacy_system_id">15</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--Workplace SP-->
+        <record model="res.workplacesp" id="data_workplacesp1">
+            <field name="name">Consulted with/Planned with the Learning Committee (Training Committee)</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.workplacesp" id="data_workplacesp2">
+            <field name="name">Employees were consulted by their respective line/business unit managers</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.workplacesp" id="data_workplacesp3">
+            <field name="name">Employees were not consulted</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.workplacesp" id="data_workplacesp4">
+            <field name="name">Other methods e.g. skills needs identified through Performance Management systems etc.</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <!--CRM dOCUMENT-->
+        <record model="res.crmdocumentrelates" id="data_crmdoc1">
+            <field name="name">Organisation Information</field>
+            <field name="saqacode">ORG_INFO</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc2">
+            <field name="name">InterSETA Transfer</field>
+            <field name="saqacode">IST</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc3">
+            <field name="name">SDF Registration</field>
+            <field name="saqacode">SDF_REG</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc4">
+            <field name="name">Training Committee</field>
+            <field name="saqacode">TC</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc5">
+            <field name="name">Grants and Levies</field>
+            <field name="saqacode">GRANTS</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc6">
+            <field name="name">WSP and ATR</field>
+            <field name="saqacode">WSP</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc7">
+            <field name="name">Employer Learnership Online module</field>
+            <field name="saqacode">EMP_LNRSHIP</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.crmdocumentrelates" id="data_crmdoc8">
+            <field name="name">FSP License</field>
+            <field name="saqacode">FSP</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc9">
+            <field name="name">CIPC</field>
+            <field name="saqacode">CIPC</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc10">
+            <field name="name">Tax Clerance</field>
+            <field name="saqacode">TAX</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc11">
+            <field name="name">BEE Certificate</field>
+            <field name="saqacode">BEE</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc12">
+            <field name="name">Registration form</field>
+            <field name="saqacode">REG_FORM</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc13">
+            <field name="name">Confirmation of Banking Details</field>
+            <field name="saqacode">CONFIRM_BANK_DTL</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.crmdocumentrelates" id="data_crmdoc14">
+            <field name="name">EMP201 or Confirmation of registration with SARS (EMPSA)</field>
+            <field name="saqacode">EMP201</field>
+            <field name="active">True</field>
+        </record>
+        
+    </data>
+</odoo>

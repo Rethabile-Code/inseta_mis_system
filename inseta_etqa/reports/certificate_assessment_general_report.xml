@@ -1,0 +1,807 @@
+<odoo>
+  <data>
+    
+    <report 
+        id="assessment_certificate_report"
+        model="inseta.assessment"
+        string="Certificate"
+        report_type="qweb-pdf"
+        name="inseta_etqa.report_assessment_certificate_template_id"
+        file="inseta_etqa.report_assessment_certificate_template_id"
+        paperformat="inseta_etqa.paperformat_moderator_letter"
+        menu="False"
+
+        />
+
+    <report 
+        id="assessment_result_statement_report"
+        model="inseta.assessment"
+        string="Result Statement"
+        report_type="qweb-pdf"
+        name="inseta_etqa.report_assessment_result_statement_template_id"
+        file="inseta_etqa.report_assessment_result_statement_template_id"
+        paperformat="inseta_etqa.paperformat_moderator_letter"
+        menu="False"
+
+        />
+
+    <report 
+        id="main_assessment_certificate_report"
+        model="inseta.learner.assessment.detail"
+        string="Certificate"
+        report_type="qweb-pdf"
+        name="inseta_etqa.report_main_assessment_certificate_template_id"
+        file="inseta_etqa.report_main_assessment_certificate_template_id"
+        paperformat="inseta_etqa.paperformat_moderator_letter"
+        menu="False"
+
+        />
+
+    <report 
+        id="main_assessment_result_statement_report"
+        model="inseta.learner.assessment.detail"
+        string="Assessment Result Statement"
+        report_type="qweb-pdf"
+        name="inseta_etqa.report_main_assessment_result_statement_template_id"
+        file="inseta_etqa.report_main_assessment_result_statement_template_id"
+        paperformat="inseta_etqa.paperformat_moderator_letter"
+        menu="True" 
+
+        />
+        
+    <template id="report_assessment_certificate_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-foreach="o.learner_assessment_details" t-as="details">
+                    <!-- <t t-foreach="ass_line.learner_learnership_line" t-as="l_ass_line"> -->
+                    <t t-call="inseta_etqa.main_assessment_certificate_template_id"/>
+                    <!-- </t> -->
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_main_assessment_certificate_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="details">
+                <t t-call="inseta_etqa.main_assessment_certificate_template_id"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_main_assessment_result_statement_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="details">
+                <t t-call="inseta_etqa.main_assessment_result_statement_template_idxxx"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_assessment_result_statement_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-foreach="o.learner_assessment_details" t-as="details">
+                    <!-- <t t-foreach="ass_line.learner_learnership_line" t-as="l_ass_line"> -->
+                    <t t-call="inseta_etqa.assessment_result_statement_template_id"/>
+                    <!-- </t> -->
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="assessment_certificate_template_id">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 18px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+                </style>
+                <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                <hr/> 
+                
+                <br/><br/><br/>
+                <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE OF ACHIEVEMENT</strong></h1>
+                <br/><br/><br/>
+                <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="details.learner.name"/></strong>.</h2> </p>
+                <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="details.learner.id_no"/></strong></h3> </p>
+                <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                    has satisfy the requirements<br/> for the successful completion of. 
+                </p>
+                <t t-if='details.qualification_programmes_line_ids'>
+                    <t t-foreach="details.qualification_programmes_line_ids" t-as="qua">
+
+                        <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="qua.qualification_id.name"/> </p><br/>
+                        <div>
+                            <div class="signleft2">
+                                <strong>at.<span t-field="qua.qualification_id.nqflevel_id.name"/> </strong><br/>
+                            </div>
+                            <div class="signright2">
+                                <strong>NLRD No.<span t-field="qua.qualification_id.nqflevel_id.name"/> </strong><br/>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+
+                <t t-if='details.skill_programmes_line_ids'>
+                    <t t-foreach="details.skill_programmes_line_ids" t-as="qua">
+
+                        <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="qua.skill_programmes_id.name"/> </p><br/>
+                        <div>
+                            <div class="signleft2">
+                                <strong>at.<span t-field="qua.skill_programmes_id.nqflevel_id.name"/> </strong><br/>
+                            </div>
+                            <div class="signright2">
+                                <strong>NLRD No.<span t-field="qua.skill_programmes_id.nqflevel_id.name"/> </strong><br/>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+
+                <t t-if='details.learner_programmes_line_ids'>
+                    <t t-foreach="details.learner_programmes_line_ids" t-as="qua">
+
+                        <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="qua.learner_programmes_id.name"/> </p><br/>
+                        <div>
+                            <div class="signleft2">
+                                <strong>at.<span t-field="qua.learner_programmes_id.nqflevel_id.name"/> </strong><br/>
+                            </div>
+                            <div class="signright2">
+                                <strong>NLRD No.<span t-field="qua.learner_programmes_id.nqflevel_id.name"/> </strong><br/>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+
+                <div>
+                    <div class="signleft">
+                        _______________________<br/>
+                        CHIEF EXECUTIVE OFFICER<br/>
+                    </div>
+                    <div class="signright">
+                        _______________________<br/>
+                        Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                    </div>
+                </div> 
+                <div>
+                    <div class="signleft">
+                        <h6>Provider Accreditation Number: <span t-field="details.provider_id.provider_accreditation_number"/></h6>
+                    </div>
+                    <div class="signright">
+                        <h6>Name: <span t-field="details.provider_id.name"/></h6><br/>
+                    </div>
+                </div> 
+                <p/><p/>
+
+            </div>
+        </t>
+    </template>
+
+    <!-- MAIN ASSESSMENT LAYOUT -->
+    <template id="main_assessment_certificate_template_id">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 18px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+
+                    aside {
+                        display: block;
+                        position: relative;
+                        margin: 40px 0;
+                        }
+
+                    aside h3 {
+                        font: bold 12px Sans-Serif;
+                        letter-spacing: 2px;
+                        text-transform: uppercase;
+                        background: #369;
+                        color: #fff;
+                        padding: 5px 10px;
+                        margin: 0 0 10px 0;
+                        line-height: 24px;
+                        }
+
+                        /* Class name via Modernizr */
+                        .csstransforms aside {
+                        border-left: 34px solid #369;
+                        padding-left: 10px;
+                        }
+                        .csstransforms aside h3 {
+                        /* Abs positioning makes it not take up vert space */
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+
+                        /* Border is the new background */
+                        background: none;
+
+                        /* Rotate from top left corner (not default) */
+                        transform-origin: 0 0;
+                        transform: rotate(90deg);
+                        }
+                </style>
+                <!-- <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center> -->
+                <hr/> 
+                
+                <br/><br/><br/>
+                <h1 style="text-align: center; font-size: 30px;"><strong>CERTIFICATE OF ACHIEVEMENT</strong></h1>
+                <br/><br/><br/>
+                <p> <h2 style="text-align: center;font-family: 'Gabriola';"><strong><span t-field="details.learner.name"/></strong>.</h2> </p>
+                <p> <h3 style="text-align: center; font-family: 'Gabriola';"><strong><span t-field="details.learner.id_no"/></strong></h3> </p>
+                <p style="padding-left: 25px;text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                    has satisfy the requirements<br/> for the successful completion of. 
+                </p>
+                <t t-if='details.learner_qualification_id'> 
+                    <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="details.learner_qualification_id.qualification_id.name"/> </p><br/>
+                    <div>
+                        <div class="signleft2">
+                            <strong>at.<span t-field="details.learner_qualification_id.qualification_id.nqflevel_id.name"/> </strong><br/>
+                        </div>
+                        <div class="signright2">
+                            <strong>NLRD No.<span t-field="details.learner_qualification_id.qualification_id.saqa_id"/> </strong><br/>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-if='details.learner_skill_learnership_id'>
+                    <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="details.learner_skill_learnership_id.skill_programme_id.name"/> </p><br/>
+                    <div>
+                        <div class="signleft2">
+                            <strong>at.<span t-field="details.learner_skill_learnership_id.skill_programme_id.nqflevel_id.name"/> </strong><br/>
+                        </div>
+                        <div class="signright2">
+                            <strong>NLRD No.<span t-field="details.learner_skill_learnership_id.skill_programme_id.programme_code"/> </strong><br/>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-if='details.learner_learnership_id'>
+                    <p style="text-align: center; font-family: 'Gabriola', Times, serif; font-size: 30px;"><span t-field="details.learner_learnership_id.learner_programme_id.name"/> </p><br/>
+                    <div>
+                        <div class="signleft2">
+                            <strong>at.<span t-field="details.learner_learnership_id.learner_programme_id.nqflevel_id.name"/> </strong><br/>
+                        </div>
+                        <div class="signright2">
+                            <strong>NLRD No.<span t-field="details.learner_learnership_id.learner_programme_id.programme_code"/> </strong><br/>
+                        </div>
+                    </div>
+                </t>
+                <aside>
+                    <h6>Reprint</h6>
+                </aside>
+                <div>
+                    <div class="signleft">
+                        _______________________<br/>
+                        CHIEF EXECUTIVE OFFICER<br/>
+                    </div>
+                    <div class="signright">
+                        _______________________<br/>
+                        Manager: EDUCATION &amp; TRAINING<br/>QUALITY ASSURANCE<br/>
+                    </div>
+                </div> 
+                <div>
+                    <div class="signleft">
+                        <h6>Provider Accreditation Number: <span t-field="details.provider_id.provider_accreditation_number"/></h6>
+                    </div>
+                    <div class="signright">
+                        <h6>Name: <span t-field="details.provider_id.name"/></h6><br/>
+                    </div>
+                </div> 
+                <p/><p/>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="assessment_result_statement_template_id">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 18px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+                </style>
+                <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center>
+                <hr/> 
+                
+                <br/>
+                <h1 style="text-align: center; font-size: 25px;"><strong>STATEMENT OF RESULTS</strong></h1>
+                <div class="row">
+                    <div class="col-xs-3" style="font-size: 20px;">
+                            <strong>Learner :  </strong><span t-field="details.learner.name"/><br/>
+                            <strong>ID Number:  </strong><span t-field="details.learner_id_no"/><br/>
+
+                            <t t-if='details.learner_qualification_id'>
+                                <strong>Title of Qualification : </strong> <span t-field="details.learner_qualification_id.qualification_id.name"/><br/>
+                            </t>
+                            <t t-if='details.learner_skill_learnership_id'> 
+                                <strong>Title of Skills Programme :  </strong><span t-field="details.learner_skill_learnership_id.skill_programme_id.name"/><br/>
+                            </t>
+                            <t t-if='details.learner_learnership_id'>
+                                <strong>Title of Learnership Programme : </strong> <span t-field="details.learner_learnership_id.learner_programme_id.name"/><br/>
+                            </t>
+                            <strong>Date Issued : </strong><span t-raw="time.strftime('%Y-%m-%d')"/> 
+                    </div><br/>
+                </div>
+
+                <br/>
+                <div class="row">
+                    <p> <h2 style="text-align: left;font-family: 'Gabriola';"><strong>Unit standards</strong>.</h2> </p>
+                </div>
+                
+                    <t t-if='details.learner_qualification_id'>
+                        <strong>Title of Qualification    :         <span t-field="details.learner_qualification_id.qualification_id.name"/> </strong><br/>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th><strong>UNIT CODE</strong></th>
+                                    <th><strong>UNIT STANDARD TITLE</strong></th>
+                                    <th><strong>NQF LEVEL</strong></th>
+                                    <th><strong>CREDITS</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="details.qualification_learnership_line" t-as="unitline">
+                                    <td>
+                                        <span t-esc="unitline.unit_standard_id.code" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="unitline.unit_standard_id.name" />
+                                    </td>
+                                    <td style="white-space: text-nowrap;">
+                                        <span t-esc="unitline.unit_standard_id.nqflevel_id.name" />
+                                    </td>
+                                    <td style="white-space: text-nowrap;">
+                                        <span t-esc="unitline.unit_standard_id.credits" />
+                                    </td>
+                                        
+                                </tr>
+                                <br/><br/>
+                                <t>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total Credits:</strong></td>
+                                    <!-- <td><span t-esc="sum(tot.unit_standard_id.credits for tot in details.qualification_learnership_line)"/></td> -->
+                                    <td><span t-esc="details.total_credits" /></td>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-if='details.learner_skill_learnership_id'>
+                        <strong>Title of Qualification    :         <span t-field="details.learner_skill_learnership_id.skill_programme_id.name"/> </strong><br/>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th><strong>UNIT CODE</strong></th>
+                                    <th><strong>UNIT STANDARD TITLE</strong></th>
+                                    <th><strong>NQF LEVEL</strong></th>
+                                    <th><strong>CREDITS</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="details.skills_learnership_line" t-as="unitline">
+                                    <td>
+                                        <span t-esc="unitline.unit_standard_id.code" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="unitline.unit_standard_id.name" />
+                                    </td>
+                                    <td style="white-space: text-nowrap;">
+                                        <span t-esc="unitline.unit_standard_id.nqflevel_id.name" />
+                                    </td>
+                                    <td style="white-space: text-nowrap;">
+                                        <span t-esc="unitline.unit_standard_id.credits" />
+                                    </td>
+                                        
+                                </tr>
+                                <br/><br/>
+                                <t>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total Credits:</strong></td>
+                                    <!-- <td><span t-esc="sum(tot.unit_standard_id.credits for tot in details.qualification_learnership_line)"/></td> -->
+                                    <td><span t-esc="details.total_credits" /></td>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        </t>
+                        <t t-if='details.learner_learnership_id'>
+                            <strong>Title of Qualification    :         <span t-field="details.learner_learnership_id.learner_programme_id.name"/> </strong><br/>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th><strong>UNIT CODE</strong></th>
+                                        <th><strong>UNIT STANDARD TITLE</strong></th>
+                                        <th><strong>NQF LEVEL</strong></th>
+                                        <th><strong>CREDITS</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="details.learnership_learnership_line" t-as="unitline">
+                                        <td>
+                                            <span t-esc="unitline.unit_standard_id.code" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="unitline.unit_standard_id.name" />
+                                        </td>
+                                        <td style="white-space: text-nowrap;">
+                                            <span t-esc="unitline.unit_standard_id.nqflevel_id.name" />
+                                        </td>
+                                        <td style="white-space: text-nowrap;">
+                                            <span t-esc="unitline.unit_standard_id.credits" />
+                                        </td>
+                                    </tr>
+                                    <br/><br/>
+                                    <t>
+                                        <td></td>
+                                        <td></td>
+                                        <td><strong>Total Credits:</strong></td>
+                                        <td><span t-esc="details.total_credits" /></td>
+                                        <!-- <td><span t-esc="sum(tot.unit_standard_id.credits for tot in details.skills_learnership_line)"/></td> -->
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                     
+                <p/><p/><p/><p/>
+                <div>
+                    <div class="signleft">
+                        _______________________<br/>
+                        ETQA Manager<br/>
+                    </div>
+                </div> 
+                <p/><p/>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="main_assessment_result_statement_template_idxxx">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 18px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+                </style>
+                <center><img class="banner table-responsive" style="height: 100px; width: auto;" src="/inseta_etqa/static/description/icon.png"/></center>
+                <hr/> 
+                
+                <br/>
+                <h1 style="text-align: center; font-size: 25px;"><strong>STATEMENT OF RESULTS</strong></h1>
+                <div class="row">
+                    <div class="col-xs-3" style="font-size: 20px;">
+                            <strong>Learner :  </strong><span t-field="details.learner.name"/><br/>
+                            <strong>ID Number:  </strong><span t-field="details.learner_id_no"/><br/>
+
+                            <t t-if='details.learner_qualification_id'>
+                                <strong>Title of Qualification : </strong> <span t-field="details.learner_qualification_id.qualification_id.name"/><br/>
+                            </t>
+                            <t t-if='details.learner_skill_learnership_id'> 
+                                <strong>Title of Skills Programme :  </strong><span t-field="details.learner_skill_learnership_id.skill_programme_id.name"/><br/>
+                            </t>
+                            <t t-if='details.learner_learnership_id'>
+                                <strong>Title of Learnership Programme : </strong> <span t-field="details.learner_learnership_id.learner_programme_id.name"/><br/>
+                            </t>
+                            <strong>Date Issued : </strong><span t-raw="time.strftime('%Y-%m-%d')"/> 
+                    </div><br/>
+                </div>
+
+                <br/>
+                <div class="row">
+                    <p> <h2 style="text-align: left;font-family: 'Gabriola';"><strong>Unit standards</strong>.</h2> </p>
+                </div>
+                
+                    <t t-if='details.learner_qualification_id'>
+                        <strong>Title of Qualification    :         <span t-field="details.learner_qualification_id.qualification_id.name"/> </strong><br/>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th><strong>UNIT CODE</strong></th>
+                                    <th><strong>UNIT STANDARD TITLE</strong></th>
+                                    <th><strong>NQF LEVEL</strong></th>
+                                    <th><strong>CREDITS</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="details.qualification_learnership_line" t-as="unitline">
+                                    <t t-if="unitline.assessment_status_id.name == 'Competent'">
+                                        <td>
+                                            <span t-esc="unitline.unit_standard_id.code" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="unitline.unit_standard_id.name" />
+                                        </td>
+                                        <td style="white-space: text-nowrap;">
+                                            <span t-esc="unitline.unit_standard_id.nqflevel_id.name" />
+                                        </td>
+                                        <td style="white-space: text-nowrap;">
+                                            <span t-esc="unitline.unit_standard_id.credits" />
+                                        </td>
+                                        
+                                    </t>
+                                </tr>
+                                <br/><br/>
+                                <t>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total Credits:</strong></td>
+                                    <!-- <td><span t-esc="sum(tot.unit_standard_id.credits for tot in details.qualification_learnership_line)"/></td> -->
+                                    <td><span t-esc="details.total_credits" /></td>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-if='details.learner_skill_learnership_id'>
+                        <strong>Title of Qualification    :         <span t-field="details.learner_skill_learnership_id.skill_programme_id.name"/> </strong><br/>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th><strong>UNIT CODE</strong></th>
+                                    <th><strong>UNIT STANDARD TITLE</strong></th>
+                                    <th><strong>NQF LEVEL</strong></th>
+                                    <th><strong>CREDITS</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="details.skills_learnership_line" t-as="unitline">
+                                    <t t-if="unitline.assessment_status_id.name == 'Competent'">
+                                        <td>
+                                            <span t-esc="unitline.unit_standard_id.code" />
+                                        </td>
+                                        <td>
+                                            <span t-esc="unitline.unit_standard_id.name" />
+                                        </td>
+                                        <td style="white-space: text-nowrap;">
+                                            <span t-esc="unitline.unit_standard_id.nqflevel_id.name" />
+                                        </td>
+                                        <td style="white-space: text-nowrap;">
+                                            <span t-esc="unitline.unit_standard_id.credits" />
+                                        </td>
+                                    </t>
+                                </tr>
+                                <br/><br/>
+                                <t>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total Credits:</strong></td>
+                                    <td><span t-esc="details.total_credits" /></td>
+                                    <!-- <td><span t-esc="sum(tot.unit_standard_id.credits for tot in details.skills_learnership_line)"/></td> -->
+                                </t>
+                            </tbody>
+                        </table>
+                        </t>
+
+                        <t t-if='details.learner_learnership_id'>
+                            <strong>Title of Qualification    :         <span t-field="details.learner_learnership_id.learner_programme_id.name"/> </strong><br/>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th><strong>UNIT CODE</strong></th>
+                                        <th><strong>UNIT STANDARD TITLE</strong></th>
+                                        <th><strong>NQF LEVEL</strong></th>
+                                        <th><strong>CREDITS</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="details.learnership_learnership_line" t-as="unitline">
+                                        <t t-if="unitline.assessment_status_id.name == 'Competent'">
+                                            <td>
+                                                <span t-esc="unitline.unit_standard_id.code" />
+                                            </td>
+                                            <td>
+                                                <span t-esc="unitline.unit_standard_id.name" />
+                                            </td>
+                                            <td style="white-space: text-nowrap;">
+                                                <span t-esc="unitline.unit_standard_id.nqflevel_id.name" />
+                                            </td>
+                                            <td style="white-space: text-nowrap;">
+                                                <span t-esc="unitline.unit_standard_id.credits" />
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <br/><br/>
+                                    <t>
+                                        <td></td>
+                                        <td></td>
+                                        <td><strong>Total Credits:</strong></td>
+                                        <td><span t-esc="sum(tot.unit_standard_id.credits for tot in details.learnership_learnership_line)"/></td>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                     
+                <br/><br/><br/><br/>
+                <div>
+                    <div class="signleft">
+                        <img style="height: 100px; width: auto;" src="/inseta_etqa/static/img/etqa_manager.png"/><br/>
+
+                        _______________________<br/>
+                        ETQA Manager<br/>
+                    </div>
+                </div> 
+                <p/><p/>
+            </div>
+        </t>
+    </template>
+  </data>
+</odoo>

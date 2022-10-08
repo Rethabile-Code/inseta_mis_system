@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+		<record id="view_inseta_learner_assessment_form" model="ir.ui.view">
+				<field name="name">view.inseta.assessment.form</field>
+				<field name="model">inseta.assessment</field>
+				<field name="arch" type="xml">
+					<form string="Inseta Verification &amp; Assessment">
+						<header>
+                            <button name="action_set_to_draft" 
+							string="Set to Draft" 
+							type="object"
+							states="reject,rework"/>
+
+						<button name="action_submit" string="Submit" type="object"
+							class="oe_highlight"
+							attrs="{'invisible':[('state','not in',['draft'])]}"/>
+
+                    	<!-- <button name="%(inseta_etqa.learner_register_rework_wizard_action)d" 
+							states="pending_allocation,pending_verification,rework_etqa_eval" 
+							context="{'default_comment_type':'Rework'}" 
+							string="Rework" 
+							type="action" 
+							groups="inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin" /> -->
+
+						<!-- <button name="action_request_admin_rejection" 
+							string="Reject" type="object"
+							class="oe_highlight" 
+							groups="inseta_etqa.group_etqa_evaluating_committee"
+							confirm="Please confirm"
+							states="awaiting_rejection"
+						/>
+
+						<button name="action_learner_submit_rework" 
+							string="Re-submit" 
+							type="object"
+							confirm="Are you sure you want to resubmit rework? All followers will be notified!"
+							class="oe_highlight" 
+							states="rework, rework_etqa_eval"
+							/> -->
+                        <button name="action_allocation_verifier" string="Approve" type="object"
+							class="oe_highlight" 
+							groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_accessor_moderator_reg"
+							confirm="Are you sure you want to verify this Registration? All followers will be notified!"
+							states="pending_allocation" 
+							/>
+
+                        <button name="action_verify" string="Submit Verification" type="object"
+							class="oe_highlight" 
+							groups="inseta_etqa.group_etqa_verifiers,inseta_etqa.group_etqa_verifiers,inseta_etqa.group_etqa_verification_admin"
+							confirm="Are you sure you want to verify this Registration? All followers will be notified!"
+							states="pending_verification" 
+							/>
+
+						<button name="action_manager_approve_verification" string="Approve" type="object"
+							class="oe_highlight" groups="inseta_etqa.group_etqa_evaluating_manager"
+							confirm="Are you sure you want to approve this Verification report? All followers will be notified!"
+							states="manager_verify" 
+							/>
+						 
+                        <button name="action_verification_signoff" string="Submit Assessment" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to Sign-off ? All followers will be notified!"
+							groups="inseta_etqa.group_approved_provider,inseta_etqa.group_provider_access_user,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin"
+							states="verified"/>
+
+						<button name="action_done" string="Approve" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to Approve? All followers will be notified!"
+							groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_assessment_admin"
+							states="manager" />
+
+						<button name="action_reject_assesment_submit" string="Reject" type="object"
+							confirm="Are you sure you want to reject? All followers will be notified!"
+							groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_assessment_admin"
+							states="pending_allocation,pending_verification,manager_verify,manager" />
+
+						<button name="action_print_all_certficate" string="Print Certificates" type="object" class="oe_highlight"
+							attrs="{'invisible':[('state','not in', ['done'])]}" groups="inseta_etqa.group_etqa_assessment_specialist,base.group_system"
+							/>
+
+						<button name="action_print_result_statement" string="Print Result Statements" type="object" class="oe_highlight"
+							attrs="{'invisible':[('state','not in',['done'])]}"/>
+							 <!-- groups="inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_etqa_verifiers,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_admin_audit_access_user,inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_it_admin"
+							/>  -->
+
+                        <!-- <button name="action_print_appointment_letter" string="Print Appointment" type="object"
+							attrs="{'invisible':[('state','not in', ['done'])]}" groups="inseta_etqa.group_etqa_evaluating_admin, inseta_etqa.group_etqa_evaluating_committee"
+							/> -->
+ 
+						<button name="action_print_reject_letter" string="Print Rejection Letter" type="object"
+							attrs="{'invisible':[('state','not in',['reject'])]}" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee"
+							/> 
+         
+						<field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="draft,pending_allocation,pending_verification,reject,done"
+							statusbar_colors='{"rework":"blue","done":"green","reject":"red"}'
+							/>
+						</header>
+						<sheet>
+							<div class="oe_title">
+								<h1>	
+									<label for="verification_number" /><br/>
+									<field name="verification_number" placeholder="Verification number" readonly="1"/>
+								</h1>
+							</div>
+							<p style="color: red;" attrs="{'invisible': [('state', 'not in', ['pending_allocation'])]}">* ETQA admins are responsible to Allocate verifiers at this stage </p>
+							<p style="color: red;" attrs="{'invisible': [('state', 'not in', ['pending_verification'])]}">* ETQA Verifiers are responsible to approve at this stage </p>
+							<p style="color: red;" attrs="{'invisible': [('state', 'not in', ['manager_verify'])]}">* ETQA Manager is responsible to approve at this stage </p>
+							<group> 
+								<group>
+									<field name="provider_sdl" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/> 
+									<field name="provider_id" force_save="1" string="Provider Name" readonly="1" required="1" options="{'no_open': True}"/> 
+									<!-- <field name="employer_sdl" required="0" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/> 
+									<field name="organisation_id" force_save="1" string="Employer Name" readonly="1"/>  -->
+									<field name="reference" readonly="1" invisible="1"/>
+									<field name="assessment_type" required="0" invisible="1"/> <field name="no_learners" required="1" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/> 
+								</group>
+								<group>
+									<field name="request_date" required="1" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/> 
+									<field name="etqa_verifier_ids" attrs="{'invisible': [('state', 'in', ['draft'])], 'readonly': [('state', 'not in', ['pending_allocation'])]}" widget="many2many_tags"
+									groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_assessment_admin"/>
+									<field name="verification_date" string="Verification date" attrs="{'invisible': [('state', 'in', ['draft'])], 'readonly': [('state', 'not in', ['pending_allocation'])]}" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee"/>
+									<field name="assessment_date" string="Assessment date" attrs="{'invisible': [('state', 'not in', ['done', 'manager', 'verified'])]}"/>
+									<field name="endorsed" readonly="1" attrs="{'invisible': [('state', 'not in', ['done'])]}"/> 
+									<field name="verified" readonly="1" attrs="{'invisible': [('state', 'not in', ['done'])]}"/> 
+									<!-- <field name="etqa_admin_ids" groups="base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee" attrs="{'required': [('state', 'in', ['pending_allocation'])], 'invisible': [('state', 'in', ['draft'])]}" readonly="0" widget="many2many_tags"/>
+									<field name="etqa_manager_ids" groups="base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee" attrs="{'required': [('state', 'in', ['pending_allocation'])],'invisible': [('state', 'in', ['draft'])]}" readonly="0" widget="many2many_tags"/> -->
+								</group> 
+							</group>
+							<div class="oe_title">
+								<h3>	
+									Assessment type<br/>
+								</h3>
+								<div class="oe_title row">
+									Qualification : <field name="qualification_assessment_type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+									Learnership : <field name="learnership_assessment_type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+									Skill : <field name="skill_assessment_type" attrs="{'readonly': [('state', 'not in', ['draft'])]}" invisible="0"/>
+								</div>
+							</div>
+							<br/>
+							<!-- <button name="action_open_assessements" string="View Learner's Assessment" type="object"
+								class="oe_left btn-primary btn-sm" attrs="{'invisible': [('state', 'in', ['draft'])]}"
+							/> -->
+							<notebook>
+								<page string="Provider Information">
+									<group>
+										<group>
+											<field name="email" force_save="1" string="Email" readonly="1"/> 
+											<field name="phone" force_save="1" string="Phone" readonly="1"/> 
+											<field name="cell_phone" force_save="1" string="Cell Phone" readonly="1"/> 
+											<field name="physical_code" force_save="1" string="Physical code" readonly="1"/> 
+											<field name="physical_address1" force_save="1" string="Physical Address" readonly="1"/> 
+										</group> 
+										<group>
+											<field name="accreditation_number" force_save="1" string="Accreditation number" readonly="1"/>
+											<!-- <field name="accreditation_status" force_save="1" string="Accreditation Class" readonly="1"/>  -->
+											<field name="end_date" force_save="1" string="Registration End date" readonly="1"/>
+										</group> 
+									</group>
+								</page>
+								
+								<page name="learner_assessment_document_page" string="Provider Documents">
+								<p style="color: red;">* Please Provider Supporting Documents </p>
+									<field name="learner_assessment_document_ids" string="Documents" domain="[('id','=',None)]" attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+										<tree string="Documents" editable="bottom">
+											<field name="name" required="1" invisible="0"/> 
+											<field name="data_file" filename="filename" required="1"/>
+                        					<field name="filename" invisible="1"/> 
+											<field name="compliant" invisible="0" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_assessment_admin"/> 
+										</tree>
+										<form string="Documents">
+											<group>
+												<group>
+													<field name="name" string="Document title" required="1" invisible="0"/> 
+													<field name="data_file" filename="filename" required="1"/>
+												</group> 
+												<group>
+													<field name="filename" invisible="1"/>
+												</group> 
+											</group>
+										</form>
+									</field>
+								</page>
+
+								<page string="Verification report" attrs="{'invisible': [('state', 'not in', ['pending_verification','manager_verify'])], 'readonly': [('state', 'not in', ['pending_verification'])]}">
+									<field name="learner_assessment_verification_report_ids" string="Add Verification report" domain="[('id','=',None)]">
+										<tree string="Verification report" editable="bottom">
+											<field name="name" required="1" invisible="0"/> 
+											<field name="data_file" filename="name" required="1"/>
+                        					<field name="filename" invisible="1"/> 
+										</tree>
+									</field>
+								</page> 
+								<page name="learner_assessment_details_page" string="Assessment Line" attrs="{'invisible': [('state', 'in', ['draft', 'pending_allocation', 'pending_verification'])]}">
+									<separator string="Assessment"/>
+									<field name="learner_assessment_details" widget="one2many_list" required="1" attrs="{'readonly': [('state', 'not in', ['verified'])],'invisible': [('state', 'in', ['draft', 'manager_verify'])]}" context = "{'default_assessment_type': assessment_type, 'default_learnership_assessment_type': learnership_assessment_type,
+										'default_skill_assessment_type': skill_assessment_type,
+										'default_qualification_assessment_type': qualification_assessment_type,
+										'default_learnership_assessment_type': learnership_assessment_type,
+										'default_provider_id': provider_id, 'default_state': state,
+										'default_provider_sdl':provider_sdl}">
+
+										<form string="Inseta Assessment">
+											<sheet>
+												<div class="oe_title" > Learner ID NO:
+													<h1>
+														<field name="state" force_save="1" invisible="1"/>
+														<field name="learner_id_no" placeholder="Learner ID No." string="Learner ID No." attrs="{'readonly': [('state', 'not in', ['verified'])]}" required="1"/>
+													</h1>
+												</div>
+												<group> 
+													<group>
+														<field name="assessment_reference" force_save="1" attrs="{'readonly': [('state', 'not in', ['verified'])]}" invisible="1"/> 
+														<field name="learner" force_save="1" required="0" string="Learner Name" attrs="{'readonly': [('state', 'not in', ['verified'])]}" options="{'no_create': True,'no_open': True}"/>
+														<field name="financial_year_id" required="1" force_save="1" attrs="{'readonly': [('state', 'not in', ['verified'])]}"  options="{'no_create': True,'no_open': True}"/>
+														<field name="provider_sdl" required="0" invisible="0" attrs="{'readonly': [('state', 'not in', ['verified'])],'required': [('provider_id', '=', False)]}"/>
+														<field name="provider_id" invisible="0" force_save="1" readonly="1" options="{'no_create': True,'no_open': True}"/>
+														<field name="approved_date" readonly="1"/>
+													</group>
+													<group>
+														
+														<field name="learner_qualification_id" readonly="0" string='Qualification' attrs="{'invisible': [('qualification_assessment_type', '=', False)], 'required': [('qualification_assessment_type', '=', True)],'readonly': [('state', 'not in', ['verified'])]}" options="{'no_create': True,'no_open': True}"/>
+														<field name="learner_learnership_id" readonly="0" string='Learner learnership' attrs="{'invisible': [('learnership_assessment_type', '=', False)], 'required': [('learnership_assessment_type', '=', True)],'readonly': [('state', 'not in', ['verified'])]}" options="{'no_create': True,'no_open': True}"/>
+														<field name="unit_standard_learnership_id" invisible="1" readonly="0" string='Unit Standard learnership' options="{'no_create': True,'no_open': True}"/>
+														<field name="learner_skill_learnership_id" readonly="0" string='Skills learnership'  attrs="{'invisible': [('skill_assessment_type', '=', False)], 'required': [('skill_assessment_type', '=', True)],'readonly': [('state', 'not in', ['verified'])]}" options="{'no_create': True,'no_open': True}"/>
+
+														<field name="assessor_id" required="1" attrs="{'readonly': [('state', 'not in', ['verified'])]}" options="{'no_create': True,'no_open': True}"/> 
+														<field name="assessment_date" required="1" attrs="{'invisible': [('assessor_id', '=', False)],'readonly': [('state', 'not in', ['verified'])]}"/> 
+														<field name="moderator_id" readonly="0" required="0" attrs="{'invisible': [('assessment_date', '=', False)],'readonly': [('state', 'not in', ['verified'])]}" options="{'no_create': True,'no_open': True}"/>
+														<field name="moderator_date" required="0" attrs="{'invisible': [('moderator_id', '=', False)],'required': [('moderator_id', '!=', False)],'readonly': [('state', 'not in', ['verified'])]}"/>
+													</group> 
+													<group> 
+														<separator string="Programme Credits"/>
+														<field name="programme_core_credits" readonly="1" force_save="1"/>
+														<field name="programme_fundamental_credits" readonly="1" force_save="1"/>
+														<field name="programme_elective_credits" readonly="1" force_save="1"/>
+														<field name="programme_total_credits" readonly="1" force_save="1"/>
+													</group> 
+													<group> 
+														<separator string="Achieved Credits"/>
+
+														<field name="core_credits" readonly="1" force_save="1"/>
+														<field name="fundamental_credits" readonly="1" force_save="1"/>
+														<field name="elective_credits" readonly="1" force_save="1"/>
+														<field name="lenght_of_line" invisible="1"/>
+													</group> 
+													
+												</group>
+												<div class="oe_title">
+													<h3>	
+														Assessment type<br/>
+													</h3>
+													<div class="oe_title row">
+														Qualification : <field name="qualification_assessment_type" attrs="{'readonly': [('state', 'not in', ['verified'])]}"/>
+														Learnership : <field name="learnership_assessment_type" attrs="{'readonly': [('state', 'not in', ['verified'])]}"/>
+														Skill : <field name="skill_assessment_type" invisible="0" attrs="{'readonly': [('state', 'not in', ['verified'])]}"/>
+													</div>
+												</div>
+												<br/>
+												<div class="oe_left" attrs="{'invisible': [('assessor_id', '=', False)]}">
+													<button name="action_select_all" string="Select All" type="object" class="btn-primary btn-sm" /> - 
+													<button name="action_deselect_all" string="Deselect All" type="object" class="btn-primary btn-sm" /> - 
+													<button name="action_update_assessors" string="Update Assessors / Moderator" type="object" class="btn-primary btn-sm"/> - 
+													<button name="action_mark_all_competent" string="Mark Select as Competent" type="object" class="btn-primary btn-sm" /> -
+													<button name="action_mark_all_not_competent" string="Mark Select as InCompetent" type="object" class="btn-primary btn-sm"/>
+													 
+												</div><br/>
+												<notebook>
+													<page name="new_programme_assessment" string="Qualification &amp; Programmes">
+														<separator string="Qualification" attrs="{'invisible': [('learner_qualification_id', '=', False)]}"/>
+														<field name="qualification_learnership_line" domain="[('id','=',None)]" 
+														attrs="{'invisible': [('learner_qualification_id', '=', False)],'readonly': [('state', 'not in', ['verified'])]}" 
+														context="{'default_learner_id': learner, 'default_inseta_assessment_detail_id': active_id,
+														'default_learner_qualification_id': learner_qualification_id}" widget="one2many_lists">
+															
+															<tree string="Qualification" editable="bottom" delete="false" create="false" widget="one2many_list">
+																<field name="completed" invisible="1" force_save="1"/>
+																<field name="select" readonly="0" force_save="0"/>
+																<field name="learner_qualification_id" readonly="1" force_save="1" invisible="1"/>
+																<field name="inseta_assessment_detail_id" force_save="1" invisible="1"/>
+																<field name="learner_id" force_save="1" invisible="1"/>
+
+																<field name="unit_standard_id" required="1" string="Unit Standard Title" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/> 
+																<field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/>
+																<field name="code" readonly="1" force_save="1"/>
+																<field name="credits" readonly="1" force_save="1"/>
+																<field name="assessor_id" required="0" string="Assessor" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/> 
+																<field name="assessment_date" required="0" string="Assessment Date" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" />
+																<field name="moderator_id" required="0" readonly="0" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/> 
+																<field name="moderator_date" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" />
+																<field name="assessment_status_id" readonly="0" required="0" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/>
+															</tree>
+															<!-- <form>
+																<group>
+																	<group>
+																		<field name="completed" invisible="1" force_save="1"/>
+																		<field name="select" readonly="0" force_save="0"/>
+																		<field name="learner_qualification_id" readonly="1" force_save="1" invisible="1"/>
+																		<field name="inseta_assessment_detail_id" force_save="1" invisible="1"/>
+																		<field name="learner_id" force_save="1" invisible="1"/>
+																		<field name="unit_standard_id" required="1" string="Unit Standard Title" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" /> 
+																		<field name="unit_standard_type_id" readonly="1" force_save="1"/>
+																		<field name="credits" readonly="1" force_save="1"/>
+																		<field name="assessor_id" required="0" string="Assessor" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" /> 
+																	</group>
+																	<group>
+																		<field name="assessment_date" required="0" string="Assessment Date" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" />
+																		<field name="moderator_id" required="0" readonly="0" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" /> 
+																		<field name="moderator_date" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" />
+																		<field name="assessment_status_id" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" readonly="0" required="0"/> 
+																	</group>
+																</group>
+																
+															</form> -->
+														</field>
+
+														<separator string="Learnership" attrs="{'invisible': [('learner_learnership_id', '=', False)]}"/>
+														<field name="learnership_learnership_line" domain="[('id','=',None)]" 
+														attrs="{'invisible': [('learner_learnership_id', '=', False)],'readonly': [('state', 'not in', ['verified'])]}" 
+														context="{'default_learner_id': learner, 'default_inseta_assessment_detail_id': active_id,
+														'default_learner_learnership_id': learner_learnership_id}">
+															<tree string="Learnership" editable="bottom" delete="false" create="false" widget="one2many_list">
+																<field name="completed" invisible="1"/>
+																<field name="select" readonly="0" force_save="0"/>
+																<field name="learner_learnership_id" readonly="1" force_save="1" invisible="1"/>
+																<field name="inseta_assessment_detail_id" force_save="1" invisible="1"/>
+																<field name="learner_id" invisible="1" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" />
+																<field name="unit_standard_id" required="1" string="Unit Standard Title" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/> 
+																<field name="unit_standard_type_id" readonly="1" force_save="1" options="{'no_create': True,'no_open': True}"/>
+																<field name="code" readonly="1" force_save="1"/>
+																<field name="credits" readonly="1" force_save="1"/>
+																<field name="assessor_id" required="0" string="Assessor" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/> 
+																<field name="assessment_date" required="0" string="Assessment Date" force_save="1" attrs="{'readonly': [('completed', '=', True)]}"/>
+																<field name="moderator_id" required="0" readonly="0" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/> 
+																<field name="moderator_date" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" />
+																<field name="assessment_status_id" readonly="0" required="0" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/>
+															</tree>
+														</field>
+														<separator string="Skills" attrs="{'invisible': [('learner_skill_learnership_id', '=', False)]}"/>
+														<field name="skills_learnership_line" domain="[('id','=',None)]" 
+														attrs="{'invisible': [('learner_skill_learnership_id', '=', False)],'readonly': [('state', 'not in', ['verified'])]}" 
+														context="{'default_learner_id': learner, 'default_inseta_assessment_detail_id': active_id,
+														'default_learner_skill_learnership_id': learner_skill_learnership_id}">
+															<tree string="Skill Programme assessment" widget="one2many_list" editable="bottom" delete="0" create="0">
+																<field name="select" readonly="0" force_save="0"/>
+																<field name="completed" invisible="1" force_save="1"/>
+																<field name="learner_skill_learnership_id" readonly="1" force_save="1" invisible="1"/>
+																<field name="inseta_assessment_detail_id" force_save="1" invisible="1"/>
+																<field name="learner_id" force_save="1" invisible="1" options="{'no_create': True,'no_open': True}"/>
+																<field name="unit_standard_id" required="1" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" string="Unit Standard Title"/> 
+																<field name="unit_standard_type_id" readonly="1" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/>
+																<field name="code" readonly="1" force_save="1"/>
+																<field name="credits" readonly="1" force_save="1"/>
+																<field name="assessor_id" required="0" string="Assessor" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" options="{'no_create': True,'no_open': True}"/> 
+																<field name="assessment_date" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" required="0" string="Assessment Date"/>
+																<field name="moderator_id" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" required="0" readonly="0" options="{'no_create': True,'no_open': True}"/> 
+																<field name="moderator_date" force_save="1" attrs="{'readonly': [('completed', '=', True)]}" />
+																<field name="assessment_status_id" readonly="0" required="0" force_save="1" attrs="{'readonly': [('completed', '=', True)]}"  options="{'no_create': True,'no_open': True}"/>
+															</tree>
+														</field>
+													</page>
+													<!-- <page string="Refusal Comment" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee">
+														<field name="refusal_comment" string="Add Verification report" widget="text" placeholder="Start typing refusal note"/>
+													</page> -->
+												</notebook>
+											</sheet>
+										</form>
+										
+										<tree string="Assessment" name="learner_assessment_details" delete="true">
+											<field name="learner_id_no" invisible="0" required="0" string="Learner ID No."/>
+											<field name="learner" invisible="0" required="0"/>
+											<field name="core_credits" invisible="0" required="0"/>
+											<field name="fundamental_credits" invisible="0" required="0"/>
+											<field name="elective_credits" invisible="0" required="0"/>
+											<field name="total_credits" invisible="0" required="0"/>
+										</tree>
+									</field>
+								</page>
+
+								<page string="Refusal Comment" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_verifiers">
+									<field name="refusal_comment" string="Add Verification report" widget="text" placeholder="Start typing refusal note"/>
+								</page>
+								
+							</notebook>
+						</sheet>
+						
+					</form>
+				</field>
+			</record>
+			<record id="view_inseta_learner_assessment_tree" model="ir.ui.view">
+				<field name="name">view inseta Assessment tree</field>
+				<field name="model">inseta.assessment</field>
+				<field name="arch" type="xml">
+					<tree string="Inseta Verification &amp; Assessment" sample="1" multi_edit="1">
+						<field name="verification_number" readonly="1" invisible="0"/>
+						<field name="provider_id" readonly="1" invisible="0"/> 
+						<field name="provider_sdl" required="1"/> 
+                        <field name="request_date" readonly="1" required="0"/>
+                        <field name="verification_date" readonly="1" required="0"/>
+                        <field name="verified" readonly="1" required="0"/>
+                        <field name="state" readonly="1" required="0"/>
+					</tree>
+				</field>
+			</record>
+
+			<record id="view_inseta_learner_assessment_filter" model="ir.ui.view">
+				<field name="name">Inseta Assessment</field>
+				<field name="model">inseta.assessment</field>
+				<field name="arch" type="xml">
+					<search string="Inseta Verification &amp; Assessment">
+						<field name="name"/>
+						<field name="provider_id" invisible="0"/> 
+					</search>
+				</field>
+			</record>
+			<record id="action_inseta_learner_assessment" model="ir.actions.act_window">
+				<field name="name">Inseta Verification &amp; Assessment</field>
+				<field name="res_model">inseta.assessment</field>
+				<field name="view_mode">tree,form</field>
+				<field name="view_id" eval="view_inseta_learner_assessment_filter" />
+				<field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						
+					</p>
+				</field>
+			</record>
+
+			<menuitem id="learner_verification_main_menu" name="Verification &amp; Assessment" sequence="7" parent="inseta_etqa.etqa_root_menu"
+			groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_verifiers,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,inseta_etqa.group_etqa_user"/>
+		
+			<menuitem id="inseta_learner_assessment_menu_id" name="Verification" groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_user,base.user_admin,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_skills.group_sdf_secondary,inseta_skills.group_sdf_user,inseta_etqa.group_etqa_verifiers,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin"
+			sequence="4" parent="inseta_etqa.learner_verification_main_menu" action="inseta_etqa.action_inseta_learner_assessment"/>  
+			
+	</odoo>

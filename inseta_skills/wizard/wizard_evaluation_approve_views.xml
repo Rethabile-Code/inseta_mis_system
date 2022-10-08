@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wizard_evaluation_approve" model="ir.ui.view">
+            <field name="name">wizard.evaluation.approve.form</field>
+            <field name="model">wizard.evaluation.approve</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="WSPATR Evaluation Bulk approval">
+                
+                    <field name="text" readonly="1"/>
+                  
+                    <footer>
+                        <button string="Approve" name="action_approve" type="object" class="print btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+       <record id="wizard_evaluation_approve_action" model="ir.actions.act_window">
+           <field name="name">Evaluation Bulk approval</field>
+           <field name="res_model">wizard.evaluation.approve</field>
+           <field name="view_mode">form</field>
+           <field name="target">new</field>
+            <field name="groups_id" eval="[(4, ref('inseta_skills.group_skills_manager'))]"/>
+           <field name="binding_model_id" ref="model_inseta_wspatr_evaluation"/>
+           <field name="binding_view_types">list</field>
+       </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+
+	<record id="view_partner_simple_form_firstname" model="ir.ui.view">
+			<field name="name">Add firstname and lastname</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_simple_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='name']" position="attributes">
+						<attribute name="attrs">
+							{
+							'readonly': [('is_company', '=', False)],
+							'required': [('is_company', '=', True)]
+							}
+						</attribute>
+					</xpath>
+					<xpath expr="//h1//field[@name='name']/.." position="before">
+						<group attrs="{'invisible': [('is_company', '=', True)]}">
+							<field
+								name="last_name"
+								attrs="{'required': [('first_name', '=', False),
+								('is_company', '=', False),
+								('type', '=', 'contact')]}"
+							/>
+							<field
+								name="first_name"
+								attrs="{'required': [('last_name', '=', False),
+								('is_company', '=', False),
+								('type', '=', 'contact')]}"
+							/>
+						</group>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<!--partner form-->
+		<record model="ir.ui.view" id="view_partner_form" >
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="attrs">
+                        {
+                        'readonly': [('is_company', '=', False)],
+                        'required': [('is_company', '=', True)]
+                        }
+                    </attribute>
+                </xpath>
+                <xpath expr="//h1//field[@name='name']/.." position="after">
+                    <div class="oe_edit_only">
+                        <group attrs="{'invisible': [('is_company', '=', True)]}">
+                            <field
+                                name="last_name"
+                                attrs="{'required': [('first_name', '=', False),
+                                ('is_company', '=', False),
+                                ('type', '=', 'contact')]}"
+                            />
+                            <field
+                                name="first_name"
+                                attrs="{'required': [('last_name', '=', False),
+                                ('is_company', '=', False),
+                                ('type', '=', 'contact')]}"
+                            />
+                        </group>
+                    </div>
+                </xpath>
+
+                <!-- Modify inner contact form of child_ids -->
+                <xpath
+                    expr="//field[@name='child_ids']/form//field[@name='name']"
+                    position="attributes"
+                >
+                    <attribute name="attrs">
+                        {
+                        'readonly': [('is_company', '=', False)],
+                        'required': [('is_company', '=', True)]
+                        }
+                    </attribute>
+                </xpath>
+                <xpath
+                    expr="//field[@name='child_ids']/form//field[@name='name']"
+                    position="after"
+                >
+                    <div class="oe_edit_only" colspan="2">
+                        <field name="is_company" invisible="True" />
+                        <group attrs="{'invisible': [('is_company', '=', True)]}">
+                            <field
+                                name="last_name"
+                                attrs="{'required': [('first_name', '=', False),
+                                ('is_company', '=', False),
+                                ('type', '=', 'contact')]}"
+                            />
+                            <field
+                                name="first_name"
+                                attrs="{'required': [('last_name', '=', False),
+                                ('is_company', '=', False),
+                                ('type', '=', 'contact')]}"
+                            />
+                        </group>
+                    </div>
+                </xpath>
+
+
+				<xpath expr="//field[@name='type']" position="after">
+					<field name="contact_type"/>
+					<!-- <field name="employer_sdl_no" /> -->
+				</xpath>
+				<!--replace Label Address with Physical Address-->
+				<xpath expr="//span[@name='address_name']" position="replace">
+					<span class="o_form_label o_td_label" name="address_name">
+						<b attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}">Company Address</b>
+						<b attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'invoice')]}">Invoice Address</b>
+						<b attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'delivery')]}">Delivery Address</b>
+						<b attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'other')]}">Other Address</b>
+						<b attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'private')]}">Private Address</b>
+						<b attrs="{'invisible': ['&amp;', ('parent_id', '!=', False), ('type', '!=', False)]}">Physical Address</b>
+					</span>
+				</xpath>
+				<!--Change address label to Physical Adreess-->
+				<xpath expr="//div[@class='o_address_format']" position="replace">
+					<div class="o_address_format">
+						<field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="street" required="1" placeholder="Physical Address Line 1" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="street2" required="1" placeholder="Physical Address Line 2" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="street3" placeholder="Physical Address Line 3" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="physical_code" required="1" placeholder="Physical Code" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="physical_suburb_id" placeholder="Physical Suburb"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="physical_city_id" placeholder="Physical City" class="o_address_city" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="state_id"  class="o_address_state" placeholder="Physical Province" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'physical_code': physical_code}"/>
+						<field name="physical_urban_rural"  placeholder="Urban/Rural" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="physical_municipality_id" placeholder="Physical Municipality"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+
+						<!--hidden fields-->
+						<field name="city" invisible="1" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="zip" invisible="1"  placeholder="Zip" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+					</div>
+				</xpath>
+
+				<xpath expr="//div[@class='o_address_format']" position="after">
+					<label for="use_physical_for_postal_addr" />
+					<field name="use_physical_for_postal_addr" string="Use Physical for Postal?" nolabel="1" />
+                    <span class="o_form_label o_td_label" name="postal_address_name">
+                        <b attrs="{'invisible': ['&amp;', ('parent_id', '!=', False), ('type', '!=', False)]}">Postal Address</b>
+					</span>
+					<div class="o_address_format" string="Postal Address">
+						<field name="postal_address1" placeholder="Postal Address Line 1" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="postal_address2" placeholder="Postal Address Line 2" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="postal_address3" placeholder="Postal Address Line 3" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="postal_code" placeholder="Postal Code" class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+
+						<field name="postal_suburb_id" placeholder="Postal Suburb"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="postal_city_id" placeholder="Physical City" class="o_address_city" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="postal_province_id"  class="o_address_state" placeholder="Postal Province" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'postal_code': postal_code}"/>
+						<field name="postal_urban_rural"  placeholder="Urban/Rural" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+						<field name="postal_municipality_id" placeholder="Postal Municipality"  class="o_address_street" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+					</div>
+				</xpath>
+				<xpath expr="//field[@name='title']" position="after">
+					<field name="school_emis_id" options="{'no_create': True, 'no_open': True}" attrs="{'invisible':[('company_type','=', 'company')]}" />
+                    <field name="school_year" attrs="{'invisible':[('company_type','=', 'company')]}"/>
+
+					<separator string="Citizenship Status" attrs="{'invisible':[('company_type','=', 'company')]}"/>
+					<field name="citizen_resident_status_id" options="{'no_create': True, 'no_open': True}" attrs="{'invisible':[('company_type','=', 'company')]}"/>
+					<field name="nationality_id"  options="{'no_create': True, 'no_open': True}" attrs="{'invisible':[('company_type','=', 'company')]}"/>
+					<field name="home_language_id"  options="{'no_create': True, 'no_open': True}" attrs="{'invisible':[('company_type','=', 'company')]}"/>
+					<field name="id_no" attrs="{'invisible':[('company_type','=', 'company')]}" />
+					<field name="alternateid_type_id"  options="{'no_create': True, 'no_open': True}" attrs="{'invisible':[('company_type','=', 'company')]}"/>
+					<field name="equity_id" options="{'no_create': True, 'no_open': True}" attrs="{'invisible':[('company_type','=', 'company')]}"/>
+					<field name="gender_id" options="{'no_create': True, 'no_open': True}"  attrs="{'invisible':[('company_type','=', 'company')]}"/>
+					<field name="birth_date"  attrs="{'invisible':[('company_type','=', 'company')]}" />
+					<separator string="Status" attrs="{'invisible':[('company_type','=', 'company')]}"/>
+					<field name="socio_economic_status_id" options="{'no_create': True, 'no_open': True}" attrs="{'invisible':[('company_type','=', 'company')]}"/>
+					<field name="disability_id" options="{'no_create': True, 'no_open': True}" attrs="{'invisible':[('company_type','=', 'company')]}" />
+					<field name="legacy_system_id" readonly="1" />
+				</xpath>
+			</field> 
+		</record>
+    </odoo>

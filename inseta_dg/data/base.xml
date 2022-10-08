@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <!--DG Type-->
+        <record model="res.dgtype" id="data_dgtypelnr1">
+            <field name="name">Learnerships for Youth (including PwD)</field>
+            <field name="saqacode">LRN-Y</field>
+            <!-- <field name="cost_per_learner">65200</field>
+            <field name="cost_per_disabled">77200</field> -->
+            <field name="cost_per_learner">78240</field>
+            <field name="cost_per_disabled">92640</field>
+            <field name="for_hei">both</field>
+            <field name="seta_mail_to">Learnerships@inseta.org.za</field>
+            <field name="sequence">1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtypelnr4">
+            <field name="name">Learnership for Rural Learners</field>
+            <field name="saqacode">LRN-R</field>
+            <!-- <field name="cost_per_learner">82200</field>
+            <field name="cost_per_disabled">77200</field> -->
+            <field name="cost_per_learner">98640</field>
+            <field name="cost_per_disabled">92640</field>
+            <field name="for_hei">both</field>
+            <field name="seta_mail_to">Learnerships@inseta.org.za</field>
+            <field name="sequence">4</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtypelnr2">
+            <field name="name">Learnership for Workers</field>
+            <field name="saqacode">LRN-W</field>
+            <!-- <field name="cost_per_learner">20000</field> -->
+            <field name="cost_per_learner">24000</field>
+            <field name="for_hei">both</field>
+            <field name="cost_per_disabled">0</field>
+            <field name="seta_mail_to">Learnerships@inseta.org.za</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtypelnr3">
+            <field name="name">Learnership youth living with Disability</field>
+            <field name="for_hei">both</field>
+            <field name="saqacode">LRN-D</field>
+            <field name="cost_per_learner">78240</field>
+            <field name="cost_per_disabled">92640</field>
+            <field name="seta_mail_to">Learnerships@inseta.org.za</field>
+            <field name="sequence">3</field>
+            <field name="active">False</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtypelnr5">
+            <field name="name">Internship Matric +</field>
+            <field name="saqacode">IT-MATRIC</field>
+            <!-- <field name="cost_per_learner">54000</field> -->
+            <field name="cost_per_learner">64800</field>
+            <field name="seta_mail_to">Internships@inseta.org.za</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtypelnr6">
+            <field name="name">Internship Diploma/Degree</field>
+            <field name="saqacode">IT-DEGREE</field>
+            <!-- <field name="cost_per_learner">78000</field> -->
+            <field name="cost_per_learner">93600</field>
+            <field name="seta_mail_to">Internships@inseta.org.za</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+        </record>
+
+
+        <!--legacy dbo.lkpdiscgranttype.csv-->
+        <record model="res.dgtype" id="data_dgtype_int">
+            <field name="legacy_system_id">1</field>
+            <field name="name">Internship</field>
+            <field name="saqacode">INT</field>
+            <field name="seta_mail_to">Internships@inseta.org.za</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+        </record>
+
+         <record model="res.dgtype" id="data_dgtype1">
+            <field name="name">Learnership</field>
+            <field name="saqacode">LRN</field>
+            <field name="legacy_system_id">2</field>
+            <field name="sequence">10</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtype8">
+            <field name="name">Skills Programmes for Workers</field>
+            <field name="saqacode">SP</field>
+            <!-- <field name="cost_per_learner">7500</field> -->
+            <field name="cost_per_learner">9000</field>
+            <field name="is_max_cost">True</field>
+            <field name="seta_mail_to">workerprogrammes@inseta.org.za</field>
+            <field name="sequence">8</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtype7">
+            <field name="name">Bursaries for Workers</field>
+            <field name="saqacode">BUR</field>
+            <!-- <field name="cost_per_learner">30000</field> -->
+            <field name="cost_per_learner">36000</field>
+            <field name="is_max_cost">True</field>
+            <field name="seta_mail_to">workerprogrammes@inseta.org.za</field>
+            <field name="legacy_system_id">4</field>
+            <field name="sequence">6</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtype8">
+            <field name="name">Bursaries for youth</field>
+            <field name="saqacode">BUR-Y</field>
+            <field name="cost_per_learner">114000</field>
+            <field name="is_max_cost">True</field>
+            <field name="seta_mail_to">workerprogrammes@inseta.org.za</field>
+            <field name="for_hei">yes</field>
+            <field name="sequence">7</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtype9">
+            <field name="name">Skills programme for Youth</field>
+            <field name="saqacode">SP-Y</field>
+            <field name="cost_per_learner">7800</field>
+            <field name="is_max_cost">True</field>
+            <field name="seta_mail_to">workerprogrammes@inseta.org.za</field>
+            <field name="for_hei">yes</field>
+            <field name="sequence">8</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgtype" id="data_dgtype_wil">
+            <field name="name">Work Integrated Learning</field>
+            <field name="saqacode">WIL</field>
+            <field name="cost_per_learner">82800</field>
+            <field name="seta_mail_to">WIL@inseta.org.za</field>
+            <field name="for_hei">yes</field>
+            <field name="sequence">9</field>
+            <field name="active">True</field>
+        </record>
+
+
+
+<!--         
+        <record model="res.dgtype" id="data_dgtype3">
+            <field name="name">Unit Standard</field>
+            <field name="saqacode">US</field>
+            <field name="sequence">12</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgtype" id="data_dgtype4">
+            <field name="name">Qualification</field>
+            <field name="saqacode">QL</field>
+            <field name="legacy_system_id">4</field>
+            <field name="sequence">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgtype" id="data_dgtype5">
+            <field name="name">HIV AIDS Course</field>
+            <field name="saqacode">HIV</field>
+            <field name="legacy_system_id">5</field>
+            <field name="sequence">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgtype" id="data_dgtype6">
+            <field name="name">Artisan</field>
+            <field name="saqacode">ART</field>
+            <field name="legacy_system_id">6</field>
+            <field name="sequence">15</field>
+            <field name="active">True</field>
+        </record> -->
+        <!--end dgtype-->
+
+
+        <!--funding window-->
+        <record model="inseta.dgfunding.window" id="data_fundingwindow_01">
+            <field name="legacy_system_id">1</field>
+            <field name="name">BURW-2019</field>
+            <field name="financial_year_id" ref="inseta_skills.data_fy19"/>
+            <field name="start_date">2019-05-02 00:00:00</field>
+            <field name="end_date">2019-06-28 23:59:00</field>
+            <field name="dgtype_id" ref="inseta_dg.data_dgtype7"/>
+            <field name="state">draft</field>
+            <field name="create_date">2019-04-29 09:09:04</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="inseta.dgfunding.window" id="data_fundingwindow_02">
+            <field name="legacy_system_id">2</field>
+            <field name="name">LRN-2019</field>
+            <field name="financial_year_id" ref="inseta_skills.data_fy19"/>
+            <field name="start_date">2019-05-02 00:00:00</field>
+            <field name="end_date">2019-06-28 23:59:00</field>
+            <field name="dgtype_id" ref="inseta_dg.data_dgtype1"/>
+            <field name="state">approve</field>
+            <field name="create_date">2019-04-29 09:09:04</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="inseta.dgfunding.window" id="data_fundingwindow_03">
+            <field name="legacy_system_id">3</field>
+            <field name="name">INT-2019</field>
+            <field name="financial_year_id" ref="inseta_skills.data_fy19"/>
+            <field name="start_date">2019-05-02 00:00:00</field>
+            <field name="end_date">2019-06-28 23:59:00</field>
+            <field name="dgtype_id" ref="inseta_dg.data_dgtype_int"/>
+            <field name="state">approve</field>
+            <field name="create_date">2019-04-29 09:09:04</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="inseta.dgfunding.window" id="data_fundingwindow_04">
+            <field name="legacy_system_id">4</field>
+            <field name="name">SPW-2019</field>
+            <field name="financial_year_id" ref="inseta_skills.data_fy19"/>
+            <field name="start_date">2019-05-02 00:00:00</field>
+            <field name="end_date">2019-06-28 23:59:00</field>
+            <field name="dgtype_id" ref="inseta_dg.data_dgtype8"/>
+            <field name="state">approve</field>
+            <field name="create_date">2019-04-29 09:09:04</field>
+            <field name="active">True</field>
+        </record>
+
+       <record model="inseta.dgfunding.window" id="data_fundingwindow_05">
+            <field name="legacy_system_id">5</field>
+            <field name="name">LRN-2020</field>
+            <field name="financial_year_id" ref="inseta_skills.data_fy20"/>
+            <field name="start_date">2020-04-01 09:30:13</field>
+            <field name="end_date">2020-06-30 23:59:59</field>
+            <field name="dgtype_id" ref="inseta_dg.data_dgtype1"/>
+            <field name="state">approve</field>
+            <field name="create_date">2020-04-07 11:57:44</field>
+            <field name="active">True</field>
+        </record>
+
+       <record model="inseta.dgfunding.window" id="data_fundingwindow_06">
+            <field name="legacy_system_id">6</field>
+            <field name="name">BURW-2020</field>
+            <field name="financial_year_id" ref="inseta_skills.data_fy20"/>
+            <field name="start_date">2020-04-01 09:30:13</field>
+            <field name="end_date">2020-06-30 23:59:59</field>
+            <field name="dgtype_id" ref="inseta_dg.data_dgtype7"/>
+            <field name="state">approve</field>
+            <field name="create_date">2020-04-07 11:57:44</field>
+            <field name="active">True</field>
+        </record>
+
+       <record model="inseta.dgfunding.window" id="data_fundingwindow_07">
+            <field name="legacy_system_id">7</field>
+            <field name="name">INT-2020</field>
+            <field name="financial_year_id" ref="inseta_skills.data_fy20"/>
+            <field name="start_date">2020-04-01 09:30:13</field>
+            <field name="end_date">2020-06-30 23:59:59</field>
+            <field name="dgtype_id" ref="inseta_dg.data_dgtype_int"/>
+            <field name="state">approve</field>
+            <field name="create_date">2020-04-07 11:57:44</field>
+            <field name="active">True</field>
+        </record>
+
+       <record model="inseta.dgfunding.window" id="data_fundingwindow_08">
+            <field name="legacy_system_id">8</field>
+            <field name="name">SPW-2020</field>
+            <field name="financial_year_id" ref="inseta_skills.data_fy20"/>
+            <field name="start_date">2020-04-01 09:30:13</field>
+            <field name="end_date">2020-06-30 23:59:59</field>
+            <field name="dgtype_id" ref="inseta_dg.data_dgtype8"/>
+            <field name="state">approve</field>
+            <field name="create_date">2020-04-07 11:57:44</field>
+            <field name="active">True</field>
+        </record>
+        <!--end funding window-->
+
+        <record model="res.dgdocumenttype" id="data_dgdocumenttype1">
+            <field name="name">Organisation Information</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgdocumenttype" id="data_dgdocumenttype2">
+            <field name="name">InterSETA Transfer</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgdocumenttype" id="data_dgdocumenttype3">
+            <field name="name">SDF Registration</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgdocumenttype" id="data_dgdocumenttype4">
+            <field name="name">Training Committee</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgdocumenttype" id="data_dgdocumenttype5">
+            <field name="name">Grants and Levies</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgdocumenttype" id="data_dgdocumenttype6">
+            <field name="name">WSP and ATR</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgdocumenttype" id="data_dgdocumenttype7">
+            <field name="name">Employer Learnership Online module</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgdocumenttype" id="data_dgdocumenttype8">
+            <field name="name">Intenship Declaration Form</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--DG  dginternshipscarcecritical-->
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical1">
+            <field name="name">Call or Contact Centre Agent</field>
+            <field name="saqacode">422206</field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical2">
+            <field name="name">Insurance Agent</field>
+            <field name="saqacode">332101</field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical3">
+            <field name="name">Outbound Contact Centre Consultant</field>
+            <field name="saqacode">422202</field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical4">
+            <field name="name">Sales Manager</field>
+            <field name="saqacode">122102</field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical5">
+            <field name="name">Management Consultant</field>
+            <field name="saqacode">242101</field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical6">
+            <field name="name">Associate Legal Professional</field>
+            <field name="saqacode">341110</field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical7">
+            <field name="name">Statistical and Mathematical Assistant</field>
+            <field name="saqacode">331401</field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical8">
+            <field name="name">Developer Programmer</field>
+            <field name="saqacode">251203</field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical9">
+            <field name="name">Marketing Practitioner</field>
+            <field name="saqacode">243103</field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical10">
+            <field name="name">Sales Representative (Personal and Household Goods)</field>
+            <field name="saqacode">332203</field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical11">
+            <field name="name">ICT System</field>
+            <field name="saqacode">251101</field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical12">
+            <field name="name">Insurance Broker</field>
+            <field name="saqacode">332102</field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical13">
+            <field name="name">Insurance Loss Adjustor</field>
+            <field name="saqacode">331503</field>
+            <field name="legacy_system_id">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical14">
+            <field name="name">Financial Investment Advisor</field>
+            <field name="saqacode">241301</field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical15">
+            <field name="name">Clerical/ Administration</field>
+            <field name="saqacode">411101</field>
+            <field name="legacy_system_id">15</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dginternshipscarcecritical" id="data_dginternshipscarcecritical16">
+            <field name="name">Actuary</field>
+            <field name="saqacode">212101</field>
+            <field name="legacy_system_id">16</field>
+            <field name="active">True</field>
+        </record>
+
+        <!--DG  dginternshipscarcecritical-->
+        <record model="res.dgpublicprovider" id="dgpublicprovider1">
+            <field name="name">Cape Peninsula University of Technology</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">1</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider2">
+            <field name="name">Central University of Technology, Free State</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">2</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider3">
+            <field name="name">Tshwane University of Technology</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">3</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider4">
+            <field name="name">University of Cape Town</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">4</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider5">
+            <field name="name">University of Fort Hare</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">5</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider6">
+            <field name="name">University of Johannesburg</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">6</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider7">
+            <field name="name">University of KwaZulu-Natal</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">7</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider8">
+            <field name="name">University of Limpopo</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">8</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider9">
+            <field name="name">University of Mpumalanga</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">9</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider10">
+            <field name="name">University of Pretoria</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">10</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider11">
+            <field name="name">University of South Africa</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">11</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider12">
+            <field name="name">University of the Free State</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">12</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider13">
+            <field name="name">University of the Western Cape</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">13</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider14">
+            <field name="name">University of the Witwatersrand</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">14</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider15">
+            <field name="name">University of Venda</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">15</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider16">
+            <field name="name">University of Zululand</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">16</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider17">
+            <field name="name">Vaal University of Technology</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">17</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider18">
+            <field name="name">Walter Sisulu University of Technology</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">18</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider19">
+            <field name="name">Stellenbosch University</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">19</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider20">
+            <field name="name">Sefako Makgatho Health Sciences University</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">20</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider21">
+            <field name="name">Sol Plaatje University</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">21</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider22">
+            <field name="name">Mangosuthu University of Technology</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">22</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider23">
+            <field name="name">Durban University of Technology</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">23</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider24">
+            <field name="name">Nelson Mandela University</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">24</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider25">
+            <field name="name">North-West University</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">25</field>
+            <field name="active">True</field>
+        </record>
+        <record model="res.dgpublicprovider" id="dgpublicprovider26">
+            <field name="name">Rhodes University</field>
+            <field name="saqacode"></field>
+            <field name="legacy_system_id">26</field>
+            <field name="active">True</field>
+        </record>
+
+        <record model="res.dgpublicprovider" id="dgpublicprovider27">
+            <field name="name">Other</field>
+            <field name="saqacode"></field>
+            <field name="active">True</field>
+        </record>
+
+        
+
+    </data>
+</odoo>

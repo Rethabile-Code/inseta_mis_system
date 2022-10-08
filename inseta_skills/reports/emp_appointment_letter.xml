@@ -1,0 +1,131 @@
+<odoo>
+  <data>
+    <record id="emp_paperformat_letter" model="report.paperformat">
+        <field name="name">Letter</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+
+    </record>
+    <report 
+            id="emp_appointment_letter_report"
+            model="inseta.organization.register"
+            string="Appointment Letter"
+            report_type="qweb-pdf"
+            name="inseta_skills.emp_appointment_letter"
+            file="inseta_skills.emp_appointment_letter"
+            paperformat="inseta_skills.emp_paperformat_letter"
+
+        />
+
+    <template id="emp_appointment_letter">
+        <div class="header">
+            <div class="row">
+                <div class="col-xs-3">
+                    .<!-- <img src="https://imgur.com/gLIZY9S.jpg" style="max-height: 150px;" /> -->
+                </div>
+                <div class="col-xs-offset-2 text-right">
+                    <img src='/inseta_skills/static/description/icon.png' style="max-height: 70px;"/>
+                </div>
+            </div>
+            <hr/> 
+        </div>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="max-width: 660px; margin: auto;">
+
+                    <style>
+                        body {
+                            line-height: 180%;
+                            font-size: 18px;
+                            font-family: 'EB Garamond';
+                        }
+
+                        page {
+                            margin-bottom: -30px;
+                        }
+
+                        p {
+                        text-align: justify;
+                            margin: 0;
+                        }
+
+                        .abc {
+                                margin-left: 40px;
+                                list-style-type: lower-alpha;
+                                }
+
+                        li {
+                        text-align: justify;
+                            padding-top: 2%;
+                            padding-bottom: 20px;
+                        }
+                    </style>
+
+                    
+                    <!-- <p><t t-esc="o.date_order" /></p> -->
+
+                    <br /><br /><br />
+
+                    <span t-field="o.name"/>,<br/>
+                    <span t-field="o.physical_address1"/>,<br/>
+                    <span t-field="o.physical_city_id.name"/>,<span t-field="o.physical_province_id.name"/>,<br/>
+                    <span t-field="o.nationality_id.name"/> <br/>
+                    <p><t t-esc="datetime.datetime.now().strftime('%B %d, %Y')" /></p>
+
+                    <p align="justify">
+                        Dear <span t-field="o.name"/>,
+                    </p>
+
+                    <h4 style="text-align: center;"><strong><u>APPOINTMENT LETTER FOR EMPLOYER REGISTRATION </u></strong></h4>
+
+                    <p>Following your satisfactory evaluation to register as a Emloyer on the <strong><span t-esc="o.date_of_registration" /></strong> </p>
+                    we hereby offer you this appointment letter on the following terms and conditions, <br/>
+                    <strong>SUBJECT TO:</strong>
+                    <p>Condition 1: - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</p>
+                    <p>Condition 2: - XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+
+                    <p style="padding-left: 25px;text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;" >
+                        ✓ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX<br/>
+                        ✓ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                    </p>
+
+                    <p><strong>See Brochure for details</strong></p>
+                    <br/>
+                    
+                    <div class="row">
+                        <p style="text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 24px;"><strong><u>GENERAL CONDITIONS</u></strong></p>
+                            <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                                <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">1. This Appointent letter is hereby given to you as a pre-condition for this registration. </p><br/>
+                            </p>
+                    </div>
+
+                    <div class="row">
+                        <p style="padding-left: 15px; text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">Please contact the skills Manager for more Information.</p>
+                        <br/><br/>
+                        <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">Yours Sincerely,<br/><br/><br/></p>
+                        <p><br/></p>
+                        <p style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">
+                            <strong style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;">INSETA SKILLS DIVISION</strong>
+                            <br/><br/>
+                                        <img src='/inseta_skills/static/description/icon.png' style="max-height: 120px;"/>
+                                <br/>
+                            <br/>
+                            <strong style="text-align: justify; font-family: 'Times New Roman', Times, serif; font-size: 18px;"> MANAGER</strong>
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+  </data>
+</odoo>

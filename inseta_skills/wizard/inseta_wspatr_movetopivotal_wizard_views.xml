@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wspatr_movetopivotal_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.wspatr.movetopivotal.form</field>
+        <field name="model">inseta.wspatr.movetopivotal</field>
+        <field name="arch" type="xml">
+            <form string="WSP/ATR Move To Pivotal">
+                <p>Are you sure you want to move these records to pivotal?</p>
+              
+                    <field name="wspatr_id" invisible="1"/>
+                    <field name="is_implementation_report" invisible="1"/>
+                    <field name="is_trained_beneficiaries" invisible="1"/>
+                    <field name="is_planned_beneficiaries" invisible="1"/>
+                    <field name="is_workplaceskillsplan" invisible="1" />
+
+                    <!-- <separator string="Trained Beneficiaries Report"  attrs="{'invisible':[('is_trained_beneficiaries','=',False)]}"/> -->
+                    <field name="trained_beneficiaries_ids" colspan="4" nolabel="1" readonly="1" attrs="{'invisible':[('is_trained_beneficiaries','=',False)]}"/>
+
+                    <field name="planned_beneficiaries_ids" colspan="4" nolabel="1" readonly="1" attrs="{'invisible':[('is_planned_beneficiaries','=',False)]}"/>
+                    <field name="workplaceskillsplan_ids" colspan="4" nolabel="1" readonly="1" attrs="{'invisible':[('is_workplaceskillsplan','=',False)]}"/>
+                    
+                    <!-- <separator string="Implementation Report" attrs="{'invisible':[('is_implementation_report','=',False)]}"/> -->
+                    <field name="implementation_report_ids" colspan="4" nolabel="1" readonly="1" attrs="{'invisible':[('is_implementation_report','=',False)]}"/>
+               
+
+                <footer>
+                    <button string='Move to Pivotal' name="move" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="wspatr_movetopivotal_wizard_action" model="ir.actions.act_window">
+        <field name="name">WSP/ATR Move To Pivotal</field>
+        <field name="res_model">inseta.wspatr.movetopivotal</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

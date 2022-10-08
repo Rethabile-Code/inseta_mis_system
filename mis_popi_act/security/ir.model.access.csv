@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_popi_act_consent_wizard,popi_act.popi_act_consent_wizard,model_popiact_consent_wizard,base.group_user,1,1,1,1
+

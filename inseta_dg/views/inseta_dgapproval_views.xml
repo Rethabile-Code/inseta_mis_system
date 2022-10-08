@@ -1,0 +1,122 @@
+<odoo>
+    <data>
+      <record id="view_dgapproval_tree" model="ir.ui.view">
+			<field name="name">inseta.dgapproval.form</field>
+			<field name="model">inseta.dgapproval</field>
+			<field name="arch" type="xml">
+				<tree string="DG Approval"> 
+					<field name="name"/>
+					<field name="financial_year_id"/>
+					<field name="count_dgapplications" />
+                    <field name="approval_date" />
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_dgapproval_filter" model="ir.ui.view">
+			<field name="name">inseta.dgapproval.filter</field>
+			<field name="model">inseta.dgapproval</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="name"/>
+					<field name="financial_year_id"/>
+                    <field name="approval_date" />
+				</search>
+			</field>
+		</record>
+
+		<record id="view_dgapproval_form" model="ir.ui.view">
+			<field name="name">inseta.dgapproval.form</field>
+			<field name="model">inseta.dgapproval</field>
+			<field name="arch" type="xml">
+				<form string="DG Approval"> 
+                    <header>
+                        <button name="action_draft"
+							states="approve,reject" 
+							string="Reset" 
+							type="object"
+							confirm="Are you sure you want to reset to draft?"
+							groups="base.group_system" />
+
+                        <button name="%(inseta_dg.dgbulkapproval_wizard_action)d"
+							context='{"default_stage": "approval"}'
+							states="draft" 
+							string="Approve" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_dg.group_ceo" />
+
+						<field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="draft,approve,reject"
+							statusbar_colors='{"draft":"blue","approve":"green","reject":"red"}'/>
+                    </header>
+					<sheet>
+						<div class="oe_title" >
+							<h1>
+								<field name="name" readonly="1"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" required="1" attrs="{'readonly':[('state','=','approve')]}"/>
+								<field name="dgtype_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','=','approve')]}"/>
+								<field name="approval_sheet" filename="file_name" required="1" attrs="{'readonly':[('state','=','approve')]}"/>
+								<field name="file_name" invisible="0" readonly="1" force_save="1" attrs="{'readonly':[('state','=','approve')]}"/> 
+                                <field name="approval_date" required="1" attrs="{'readonly':[('state','=','approve')]}"/>
+							</group>
+							<group/>
+							<group>
+								<button  name="action_pull" type="object" string="Search Records" class="oe_highlight pull-right" attrs="{'invisible':[('state','=','approve')]}"/>
+								<div class="clearfix"/>
+							</group>
+							<group/>
+						</group>
+					
+                         <notebook>
+                            <page string="DG Applications">
+								<field name="dgapplication_ids" nolabel="1" attrs="{'readonly':[('state','=','approve')]}">
+									<tree create="0">
+              						<field name="is_ceo_approved" string="Approve?"/>
+									<field name="name" invisible="1"/>
+									<field name="organisation_id"/>
+									<field name="financial_year_id"/>
+									<field name="dgtype_id"/>
+									<field name="due_date" />
+									<field name="submitted_date" />
+									<field name="approved_date" />
+									<field name="rejected_date" />
+									<field name="dgac_recommendation" string="DGAC Recommendation" />
+									<field name="state" />
+									</tree>
+								</field>
+                            </page>
+                         </notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+        <record id="act_window_dgapproval" model="ir.actions.act_window">
+			<field name="name">DG Approval</field>
+			<field name="res_model">inseta.dgapproval</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create"></p>
+			</field>
+		</record>
+
+        <menuitem id="menu_dgapproval" 
+            name="DG Approval" 
+            sequence="3" 
+            parent="inseta_dg.menu_root"
+            groups="inseta_dg.group_ceo,inseta_dg.group_pmo_manager,inseta_dg.group_pmo_admin"
+            action="act_window_dgapproval"
+		/>
+
+    </data>
+</odoo>

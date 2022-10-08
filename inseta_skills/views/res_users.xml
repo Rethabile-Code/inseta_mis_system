@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+
+
+        <!--Users Inherit form view-->
+        <record id="view_users_form" model="ir.ui.view">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//page[@name='access_rights']" position="inside" >
+                        <group string="Allowed Organisations" >
+                            <field string="Allowed Organisations" name="allowed_organisation_ids" widget="many2many_tags" />
+                        </group>
+                    </xpath>
+                    <xpath expr="//field[@name='active']" position="after">
+                        <field name="sdf_id" options="{'no_create': True}" />
+                        <field name="is_skills_mgr" string="Is Skills Manager?"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

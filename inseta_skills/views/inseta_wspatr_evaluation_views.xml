@@ -1,0 +1,408 @@
+<odoo>
+	<data>
+		<record id="view_wspatr_evaluation_tree" model="ir.ui.view">
+			<field name="name">inseta.wspatr.evaluation.tree</field>
+			<field name="model">inseta.wspatr.evaluation</field>
+			<field name="arch" type="xml">
+				<tree string="WSP/ATR Evaluation">
+					<field name="organisation_id" />
+					<field name="financial_year_id"/>
+					<field name="wspatr_id" string="WSP Submission"/>
+					<field name="create_uid" />
+					<field name="create_date"/>
+					<field name="state" string="Status" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_wspatr_evaluation_filter" model="ir.ui.view">
+			<field name="name">inseta.wspatr.evaluation.filter</field>
+			<field name="model">inseta.wspatr.evaluation</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="organisation_id" />
+					<field name="wspatr_id" string="WSP Submission"/>
+					<field name="financial_year_id"/>
+					<field name="state" string="Status" />
+				</search>
+			</field>
+		</record>
+
+		<record id="view_wspatr_evaluation_form" model="ir.ui.view">
+			<field name="name">inseta.wspatr.evaluation.form</field>
+			<field name="model">inseta.wspatr.evaluation</field>
+			<field name="arch" type="xml">
+				<form string="WSP/ATR Evaluation">
+					<header>
+                        <button name="action_reset" confirm="Are you sure you want to reset the evaluation?" string="Reset" type="object" groups="base.group_system" />
+
+						<!--Skill Admin-->
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d"
+							context='{"default_stage": "validation","default_option":"Evaluated"}'
+							string="Evaluate"
+							states="submitted,Query_Skills_Admin" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_admin" />
+
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d"
+							context='{"default_stage": "validation","default_option": "Query"}'
+							string="Query" 
+							states="submitted,Query_Skills_Admin" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_admin" />
+
+						<!--Skill spec-->
+
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d" 
+							context='{"default_stage": "assessment","default_option2": "Recommended_For_Approval"}'
+							states="Evaluated,Query_Skills_Specialist" 
+							string="Recommend For Approval" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_specialist" />
+
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d" 
+							context='{"default_stage": "assessment","default_option2": "Recommended_For_Rejection"}'
+							states="Evaluated,Query_Skills_Specialist" 
+							string="Recommend For Rejection" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_specialist" />
+
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d" 
+							context='{"default_stage": "assessment","default_option2": "Query"}'
+							states="Evaluated,Query_Skills_Specialist" 
+							string="Query" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_specialist" />
+
+						<!--Skill Manager-->
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d" 
+							context='{"default_stage": "approval", "default_option3": "Approve"}'
+							states="Recommended_For_Approval,Recommended_For_Rejection" 
+							string="Approve" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_manager" />
+
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d" 
+							context='{"default_stage": "approval", "default_option3": "Reject"}'
+							states="Recommended_For_Approval,Recommended_For_Rejection" 
+							string="Reject" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_manager" />
+
+                    	<button name="%(inseta_skills.wspatr_validate_wizard_action)d" 
+							context='{"default_stage": "approval", "default_option3": "Query"}'
+							states="Recommended_For_Approval,Recommended_For_Rejection" 
+							string="Query" 
+							type="action"
+							class="oe_highlight"
+							groups="inseta_skills.group_skills_manager" />
+					</header>
+					<sheet>
+						<div class="oe_title">
+							<h1>
+								<field name="wspatr_id" invisible="1" />
+							</h1>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-12">
+								<table class="table">
+									<tr class="bg-primary" style="text-align:center">
+										<th colspan="2">Financial Year</th>
+									</tr>
+									<tr>
+										<td colspan="2" style="text-align:center">
+											<field name="financial_year_id" options="{'no_create': True, 'no_open': True}" readonly="1" force_save="1" nolabel="1" />
+										</td>
+									</tr>
+								</table>
+
+								<field name="evaluation_header_html" nolabel="1"/>
+
+								<table class="table">
+									<thead>
+										<tr class="bg-primary" style="text-align:center">
+											<th colspan="4">Evaluation Checklist: SME 
+											WSP <field name="wsp_year" nolabel="1" />
+/											<field name="wsp_next_year" nolabel="1" />
+- 
+											ATR <field name="atr_year" nolabel="1"/>
+/										<field name="wsp_year" nolabel="1" />
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="width:50%">
+										Does the number of employees on the Organization Details equal to number of employees on the Current Employment Profile and provincial breakdown and Highest qualification profile form? 
+									</td>
+									<td>
+										<field name="employment_totals_comment" nolabel="1" />
+									</td>
+									<td colspan="2"></td>
+								</tr>
+								<tr>
+									<td>
+										Are the organisational details and organisational contacts of all linked child companies completed and confirmed?
+									</td>
+									<td>
+										<field name="organisation_contacts_comment" nolabel="1" />
+									</td>
+									<td colspan="2"></td>
+								</tr>
+								<tr>
+									<td>
+										Are the following screens completed and confirmed: Organisational Details, Organisational Contacts, Child Organisations, CFO Details, CEO Details and Employer Banking Details?
+									</td>
+									<td>
+										<field name="organisation_ceo_bankdetails_comment" nolabel="1" />
+									</td>
+									<td colspan="2"></td>
+								</tr>
+
+							</tbody>
+						</table>
+
+						<table class="table">
+							<thead>
+								<tr class="bg-primary" style="text-align:center">
+									<th colspan="2">Workplace Skills Plan Evaluation (WSP) and Annual Training Report (ATR) forms</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+                    				<!-- <button name="action_open_wsp" type="object" class="oe_highlight" string="Open WSPATR Form" icon="fa-folder-open"/> -->
+
+									<field nolabel="1" name="checklist_ids" context="{'default_evaluation_id': active_id, 'default_wspatr_id': wspatr_id}">
+										<tree editable="bottom" create="0" delete="0">
+											<field name="form_name" readonly="1" force_save="1" />
+                    						<button name="action_open_wsp" type="object" class="oe_highlight" string="View Form" icon="fa-folder-open"/>
+											<!-- <field name="wspatr_id" string="View Form" options="{'no_create': True,}" /> -->
+											<field name="form_completed" readonly="1" force_save="1"/>
+											<field name="all_in_order" />
+											<field name="comment" style="border: solid 1px #d6d6d6"  />
+										</tree>
+										<form >
+											<group>
+												<group>
+													<field name="form_name" readonly="1" force_save="1" />
+													<field name="wspatr_id" string="View Form" options="{'no_create': True,}" />
+													<field name="form_completed" />
+													<field name="all_in_order" />
+													<field name="comment" />
+												</group>
+												<group/>
+											
+											</group>
+										</form>
+									</field>
+								</tr>
+							</tbody>
+						</table>
+
+
+						<table class="table">
+							<thead>
+								<tr class="bg-primary" style="text-align:center">
+									<th colspan="4">Workplace Skills Plan Evaluation (WSP) and Annual Training Report (ATR) Documents</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr>
+									<td style="width:25%">
+										Authorisation Page
+										<field name="authorisation_page_link" />
+										<!-- <button name="download_authorization_page" string="Download" type="object" icon="fa-download" /> -->
+									</td>
+									<td>
+										<field name="authorisation_page" />
+									</td>
+									<td style="width:25%" attrs="{'invisible':[('authorisation_page','!=','Query')]}"> Reasons for non compliant Authorization Page</td>
+									<td attrs="{'invisible':[('authorisation_page','!=','Query')]}">
+										<field name="authorisation_page_noncompliance_reason" nolabel="1"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:25%">
+										Bank Confirmation
+										<field name="bank_confirmation_link" />
+									</td>
+									<td>
+										<field name="bank_confirmation" />
+									</td>
+									<td style="width:25%" attrs="{'invisible':[('bank_confirmation','!=','Query')]}"> Reasons for incompliant Bank Confirmation</td>
+									<td attrs="{'invisible':[('bank_confirmation','!=','Query')]}">
+										<field name="bank_confirmation_noncompliance_reason" nolabel="1"/>
+									</td>
+								</tr>
+
+								<tr>
+									<td style="width:25%">
+										BEE certificate
+										<field name="bee_certificate_link" />
+									</td>
+									<td>
+										<field name="bee_certificate" />
+									</td>
+									<td style="width:25%" attrs="{'invisible':[('bee_certificate','!=','Query')]}"> Reasons for incompliant BEE certificate</td>
+									<td attrs="{'invisible':[('bee_certificate','!=','Query')]}">
+										<field name="bee_certificate_noncompliance_reason" nolabel="1"/>
+									</td>
+								</tr>
+
+								<tr>
+									<td style="width:25%">
+										FSP license
+										<field name="fsp_license_link" />
+									</td>
+									<td>
+										<field name="fsp_license" />
+									</td>
+									<td style="width:25%" attrs="{'invisible':[('fsp_license','!=','Query')]}"> Reasons for incompliant FSP license</td>
+									<td attrs="{'invisible':[('fsp_license','!=','Query')]}">
+										<field name="fsp_license_noncompliance_reason" nolabel="1"/>
+									</td>
+								</tr>
+
+								<tr>
+									<td>Evaluated by</td>
+									<td>
+										<field name="evaluated_by" readonly="1" force_save="1"/>
+									</td>
+									<td>Date Evaluated</td>
+									<td>
+										<field name="evaluated_date" readonly="1" force_save="1"/>
+									</td>
+								</tr>
+								<tr>
+									<td>Status</td>
+									<td>
+										<field name="state" readonly="1" force_save="1"/>
+									</td>
+									<td >Comment</td>
+									<td>
+										<field name="comment" readonly="1" force_save="1"/>
+									</td>
+								</tr>
+
+								<tr>
+									<td>Query by</td>
+									<td>
+										<field name="query_by" readonly="1" force_save="1"/>
+									</td>
+									<td>Query Date</td>
+									<td>
+										<field name="query_date" readonly="1" force_save="1"/>
+									</td>
+								</tr>
+
+								<tr>
+									<td>Rejected by</td>
+									<td>
+										<field name="rejected_by" readonly="1" force_save="1"/>
+									</td>
+									<td>Rejected Date</td>
+									<td>
+										<field name="rejected_date" readonly="1" force_save="1"/>
+									</td>
+								</tr>
+
+								<tr>
+									<td>Recommended by</td>
+									<td>
+										<field name="recommended_by" readonly="1" force_save="1"/>
+									</td>
+									<td>Recommended Date</td>
+									<td>
+										<field name="recommended_date" readonly="1" force_save="1"/>
+									</td>
+								</tr>
+
+								<tr>
+									<td>Approved by</td>
+									<td>
+										<field name="approved_by" readonly="1" force_save="1"/>
+									</td>
+									<td>Approved Date</td>
+									<td>
+										<field name="approved_date" readonly="1" force_save="1"/>
+									</td>
+								</tr>
+
+								<tr>
+									<td colspan="4">										<!--leave empty-->
+									</td>
+								</tr>
+
+								<tr>
+									<td colspan="4">
+										<!-- <button string="Save" name="action_save" icon="fa-save" class="oe_highlight" type="object"/> -->
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="activity_ids" widget="mail_activity"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+		<record id="act_window_wspatr_evaluation" model="ir.actions.act_window">
+			<field name="name">WSP/ATR Evaluation</field>
+			<field name="res_model">inseta.wspatr.evaluation</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create"></p>
+			</field>
+		</record>
+
+		<menuitem id="menu_wsp_atr_evaluation" 
+			name="WSP &amp; ATR Evaluation"
+			sequence="2" 
+			parent="menu_parent_wsp_atr" 
+			action="act_window_wspatr_evaluation"
+			groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager"/>
+
+<!-- <menuitem id="menu_wspatr_payment" name="WSP/ATR Payment" sequence="2" parent="menu_parent_wsp_atr" action="act_window_wspatr_payment" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager" /> -->
+
+        <record id="view_wsp_atr_form_inherit" model="ir.ui.view">
+            <field name="name">Inseta WSPATR</field>
+            <field name="model">inseta.wspatr</field>
+            <field name="inherit_id" ref="inseta_skills.view_wsp_atr_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/div[@name='button_box']" position="inside">
+						<button type="action" 
+						class="oe_stat_button" 
+						name="%(inseta_skills.act_window_wspatr_evaluation)d" 
+						groups="inseta_skills.group_skills_admin,inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager"
+						context="{
+							'search_default_organisation_id':organisation_id, 
+							'default_wspatr_id':active_id,
+							'default_financial_year_id': financial_year_id,
+							'default_organisation_id': organisation_id,
+						}" icon="fa-book">
+						<field string="WSP Evaluation" name="evaluation_count" widget="statinfo"/>
+					</button>
+				</xpath>
+			</field>
+		</record>
+
+</data>
+</odoo>

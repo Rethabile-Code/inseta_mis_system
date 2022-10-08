@@ -1,0 +1,125 @@
+<odoo>
+    <data>
+        <record id="view_hei_rep_tree" model="ir.ui.view">
+            <field name="name">mis.hei.representative.tree</field>
+            <field name="model">mis.hei.representative</field>
+            <field name="arch" type="xml">
+                <tree string="HEI Representative">
+
+                    <field name="reference"/>
+                    <field name="title" />
+
+                    <field name="first_name" />
+                    <field name="last_name" />
+                    <field name="reference" />
+                    <field name="organisation_id"/>
+                    <field name="mobile"/>
+                    <field name="email"/>
+
+                    <field name="signatory_title" />
+                    <field name="signatory_first_name" />
+                    <field name="signatory_last_name" />
+                    <field name="signatory_mobile"/>
+                    <field name="signatory_email"/>
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hei_rep_form" model="ir.ui.view">
+            <field name="name">mis.hei.representative.form</field>
+            <field name="model">mis.hei.representative</field>
+            <field name="arch" type="xml">
+                <form string="HEI Representative">
+                    <header>
+
+                        <button name="action_reset" string="Set to Draft" type="object" states="approve,reject" groups="base.group_system" />
+                        <button name="action_submit" string="Submit" type="object" class="oe_highlight" states="draft,rework" confirm="Are you sure you want to submit?"  groups="inseta_dg.group_hei_representative"/>
+                        <button name="action_approve" string="Approve" type="object" class="oe_highlight" states="submit" confirm="Are you sure you want to approve?" groups="inseta_dg.group_pmo_admin" />
+                        <button name="action_reject" string="Reject" type="object" class="oe_highlight" states="submit" confirm="Are you sure you want to reject?" groups="inseta_dg.group_pmo_admin"/>
+
+                        <field name="state" widget="statusbar" clickable="True" statusbar_visible="draft,submit,approve,reject" statusbar_colors='{"open":"green","close":"red"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="reference" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="organisation_id" options="{'no_create': True}"/>
+                                <field name="title" options="{'no_create': True}"/>
+                                <field name="first_name" />
+                                <field name="last_name" />
+                                <field name="mobile"/>
+                                <field name="email"/>
+                                <field name="designation"/>
+                            </group>
+                            <group>
+                                <field name="signatory_title" options="{'no_create': True}"/>
+                                <field name="signatory_first_name" />
+                                <field name="signatory_last_name" />
+                                <field name="signatory_mobile"/>
+                                <field name="signatory_email"/>
+                                <field name="signatory_designation"/>
+                            </group>
+
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="act_window_hei_rep" model="ir.actions.act_window">
+            <field name="name">HEI Representative</field>
+            <field name="res_model">mis.hei.representative</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+					Click to Create new HEI Representative. 
+                </p>
+            </field>
+        </record>
+
+        <record id="act_window_hei" model="ir.actions.act_window">
+            <field name="name">HEIs</field>
+            <field name="res_model">inseta.organisation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"> [('institution_type','in', ('TVET','UoT','University'))]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+					Click to Create new HEI.
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_window_dgapplication_hei">
+        <field name="name">DG Dashboard</field>
+        <field name="res_model">inseta.dgapplication</field>
+        <field name="view_id" ref="view_dgapplication_tree" />
+        <field name="domain">[('is_hei','=',True)]</field>
+        <field name="context">{'default_is_hei': True}</field>
+        <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="HEI" sequence="1" 
+            id="menu_hei_root" 
+            parent="inseta_dg.menu_root"  
+            groups="inseta_dg.group_hei_representative,inseta_dg.group_desktop_evaluation,inseta_dg.group_dg_view_only,inseta_dg.group_adjudication_committee,inseta_dg.group_pmo_cordinator,inseta_dg.group_spo_manager,inseta_dg.group_pmo_manager,inseta_dg.group_coo,inseta_dg.group_ceo,inseta_dg.group_pmo_admin"/>
+
+        <menuitem name="DG Application" sequence="1" id="menu_hei_application" parent="inseta_dg.menu_hei_root" action="act_window_dgapplication_hei" />
+
+        <menuitem name="HEI Representative" sequence="2" id="menu_hei_rep" parent="inseta_dg.menu_hei_root" action="act_window_hei_rep" />
+
+        <menuitem name="HEIs" sequence="3" id="menu_hei" parent="inseta_dg.menu_hei_root" action="act_window_hei" />
+
+        <!-- groups="inseta_dg.group_pmo_manager,inseta_dg.group_ceo" -->
+
+    </data>
+</odoo>

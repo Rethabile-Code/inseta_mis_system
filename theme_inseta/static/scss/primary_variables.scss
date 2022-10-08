@@ -1,0 +1,54 @@
+// $o-color-palettes: (
+//     (
+//         'o-color-1': #85AFA8,
+//         'o-color-2': #7E566B,
+//         'o-color-3': #85909A,
+//         'o-color-4': #969397,
+//         'o-color-5': #422335,
+//     ),
+//     (
+//         'o-color-1': #54787D,
+//         'o-color-2': #6B9997,
+//         'o-color-3': #615145,
+//         'o-color-4': #C6CCA5,
+//         'o-color-5': #412342,
+//     ),
+// );
+
+$theme_color: #143e90  !default;
+
+/* ================= Main Colors =========================*/
+$o-theme-color-palettes: (
+    (
+        'alpha': $theme_color,
+        'beta': #343a40,
+        'gamma': #4c9cba,
+        'delta': #000000,
+        'epsilon': $theme_color,
+    ),
+);
+/* ==================== Text Colors =========================*/
+$o-color-palettes: (
+    (
+        'o-color-1': $theme_color,
+        'o-color-2': #343a40,
+        'o-color-3': #4c9cba,
+        'o-color-4': #eeeeee,
+        'o-color-5': #eeeeee,
+		'body': null, // Default to bootstrap
+	    'menu': null,
+	    'footer': rgba(4, 18, 46, 0.9),
+	    'text': #6c757d,
+	    'h1':  #212529,
+	    'h2':  #212529,
+	    'h3':  #212529,
+	    'h4':  #212529,
+	    'h5':  #212529,
+	    'h6':  #212529,
+    ),
+);
+/* ===================== State Colors ========================*/
+$success:       #00b115 !default;
+$info:          #ffaa50 !default;
+$warning:       #ff5050 !default;
+$danger:        #900000 !default;

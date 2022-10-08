@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+        <record id="action_organisation_report_xlxs" model="ir.actions.report">
+            <field name="name">All Organisations (Huge) Report</field>
+            <field name="model">wizard.skills.report.line</field>
+            <field name="report_type">xlsx</field>  
+            <field name="report_name">inseta_skills.report_organisation</field>
+            <field name="report_file">inseta_skills.report_organisation</field>
+            <field name="print_report_name">'All_organisations_'+time.strftime('%Y-%m-%d-%H:%M:%S'))</field>
+            <field name="attachment">('All_organisations_'+time.strftime('%Y-%m-%d-%H:%M:%S').replace('-','_')+'.pdf')</field>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- <record id="action_organisation_report" model="ir.actions.report">
+            <field name="name">All Organisations (Huge) Report</field>
+            <field name="model">wizard.skills.report.line</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">inseta_skills.report_organisation</field>
+            <field name="report_file">inseta_skills.report_organisation</field>
+            <field name="print_report_name">'All_organisations_'+time.strftime('%Y-%m-%d-%H:%M:%S'))</field>
+            <field name="attachment">('All_organisations_'+time.strftime('%Y-%m-%d-%H:%M:%S').replace('-','_')+'.pdf')</field>
+            <field name="binding_type">report</field>
+        </record> -->
+
+    </data>
+</odoo>

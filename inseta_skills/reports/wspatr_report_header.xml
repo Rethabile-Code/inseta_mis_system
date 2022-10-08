@@ -1,0 +1,399 @@
+<odoo>
+    <data>
+        <record id="wsp_paperformat_landscape" model="report.paperformat">
+            <field name="name">WSP Report Landscape</field>
+            <field name="default" eval="True"/>
+            <field name="format">A3</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">7</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">4</field>
+            <field name="margin_right">4</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">64</field>
+            <field name="dpi">90</field>
+        </record>
+        
+        <template id="wspatr_report_header">
+            <div id="header" class="col-lg-12 col-md-12">
+
+                <h1><span t-esc="o.report_title"/><br/><br/></h1>
+                <h2 class="title">
+                    DHET Registered Name:<span t-esc="o.organisation_id.dhet_trade_name and o.organisation_id.dhet_trade_name.upper()  or o.organisation_id.trade_name.upper()"/><br/><br/>
+                    SETA Registered Name: <span t-esc="o.organisation_id.trade_name.upper()"/> <br/><br/>
+                    Company Size: <span t-esc="o.organisation_id.organisation_size_id.name"/> <br/><br/>
+                    <span t-field="o.organisation_id.sdl_no"/> <br/><br/>
+                    SDF: <span t-esc="o.sdf_id and o.sdf_id.name or o.create_uid.name"/> <br/><br/>
+                    Submission Date: <t t-esc="o.submitted_date and o.submitted_date.strftime('%d/%m/%Y')"/> <br/><br/>
+                </h2>
+
+                <ol class="note">
+                    <h2 class="title" style="text-align:left"> PLEASE NOTE</h2>
+
+                    <li>IT IS IMPORTANT TO COMPLETE ALL THE SECTIONS OF THE REPORTS</li>
+                    <li>WHERE A SECTION IS NOT RELEVANT, PLEASE INDICATE SO IN YOUR REPORT. THE INFORMATION REQUIRED IS IMPORTANT FOR THE SETA'S REPORTING TO THE DEPARTMENT OF HIGHER EDUCATION AND TRAINING FOR COMPILATION OF THE SECTOR SKILLS PLAN.</li>
+                    <li>FOR SUBMISSION TO THE INSETA, THESE REPORTS MUST BE COMPLETED ON THE INSETA MIS SYSTEM.</li>
+                    <li>THE PURPOSE OF THESE GUIDELINES IS TO ASSIST WITH THE COMPLETION OF THE WSP &amp; ATR REPORTS. PLEASE NOTE THAT NO REPORTS MUST BE COMPLETED ON THESE GUIDELINES FOR SUBMISSION TO THE INSETA</li>
+                    <li> AFTER OBTAINING THE REQUIRED SIGNATURES ,THE AUTHORISATION FORM AS WELL AS BANK DOCUMENTS SHOULD BE UPLOADED ON THE SYSTEM UNDER THE WSP/ATR DOCUMENTS UPLOAD TAB.</li>
+                    <li>PLEASE NOTE: IF THE NAME OF THE COMPANY APPEARING ON THE DEPARTMENT OF HIGHER EDUCATION AND TRAINING SIDE DIFFERS FROM THE NAME ON THE BANK DOCUMENTS, THEN YOU NEED TO UPLOAD BOTH DOCUMENTS (BANK DOCUMENTS AND CIPRO DOCUMENTS) TO SHOW PROOF OF REGISTERED COMPANY NAME AND TRADING NAME BEFORE PAYMENT CAN BE MADE. 
+                    IF THE DEPARTMENT OF HIGHER EDUCATION AND TRAINING REGISTERED NAME IS INCORRECT THEN YOU NEED TO CONTACT SARS TO CHANGE THE COMPANY’S REGISTERED NAME
+                    </li>
+                </ol>
+
+                <p class="due">
+                    <h2 t-if="o.due_date"> DUE DATE: <t t-esc="o.due_date.strftime('%d/%m/%Y')"/></h2>
+                    PLEASE NOTE THAT EXTENSIONS WILL ONLY BE GRANTED FOR THE SUBMISSON OF THE ATR AND WSP REPORTS ON WRITTEN REQUEST TO THE INSETA COUNCIL AND AT THE COUNCIL’S DISCRETION - REQUESTS
+                    TO BE HANDED TO THE SKILLS DIVISION. PLEASE REFER TO THE GOVERNMENT GAZETTE No. 29583 REGULATIONS (Regulation No. 713. Section 5.2 (a, b) &amp; Section 5.5).
+                </p>
+
+            </div>
+    
+            <p style="page-break-before:always;"> </p>
+        </template>
+
+        <template id="wspatr_org_details">
+            <div class="col-lg-12 col-md-12" id="org-details">
+                <h2>ORGANISATION DETAILS</h2>
+                <table class="table table-bordered table-sm">
+                    <tbody>
+                        <tr>
+                            <td style="width:50%">SDL Number </td> <td style="width:50%"> <span t-esc="o.organisation_id.sdl_no"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Possible SDL Number</td> <td> <span t-esc="o.organisation_id.possible_sdl_no or 'None'"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Legal Name</td> <td> <span t-esc="o.organisation_id.legal_name"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Trade Name</td> <td> <span t-esc="o.organisation_id.trade_name"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Organisation Registration Number Type</td> <td> <span t-esc="o.organisation_id.registration_no_type_id and o.organisation_id.registration_no_type_id.name or 'None'"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Organisation Registration Number</td> <td> <span t-esc="o.organisation_id.registration_no or 'None' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td> <td> <span t-esc="o.organisation_id.phone or 'None' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Fax Number</td> <td> <span t-esc="o.organisation_id.fax_number or 'None'"/> </td>
+                        </tr>
+
+                        <tr>
+                            <td>SIC Code Description</td> <td> <span t-esc="o.organisation_id.sic_code_desc"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Number Of Employee</td> <td> <span t-esc="o.organisation_id.no_employees"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Number of Employees (Employment Profile)</td> <td> <span t-esc="o.no_employees_emp_profile"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Annual Turnover</td> <td> <span t-esc="o.organisation_id.annual_turnover"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Organisation Size</td> <td> <span t-esc="o.organisation_id.organisation_size_id and o.organisation_id.organisation_size_id.name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Communication</td> <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>BEE Status</td> <td> <span t-esc="o.organisation_id.bee_status_id and o.organisation_id.bee_status_id.name or 'None'"/> </td>
+                        </tr>
+                        <tr>
+                            <td>GPS Coordinates</td> <td> <span t-esc="o.organisation_id.latitude_degree or 'None' "/>, <span t-esc="o.organisation_id.longitude_degree or 'None' "/>  </td>
+                        </tr>
+                        <tr>
+                            <td>Physical Code</td> <td> <span t-esc="o.organisation_id.physical_code"/> </td>
+                        </tr>
+
+                        <tr>
+                            <td>Physical Address Line 1</td> <td> <span t-esc="o.organisation_id.street"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Physical Address Line 2</td> <td> <span t-esc="o.organisation_id.street2"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Physical Address Line 3</td> <td> <span t-esc="o.organisation_id.street3"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Physical Suburb</td> <td> <span t-esc="o.organisation_id.physical_suburb_id and o.organisation_id.physical_suburb_id.name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td> Physical City</td> <td> <span t-esc="o.organisation_id.physical_city_id and o.organisation_id.physical_city_id.name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Physical Municipality</td> <td> <span t-esc="o.organisation_id.physical_municipality_id and o.organisation_id.physical_municipality_id.name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Physical UrbanRural</td> <td> <span t-esc="o.organisation_id.physical_urban_rural"/> </td>
+                        </tr>
+                        <tr>
+                            <td> Physical Province</td> <td> <span t-esc="o.organisation_id.physical_province_id and o.organisation_id.physical_province_id.name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td> Use Physical Address For Postal Address</td> <td> <span t-esc=" 'Yes' if o.organisation_id.use_physical_for_postal_addr else 'No' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Postal Code</td> <td> <span t-esc="o.organisation_id.postal_code"/> </td>
+                        </tr>
+
+                        <tr>
+                            <td>Postal Address Line 1</td> <td> <span t-esc="o.organisation_id.postal_address1"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Postal Address Line 2</td> <td> <span t-esc="o.organisation_id.postal_address2"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Postal Address Line 3</td> <td> <span t-esc="o.organisation_id.postal_address3"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Postal Suburb</td> <td> <span t-esc="o.organisation_id.postal_suburb_id and o.organisation_id.postal_suburb_id.name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Postal City</td> <td> <span t-esc="o.organisation_id.postal_city_id and o.organisation_id.postal_city_id.name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Postal Municipality</td> <td> <span t-esc="o.organisation_id.postal_municipality_id and o.organisation_id.postal_municipality_id.name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Postal UrbanRural</td> <td> <span t-esc="o.organisation_id.postal_urban_rural"/> </td>
+                        </tr>
+                        <tr>
+                            <td>Postal Province</td> <td> <span t-esc="o.organisation_id.postal_province_id and o.organisation_id.postal_province_id.name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>Confirm Details</td> <td> <span t-esc=" 'Yes' if o.organisation_id.is_confirmed else 'No' "/> </td>
+                        </tr>
+                        <t t-set="cfo" t-value="o.organisation_id.cfo_ids and o.organisation_id.cfo_ids[0]" />
+
+                        <tr>
+                            <td>CFO First Name</td> <td> <span t-esc="cfo and cfo.first_name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td> CFO Surname</td> <td> <span t-esc="cfo and cfo.last_name or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td> CFO Cell Phone Number</td> <td> <span t-esc="cfo and cfo.mobile or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>CFO Fax Number </td> <td> <span t-esc="cfo and cfo.fax_number or '' "/> </td>
+                        </tr>
+                        <tr>
+                            <td>CFO Email </td> <td> <span t-esc="cfo and cfo.email or '' "/> </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered table-sm" style="margin-top:16px">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Contact First Name</th>
+                            <th>Contact Surname </th>
+                            <th>Initials</th>
+                            <th>Designation</th>
+                            <th>Telephone Number</th>
+                            <th>Cell Phone Number</th>
+                            <th>Fax Number</th>
+                            <th>Email</th>
+                            <th>Postal Code</th>
+                            <th>Postal Suburb</th>
+                            <th>Postal City</th>
+                            <th>Postal Province</th>
+                            <th>UrbanRural Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.organisation_id.child_ids" t-as="contact">
+                            <td><span t-esc="contact.title and contact.title.name or '' "/></td>
+                            <td><span t-esc="contact.first_name"/></td>
+                            <td><span t-esc="contact.last_name"/></td>
+                            <td><span t-esc="contact.initials"/></td>
+                            <td><span t-esc="contact.function"/></td>
+                            <td><span t-esc="contact.phone"/></td>
+                            <td><span t-esc="contact.mobile"/></td>
+                            <td><span t-esc="contact.fax_number"/></td>
+                            <td><span t-esc="contact.email"/></td>
+                            <td><span t-esc="contact.postal_code"/></td>
+                            <td><span t-esc="contact.postal_suburb_id and contact.postal_suburb_id.name or ''"/></td>
+                            <td><span t-esc="contact.postal_city_id and contact.postal_city_id.name or ''"/></td>
+                            <td><span t-esc="contact.postal_province_id and contact.postal_province_id.name or ''"/></td>
+                            <td><span t-esc="contact.postal_urban_rural"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <t t-set="approved_sdfs" t-value="o.organisation_id.sdf_ids and o.organisation_id.sdf_ids.filtered(lambda x: x.state == 'approve')" />
+                <t t-set="sdf" t-value="approved_sdfs and approved_sdfs[0].sdf_id or False" />
+
+                <h2 style="font-weight:bold">SKILLS DEVELOPMENT FACILITATOR</h2>
+                <table class="table table-bordered table-sm">
+                    <tbody>
+                        <tr>
+                            <td style="width:50%">Alternate ID Type</td><td style="width:50%"><span t-esc="sdf and sdf.alternateid_type_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>ID No</td><td><span t-esc="sdf and sdf.id_no or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Title</td><td><span t-esc="sdf and sdf.title.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>First Name</td><td><span t-esc="sdf and sdf.first_name or ''"/></td>
+                        </tr>
+                        <tr>
+                            <td>Middle Name</td><td><span t-esc="sdf and sdf.middle_name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Surname</td><td><span t-esc="sdf and sdf.last_name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Initials</td><td><span t-esc="sdf and sdf.initials or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Date of Birth</td><td><span t-esc="sdf and sdf.birth_date or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td><td><span t-esc="sdf and sdf.gender_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Equity</td><td><span t-esc="sdf and sdf.equity_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Disability Status</td><td><span t-esc="sdf and sdf.disability_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Home Language</td><td><span t-esc="sdf and sdf.home_language_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Nationality</td><td><span t-esc="sdf and sdf.nationality_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Citizen Residential Status </td><td><span t-esc="sdf and sdf.citizen_resident_status_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Socio Economic Status</td><td><span t-esc="sdf and sdf.socio_economic_status_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Telephone Number</td><td><span t-esc="sdf and sdf.phone or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Cell Phone Number </td><td><span t-esc="sdf and sdf.mobile or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td> Fax Number </td><td><span t-esc="sdf and sdf.fax_number or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Email </td><td><span t-esc="sdf and sdf.email or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Physical Code</td><td><span t-esc="sdf and sdf.physical_code or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Physical Address Line 1 </td><td><span t-esc="sdf and sdf.street or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Physical Address Line 2 </td><td><span t-esc="sdf and sdf.street2 or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Physical Address Line 3 </td><td><span t-esc="sdf and sdf.street3 or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Physical Suburb</td><td><span t-esc="sdf and sdf.physical_suburb_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Physical City</td><td><span t-esc="sdf and sdf.physical_city_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Physical Municipality</td><td><span t-esc="sdf and sdf.physical_municipality_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Physical Urban Rural </td><td><span t-esc="sdf and sdf.physical_urban_rural or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td> Physical Province</td><td><span t-esc="sdf and sdf.state_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Use Physical Address For Postal Address </td><td><span t-esc="'Yes' if sdf and sdf.use_physical_for_postal_addr else 'No'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Postal Code</td><td><span t-esc="sdf and sdf.postal_code or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Postal Address Line 1 </td><td><span t-esc="sdf and sdf.postal_address1 or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Postal Address Line 2 </td><td><span t-esc="sdf and sdf.postal_address2 or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Postal Address Line 3 </td><td><span t-esc="sdf and sdf.postal_address3 or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Postal Suburb</td><td><span t-esc="sdf and sdf.postal_suburb_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Postal City</td><td><span t-esc="sdf and sdf.postal_city_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Postal Municipality</td><td><span t-esc="sdf and sdf.postal_municipality_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Postal Urban Rural </td><td><span t-esc="sdf and sdf.postal_urban_rural or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Postal Province</td><td><span t-esc="sdf and sdf.postal_province_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Highest Education</td><td><span t-esc="sdf and sdf.highest_edu_level_id.name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Highest Education Description</td><td><span t-esc="sdf and sdf.highest_edu_desc or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Current Occupation</td><td><span t-esc="sdf and sdf.current_occupation or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Years In Occupation </td><td><span t-esc="sdf and sdf.occupation_years or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Experience </td><td><span t-esc="sdf and sdf.occupation_experience or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Have you completed a SDF Training Programme provided by an accredited training provider? </td><td><span t-esc="'Yes' if sdf and sdf.has_completed_sdftraining else 'No'"/></td>
+                        </tr>
+                        <tr>
+                            <td>Name of Accredited Training Provider</td><td><span t-esc="sdf and sdf.accredited_trainingprovider_name or 'None'"/></td>
+                        </tr>
+                        <tr>
+                            <td>General Comments </td><td><span t-esc="sdf and sdf.general_comments or 'None'"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 style="font-weight:bold">CHILD ORGANISATIONS</h2>
+                <table class="table table-bordered table-sm" t-if="o.organisation_id.linkage_ids">
+                    <thead>
+                        <tr>
+                            <th>Trade Name</th>
+                            <th>SDL No</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.organisation_id.linkage_ids" t-as="link">
+                            <td style="width:50%"><span t-esc="link.childorganisation_id.trade_name"/></td>
+                            <td style="width:50%"><span t-esc="link.childorganisation_id.sdl_no"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <t t-else="">
+                    <p>No Child Organisation</p>
+                </t>
+            </div>
+        </template>
+    </data>
+</odoo>

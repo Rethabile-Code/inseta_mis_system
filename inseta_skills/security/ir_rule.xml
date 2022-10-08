@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <!--SDF View only partner records he created-->
+    <record id="res_sdf_rule_partner" model="ir.rule">
+        <field name="name">SDF Rule Partner</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_sdf_user')),(4,ref('inseta_skills.group_sdf_secondary'))]"/>
+    </record>
+
+    <!--SDF View only SDF register records that he is the user or he created -->
+    <!-- <record id="res_sdf_rule_sdf_register" model="ir.rule">
+        <field name="name">SDF Rule SDF Register: View Own Documents</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_sdf_register"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('user_id', '=', user.id), ('create_uid','=', user.id)]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_sdf_user')),(4,ref('inseta_skills.group_sdf_secondary'))]"/>
+    </record> -->
+
+    <!-- <record id="res_rule_all_sdf_register" model="ir.rule">
+        <field name="name">SDF Rule All SDF Register</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_sdf_register"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_skills_specialist')), (4,ref('inseta_skills.group_skills_admin')),(4,ref('inseta_skills.group_skills_manager'))]"/>
+    </record> -->
+
+    <record id="res_sdf_rule_sdf" model="ir.rule"> 
+        <field name="name">SDF Rule SDF: View Own Documents</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True" /> 
+        <field name="perm_write" eval="False" /> 
+        <field name="perm_create" eval="False" /> 
+        <field name="perm_unlink" eval="False" /> 
+        <field name="domain_force">['|','|',('user_id', '=', user.id), ('create_uid','=', user.id),('partner_id','=', user.partner_id.id)]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_sdf_user')),(4,ref('inseta_skills.group_sdf_secondary'))]"/>
+    </record>
+
+    <record id="res_sdf_rule_sdf_employer" model="ir.rule">
+        <field name="name">SDF Rule Employer: View Own SDFs</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('id', 'in', [sdforg.sdf_id.id for sdforg in user.allowed_organisation_ids.sdf_ids])]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_employer'))]"/>
+    </record>
+
+    <record id="res_sdf_rule_allsdf" model="ir.rule">
+        <field name="name">View All SDFs</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_sdf"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_skills_specialist')), (4,ref('inseta_skills.group_skills_admin')),(4,ref('inseta_skills.group_skills_manager'))]"/>
+    </record>
+
+
+    <record id="res_sdf_rule_wspatr" model="ir.rule">
+        <field name="name">View Own WSP/ATR documents</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+        <field name="global" eval="True"/>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_sdf_user')),(4,ref('inseta_skills.group_sdf_secondary')),(4,ref('inseta_skills.group_employer'))]"/>
+        <field name="perm_read" eval="True" /> 
+        <field name="perm_write" eval="False" /> 
+        <field name="perm_create" eval="False" /> 
+        <field name="perm_unlink" eval="False" /> 
+        <field name="domain_force">['|', '|', '|', 
+            ('create_uid','=',user.id),
+            ('organisation_id', 'in', [o.id for o in user.allowed_organisation_ids]),
+            ('organisation_id', 'in', [o.organisation_id.id for o in user.sdf_id.organisation_ids]),
+            ('organisation_id', 'in', [o.childorganisation_id.id for o in user.allowed_organisation_ids.mapped('linkage_ids').filtered(lambda x: x.state=='active')])]</field>
+    </record>
+
+    <record model="ir.rule" id="rule_wspatr_all_document">
+        <field name="name">Access all WSP/ATR</field>
+        <field name="model_id" ref="inseta_skills.model_inseta_wspatr"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_skills_specialist')), (4,ref('inseta_skills.group_skills_admin')),(4,ref('inseta_skills.group_skills_manager'))]"/>
+    </record>
+
+    <!-- <record model="ir.rule" id="rule_organisation_own_document">
+        <field name="name">Access own organisation and its linked organisation </field>
+        <field name="model_id" ref="model_inseta_organisation"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('id', 'in', [o.id for o in user.allowed_organisation_ids]),('id', 'in', [o.childorganisation_id.id for o in user.allowed_organisation_ids.mapped('linkage_ids').filtered(lambda x: x.state=='active')])]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_sdf_user')),(4,ref('inseta_skills.group_sdf_secondary')),(4,ref('inseta_skills.group_employer'))]"/>
+    </record> -->
+
+    <!-- <record model="ir.rule" id="rule_organisation_all_document">
+        <field name="name">Access all organisation</field>
+        <field name="model_id" ref="model_inseta_organisation"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4,ref('inseta_skills.group_skills_specialist')), (4,ref('inseta_skills.group_skills_admin')),(4,ref('inseta_skills.group_skills_manager'))]"/>
+    </record> -->
+
+    <record id="res_financial_year_rule" model="ir.rule">
+        <field name="name">Fiscal Year multi-company</field>
+        <field name="model_id" ref="model_res_financial_year" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+
+</odoo>

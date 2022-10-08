@@ -1,0 +1,195 @@
+<odoo>
+    <data>
+      <record id="view_docrelates_tree" model="ir.ui.view">
+			<field name="name">res.wspdocument.relates.tree</field>
+			<field name="model">res.wspdocument.relates</field>
+			<field name="arch" type="xml">
+				<tree string="DG type"> 
+                    <field name="name"/>
+                    <field name="saqacode"/>
+				</tree>
+			</field>
+		</record>
+		 
+		<record id="view_docrelates_filter" model="ir.ui.view">
+			<field name="name">res.wspdocument.relates.filter</field>
+			<field name="model">res.wspdocument.relates</field>
+			<field name="arch" type="xml">
+				<search string="">
+					<field name="name"/>
+                    <field name="saqacode"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="view_docrelates_form" model="ir.ui.view">
+			<field name="name">res.wspdocument.relates.form</field>
+			<field name="model">res.wspdocument.relates</field>
+			<field name="arch" type="xml">
+				<form string=""> 
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="saqacode"/>
+							</group>
+							<group/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+      <record id="view_seta_tree" model="ir.ui.view">
+			<field name="name">res.seta.tree</field>
+			<field name="model">res.seta</field>
+			<field name="arch" type="xml">
+				<tree string="SETA"> 
+                    <field name="name"/>
+					<field name="description"/>
+                    <field name="saqacode"/>
+					<field name="seta_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_seta_form" model="ir.ui.view">
+			<field name="name">res.seta.form</field>
+			<field name="model">res.seta</field>
+			<field name="arch" type="xml">
+				<form string=""> 
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="description"/>
+								<field name="saqacode"/>
+								<field name="seta_id" />
+								<field name="legacy_system_id" readonly="1"/>
+							</group>
+							<group/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+      	<record id="view_formsp_tree" model="ir.ui.view">
+			<field name="name">res.formsp.tree</field>
+			<field name="model">res.formsp</field>
+			<field name="arch" type="xml">
+				<tree string="Scarce &amp; Critical Skills"> 
+                    <field name="name"/>
+                    <field name="saqacode"/>
+					<!-- <field name="legacy_system_id"/> -->
+				</tree>
+			</field>
+		</record>
+
+      	<record id="view_formsp_form" model="ir.ui.view">
+			<field name="name">res.formsp.form</field>
+			<field name="model">res.formsp</field>
+			<field name="arch" type="xml">
+				<form string=""> 
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="saqacode"/>
+								<field name="legacy_system_id" readonly="1"/>
+							</group>
+							<group/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="act_window_formsp" model="ir.actions.act_window">
+			<field name="name">Scarce &amp; Critical Skills</field>
+			<field name="res_model">res.formsp</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+
+        <record id="act_window_docrelates" model="ir.actions.act_window">
+			<field name="name">WSP Document Types</field>
+			<field name="res_model">res.wspdocument.relates</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="act_window_seta" model="ir.actions.act_window">
+			<field name="name">SETAs</field>
+			<field name="res_model">res.seta</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="act_window_siccode" model="ir.actions.act_window">
+			<field name="name">SIC Codes</field>
+			<field name="res_model">res.sic.code</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="act_window_subsector" model="ir.actions.act_window">
+			<field name="name">Sub Sector</field>
+			<field name="res_model">res.sub.sector</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="act_window_bank" model="ir.actions.act_window">
+			<field name="name">Banks</field>
+			<field name="res_model">inseta.bank</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+
+        <record id="act_window_vacancyreason" model="ir.actions.act_window">
+			<field name="name">WSP Vacancy Reasons</field>
+			<field name="res_model">res.vacancyreason</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					 
+				</p>
+			</field>
+		</record>
+        <menuitem id="menu_seta" name="SETAs" sequence="10" action="act_window_seta" parent="inseta_skills.skills_configuration_menu"/>
+        <menuitem id="menu_siccode" name="SIC Codes" sequence="11" action="act_window_siccode" parent="inseta_skills.skills_configuration_menu"/>
+        <menuitem id="menu_subsector" name="Sub Sector" sequence="12" action="act_window_subsector" parent="inseta_skills.skills_configuration_menu"/>
+        <menuitem id="menu_bank" name="Banks" sequence="13" action="act_window_bank" parent="inseta_skills.skills_configuration_menu"/>
+
+        <menuitem id="menu_docrelates" name="Document Types" sequence="5" action="act_window_docrelates" parent="inseta_skills.menu_wsp_config"/>
+        <menuitem id="menu_vacancyreasons" name="Hard To Fill Vacancy Reasons" sequence="6" action="act_window_vacancyreason" parent="inseta_skills.menu_wsp_config"/>
+        <menuitem id="menu_formsp" name="Scarce &amp; Critical Skills" sequence="7" action="act_window_formsp" parent="inseta_skills.menu_wsp_config"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="seq_inseta_lpro_code" model="ir.sequence">
+            <field name="name">Inseta LPRO</field>
+            <field name="code">inseta.lpro</field>
+            <field name="prefix">LR</field>
+            <field name="padding">6</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Email template -->
+
+        <record id="mail_template_notify_learning_programme_employer_after_registration" model="mail.template">
+            <field name="name">Notification After submission Learning Programming</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.organisation_id.name}, <br/>
+                This email serves to confirm the receipts of documents for ${object.dg_evaluation_id.name}. Feedback will be provided once <br/>
+                verification of documents is done.<br/>
+                
+                Yours Sincerely <br/>
+                Learning Division
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learning_programme_project_admin" model="mail.template">
+            <field name="name">Notification To Project Admin Learning Programming</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                Documents for ${object.dg_evaluation_id.name} have been submitted. Please log on to the system to evaluate.<br/>
+                
+                Yours Sincerely <br/>
+                Projects Division
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learning_programme_specialist" model="mail.template">
+            <field name="name">Notification To Learning Specialist Learning Programming</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                The Project Admin has evaluated the Documents for ${object.dg_evaluation_id.name} have been submitted. Please log on to the system to approve<br/>
+                
+                Yours Sincerely <br/>
+                Projects ${object.write_uid.name}
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learning_programme_manager" model="mail.template">
+            <field name="name">Notification To Learning manager Learning Programming</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                The Project Admin has evaluated the Documents for ${object.dg_evaluation_id.name} have been submitted. Please log on to the system to approve<br/>
+                
+                Yours Sincerely <br/>
+                Projects ${object.write_uid.name}
+
+            ]]></field>
+        </record>
+
+
+        <record id="mail_template_notify_learning_programme_cfo" model="mail.template">
+            <field name="name">Notification To Learning Manager Learning Programming</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                Documents for ${object.dg_evaluation_id.name} has been approved. Please log onto the system to approve the Funding Agreement<br/>
+                Yours Sincerely <br/>
+                Projects ${object.write_uid.name}
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learning_programme_coo" model="mail.template">
+            <field name="name">Notification To COO Learning Programming</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                A funding agreement for a ${object.dg_evaluation_id.name} has been signed by the Employer. Please log onto the system to <br/>
+view it
+                Yours Sincerely <br/>
+                Learning Division
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learning_programme_cfo" model="mail.template">
+            <field name="name">Notification To CFO Learning Programming</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                A funding agreement for a ${object.dg_evaluation_id.name} has been signed by the COO. Please log onto the system to <br/>
+view it
+                Yours Sincerely <br/>
+                Projects ${object.write_uid.name}
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learning_programme_ceo" model="mail.template">
+            <field name="name">Notification To CEO Learning Programming</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                A funding agreement for a ${object.dg_evaluation_id.name} has been signed by the CFO. Please log onto the system to <br/>
+view it
+                Yours Sincerely <br/>
+                Projects ${object.write_uid.name}
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learning_programme_all" model="mail.template">
+            <field name="name">Notification To All Learning Programming</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                Please note that ${object.organisation_id.name} has submitted learning programming report reference ${object.dg_evaluation_id.name} Please  <br/>
+                log onto the system to view.
+                Yours Sincerely <br/>
+                Learning Division
+
+            ]]></field>
+        </record>
+ 
+        <record id="mail_template_notify_learning_programme_employer_rework" model="mail.template">
+            <field name="name">Notification To Employer For rework (Learning programme)</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.organisation_id.name}, <br/>
+                <p>Company Name: ${object.organisation_id.name}, <br/>
+                Your application with DG reference ${object.dg_evaluation_id.name} funding is on hold pending the following: <br/>
+                Query Reason: ${object.rework_comment} <br/>
+                Please submit outstanding information in within (5) working days for us to re-evaluate your application.<br/>
+                Yours Sincerely <br/>
+                Learning Division
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learning_programme_followers_rework" model="mail.template">
+            <field name="name">Notification Learning Programming Followers for rework</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                A funding agreement for a ${object.dg_evaluation_id.name} has been queried.<br/>
+                Yours Sincerely.<br/>
+                ${object.write_uid.name}<br/>
+                Learning Division <br/>  
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_to_employer_after_approval" model="mail.template">
+            <field name="name">Notification Learning Programming To employer after approval</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                A funding agreement for a ${object.dg_evaluation_id.name} has been Approved.<br/>
+                Yours Sincerely <br/>
+                ${object.write_uid.name}<br/>
+                Learning Division <br/>
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_notify_learning_programme_followers_for_rework_submit" model="mail.template">
+            <field name="name">Notification Learning Programming Followers for rework Submission</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learning Programme Notification</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                Please note that ${object.organisation_id.name} has submitted a rework for the reference ${object.dg_evaluation_id.name} Please  <br/>
+                log onto the system to view.<br/>
+                Yours Sincerely <br/>
+                ${object.organisation_id.name}<br/>
+                <br/>
+
+            ]]></field>
+        </record>
+
+
+
+        <record id="mail_template_send_internship_funding_agreement" model="mail.template">
+            <field name="name">Inseta Send Internship funding agreement template</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Internship Funding Agreement</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="report_template" ref="inseta_learning_programme.internship_funding_agreement_report"/>
+            <field name="report_name">Internship Funding Agreement_${(object.financial_year_id.name or '').replace('/','_')}</field>
+             
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                A funding agreement contract for ${object.financial_year_id.name} has been generated. Kindly review the attachment <br/>
+                Yours Sincerely <br/>
+                ${object.create_uid.name}<br/>
+                <br/>
+
+            ]]></field>
+        </record>
+
+        <record id="mail_template_send_learnership_funding_agreement" model="mail.template">
+            <field name="name">Inseta Send Learnership funding agreement template</field>
+            <field name="email_from">"INSETA"registrations@inseta.org.za</field>
+            <field name="subject">Learnership Funding Agreement</field>
+            <field name="model_id" ref="inseta_learning_programme.model_inseta_lpro"/>
+            <field name="auto_delete" eval="False"/> 
+            <field name="report_template" ref="inseta_learning_programme.internship_funding_agreement_report"/>
+            <field name="report_name">Learnership Funding Agreement_${(object.financial_year_id.name or '').replace('/','_')}</field>
+             
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir / Madam, <br/>
+                A funding agreement contract for ${object.financial_year_id.name} has been generated. Kindly review the attachment <br/>
+                Yours Sincerely <br/>
+                ${object.create_uid.name}<br/>
+                <br/>
+
+            ]]></field>
+        </record>
+
+        
+    </data>
+</odoo>

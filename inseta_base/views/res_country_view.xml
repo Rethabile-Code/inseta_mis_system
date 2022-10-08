@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+		<record model="ir.ui.view" id="view_country_form" >
+			<field name="name">res.country.form</field>
+			<field name="model">res.country</field>
+			<field name="inherit_id" ref="base.view_country_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='state_ids']/tree" position="inside">
+					<field name="saqacode"/>
+                    <field name="legacy_system_id" />
+				</xpath>
+            </field>
+        </record>
+
+
+		<record model="ir.ui.view" id="view_country_state_tree" >
+			<field name="name">res.country.state.tree</field>
+			<field name="model">res.country.state</field>
+			<field name="inherit_id" ref="base.view_country_state_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//tree" position="inside">
+					<field name="saqacode"/>
+                    <field name="legacy_system_id" />
+				</xpath>
+            </field>
+        </record>
+
+    </odoo>

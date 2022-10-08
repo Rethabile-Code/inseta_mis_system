@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wspatr_error_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.wspatr.error.wizard.form</field>
+        <field name="model">inseta.wspatr.error.wizard</field>
+        <field name="arch" type="xml">
+            <form string="WSP/ATR Error ">
+                <group>
+                    <group colspan="4">
+                        <field name="message" readonly="1" />
+                        <field name="error_file" string="Download" readonly="1" />
+                    </group>
+                </group>
+
+                <footer>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="wspatr_error_wizard_action" model="ir.actions.act_window">
+        <field name="name">WSPATR Error</field>
+        <field name="res_model">inseta.wspatr.error.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

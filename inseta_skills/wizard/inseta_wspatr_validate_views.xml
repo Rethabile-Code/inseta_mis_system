@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wspatr_validate_wizard_view_form" model="ir.ui.view">
+        <field name="name">inseta.wspatr.validate.wizard.form</field>
+        <field name="model">inseta.wspatr.validate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="WSP/ATR Evaluation">
+                <field name="stage" invisible="1" />
+                <group>
+                    <group colspan="4">
+                        <!-- <field name="wspatr_id" invisible="1"/> -->
+                        <field name="evaluation_id" invisible="1"/>
+
+                        <field name="option" string="Option" attrs="{
+                            'required':[('stage','in',('validation',))],
+                            'invisible':[('stage','in',('approval','assessment',))],
+                            }"/>
+                        <field name="option2" string="Option" attrs="{
+                            'required':[('stage','in',('assessment',))],
+                            'invisible':[('stage','in',('approval','validation'))],
+                            }"/>
+
+                        <field name="option3" string="Option" attrs="{
+                            'required':[('stage','in',('approval',))],
+                            'invisible':[('stage','in',('assessment','validation'))],
+                            }"/>
+
+                        <field string="Comment" name="comment" attrs="{'required':['|','|',('option','=', 'Query'), ('option2','=', 'Query'), ('option3','in', ('Query','Reject'))]}"/>
+                    </group>
+                </group>
+
+                <footer>
+                    <button string='Submit' name="wspatr_validate" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <record id="wspatr_validate_wizard_action" model="ir.actions.act_window">
+        <field name="name">WSPATR Evaluation</field>
+        <field name="res_model">inseta.wspatr.validate.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wspatr_validate_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

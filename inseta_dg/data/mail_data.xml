@@ -1,0 +1,1478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="mail_act_pending_verification" model="mail.activity.type">
+            <field name="name">Pending Verification</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="inseta_dg.model_inseta_dgapplication"/>
+        </record>
+
+        <record id="mail_act_pending_approval" model="mail.activity.type">
+            <field name="name">Pending Approval</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="inseta_dg.model_inseta_dgapplication"/>
+        </record>
+
+        <record id="mail_act_dgapplication_rework" model="mail.activity.type">
+            <field name="name">Rework</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="inseta_dg.model_inseta_dgapplication"/>
+        </record>
+
+
+
+
+       <!--Funding window Approval Request email -->
+        <record id="mail_template_notify_dgwindow_approvalrequest_ceo" model="mail.template">
+            <field name="name">DG Funding Window Request for Approval: PMO Manager</field>
+            <field name="model_id" ref="inseta_dg.model_inseta_dgfunding_window"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_ceo_email()}</field>
+            <field name="subject">DG Window Approval for ${object.financial_year_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear CEO,<br/> <br/>
+                        A task to approve DG application window has been submitted. Please log onto the system to action.
+                        <br/>
+                        <br/>
+                        Click the button below to approve <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgfunding.window&amp;view_type=form">Approve</a>
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/> ${object.create_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+        <record id="mail_template_notify_dgwindow_approved_pmomgr" model="mail.template">
+            <field name="name">DG Window Approved: CEO</field>
+            <field name="model_id" ref="inseta_dg.model_inseta_dgfunding_window"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_mgr_email()}</field>
+            <field name="subject">DG Funding Window Approved for ${object.financial_year_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.pmo_mgr_ids and object.pmo_mgr_ids[0].name or 'Sir/Madame'},<br/> <br/>
+                        The CEO has approved DG Opening window. 
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/> ${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_notify_dgwindow_rework_pmomgr" model="mail.template">
+            <field name="name">DG Window Queried: CEO</field>
+            <field name="model_id" ref="inseta_dg.model_inseta_dgfunding_window"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_mgr_email()}</field>
+            <field name="subject">DG Funding Window for ${object.financial_year_id.name} Queried!</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.pmo_mgr_ids and object.pmo_mgr_ids[0].name or 'Sir/Madame'},<br/> <br/>
+                        The CEO has queried the DG Opening window submission, see comments below:
+                        <br/><br/>
+                        Comments: ${object.comment}
+                        <br/>
+                        Click the button below to rework <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgfunding.window&amp;view_type=form">Rework</a>
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/> ${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+<!-- DG INDUSTRY FUNDED WINDOW OPEN -->
+
+       <!--Funding window Approval Request email -->
+        <record id="mail_template_notify_dgindustryfundedwindow_approvalrequest_ceo" model="mail.template">
+            <field name="name">DG Industry Funded Window Open Request for Approval: PMO Manager</field>
+            <field name="model_id" ref="inseta_dg.model_inseta_dgindustryfunded_window"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_ceo_email()}</field>
+            <field name="subject">DG Industry Funded Window Approval</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear COO,<br/> <br/>
+                        A task to approve DG  Industry Funded window window has been submitted. Please log onto the system to action.
+                        <br/>
+                        <br/>
+                        Click the button below to approve <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgfunding.window&amp;view_type=form">Approve</a>
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/> ${object.create_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+        <record id="mail_template_notify_dgindustryfundedwindow_approved_pmomgr" model="mail.template">
+            <field name="name">DG Industry Funded Window Approved: COO</field>
+            <field name="model_id" ref="inseta_dg.model_inseta_dgindustryfunded_window"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_mgr_email()}</field>
+            <field name="subject">DG INDUSTRY Funded Window Approved for ${object.financial_year_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.pmo_mgr_ids and object.pmo_mgr_ids[0].name or 'Sir/Madame'},<br/> <br/>
+                        The COO has approved DG Opening window. 
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/> ${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_notify_dgindustryfundedwindow_rework_pmomgr" model="mail.template">
+            <field name="name">DG Window Queried: CEO</field>
+            <field name="model_id" ref="inseta_dg.model_inseta_dgfunding_window"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_mgr_email()}</field>
+            <field name="subject">DG Industry Funded Window for ${object.financial_year_id.name} Queried!</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.pmo_mgr_ids and object.pmo_mgr_ids[0].name or 'Sir/Madame'},<br/> <br/>
+                        The COO has queried the DG Industry Funded Opening window submission, see comments below:
+                        <br/><br/>
+                        Comments: ${object.comment}
+                        <br/>
+                        Click the button below to rework <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgindustryfunded.window&amp;view_type=form">Rework</a>
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/> ${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+<!--DG application-->
+
+     <!-- Email template for "Sending Notification" to Employer after submission -->
+        <record id="mail_template_notify_dgappl_employer" model="mail.template">
+            <field name="name">DG Application: Employer</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_employer_contact_email()}</field>
+            <field name="subject">Your DG application for ${object.financial_year_id.name} acknowledged.</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.organisation_id.name or ''},<br/> <br/>
+                        Your application for a DG for a ${object.dgtype_id.name} with submission date ${object.submitted_date.strftime('%B %d, %Y')} is hereby acknowledged. The
+                        outcome will be communicated to you thereafter. <br/><br/>
+                        % if object.is_hei:
+                            <ul>
+                                <li>TVET College Name: ${object.organisation_id.name}</li>
+                                <li>HEI Number: ${object.organisation_id.sdl_no}</li>
+                                <li>Programme: ${object.dgtype_id.name}</li>
+                            </ul>
+                        % else:
+                            <ul>
+                                <li>Company Name: ${object.organisation_id.name}</li>
+                                <li>SDL Number: ${object.organisation_id.sdl_no}</li>
+                                <li>Programme: ${object.dgtype_id.name}</li>
+                            </ul>
+                        %endif
+
+                        Should you require any additional information, please contact INSETA.<br/>
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+        <record id="mail_template_notify_dgappl_employer_progress1" model="mail.template">
+            <field name="name">DG Application Progress Update: Employer</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_employer_contact_email()}</field>
+            <field name="subject">Progress Update: Your DG application for ${object.financial_year_id.name}.</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.organisation_id.name or ''},<br/> <br/>
+                        Your application for a DG for a ${object.dgtype_id.name} with submission date ${object.submitted_date.strftime('%B %d, %Y')}
+                        has been <strong>
+                        % if object.state == "pending_approval": 
+                            verified.
+                        % elif object.state == "pending_adjudication": 
+                            evaluated.
+                        % elif object.state == "pending_approval2": 
+                            recommended.
+                        % elif object.state in ("approve","reject"): 
+                            reviewed by the CEO.
+                        % endif
+                        </strong> <br/><br/>
+                        Should you require any additional information, please contact INSETA.<br/>
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+     <!-- Email template for "Sending Notification" to Employer afterregistration -->
+        <record id="mail_template_notify_dgappl_pmoadmin" model="mail.template">
+            <field name="name">DG Application: PMO Admin</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_admin_email()}</field>
+            <field name="subject">DG Application Submitted: ${object.organisation_id.name} (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.pmo_admin_ids and object.pmo_admin_ids[0].name or 'Sir/Madame'},<br/> <br/>
+                        An application for a Discretionary Grant ${object.organisation_id.name} for ${object.dgtype_id.name} with reference number
+                        ${object.name} has been submitted. Please log on to the system to evaluate.  <br/>
+                        Click the button below to evaluate<br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgapplication&amp;view_type=form">Evaluate</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    <!-- Email template for "Sending Notification" to employer for rework -->
+        <record id="mail_template_notify_dgappl_employer_rework" model="mail.template">
+            <field name="name">DG Application Rework</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_employer_contact_email()}</field>
+            <field name="subject">Your DG Application for ${object.financial_year_id.name} has been queried</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.organisation_id.name or ''},<br/> <br/>
+                        Your application has been verified by INSETA, please find below the outcomes: <br /><br/>
+                        Findings: <br/> 
+                        Required action: <br/>
+                        Comments: ${object.rework_comment}
+                        <br /><br/>
+                        Kindly note that you up until end of business day on the ${object.rework_expiration_date} to
+                        respond to this query. Failure to do so may result to your registration being rejected.
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+    <!-- Email template for "Sending Notification Reminder" to Organisation for rework -->
+        <record id="mail_template_remind_dgapplication_rework" model="mail.template">
+            <field name="name">DG Application Rework Reminder</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_employer_contact_email()}</field>
+            <field name="subject">DG Application Rework Reminder: ${object.organisation_id.name} (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+            <tbody>
+                <!-- CONTENT -->
+                <tr>
+                    <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                            <tr><td valign="top" style="font-size: 13px;">
+                                <div>
+                                    Dear ${object.organisation_id.name or ''},<br/> <br/>
+                                    Your application with reference number ${object.name} 
+                                    is waiting to be reworked. Kindly address and submit the rework.<br/>
+
+                                    <br/><br/>
+                                    Yours Sincerely,<br />
+                                    --<br/>Projects Division
+                                </div>
+                            </td></tr>
+                            <tr><td style="text-align:center;">
+                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                            </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </td></tr>
+            </table>
+        </field>
+        <field name="lang">${object.create_uid.partner_id.lang}</field>
+        <field name="auto_delete" eval="False"/>
+        </record>
+
+
+    <!-- Email template for "NOtify PMO admin" after rework -->
+        <record id="mail_template_notify_dgapplication_afterrework" model="mail.template">
+            <field name="name">DG Application After Rework: PMO Admin </field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_admin_email()}</field>
+            <field name="subject">DG Application Query Replied:  ${object.organisation_id.name} (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+            <tbody>
+                <tr>
+                    <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                            <tr><td valign="top" style="font-size: 13px;">
+                                <div>
+                                    Dear ${object.pmo_admin_ids and object.pmo_admin_ids[0].name or 'Sir/Madame'},<br/> <br/>
+                                    The Employer ${object.organisation_id.name}  has responded to a query. Please log onto the system to evaluate.<br/>
+                                    Click the button below to evaluate<br/>
+                                    <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgapplication&amp;view_type=form">Evaluate</a>
+                                    <br/><br/>
+                                    Yours Sincerely,<br />
+                                    --<br/>Projects Division
+                                </div>
+                            </td></tr>
+                            <tr><td style="text-align:center;">
+                            <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                            </td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </td></tr>
+            </table>
+        </field>
+        <field name="lang">${object.create_uid.partner_id.lang}</field>
+        <field name="auto_delete" eval="False"/>
+        </record>
+
+     <!-- Email template for "Sending Notification" to Evaluation Committee after verify -->
+        <record id="mail_template_notify_dgappl_evalcomm" model="mail.template">
+            <field name="name">DG Application: Evaluation Committee</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_evaluation_committee_email()}</field>
+            <field name="subject">DG Application for recommendation: ${object.organisation_id.name} - ${object.financial_year_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Sir/Madame,<br/> <br/>
+                        An application for a Discretionary Grant for ${object.organisation_id.name} with reference number ${object.name}
+                        has been verified. Please log on to the system to recommend.  <br/>
+                        Click the button below to recommend<br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgapplication&amp;view_type=form">Recommend</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+     <!-- Email template for "Sending Notification" to Adjudicaton Committee after verify -->
+        <record id="mail_template_notify_dgappl_adjudcomm" model="mail.template">
+            <field name="name">DG Application: Adjudication Committee</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_adjudication_committee_email()}</field>
+            <field name="subject">DG Application for recommendation: ${object.organisation_id.name} - ${object.financial_year_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Sir/Madame,<br/> <br/>
+                        An application for a Discretionary Grant for ${object.organisation_id.name} with reference number ${object.name}
+                        has been verified. Please log on to the system to recommend.  <br/>
+                        Click the button below to recommend<br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgapplication&amp;view_type=form">Recommend</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    <!-- Email template for "Sending Notification" to eval comm after adjud comm rework -->
+        <record id="mail_template_notify_dgappl_evalcomm_rework" model="mail.template">
+            <field name="name">DG Application Rework Evaluation Committee</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_evaluation_committee_email()}</field>
+            <field name="subject">DG Application for ${object.organisation_id.name} (${object.financial_year_id.name}) has been queried</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Sir/Madame,<br/> <br/>
+                        The application has been reviewed by the Adjudication Committee: <br /><br/>
+                        Findings: <br/> 
+                        Required action: <br/>
+                        Comments: ${object.evaluation_ids.filtered(lambda x: x.state == 'rework_eval_committee')[0].comment}
+
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>Adjudication Committee
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+     <!-- Email template for "Sending Notification" to CEO after Adjudicaton Committee recommendation -->
+        <record id="mail_template_notify_dgappl_ceo" model="mail.template">
+            <field name="name">DG Application: CEO</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_ceo_email()}</field>
+            <field name="subject">DG Application: ${object.organisation_id.name} - ${object.financial_year_id.name}</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear CEO,<br/> <br/>
+                        An application for a Discretionary Grant for ${object.organisation_id.name} with reference number ${object.name}
+                        has been verified. Please log on to the system to recommend.  <br/>
+                        Click the button below to recommend<br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgapplication&amp;view_type=form">Recommend</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    <!-- Email template for "Sending Notification" to adjud comm after ceo rework -->
+        <record id="mail_template_notify_dgappl_adjudcomm_rework" model="mail.template">
+            <field name="name">DG Application Rework Adjudication Committee</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_adjudication_committee_email()}</field>
+            <field name="subject">DG Application for ${object.organisation_id.name} (${object.financial_year_id.name}) has been queried by the CEO</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Sir/Madame,<br/> <br/>
+                        The application has been reviewed by the Adjudication Committee: <br /><br/>
+                        Findings: <br/> 
+                        Required action: <br/>
+                        Comments: ${object.evaluation_ids.filtered(lambda x: x.state == 'rework_eval_committee')[0].comment}
+
+                        <br/><br/>
+                        Yours Sincerely,<br />
+                        --<br/>Adjudication Committee
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+     <!-- Email template for "Sending Notification" to pmo admin after approval/rejection -->
+        <record id="mail_template_notify_dgappl_pmoadmin_afterapproval" model="mail.template">
+            <field name="name">DG Application After Approval/Rejection: PMO Admin</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_admin_email()}</field>
+            <field name="subject">DG Application Reviewed: ${object.organisation_id.name} (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Stakeholder,<br/> <br/>
+                        An application for a Discretionary Grant ${object.organisation_id.name} for ${object.dgtype_id.name} with reference number
+                        ${object.name} has been verified by the CEO. Please log on to the system to review.  <br/>
+                        Click the button below to Review<br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgapplication&amp;view_type=form">Review</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+     <!-- Email template for "Sending Notification" to pgr mgr after approval/rejection -->
+        <record id="mail_template_notify_dgappl_rejection_mgr_afterreview" model="mail.template">
+            <field name="name">DG Application Rejection Review: Programme Mgr</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_programme_mgr_email()}</field>
+            <field name="subject">DG Application for your signature: ${object.organisation_id.name} (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Stakeholder,<br/> <br/>
+                        An application for a Discretionary Grant for ${object.organisation_id.name} with reference number ${object.name} 
+                        dated ${object.submitted_date.strftime('%B %d, %Y')} has been declined by INSETA. Please login to sign the letter. 
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="inseta_dg.action_dgapplication_decline_letter_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}_decline_letter</field> -->
+        </record>
+
+
+     <!-- Email template for "Sending Notification" to pgr mgr after approval/rejection -->
+        <record id="mail_template_notify_dgappl_approval_mgr_afterreview" model="mail.template">
+            <field name="name">DG Application Approval Review: Programme Mgr</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_programme_mgr_email()}</field>
+            <field name="subject">DG Application for your signature: ${object.organisation_id.name} (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Stakeholder,<br/> <br/>
+                        An application for a Discretionary Grant for ${object.organisation_id.name} with reference number ${object.name} 
+                        dated ${object.submitted_date.strftime('%B %d, %Y')} has been approved. Please login to sign the letter.
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="inseta_dg.action_dgapplication_recommendation_letter_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}_recommendation_letter</field> -->
+        </record>
+
+
+   <!-- Email template for "Sending Decline Notification" to Coo after prg mgr signature -->
+        <record id="mail_template_notify_dgappl_rejection_coo_afterreview1" model="mail.template">
+            <field name="name">DG Application Rejection Final Signature: COO</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_coo_email()}</field>
+            <field name="subject">DG Application for Final Signature: ${object.organisation_id.name} (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Stakeholder,<br/> <br/>
+                        A letter for a DG application for a ${object.dgtype_id.name} for ${object.organisation_id.name} with reference number ${object.name} has been signed by the programme manager. Please log onto the system for
+                        the final signature. <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgapplication&amp;view_type=form">view</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="inseta_dg.action_dgapplication_decline_letter_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}_decline_letter</field> -->
+        </record>
+
+    <!-- Email template for "Sending Notification" to Coo after prog mgr signature -->
+        <record id="mail_template_notify_dgappl_approval_coo_afterreview1" model="mail.template">
+            <field name="name">DG Application Final Signature: COO</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_coo_email()}</field>
+            <field name="subject">DG Application for Final Signature: ${object.organisation_id.name} (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Stakeholder,<br/> <br/>
+                        A letter for a DG application for a ${object.dgtype_id.name} for ${object.organisation_id.name} with reference number ${object.name} has been signed by the programme manager. Please log onto the system for
+                        the final signature. <br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=inseta.dgapplication&amp;view_type=form">view</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="inseta_dg.action_dgapplication_recommendation_letter_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}_recommendation_letter</field> -->
+        </record>
+
+
+    <!-- Email to PMO admin after coo signature -->
+        <record id="mail_template_notify_dgappl_pmoadmin_after_coo_sign" model="mail.template">
+            <field name="name">DG Application notify Signing: Pmo Admin</field>
+            <field name="model_id" ref="model_inseta_dgapplication"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_admin_email()}</field>
+            <field name="subject">DG Application signed by COO: ${object.organisation_id.name} (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT --> 
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Stakeholder,<br/> <br/>
+                        An application for a Discretionary Grant ${object.organisation_id.name} for ${object.dgtype_id.name} with reference number
+                        ${object.name} has been signed by the COO. Please log on to the system to review.  <br/>
+                        Click the button below to Review<br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;action=&amp;model=inseta.dgapplication&amp;view_type=form">Review</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    <!--DG RECOMMENDATION/DECLINE LETTERS are sent from DG Evaluation model-->
+    <!-- Email template for "Sending approval Notification" to employer after ceo signature -->
+        <record id="mail_template_notify_dgappl_approval_employer_afterreview" model="mail.template">
+            <field name="name">DG Application Recommendation: Employer</field>
+            <field name="model_id" ref="model_inseta_dgevaluation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.dgapplication_id.get_employer_contact_email()}</field>
+            <field name="subject">Your DG application for ${object.dgapplication_id.financial_year_id.name} has been recommended</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.dgapplication_id.organisation_id.name},<br/> <br/>
+                        Your application dated ${object.dgapplication_id.submitted_date.strftime('%B %d, %Y')} for Discretionary Grant for ${object.dgapplication_id.dgtype_id.name} has been
+                        recommended by INSETA. Please see the recommendation letter attached. 
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="report_template" ref="inseta_dg.action_dgapplication_recommendation_letter_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}_recommendation_letter</field>
+        </record>
+
+    <!-- Email template for "Sending rejection Notification" to employer after ceo signature -->
+        <record id="mail_template_notify_dgappl_rejection_employer_afterreview" model="mail.template">
+            <field name="name">DG Application Decline: Employer</field>
+            <field name="model_id" ref="model_inseta_dgevaluation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.dgapplication_id.get_employer_contact_email()}</field>
+            <field name="subject">Your DG application for ${object.dgapplication_id.financial_year_id.name} has been declined</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.dgapplication_id.organisation_id.name},<br/> <br/>
+                        Your application dated ${object.dgapplication_id.submitted_date.strftime('%B %d, %Y')} for Discretionary Grant for ${object.dgapplication_id.dgtype_id.name} has been
+                        declined by INSETA. Please see the decline letter attached.
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="report_template" ref="inseta_dg.action_dgapplication_decline_letter_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}_decline_letter</field>
+        </record>
+
+<!--BULK APPROVAL AND RECOMMENDATION EMAILS-->
+
+     <!-- Email template for Bulk approval to pmo admin after CEO approval/rejection -->
+        <record id="mail_template_notify_dgappl_pmoadmin_afterbulkapproval" model="mail.template">
+            <field name="name">DG Bulk Approval: PMO Admin</field>
+            <field name="model_id" ref="model_inseta_dgapproval"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_admin_email()}</field>
+            <field name="subject">DG Approval by CEO: Financial Year (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Sir/Madame, <br/> <br/>
+                        The following Discretionary grants have been verified by the CEO.  <br/>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Submission No</th>
+                                    <th>Employer</th>
+                                    <th>DG Type</th>
+                                    <th>Financial Year</th>
+                                    <th>State</th>
+                                </tr>
+                            </thead>
+                            % for dg in object.dgapplication_ids:
+                                <tr>
+                                    <td>${dg.name}</td>
+                                    <td>${dg.organisation_id.name}</td>
+                                    <td>${dg.dgtype_id.name}</td>
+                                    <td>${dg.financial_year_id.name}</td>
+                                    <td>${dg.state}</td>
+                                </tr>
+                            % endfor
+                        </table>
+                        <br/>
+                        Please log on to the system to review.<br/>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/> ${object.create_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+     <!-- Email template for bulk recommendation to Adjudicaton Committee after verify -->
+        <record id="mail_template_notify_dgappl_adjudcomm_bulk" model="mail.template">
+            <field name="name">DGEC Bulk Recommendation: Adjudication Committee</field>
+            <field name="model_id" ref="model_inseta_dgrecommendation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_adjudication_committee_email()}</field>
+            <field name="subject">DGEC recommendation: Financial Year ( ${object.financial_year_id.name} )</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Sir/Madame,<br/> <br/>
+                        The following Discretionary Grants have been verified.  <br/>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Submission No</th>
+                                    <th>Employer</th>
+                                    <th>DG Type</th>
+                                    <th>Financial Year</th>
+                                    <th>State</th>
+                                </tr>
+                            </thead>
+                            % for dg in object.dgapplication_ids:
+                                <tr>
+                                    <td>${dg.name}</td>
+                                    <td>${dg.organisation_id.name}</td>
+                                    <td>${dg.dgtype_id.name}</td>
+                                    <td>${dg.financial_year_id.name}</td>
+                                    <td>${dg.state}</td>
+                                </tr>
+                            % endfor
+                        </table>
+                        <br/>
+                        Please log on to the system to recommend.
+                        <br/><br/>
+
+                        Click the button below to recommend <br/>
+                        <a class="btn btn-primary" context="{'default_committee':'DGAC'}" href="/web#id=${object.id}&amp;action=&amp;model=inseta.dgrecommendation&amp;view_type=form&amp;cids=1&amp;;menu_id=">Recommend</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+     <!-- Email template for bulk recommendation  to CEO after Adjudicaton Committee recommendation -->
+        <record id="mail_template_notify_dgappl_ceo_bulk" model="mail.template">
+            <field name="name">DG Bulk Recommendation: CEO</field>
+            <field name="model_id" ref="model_inseta_dgrecommendation"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_ceo_email()}</field>
+            <field name="subject">DG Approval Request: Financial Year - (${object.financial_year_id.name})</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.get_ceo() and object.get_ceo()[0].name or 'Sir/Madame'}<br/> <br/>
+                        The following Discretionary Grants have been verified.  <br/>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Submission No</th>
+                                    <th>Employer</th>
+                                    <th>DG Type</th>
+                                    <th>Financial Year</th>
+                                    <th>State</th>
+                                </tr>
+                            </thead>
+                            % for dg in object.dgapplication_ids:
+                                <tr>
+                                    <td>${dg.name}</td>
+                                    <td>${dg.organisation_id.name}</td>
+                                    <td>${dg.dgtype_id.name}</td>
+                                    <td>${dg.financial_year_id.name}</td>
+                                    <td>${dg.state}</td>
+                                </tr>
+                            % endfor
+                        </table>
+                        has been verified. Please log on to the system to approve.  <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>${object.write_uid.name}
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <!--HEI Representative registration-->
+
+        <record id="mail_template_notify_hei_rep" model="mail.template">
+            <field name="name">HEI Rep Registration: Rep</field>
+            <field name="model_id" ref="model_mis_hei_representative"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">Your HEI representative registration</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear ${object.first_name or ''},<br/> <br/>
+                        A registration for HEI Representative with reference number ${object.reference} dated ${object.registration_date} is hereby acknowledged. <br/>
+                        The outcome will be communicated thereafter.
+        
+                        Herewith your login details: 
+                        <ul>
+                            <li>Username: ${object.user_id.login}</li>
+                            <li>Password: ${object.password}</li>
+                        </ul>
+
+                        Should you require any additional information, please contact INSETA.<br/>
+                        <br /><br/>
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+        <record id="mail_template_notify_hei_rep_admin" model="mail.template">
+            <field name="name">HEI Rep Registration: PMO Admin</field>
+            <field name="model_id" ref="model_mis_hei_representative"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.get_pmo_admin_email()}</field>
+            <field name="subject">HEI Representative registration</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Sir/Madame,<br/> <br/>
+                        A registration for a HEI Representative with reference number
+                        ${object.reference} has been submitted. Please log on to the system to evaluate.  <br/>
+                        Click the button below to evaluate<br/>
+                        <a class="btn btn-primary" href="/web#id=${object.id}&amp;model=mis.hei.representative&amp;view_type=form">Evaluate</a>
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+
+       <record id="mail_template_notify_hei_rep_approve" model="mail.template">
+            <field name="name">HEI Rep Registration: Approval</field>
+            <field name="model_id" ref="model_mis_hei_representative"/>
+            <field name="email_from">"INSETA"noreply@inseta.org.za</field>
+            <field name="email_to">${object.email}</field>
+            <field name="subject">HEI Representative registration approval</field>
+            <field name="body_html" type="html">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
+<table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+<tbody>
+    <!-- CONTENT -->
+    <tr>
+        <td align="center" style="min-width: 590px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                <tr><td valign="top" style="font-size: 13px;">
+                    <div>
+                        Dear Stakeholder,<br/> <br/>
+                        Your application for a HEI Representative with reference number ${object.reference} 
+                        dated ${object.submitted_date.strftime('%B %d, %Y')} has been 
+                        % if object.state == "approve": 
+                            approved.
+                        % elif object.state == "reject": 
+                            rejected.
+                        % endif
+                        <br/><br/>
+
+                        Yours Sincerely,<br />
+                        --<br/>Projects Division
+                    </div>
+                </td></tr>
+                <tr><td style="text-align:center;">
+                  <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+                </td></tr>
+            </table>
+        </td>
+    </tr>
+</tbody>
+</table>
+</td></tr>
+</table>
+            </field>
+            <field name="lang">${object.create_uid.partner_id.lang}</field>
+            <field name="auto_delete" eval="False"/>
+            <!-- <field name="report_template" ref="inseta_dg.action_dgapplication_recommendation_letter_report"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}_recommendation_letter</field> -->
+        </record>
+
+
+
+    </data>
+</odoo>

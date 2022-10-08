@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <!-- facilitator form -->
+		<record id="view_facilitator_form" model="ir.ui.view">
+			<field name="name">SDP form</field>
+			<field name="model">inseta.sdf</field>
+			<field name="arch" type="xml">
+				<form string="SDF" create="0">
+					<header>
+                        <button name="action_set_to_draft" 
+							string="Set to Draft" 
+							type="object"
+							states="approve"
+							groups="base.group_system" />
+
+						<button name="action_submit" string="Submit" type="object"
+							class="oe_highlight"
+							attrs="{'invisible':[('state','not in',['draft'])]}" />
+
+						<!--Skill Specialist and Manager can ask for rework. 
+						When skill specialist asks for rework it goes to SDF
+						When skill manager asks for rework, it goes to Skill specialist-->
+                    	<button name="%(inseta_skills.sdf_register_rework_wizard_action)d" 
+							states="pending_verification,pending_approval,rework_skill_spec" 
+							context="{'default_comment_type':'Rework'}" 
+							string="Rework" 
+							type="action" 
+							groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_manager" />
+
+						<!--Skill Specialist SDF for rework. 
+						if SDF does not rework within 10 days, Specialise can submit for Rejection-->
+						<button name="action_request_manager_rejection" 
+							string="SKill Spec. Request Rejection" type="object"
+							class="oe_highlight" groups="inseta_skills.group_skills_specialist"
+							confirm="Please confirm"
+							states="awaiting_rejection"
+						/>
+
+						<button name="action_sdf_submit_rework" 
+							string="Re-submit" 
+							type="object"
+							confirm="Are you sure you want to resubmit rework? All representatives will be notified!"
+							class="oe_highlight" 
+							states="rework"
+							/>
+
+                        <button name="action_verify" string="Verify" type="object"
+							class="oe_highlight" 
+							groups="inseta_skills.group_skills_specialist"
+							confirm="Are you sure you want to verify this Registration? All representatives will be notified!"
+							states="pending_verification,rework_skill_spec" 
+							/>
+
+						<button name="%(inseta_skills.sdf_register_rework_wizard_action)d"  
+							string="Reject"
+							type="action" 
+							context="{'default_comment_type':'Reject'}" 
+							class="oe_highlight" groups="inseta_skills.group_skills_manager"
+							states="pending_approval, awaiting_rejection2"/>
+
+                        <button name="action_manager_approve" string="Approve" type="object"
+							class="oe_highlight" 
+							confirm="Are you sure you want to approve this Registration? All representatives will be notified!"
+							groups="inseta_skills.group_skills_manager"
+							states="pending_approval" />
+
+
+						<field name="state" widget="statusbar" clickable="True"
+							statusbar_visible="draft,submit,pending_verification,pending_approval,reject,approve"
+							statusbar_colors='{"rework":"blue","approve":"green","reject":"red"}'
+							/>
+					</header>
+					<sheet>
+
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="image_512" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_128&quot;}"/>
+                        <div class="oe_title">
+                            <field name="active" invisible="1"/>
+							<h2><field name="reference" string="Ref. No" readonly="1" force_save="1"/> </h2>
+                            <h1>
+                                <field name="name" readonly="1" force_save="1" class="oe_inline" />
+                            </h1>
+                        </div>
+
+						<notebook class="dolphin">
+							<page string="SDF" autofocus="1">
+								<group>
+									<group>
+										<field name="title" string="Title" attrs="{ 'readonly':[('state','in',['approve', 'reject'])]}"  options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+										<field name="first_name" attrs="{ 'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="last_name" string="Surname" attrs="{ 'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="middle_name" string="Middlename" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="initials" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="user_id" string="Related User" groups="base.group_system" options="{'no_create': True}"/>
+										<field name="partner_id" string="Related Partner" groups="base.group_system" options="{'no_create': True}"/>
+
+										<!-- <field name="username" string="Username" groups="base.group_system"/> -->
+										<field name="password" string="SDF Password" groups="base.group_system"/>
+										<!-- <field name="organisation_user_id" string="Org. Related User" groups="base.group_system" options="{'no_create': True,'no_open':True}"/>
+										<field name="organisation_password" string="Org. Password" groups="base.group_system"/> -->
+										<field name="email" string="Email" widget="email" attrs="{ 'readonly':[('state','in',['approve', 'reject'])]}" />
+										<field name="phone" placeholder="0117827460" attrs="{'readonly':[('state','in',['approve', 'reject'])]}" /> 
+										<field name="mobile" placeholder="0117827460" required="1" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/> 
+										<field name="fax_number" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="approval_date" readonly="1" />
+										<field name="registration_date" readonly="1" />
+										
+										<separator string="Physical Address"/>
+
+										<field name="country_id" required="1"  options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}" />
+										<field name="street" string="Physical Address Line 1" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="street2" string="Physical Address Line 2"  attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="street3" string="Physical Address Line 3"  attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="physical_code"  string="Physical Code"  attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="physical_suburb_id" string="Physical Suburb"   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="physical_city_id" string="Physical City" class="o_address_city" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="state_id"  class="o_address_state" string="Physical Province" options="{'no_open': True, 'no_create': True}"  attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="physical_urban_rural"  string="Urban/Rural"  attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="physical_municipality_id" string="Physical Municipality"   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<!-- <button name="action_work_addr_map" 
+											string="Map" type="object"
+											icon="fa-map" /> -->
+
+
+										<!-- <group>
+											<div>
+												<field name="use_physical_for_postal_addr"  nolabel="1" class="oe_inline" modifiers="{}"/>
+												<label for="use_physical_for_postal_addr" string="Use Physical for Postal?" class="oe_inline"/>
+											</div>
+										</group> -->
+												<field name="use_physical_for_postal_addr"  class="oe_inline" modifiers="{}"/>
+
+
+										<separator string="Postal Address"/>
+
+										<field name="postal_address1" string="Postal Address Line 1"  attrs="{'required':[('use_physical_for_postal_addr','=', True)], 'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="postal_address2" string="Postal Address Line 2"  attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="postal_address3" string="Postal Address Line 3"  attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="postal_code" string="Postal Code"  attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+
+										<field name="postal_suburb_id" string="Postal Suburb"   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="postal_city_id" string="Physical City" class="o_address_city" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="postal_province_id"  class="o_address_state" string="Postal Province" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="postal_urban_rural"  string="Urban/Rural"  />
+										<field name="postal_municipality_id" string="Postal Municipality"   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<!-- <button name="action_postal_addr_map" 
+											string="Map" type="object"
+											icon="fa-map" /> -->
+									
+									</group>
+
+									<group string="Citizenship &amp; Status" attrs="{'readonly':[('state','!=','draft')]}">  
+										<field name="citizen_resident_status_id" options="{'no_create': True,'no_quick_create':True,'no_open':True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="nationality_id" placeholder="Nationality" class="oe_no_button"
+											options="{'no_create': True,'no_quick_create':True,'no_open':True}" />
+										<field name="id_no"/>
+										<field name="alternateid_type_id" attrs="{'readonly':[('state','not in',['draft', 'rework'])]}"  options="{'no_create': True,'no_quick_create':True,'no_open':True}"/>
+											<span class="o_form_label o_td_label" >
+												<b>Alternate ID Proof</b>
+											</span>
+										<div class="o_address_format">
+											<field name="alternate_id_proof" filename="file_name3" class="o_address_street" attrs="{'readonly':[('state','in',['reject','approve'])]}"/> 
+											<field name="file_name3" invisible="1" class="o_address_street"/>
+										</div>
+										<field name="gender_id" options="{'no_create': True,'no_open':True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="birth_date" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<!-- <field name="passport_no" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/> -->
+										<field name="home_language_id" attrs="{'readonly':[('state','in',['approve', 'reject'])]}" />
+
+										<separator string="Status"/>
+										<field name="disability_id" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="socio_economic_status_id" options="{'no_create': True,'no_quick_create':True,'no_open':True}" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+										<field name="equity_id" attrs="{'readonly':[('state','in',['approve', 'reject'])]}" options="{'no_create': True,'no_quick_create':True,'no_open':True}" />
+
+										<separator string="Occupation"/>
+										<field name="current_occupation" />
+										<field name="occupation_years"/> 
+										<field name="occupation_experience" style="background:#efefef" />
+
+										<separator string="Training"/>
+										<field name="highest_edu_level_id" options="{'no_create': True,'no_quick_create':True,'no_open':True}"/>
+										<field name="highest_edu_desc" />
+										<field name="has_requested_sdftraining" />
+										<field name="has_completed_sdftraining" />
+										<field name="accredited_trainingprovider_name" />
+									</group>
+								</group>
+                                <group string="GPS Cordinates">
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="latitude_degree">
+                                            <b>Latitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="latitude_degree" placeholder="Degree" string="Degree" class="o_address_zip"   style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip"   style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="latitude_seconds" placeholder="Seconds" string="Seconds" class="o_address_zip"   style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <button
+                                                string="Get Geolocation"
+                                                name="get_geolocation"
+                                                colspan="2"
+                                                icon="fa-check"
+                                                type="object"/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <span class="o_form_label o_td_label" name="longitude_degree">
+                                            <b>Longitude</b>
+                                        </span>
+                                        <div class="o_address_format" >
+                                            <field name="longitude_degree" string="Degree" placeholder="Degree" class="o_address_zip"   style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_minutes" placeholder="Minutes" string="Minutes" class="o_address_zip"   style="padding:2px; border:solid 1px #DDDDDD"/>
+                                            <field name="longitude_seconds" placeholder="Seconds" string="Seconds"  class="o_address_zip"  style="padding:2px; border:solid 1px #DDDDDD"/>
+                                        </div>
+                                    </group>
+                                </group>
+								<group>
+									<field name="general_comments"  colspan="4"
+										attrs="{'readonly':[('state','in',['approve', 'reject'])]}" />
+								</group>
+								<group>
+									<div>
+										<field name="is_confirmed" required="1" nolabel="1" class="oe_inline" modifiers="{}"/>
+										<label for="is_confirmed" string="I hereby confirm that the following information submitted is complete, accurate and not missleading" class="oe_inline"/>
+									</div>
+								</group>
+							</page>
+							<page string="Organisation Details">
+								<field name="id" invisible="1"/>
+								<field name="organisation_ids" context="{'default_sdf_id':id}" attrs="{'readonly':[('state','in',['reject'])]}" nolabel="1">
+									<tree string="Organisations">
+										<field name="sdf_id" invisible="1" />
+										<field name="reference" />
+										<field name="organisation_id"/>
+										<field name="appointment_letter" filename="file_name"/>
+										<field name="file_name" invisible="0" readonly="1" force_save="1"/> 
+										<button name="export_appointment_letter" string="Download" type="object" icon="fa-download" />  
+										<field name="sdf_role" />
+										<field name="approval_date" />
+										<field name="state"/>
+									</tree>
+									<form string="SDF orgnaisation">
+										<header>
+											<button name="action_draft" 
+												string="Reset to Draft" 
+												states="draft"
+												type="object"
+												confirm="Are you sure you want to set to draft?"
+												groups="base.group_system"/>
+
+											<button name="action_submit" 
+												string="Submit" 
+												class="oe_highlight"
+												states="draft,rework,rework_skill_spec"
+												type="object"
+												confirm="Are you sure you want to submit?"
+												groups="inseta_skills.group_sdf_user,inseta_skills.group_sdf_secondary,inseta_skills.group_skills_admin"/>
+
+											<!-- <button name="action_print_approval_letter" string="Print Approval Letter" type="object"
+												states="approve"
+												 groups="inseta_skills.group_skills_manager"
+												/>
+
+											<button name="action_print_rejection_letter" string="Print Rejection Letter" type="object"
+												states="reject"
+												groups="inseta_skills.group_skills_manager"
+												/>  -->
+
+											<field name="state" widget="statusbar" clickable="True"
+												statusbar_visible="draft,submit,pending_approval,approve,reject"
+												statusbar_colors='{"approve":"green","reject":"red"}'
+												/>
+										</header>
+										<sheet>
+											<div class="oe_title">
+												<h1>
+													<field name="reference" string="Ref. No" readonly="1" force_save="1"/>
+												</h1>
+											</div>
+											
+											<group>
+												<div/>
+												<field name="is_sdf" invisible="1" />
+												<field name="sdf_id" string="SDF" readonly="1" force_save="1" />
+												<label for="sdl_no">SDL No</label>
+												<div class="o_row">
+													<field name="sdl_no" required="1"/>
+													<button
+														string="Search"
+														name="action_search_organisation"
+														colspan="2"
+														icon="fa-search"
+														class="oe_highlight"
+														type="object"/>
+												</div>
+												<field name="organisation_id" readonly="1" force_save="1"/>
+
+												<!-- <field name="organisation_id" attrs="{'readonly':[('state','in',['reject','approve'])]}"/> -->
+												<field name="is_acting_for_employer" class="oe_inline" modifiers="{}" invisible="1"/>
+												<field name="sdf_function_id"  options="{'no_create': True,'no_open':True}" invisible="1"/>
+												<field name="appointment_procedure_id"  options="{'no_create': True,'no_open':True}" invisible="1"/>
+												<field name="require_appointment_procedure_other" invisible="1" />
+												<!-- <field name="appointment_procedure_other" attrs="{'invisible':[('require_appointment_procedure_other','=',False)],'required':[('require_appointment_procedure_other','=',True)]}" /> -->
+												<field name="appointment_procedure_other" invisible="1"/>
+												<field name="sdf_role"  attrs="{'readonly':[('state','in',['reject','approve'])], 'required': [('organisation_id','!=',False)]}"/>
+												<field name="appointment_letter" filename="file_name" attrs="{'readonly':[('state','in',['reject','approve'])], 'required': [('organisation_id','!=',False)]}"/> 
+												<field name="file_name" invisible="1"/>
+												<field name="application_date" readonly="1" force_save="1" />
+												<field name="require_registration_date" invisible="1" />
+												<field name="registration_start_date" string="Start Date" attrs="{'required':[('require_registration_date','=',True)],'readonly':[('state','in',['reject','approve'])]}" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager" />
+												<field name="registration_end_date" string="End Date"  attrs="{'required':[('require_registration_date','=',True)],'readonly':[('state','in',['reject','approve'])]}" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/>
+												<field name="recommendation_status" readonly="1" force_save="1" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/>
+												<field name="recommendation_comment" readonly="1" force_save="1" groups="inseta_skills.group_skills_specialist,inseta_skills.group_skills_admin,inseta_skills.group_skills_manager"/>
+											</group>
+										</sheet>
+										<div class="oe_chatter">
+											<field name="message_follower_ids" widget="mail_followers"/>
+											<field name="activity_ids" widget="mail_activity"/>
+											<field name="message_ids" widget="mail_thread"/>
+										</div>
+									</form>
+								</field>
+
+								<h2>Child Organisations</h2>
+								<div class="row" >
+									<div class="col col-md-12">
+										<table class="table table-stripped" style="width:100%">
+											<field name="child_organisations_html" />
+										</table>
+									</div>
+								</div>
+							</page>
+							<page string="Documents">
+								<group>
+									<group>
+										<span class="o_form_label o_td_label" name="sdf_certificate">
+											<b>SDF Certificate</b>
+										</span>
+										<div class="o_address_format" string="Postal Address">
+											<field name="sdf_certificate"  filename="file_name"   widget="binary" attrs="{'readonly':[('state','in',['approve', 'reject'])]}"/>
+											<field name="file_name" invisible="1" />
+										</div>
+										<span class="o_form_label o_td_label" name="code_of_conduct">
+											<b>Code of Conduct</b>
+										</span>
+										<div class="o_address_format" string="Postal Address">
+											<field name="code_of_conduct" filename="file_name2" widget="binary" attrs="{'readonly':[('state','in',['approve', 'reject'])]}" />
+											<field name="file_name2" string="File Name" invisible="1" />
+										</div>
+									</group>
+								</group>
+							</page>
+						</notebook>
+                       
+                    </sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_facilitator_tree" model="ir.ui.view">
+			<field name="name">view.inseta.sdf.tree</field>
+			<field name="model">inseta.sdf</field>
+			<field name="arch" type="xml">
+				<tree string="Contacts" create="0" >
+					<field name="reference" />
+					<field name="title" />
+                    <field name="first_name" string="Fisrt Name"/>
+                    <field name="last_name"/>
+                    <field name="initials"/>
+					<field name="id_no" />
+                    <field name="gender_id"/>
+                    <field name="mobile" class="o_force_ltr" optional="show"/>
+                    <field name="email" optional="show"/>
+                    <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
+                    <field name="physical_city_id" optional="hide" />
+                    <field name="physical_province_id" optional="hide"/>
+                    <field name="nationality_id" optional="hide" />
+					<field name="registration_date" />
+					<field name="approval_date" />
+					<field name="state" string="Status" />
+                </tree>
+			</field>
+		</record>
+
+		<record id="view_facilitator_filter" model="ir.ui.view">
+			<field name="name">SDF </field>
+			<field name="model">inseta.sdf</field>
+			<field name="arch" type="xml">
+				<search string="Search SDF">
+					<field name="reference" />
+					<field name="name" />
+					<field name="first_name"/> 
+					<field name="last_name"/> 
+					<field name="id_no" />
+					<field name="email" />
+                    <field name="gender_id"/>
+                    <field name="physical_city_id" />
+                    <field name="physical_province_id" />
+                    <field name="nationality_id" />
+					<group expand="0" string="Group By">
+						<filter string="Status" name="grp_state" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Physical Province" name="grp_province"  domain="[]" context="{'group_by':'physical_province_id'}"/>
+						<filter string="Physical City" name="grp_city"  domain="[]" context="{'group_by':'physical_city_id'}"/>
+						<filter string="Gender" name="grp_gender"  domain="[]" context="{'group_by':'gender_id'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+ 
+
+        <!-- SDP Facilitator. -->
+		<record id="action_sdp_facilitator" model="ir.actions.act_window">
+			<field name="name">SDF</field>
+			<field name="res_model">inseta.sdf</field>
+			<field name="view_mode">kanban,tree,form</field>
+             <field name="domain">[]</field>
+             <!-- <field name="context">{'default_contact_type': 'sdf'}</field> -->
+             <field name="search_view_id" ref="inseta_skills.view_facilitator_filter" />
+			<field name="view_id" eval="False" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Register SDF.
+				</p>
+			</field>
+		</record>
+
+         
+        <record id="action_facilitator_tree" model="ir.actions.act_window.view">
+          <field eval="1" name="sequence" />
+          <field name="view_mode">tree</field>
+          <field name="view_id" ref="view_facilitator_tree" />
+          <field name="act_window_id" ref="action_sdp_facilitator" />
+        </record>
+
+        <record id="action_facilitator_form" model="ir.actions.act_window.view">
+          <field eval="2" name="sequence" />
+          <field name="view_mode">form</field>
+          <field name="view_id" ref="view_facilitator_form" />
+          <field name="act_window_id" ref="action_sdp_facilitator" />
+        </record>
+
+        <menuitem id="skills_sdf_menu" name="Skills" sequence="4"  groups="group_sdf_user,group_sdf_secondary,group_employer,group_skills_view_only,group_skills_specialist,group_skills_admin,group_skills_manager"/>     
+        <menuitem 
+			id="skills_sdf_registerations_menu" 
+			name="SDF Dashboard" 
+			sequence="2" 
+			parent="skills_sdf_menu"/>
+
+        <menuitem id="skills_sdf_emp_menu3" 
+			name="SDF" 
+			sequence="1" 
+			parent="skills_sdf_registerations_menu" 
+			action="action_sdp_facilitator"/>
+
+        <menuitem id="skills_configuration_menu" 
+			name="Configuration" 
+			sequence="20" 
+			parent="skills_sdf_menu"
+			groups="inseta_skills.group_skills_manager"/>    
+
+</odoo>

@@ -1,0 +1,1119 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+
+		<record id="view_inseta_main_programme_form" model="ir.ui.view">
+			<field name="name">programme form</field>
+			<field name="model">inseta.programme</field>
+			<field name="arch" type="xml">
+				<form string="Programme">
+					<header> 
+					</header>
+					<sheet>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h1>Title <br/>
+                                <field name="name" default_focus="1" required="1"/>
+                            </h1>
+                        </div>
+						<group>
+						<separator string="Details" colspan="4"/>
+							<group>
+								<field name="programme_code" string="Programme code" required="1"/>
+								<field name="programme_type_id" invisible="1" required="0"/>
+								<field name="nqflevel_id" required="1"/>
+                                <!-- <field name="ofo_occupation_id" required="0"/> -->
+							</group>
+							<group>
+								<field name="qualification_id" required="1"/>
+								<field name="credits" required="1"/>
+								<field name="quality_assurance_id"/>
+								<!-- <field name="programme_unit_id"/> -->
+							</group> 
+						</group>
+						  
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_inseta_main_programme_tree" model="ir.ui.view">
+			<field name="name">view.inseta.programme.tree</field>
+			<field name="model">inseta.programme</field>
+			<field name="arch" type="xml">
+				<tree string="" create="0" sample="1" multi_edit="1">
+                    <field name="name" string="Name" required="1"/>
+                    <field name="programme_code" string="Programme code" required="1"/>
+                    <field name="programme_type_id" invisible="1"/>
+                    <field name="nqflevel_id" required="1"/>
+                    <field name="qualification_id" required="1"/>
+                    <field name="credits" required="1"/>
+                    <field name="quality_assurance_id"/>
+                    <field name="programme_unit_id"/>
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+                </tree>
+
+			</field>
+		</record>
+
+		<record id="view_inseta_main_programme_filter" model="ir.ui.view">
+			<field name="name">Learnership programme</field>
+			<field name="model">inseta.programme</field>
+			<field name="arch" type="xml">
+				<search string="Search">
+					<field name="name" />
+                    <field name="programme_code" string="Programme code"/>
+                    <field name="quality_assurance_id"/>
+                    <field name="qualification_id"/>
+                    <field name="programme_type_id" invisible="1"/>
+					 
+				</search>
+			</field>
+		</record>
+
+		<record id="view_inseta_learner_programme_form" model="ir.ui.view">
+			<field name="name">Learnership programme form</field>
+			<field name="model">inseta.learner.programme</field>
+			<field name="arch" type="xml">
+				<form string="Learnership programme">
+					<header> 
+					</header>
+					<sheet>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h1>
+                                <field name="name" default_focus="1"  placeholder="Name"/>
+                            </h1>
+                        </div>
+						<group>
+						<separator string="Details" colspan="4"/>
+							<group>
+								<field name="learnership_saqa_id" string="Learnership SAQA ID" required="1"/>
+								<field name="programme_code" string="Programme code" required="1"/>
+								<field name="programme_type_id" invisible="1" required="0"/>
+								<field name="nqflevel_id" required="1"/>
+                                <!-- <field name="ofo_occupation_id" required="0"/> -->
+								<field name="qualification_type_id" required="0"/>
+								<field name="learner_programme_type_id" required="0"/>
+								<field name="is_unit_base" invisible="1"/>
+								<field name="quality_assurance_id" required="1"/>
+								<field name="registration_start_date" readonly="0" required="1"/>
+								<field name="registration_end_date" readonly="0" required="1"/>
+								<field name="is_south_african_programme" invisible="1"/>
+							</group>
+							<group>
+								<field name="qualification_id" attrs="{'required': [('is_unit_base', '=', 'Yes')]}"/>
+								<!-- <field name="minimum_credits" required="0"/> -->
+								<field name="fundamental_credits" readonly="1" force_save="1"/>
+								<field name="core_credits" readonly="1" force_save="1"/>
+								<field name="elective_credits" readonly="1" force_save="1"/>
+								<field name="credits" required="1"/>
+								<field name="active" readonly="0"/>
+								
+								<!-- <field name="programme_unit_id"/> -->
+							</group> 
+						</group>
+						<notebook>
+							<page name="learnership_unit_standard_ids" string="Learnership Unit Standard line">
+								<field name="learnership_unit_standard_ids" nolabel="1" readonly="0" required="0" context="{'default_learner_programme_id': active_id}" force_save="1">
+									<form string="Inseta Learnership Unit Standard">
+										<!-- <div class="oe_title">
+											<h1> Title <br/>
+												<field name="name" placeholder="" readonly="0"/>
+											</h1>
+										</div> -->
+										<group> 
+											<group>
+												
+												<field name="learner_programme_id" string="Learnership" required="0" invisible="1"/>
+												<!-- <field name="code" required="0"/> -->
+												<field name="unit_standard_id" required="1"/>
+												<field name="unit_standard_type_id" required="1" invisible="0"/> 
+												<field name="credits" required="1"/>
+											</group>
+											<group>
+												<field name="legacy_system_id" invisible="0"/>
+												<field name="active"/>
+											</group> 
+										</group>
+									</form>
+									<tree string="Learnership ">
+										<field name="learner_programme_id" string="Learnership" required="0" invisible="1"/>
+										<!-- <field name="code" required="0"/> -->
+										<field name="unit_standard_id" required="1"/>
+										<field name="unit_standard_type_id" required="1" invisible="0"/> 
+										<field name="credits" required="1"/>
+									</tree>
+								</field>
+							</page>
+							<page name="unitstandards" string="Unit Standards line" invisible="1">
+								<field name="unit_standard_ids" nolabel="1" readonly="0" required="1">
+									<form string="Inseta Unit Standard">
+										<div class="oe_title">
+											<h1>
+												<field name="name" string="Learnership code" placeholder="Name" readonly="0"/>
+											</h1>
+										</div>
+										<group> 
+											<group>
+												<field name="unit_standard_type" required="1" invisible="0"/> 
+												<field name="code" string="Learnership code" required="1"/>
+												<field name="nqflevel_id" required="1"/>
+												
+											</group>
+											<group>
+												<field name="core_credits" invisible="0"/>
+												<field name="elective_credits" required="0"/>
+												<field name="fundamental_credits" invisible="0"/>
+												<field name="credits" required="1"/>
+											</group> 
+										</group>
+									</form>
+									<tree string="Unit standards">
+										<field name="name" required="1" invisible="0"/> 
+										<field name="unit_standard_type" required="1" invisible="0"/> 
+										<field name="code" required="1"/>
+										<field name="nqflevel_id" required="1"/>
+										<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+										<field name="core_credits" invisible="0" string="Core"/>
+										<field name="elective_credits" required="0" string="Elective"/>
+										<field name="credits" required="1"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+						  
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_inseta_learner_programme_tree" model="ir.ui.view">
+			<field name="name">view.inseta.learner.programme.tree</field>
+			<field name="model">inseta.learner.programme</field>
+			<field name="arch" type="xml">
+				<tree string="" sample="1" multi_edit="1">
+                    <field name="name" string="Name" required="1"/>
+                    <field name="programme_code" string="Programme code" required="1"/>
+                    <field name="learnership_saqa_id" string="Learnership SAQA ID"/>
+                    <field name="programme_type_id" invisible="1"/>
+                    <field name="nqflevel_id" required="1"/>
+                    <field name="qualification_id" required="1"/>
+                    <field name="credits" required="1"/>
+                    <field name="quality_assurance_id"/>
+                    <field name="programme_unit_id"/>
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+                </tree>
+
+			</field>
+		</record>
+
+		<record id="view_inseta_learner_programme_filter" model="ir.ui.view">
+			<field name="name">Learnership programme</field>
+			<field name="model">inseta.learner.programme</field>
+			<field name="arch" type="xml">
+				<search string="Search">
+					<field name="name" />
+                    <field name="programme_code" string="Programme code"/>
+                    <field name="learnership_saqa_id" string="Learnership SAQA ID" required="1"/>
+                    <field name="quality_assurance_id"/>
+                    <field name="qualification_id"/>
+                    <field name="programme_type_id" invisible="1"/>
+					
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+					<!-- <group expand="0" string="Group By">
+						<filter string="Status" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Work Province" icon="terp-personal" domain="[]" context="{'group_by':'physical_province_id'}"/>
+						<filter string="Postal Province" icon="terp-personal" domain="[]" context="{'group_by':'postal_province_id'}"/>
+					</group> -->
+				</search>
+			</field>
+		</record>
+
+        <!-- skill programme form -->
+		<record id="view_learner_skill_programme_form" model="ir.ui.view">
+			<field name="name">Skill programme form</field>
+			<field name="model">inseta.skill.programme</field>
+			<field name="arch" type="xml">
+				<form string="Skill programme">
+					<header> 
+					</header>
+					<sheet>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h1>
+                                <field name="name" default_focus="1"  placeholder="Name"/>
+                            </h1>
+                        </div>
+						<group>
+							<separator string="Details" colspan="4"/>
+							<group>
+								<field name="programme_code" string="Programme code" required="1"/>
+								<field name="programme_type_id" invisible="1"/>
+								<field name="nqflevel_id" required="1"/>
+								<field name="skill_programme_type_id" required="0" invisible="0"/>
+								<field name="qualification_type_id" required="0" invisible="1"/>
+								<field name="is_unit_base" invisible="1"/>
+								<field name="qualification_id" attrs="{'required': [('is_unit_base', '=', 'Yes')]}"/>
+								<field name="quality_assurance_id" required="1"/>
+								<field name="is_south_african_programme" invisible="1"/>
+							</group>
+							<group>
+								
+								<!-- <field name="ofo_occupation_id" required="1"/> -->
+								<field name="fundamental_credits" readonly="1" force_save="1"/>
+								<field name="core_credits" readonly="1" force_save="1"/>
+								<field name="elective_credits" readonly="1" force_save="1"/>
+								<field name="credits" required="1"/>
+								<field name="minimum_credits" required="0" invisible="1"/>
+								<field name="registration_start_date" readonly="0" required="1"/>
+								<field name="registration_end_date" readonly="0" required="1"/>
+								
+							</group>
+							 
+						</group>
+						<notebook>
+							<page name="skill_unit_standard_ids" string="Skills Unit Standard line">
+								<field name="skill_unit_standard_ids" nolabel="1" readonly="0" required="0" context="{'default_skill_programme_id': active_id}">
+									<form string="Inseta Skill Unit Standard">
+										<!-- <div class="oe_title">
+											<h1> Skill programme <br/>
+												<field name="skill_programme_id" required="1" invisible="0"/>
+											</h1>
+										</div> -->
+										<group> 
+											<group>
+												<field name="skill_programme_id" required="0" invisible="1"/>
+												<!-- <field name="code" required="0"/> -->
+												<field name="unit_standard_id" required="1"/>
+												<field name="unit_standard_type_id" required="1" invisible="0"/> 
+												<field name="credits" required="1"/>
+											</group>
+											<group>
+												<field name="legacy_system_id" invisible="0"/>
+												<field name="active"/>
+											</group> 
+										</group>
+									</form>
+									<tree string="Skill Unit standards">
+										<field name="skill_programme_id" required="0" invisible="1"/>
+										<!-- <field name="code" required="1"/> -->
+										<field name="unit_standard_id" required="1"/>
+										<field name="unit_standard_type_id" required="1" invisible="0"/> 
+										<field name="credits" required="1"/>
+									</tree>
+								</field>
+							</page>
+							<page name="unitstandards" string="Unit Standards line" invisible="1">
+								<field name="unit_standard_ids" nolabel="1" readonly="0" required="1">
+									<form string="Inseta Unit Standard">
+										<div class="oe_title">
+											<h1>
+												<field name="name" placeholder="Name" readonly="0"/>
+											</h1>
+										</div>
+										<group> 
+											<group>
+												<field name="unit_standard_type" required="1" invisible="0"/> 
+												<field name="code" required="1"/>
+												<field name="nqflevel_id" required="1"/>
+												
+											</group>
+											<group>
+												<field name="fundamental_credits" invisible="0"/>
+												<field name="core_credits" invisible="0"/>
+												<field name="elective_credits" required="0"/>
+												<field name="credits" required="1"/>
+											</group> 
+										</group>
+									</form>
+									<tree string="Unit standards">
+										<field name="name" required="1" invisible="0"/> 
+										<field name="unit_standard_type" required="1" invisible="0"/> 
+										<field name="code" required="1"/>
+										<field name="nqflevel_id" required="1"/>
+										<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+										<field name="core_credits" invisible="0" string="Core"/>
+										<field name="elective_credits" required="0" string="Elective"/>
+										<field name="credits" required="1"/>
+										
+									</tree>
+								</field>
+							</page>
+						</notebook>
+						  
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_skill_programme_tree" model="ir.ui.view">
+			<field name="name">view.inseta.skill.programme.tree</field>
+			<field name="model">inseta.skill.programme</field>
+			<field name="arch" type="xml">
+				<tree string="" sample="1" multi_edit="1">
+					<field name="name" default_focus="1"  placeholder="Name"/>
+                    <field name="programme_code" string="Programme code" required="1"/>
+                    <field name="programme_type_id" invisible="1"/>
+                    <field name="nqflevel_id" required="1"/>
+                    <field name="qualification_id" required="1"/>
+                    <field name="credits" required="1"/>
+                    <field name="quality_assurance_id"/>
+                    <field name="programme_unit_id"/>
+                </tree>
+			</field>
+		</record>
+
+		<record id="view_skill_programme_filter" model="ir.ui.view">
+			<field name="name">Skill programme</field>
+			<field name="model">inseta.skill.programme</field>
+			<field name="arch" type="xml">
+				<search string="Search">
+					<field name="name"/>
+                    <field name="programme_code" string="Programme code"/>
+                    <field name="quality_assurance_id"/>
+                    <field name="qualification_id"/>
+                    <field name="programme_type_id" invisible="1"/>
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+
+					<!-- <group expand="0" string="Group By">
+						<filter string="Status" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Work Province" icon="terp-personal" domain="[]" context="{'group_by':'physical_province_id'}"/>
+						<filter string="Postal Province" icon="terp-personal" domain="[]" context="{'group_by':'postal_province_id'}"/>
+					</group> -->
+				</search>
+			</field>
+		</record>
+
+		<!-- skill programme form -->
+		<record id="view_qualification_programme_form" model="ir.ui.view">
+			<field name="name">inseta.qualification.programme programme form</field>
+			<field name="model">inseta.qualification.programme</field>
+			<field name="arch" type="xml">
+				<form string="qualification programme">
+					<header> 
+					</header>
+					<sheet>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h1>
+                                <field name="name" default_focus="1"  placeholder="Name"/>
+                            </h1>
+                        </div>
+						<group>
+						<separator string="Details" colspan="4"/>
+							<group>
+								<field name="programme_code" string="Programme code" required="1"/>
+								<field name="programme_type_id" invisible="1"/>
+								<field name="nqflevel_id" required="1"/>
+								<!-- <field name="ofo_occupation_id" required="0"/> -->
+
+                                
+							</group>
+							<group>
+								<field name="qualification_id" required="1"/>
+								<field name="credits" required="1"/>
+								<field name="quality_assurance_id"/>
+								<field name="programme_unit_id"/>
+							</group> 
+						</group>
+						  
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_qualification_programme_tree" model="ir.ui.view">
+			<field name="name">view.inseta.qualification.programme.tree</field>
+			<field name="model">inseta.qualification.programme</field>
+			<field name="arch" type="xml">
+				<tree string="" sample="1" multi_edit="1">
+                    <field name="name" string="Name" required="1"/>
+                    <field name="programme_code" string="Programme code" required="1"/>
+                    <field name="programme_type_id" invisible="1"/>
+                    <field name="nqflevel_id" required="1"/>
+                    <field name="qualification_id" required="1"/>
+                    <field name="credits" required="1"/>
+                    <field name="quality_assurance_id"/>
+                    <field name="programme_unit_id"/>
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+
+                </tree>
+			</field>
+		</record>
+
+		<record id="view_qualification_programme_filter" model="ir.ui.view">
+			<field name="name">Qualification programme</field>
+			<field name="model">inseta.qualification.programme</field>
+			<field name="arch" type="xml">
+				<search string="Search">
+					<field name="name" />
+                    <field name="programme_code" string="Programme code"/>
+                    <field name="quality_assurance_id"/>
+                    <field name="qualification_id"/>
+                    <field name="programme_type_id" invisible="1"/>
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+					<!-- <group expand="0" string="Group By">
+						<filter string="Status" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Work Province" icon="terp-personal" domain="[]" context="{'group_by':'physical_province_id'}"/>
+						<filter string="Postal Province" icon="terp-personal" domain="[]" context="{'group_by':'postal_province_id'}"/>
+					</group> -->
+				</search>
+			</field>
+		</record>
+
+		<record id="view_inseta_wiltvet_programme_form" model="ir.ui.view">
+			<field name="name">wiltvet programme form</field>
+			<field name="model">inseta.wiltvet.programme</field>
+			<field name="arch" type="xml">
+				<form string="Internship programme">
+					<header> 
+					</header>
+					<sheet>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h1>
+                                <field name="name" default_focus="1"  placeholder="Name"/>
+                            </h1>
+                        </div>
+						<group>
+						<separator string="Details" colspan="4"/>
+							<group>
+								<field name="programme_code" string="Programme code" required="1"/>
+								<field name="programme_type_id" invisible="1"/>
+								<field name="nqflevel_id" required="1"/>
+                                <!-- <field name="ofo_occupation_id" required="0"/> -->
+								<field name="qualification_type_id" required="0"/>
+								<field name="is_unit_base" invisible="1"/>
+
+								
+							</group>
+							<group>
+								<field name="qualification_id" attrs="{'required': [('is_unit_base', '=', 'Yes')]}"/>
+								<field name="minimum_credits" required="0"/>
+								<field name="credits" required="1"/>
+								<field name="quality_assurance_id" required="1"/>
+								<field name="registration_start_date" readonly="0" required="1"/>
+								<field name="registration_end_date" readonly="0" required="1"/>
+								<field name="is_south_african_programme" invisible="1"/>
+								<!-- <field name="programme_unit_id"/> -->
+							</group> 
+						</group>
+						<notebook>
+							<page name="unitstandards" string="Unit Standards line">
+								<field name="unit_standard_ids" nolabel="1" readonly="0" required="1">
+									<form string="Inseta Unit Standard">
+										<div class="oe_title">
+											<h1>
+												<field name="name" string="Learnership code" placeholder="Name" readonly="0"/>
+											</h1>
+										</div>
+										<group> 
+											<group>
+												<field name="unit_standard_type" required="1" invisible="0"/> 
+												<field name="code" string="Learnership code" required="1"/>
+												<field name="nqflevel_id" required="1"/>
+												
+											</group>
+											<group>
+												<field name="fundamental_credits" invisible="0"/>
+												<field name="core_credits" invisible="0"/>
+												<field name="elective_credits" required="0"/>
+												<field name="credits" required="1"/>
+											</group> 
+										</group>
+									</form>
+									<tree string="Unit standards">
+										<field name="name" required="1" invisible="0"/> 
+										<field name="unit_standard_type" required="1" invisible="0"/> 
+										<field name="code" required="1"/>
+										<field name="nqflevel_id" required="1"/>
+										<field name="core_credits" invisible="0" string="Core"/>
+										<field name="elective_credits" required="0" string="Elective"/>
+										<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+										<field name="credits" required="1"/>
+										
+									</tree>
+								</field>
+							</page>
+						</notebook>
+						  
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_inseta_wiltvet_programme_tree" model="ir.ui.view">
+			<field name="name">view.inseta.wiltvet.programme.tree</field>
+			<field name="model">inseta.wiltvet.programme</field>
+			<field name="arch" type="xml">
+				<tree string="" sample="1" multi_edit="1">
+                    <field name="name" string="Name" required="1"/>
+                    <field name="programme_code" string="Programme code" required="1"/>
+                    <field name="programme_type_id" invisible="1"/>
+                    <field name="nqflevel_id" required="1"/>
+                    <field name="qualification_id" required="1"/>
+                    <field name="credits" required="1"/>
+                    <field name="quality_assurance_id"/> 
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+                </tree>
+
+			</field>
+		</record>
+
+		<record id="view_inseta_wiltvet_programme_filter" model="ir.ui.view">
+			<field name="name">Learner internship programme</field>
+			<field name="model">inseta.wiltvet.programme</field>
+			<field name="arch" type="xml">
+				<search string="Search">
+					<field name="name" />
+                    <field name="programme_code" string="Programme code"/>
+                    <field name="quality_assurance_id"/> 
+                    <field name="programme_type_id" invisible="1"/>
+					 
+				</search>
+			</field>
+		</record>
+
+		<record id="view_inseta_internship_programme_form" model="ir.ui.view">
+			<field name="name">internship programme form</field>
+			<field name="model">inseta.internship.programme</field>
+			<field name="arch" type="xml">
+				<form string="Internship programme">
+					<header> 
+					</header>
+					<sheet>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h1>
+                                <field name="name" default_focus="1"  placeholder="Name"/>
+                            </h1>
+                        </div>
+						<group>
+						<separator string="Details" colspan="4"/>
+							<group>
+								<field name="programme_code" string="Programme code" required="1"/>
+								<field name="programme_type_id" invisible="1"/>
+								<field name="nqflevel_id" required="1"/>
+                                <!-- <field name="ofo_occupation_id" required="0"/> -->
+								<field name="qualification_type_id" required="0"/>
+								<field name="is_unit_base" invisible="1"/>
+
+								
+							</group>
+							<group>
+								<field name="qualification_id" attrs="{'required': [('is_unit_base', '=', 'Yes')]}"/>
+								<field name="minimum_credits" required="0"/>
+								<field name="credits" required="1"/>
+								<field name="quality_assurance_id" required="1"/>
+								<field name="registration_start_date" readonly="0" required="1"/>
+								<field name="registration_end_date" readonly="0" required="1"/>
+								<field name="is_south_african_programme" invisible="1"/>
+								<!-- <field name="programme_unit_id"/> -->
+							</group> 
+						</group>
+						<notebook>
+							<page name="unitstandards" string="Unit Standards line">
+								<field name="unit_standard_ids" nolabel="1" readonly="0" required="1">
+									<form string="Inseta Unit Standard">
+										<div class="oe_title">
+											<h1>
+												<field name="name" string="Learnership code" placeholder="Name" readonly="0"/>
+											</h1>
+										</div>
+										<group> 
+											<group>
+												<field name="unit_standard_type" required="1" invisible="0"/> 
+												<field name="code" string="Learnership code" required="1"/>
+												<field name="nqflevel_id" required="1"/>
+												
+											</group>
+											<group>
+												<field name="fundamental_credits" invisible="0"/>
+												<field name="core_credits" invisible="0"/>
+												<field name="elective_credits" required="0"/>
+												<field name="credits" required="1"/>
+											</group> 
+										</group>
+									</form>
+									<tree string="Unit standards">
+										<field name="name" required="1" invisible="0"/> 
+										<field name="unit_standard_type" required="1" invisible="0"/> 
+										<field name="code" required="1"/>
+										<field name="nqflevel_id" required="1"/>
+										<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+										<field name="core_credits" invisible="0" string="Core"/>
+										<field name="elective_credits" required="0" string="Elective"/>
+										<field name="credits" required="1"/>
+										
+									</tree>
+								</field>
+							</page>
+						</notebook>
+						  
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_inseta_internship_programme_tree" model="ir.ui.view">
+			<field name="name">view.inseta.internship.programme.tree</field>
+			<field name="model">inseta.internship.programme</field>
+			<field name="arch" type="xml">
+				<tree string="" sample="1" multi_edit="1">
+                    <field name="name" string="Name" required="1"/>
+                    <field name="programme_code" string="Programme code" required="1"/>
+                    <field name="programme_type_id" invisible="1"/>
+                    <field name="nqflevel_id" required="1"/>
+                    <field name="qualification_id" required="1"/>
+                    <field name="credits" required="1"/>
+                    <field name="quality_assurance_id"/> 
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+                </tree>
+
+			</field>
+		</record>
+
+		<record id="view_inseta_internship_programme_filter" model="ir.ui.view">
+			<field name="name">Learner internship programme</field>
+			<field name="model">inseta.internship.programme</field>
+			<field name="arch" type="xml">
+				<search string="Search">
+					<field name="name" />
+                    <field name="programme_code" string="Programme code"/>
+                    <field name="quality_assurance_id"/> 
+                    <field name="programme_type_id" invisible="1"/>
+					 
+				</search>
+			</field>
+		</record>
+
+		<record id="view_inseta_bursary_programme_form" model="ir.ui.view">
+			<field name="name">Bursary programme form</field>
+			<field name="model">inseta.bursary.programme</field>
+			<field name="arch" type="xml">
+				<form string="Internship programme">
+					<header> 
+					</header>
+					<sheet>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h1>
+                                <field name="name" default_focus="1"  placeholder="Name"/>
+                            </h1>
+                        </div>
+						<group>
+						<separator string="Details" colspan="4"/>
+							<group>
+								<field name="programme_code" string="Programme code" required="1"/>
+								<field name="programme_type_id" invisible="1"/>
+								<field name="nqflevel_id" required="1"/>
+                                <!-- <field name="ofo_occupation_id" required="0"/> -->
+								<field name="qualification_type_id" required="0"/>
+								<field name="is_unit_base" invisible="1"/>
+
+								
+							</group>
+							<group>
+								<field name="qualification_id" attrs="{'required': [('is_unit_base', '=', 'Yes')]}"/>
+								<field name="minimum_credits" required="0"/>
+								<field name="credits" required="1"/>
+								<field name="quality_assurance_id" required="1"/>
+								<field name="registration_start_date" readonly="0" required="1"/>
+								<field name="registration_end_date" readonly="0" required="1"/>
+								<field name="is_south_african_programme" invisible="1"/>
+								<!-- <field name="programme_unit_id"/> -->
+							</group> 
+						</group>
+						<notebook>
+							<page name="unitstandards" string="Unit Standards line">
+								<field name="unit_standard_ids" nolabel="1" readonly="0" required="1">
+									<form string="Inseta Unit Standard">
+										<div class="oe_title">
+											<h1>
+												<field name="name" string="Learnership code" placeholder="Name" readonly="0"/>
+											</h1>
+										</div>
+										<group> 
+											<group>
+												<field name="unit_standard_type" required="1" invisible="0"/> 
+												<field name="code" string="Learnership code" required="1"/>
+												<field name="nqflevel_id" required="1"/>
+												
+											</group>
+											<group>
+												<field name="fundamental_credits" invisible="0"/>
+												<field name="core_credits" invisible="0"/>
+												<field name="elective_credits" required="0"/>
+												<field name="credits" required="1"/>
+											</group> 
+										</group>
+									</form>
+									<tree string="Unit standards">
+										<field name="name" required="1" invisible="0"/> 
+										<field name="unit_standard_type" required="1" invisible="0"/> 
+										<field name="code" required="1"/>
+										<field name="nqflevel_id" required="1"/>
+										<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+										<field name="core_credits" invisible="0" string="Core"/>
+										<field name="elective_credits" required="0" string="Elective"/>
+										<field name="credits" required="1"/>
+										
+									</tree>
+								</field>
+							</page>
+						</notebook>
+						  
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_inseta_bursary_programme_tree" model="ir.ui.view">
+			<field name="name">view.inseta.bursary.programme.tree</field>
+			<field name="model">inseta.bursary.programme</field>
+			<field name="arch" type="xml">
+				<tree string="" sample="1" multi_edit="1">
+                    <field name="name" string="Name" required="1"/>
+                    <field name="programme_code" string="Programme code" required="1"/>
+                    <field name="programme_type_id" invisible="1"/>
+                    <field name="nqflevel_id" required="1"/>
+                    <field name="qualification_id" required="1"/>
+                    <field name="credits" required="1"/>
+                    <field name="quality_assurance_id"/> 
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+                </tree>
+
+			</field>
+		</record>
+
+		<record id="view_inseta_bursary_programme_filter" model="ir.ui.view">
+			<field name="name">Bursary programme</field>
+			<field name="model">inseta.bursary.programme</field>
+			<field name="arch" type="xml">
+				<search string="Search">
+					<field name="name" />
+                    <field name="programme_code" string="Programme code"/>
+                    <field name="quality_assurance_id"/> 
+                    <field name="programme_type_id" invisible="1"/>
+					 
+				</search>
+			</field>
+		</record>
+
+		<record id="view_inseta_candidacy_programme_form" model="ir.ui.view">
+			<field name="name">candidacy programme form</field>
+			<field name="model">inseta.candidacy.programme</field>
+			<field name="arch" type="xml">
+				<form string="Candidacy programme">
+					<header> 
+					</header>
+					<sheet>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h1>
+                                <field name="name" default_focus="1"  placeholder="Name"/>
+                            </h1>
+                        </div>
+						<group>
+						<separator string="Details" colspan="4"/>
+							<group>
+								<field name="programme_code" string="Programme code" required="1"/>
+								<field name="programme_type_id" invisible="1"/>
+								<field name="nqflevel_id" required="1"/>
+                                <!-- <field name="ofo_occupation_id" required="0"/> -->
+								<field name="qualification_type_id" required="0"/>
+								<field name="is_unit_base" invisible="1"/>
+
+								
+							</group>
+							<group>
+								<field name="qualification_id" attrs="{'required': [('is_unit_base', '=', 'Yes')]}"/>
+								<field name="minimum_credits" required="0"/>
+								<field name="credits" required="1"/>
+								<field name="quality_assurance_id" required="1"/>
+								<field name="registration_start_date" readonly="0" required="1"/>
+								<field name="registration_end_date" readonly="0" required="1"/>
+								<field name="is_south_african_programme" invisible="1"/>
+								<!-- <field name="programme_unit_id"/> -->
+							</group> 
+						</group>
+						<notebook>
+							<page name="unitstandards" string="Unit Standards line">
+								<field name="unit_standard_ids" nolabel="1" readonly="0" required="1">
+									<form string="Inseta Unit Standard">
+										<div class="oe_title">
+											<h1>
+												<field name="name" string="Learnership code" placeholder="Name" readonly="0"/>
+											</h1>
+										</div>
+										<group> 
+											<group>
+												<field name="unit_standard_type" required="1" invisible="0"/> 
+												<field name="code" string="Learnership code" required="1"/>
+												<field name="nqflevel_id" required="1"/>
+												
+											</group>
+											<group>
+											<field name="fundamental_credits" invisible="0"/>
+												<field name="core_credits" invisible="0"/>
+												<field name="elective_credits" required="0"/>
+												
+												<field name="credits" required="1"/>
+											</group> 
+										</group>
+									</form>
+									<tree string="Unit standards">
+										<field name="name" required="1" invisible="0"/> 
+										<field name="unit_standard_type" required="1" invisible="0"/> 
+										<field name="code" required="1"/>
+										<field name="nqflevel_id" required="1"/>
+										<field name="fundamental_credits" invisible="0" string="Fundamental"/>
+										<field name="core_credits" invisible="0" string="Core"/>
+										<field name="elective_credits" required="0" string="Elective"/>
+										<field name="credits" required="1"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+						  
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_inseta_candidacy_programme_tree" model="ir.ui.view">
+			<field name="name">view.inseta.candidacy.programme.tree</field>
+			<field name="model">inseta.candidacy.programme</field>
+			<field name="arch" type="xml">
+				<tree string="" sample="1" multi_edit="1">
+                    <field name="name" string="Name" required="1"/>
+                    <field name="programme_code" string="Programme code" required="1"/>
+                    <field name="programme_type_id" invisible="1"/>
+                    <field name="nqflevel_id" required="1"/>
+                    <field name="qualification_id" required="1"/>
+                    <field name="credits" required="1"/>
+                    <field name="quality_assurance_id"/> 
+					<!-- <field name="ofo_occupation_id" required="0"/> -->
+                </tree>
+
+			</field>
+		</record>
+
+		<record id="view_inseta_candidacy_programme_filter" model="ir.ui.view">
+			<field name="name">Learner candidacy programme</field>
+			<field name="model">inseta.candidacy.programme</field>
+			<field name="arch" type="xml">
+				<search string="Search">
+					<field name="name" />
+                    <field name="programme_code" string="Programme code"/>
+                    <field name="quality_assurance_id"/> 
+                    <field name="programme_type_id" invisible="1"/>
+					 
+				</search>
+			</field>
+		</record>
+
+		
+
+        <record id="view_skill_programme_type_form" model="ir.ui.view">
+			<field name="name">Programme type form</field>
+			<field name="model">inseta.programme.type</field>
+			<field name="arch" type="xml">
+				<form string="Programme Type">
+					<header> 
+					</header>
+					<sheet>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                            <h1>
+                                <field name="name" default_focus="1"  placeholder="Name"/>
+                            </h1>
+                        </div>
+						<group>
+						<separator string="Details" colspan="4"/>
+							<group>
+								<field name="code" string="Code" required="0"/>
+								<field name="is_type" string="Type" required="1"/>
+								
+							</group>
+							<group>
+								<field name="legacy_system_id" string="Code" required="1"/>
+								 
+							</group> 
+						</group>
+						  
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_skill_programme_type_tree" model="ir.ui.view">
+			<field name="name">view.inseta.programme.type.tree</field>
+			<field name="model">inseta.programme.type</field>
+			<field name="arch" type="xml">
+				<tree string="" sample="1" multi_edit="1">
+                    <field name="name" required="1"/>
+                    <field name="code" string="SAQA code" required="1"/>
+                     
+                </tree>
+			</field>
+		</record>
+
+		<record id="view_skill_programme_type_filter" model="ir.ui.view">
+			<field name="name">Programme Type</field>
+			<field name="model">inseta.programme.type</field>
+			<field name="arch" type="xml">
+				<search string="Search">
+					<field name="name" />
+                    <field name="code" string="SAQA code"/>
+					<!-- <group expand="0" string="Group By">
+						<filter string="Status" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Work Province" icon="terp-personal" domain="[]" context="{'group_by':'physical_province_id'}"/>
+						<filter string="Postal Province" icon="terp-personal" domain="[]" context="{'group_by':'postal_province_id'}"/>
+					</group> -->
+				</search>
+			</field>
+		</record>
+
+		 <record id="action_main_programme_view" model="ir.actions.act_window">
+			<field name="name">All Programmes</field>
+			<field name="res_model">inseta.programme</field>
+			<field name="view_mode">tree,form</field>
+             <field name="domain">[]</field>
+             <field name="search_view_id" ref="inseta_etqa.view_inseta_main_programme_filter" />
+			<field name="view_id" eval="False"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create Programme.
+				</p>
+			</field>
+		</record>
+ 		<!-- Learner Programme	 -->
+		 <record id="action_learner_programme_view" model="ir.actions.act_window">
+			<field name="name">Learnership Programme</field>
+			<field name="res_model">inseta.learner.programme</field>
+			<field name="view_mode">tree,form</field>
+             <field name="domain">[]</field>
+             <field name="search_view_id" ref="inseta_etqa.view_inseta_learner_programme_filter" />
+			<field name="view_id" eval="False"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create Learner's Programme.
+				</p>
+			</field>
+		</record>
+
+		<!--  -->
+        <!--Skill programme. -->
+		<record id="action_skill_programme_view" model="ir.actions.act_window">
+			<field name="name">Skill Programme</field>
+			<field name="res_model">inseta.skill.programme</field>
+			<field name="view_mode">tree,form</field>
+             <field name="domain">[]</field>
+             <field name="search_view_id" ref="inseta_etqa.view_skill_programme_filter" />
+			<field name="view_id" eval="False"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create Skills Programme.
+				</p>
+			</field>
+		</record>
+
+		<!--Qualification programme. -->
+		<record id="action_qualification_programme_view" model="ir.actions.act_window">
+			<field name="name">Qualification Programme</field>
+			<field name="res_model">inseta.qualification.programme</field>
+			<field name="view_mode">tree,form</field>
+             <field name="domain">[]</field>
+             <field name="search_view_id" ref="inseta_etqa.view_qualification_programme_filter" />
+			<field name="view_id" eval="False"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create Qualification Programme.
+				</p>
+			</field>
+		</record>
+ 
+        <!-- learner. -->
+		<record id="action_programme_type_view" model="ir.actions.act_window">
+			<field name="name">Programme Type</field>
+			<field name="res_model">inseta.programme.type</field>
+			<field name="view_mode">tree,form</field>
+             <field name="domain">[]</field>
+             <field name="search_view_id" ref="inseta_etqa.view_skill_programme_type_filter" />
+			<field name="view_id" eval="False"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create Programme type.
+				</p>
+			</field>
+		</record>
+
+		<record id="action_internship_programme_view" model="ir.actions.act_window">
+			<field name="name">Internship Programme</field>
+			<field name="res_model">inseta.internship.programme</field>
+			<field name="view_mode">tree,form</field>
+             <field name="domain">[]</field>
+             <field name="search_view_id" ref="inseta_etqa.view_inseta_internship_programme_filter" />
+			<field name="view_id" eval="False"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create internship's Programme.
+				</p>
+			</field>
+		</record>
+
+		<record id="action_wiltvet_programme_view" model="ir.actions.act_window">
+			<field name="name">Wiltvet Programme</field>
+			<field name="res_model">inseta.wiltvet.programme</field>
+			<field name="view_mode">tree,form</field>
+             <field name="domain">[]</field>
+             <field name="search_view_id" ref="inseta_etqa.view_inseta_wiltvet_programme_filter" />
+			<field name="view_id" eval="False"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create WILTVET's Programme.
+				</p>
+			</field>
+		</record>
+
+		<record id="action_bursary_programme_view" model="ir.actions.act_window">
+			<field name="name">Bursary Programme</field>
+			<field name="res_model">inseta.bursary.programme</field>
+			<field name="view_mode">tree,form</field>
+             <field name="domain">[]</field>
+             <field name="search_view_id" ref="inseta_etqa.view_inseta_bursary_programme_filter" />
+			<field name="view_id" eval="False"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create bursary's Programme.
+				</p>
+			</field>
+		</record>
+
+		<record id="action_candidacy_programme_view" model="ir.actions.act_window">
+			<field name="name">Candidacy Programme</field>
+			<field name="res_model">inseta.candidacy.programme</field>
+			<field name="view_mode">tree,form</field>
+             <field name="domain">[]</field>
+             <field name="search_view_id" ref="inseta_etqa.view_inseta_candidacy_programme_filter" />
+			<field name="view_id" eval="False"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click To Create Candidacy's Programme.
+				</p>
+			</field>
+		</record>
+		<menuitem id="view_learner_programme_main_menu" name="Learnership Programme" sequence="2" parent="inseta_etqa.etqa_configuration_menu" action="action_learner_programme_view"/>
+		<menuitem id="view_skill_programme_main_menu" name="Skill Programme" sequence="3" parent="inseta_etqa.etqa_configuration_menu" action="action_skill_programme_view"/>
+		
+
+		<!-- <menuitem id="view_programme_main_menu" name="Setup Programmes" sequence="0" parent="inseta_etqa.etqa_configuration_menu" groups="inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_manager"/> -->
+		<!-- <menuitem id="view_all_programme_main_menu" name="Programmes" sequence="0" parent="inseta_etqa.view_programme_main_menu" action="action_main_programme_view"/> -->
+		<!-- <menuitem id="view_internship_programme_main_menu" name="Internship" sequence="4" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_internship_programme_view"/>
+		<menuitem id="view_candidacy_programme_main_menu" name="Candidacy" sequence="5" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_candidacy_programme_view"/>
+		<menuitem id="view_wiltvet_programme_main_menu" name="WilTvet" sequence="6" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_wiltvet_programme_view"/>
+		<menuitem id="view_bursary_programme_main_menu" name="Bursary" sequence="7" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_bursary_programme_view"/>
+		<menuitem id="view_skill_programme_type_menu" name="Programme Type" sequence="4" parent="inseta_etqa.inseta_provider_config_menu_id" action="action_programme_type_view"/> -->
+ 
+</odoo>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <!-- moderator form -->
+		<record id="view_moderator_form" model="ir.ui.view">
+			<field name="name">Inseta moderator form</field>
+			<field name="model">inseta.moderator</field>
+			<field name="arch" type="xml">
+				<form string="moderator" create="0">
+					<header>
+                        <button name="set_to_edit" string="Toggle Edit Mode" class="oe_highlight" type="object" groups="inseta_etqa.group_etqa_evaluating_admin,base.group_system"/>
+						<button name="action_print_certficate" string="Print Certificate" class="oe_highlight" type="object"
+							groups="inseta_etqa.group_etqa_accreditation_specialist,base.group_system,inseta_etqa.group_it_admin,inseta_etqa.group_accessor_moderator_reg"
+						/>
+					</header>
+					<sheet>
+						<field name="image_512" widget='image' class="oe_left oe_avatar"/>
+                        <div class="oe_button_box" name="button_box"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="image_512" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_128&quot;}"/>
+                        <div class="row">
+							<strong>Full Name : </strong><br/>
+						</div>
+						<div class="oe_title">
+                            <field name="active" invisible="1"/>
+                             
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="E.g Maduka Chris" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                            </h1>
+                             
+                        </div>
+                        <group>
+                            <group>
+                                <field name="edit_mode" invisible="0"/>
+                                <field name="type" groups="base.group_no_one"/>
+                                <field name="contact_type"/>
+ 								<field name="first_name"  attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="last_name" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="middle_name" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="city" placeholder="City" class="o_address_city" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="state_id" class="o_address_state" placeholder="Province" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('edit_mode', '=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+								<!-- <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('edit_mode', '=', False)]}"/> -->
+								<field name="country_id" invisible="1" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								<field name="nationality_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+						
+								<!-- <field name="vat" placeholder="e.g. BE0477472701"/> -->
+                            </group>
+                            <group>
+                                <field name="employer_sdl_no" attrs="{'readonly': [('edit_mode', '=', False)]}" string="Moderator Registration Number"/>
+                                <field name="phone" widget="phone" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="mobile" widget="phone" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="fax_number" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <field name="user_id" invisible="1" string="Related User" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_open': True,'no_create': True}"/>
+                                <field name="user_ids" invisible="1" string="Link Provider Users" widget="many2many_tags" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{'no_open': True,'no_create': True}"/>
+								<field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                <!-- <field name="website" widget="url" placeholder="e.g. https://www.odoo.com" attrs="{'readonly': [('edit_mode', '=', False)]}"/> -->
+                            </group>
+                        </group>
+
+                        <notebook colspan="4">
+                            <page name="moderator_pulic_information" string="Public Information">
+                                <group name="container_row_2">
+                                    <group string="Home Details" name="moderator_detail" priority="1">
+                                        <field name="birth_date" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="title" placeholder="e.g. Mister" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="citizen_resident_status_id" options="{'no_create': True, 'no_open': False}"/>                                         
+                                        <!-- <field name="current_occupation"/> -->
+                                        <field name="disability_id" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="equity_id" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+								        <field name="id_no" readonly="1" string="Identification Number"/>
+                                        <field name="provider_code" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="provider_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+								        <field name="etdp_registration_number" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                    </group>
+                                    <group >
+                                        <field name="socio_economic_status_id" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <!-- <field name="highest_edu_level_id" options="{'no_create': True, 'no_open': False}"/> -->
+                                        <field name="home_language_id" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="passport_no" invisible="1"/>
+                                         
+                                    </group>
+
+                                    <group string="Contact Address Details" name="moderator_hm_detail" priority="1">
+                                        <field name="zip" string="Physical Code" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="street" string="Physical Address" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="street2" string="Physical Address Line 2" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="street3" string="Physical Address Line 3" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="physical_city_id" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="physical_municipality_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="physical_province_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="physical_suburb_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="physical_urban_rural" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="statssa_area_code_id" string="STATSSA Area code" required="0" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+
+                                        <!-- <button name="action_work_addr_map" 
+												string="Map" type="object"
+												icon="fa-map" /> -->
+                                    </group>
+                                    <group>
+                                        <field name="use_physical_for_postal_addr"/>
+                                        <field name="postal_address1" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="postal_address2" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="postal_address3" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="postal_city_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="postal_code" attrs="{'readonly': [('edit_mode', '=', False)]}"/>
+                                        <field name="postal_municipality_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="postal_province_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="postal_suburb_id" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <field name="postal_urban_rural" attrs="{'readonly': [('edit_mode', '=', False)]}" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        <!-- <button name="action_postal_addr_map" 
+												string="Map" type="object"
+												icon="fa-map" /> -->
+                                    </group>
+                                </group>
+
+                                     
+                            </page>
+
+                             
+                           <page name="assessor_attachment_page" string="Attachments">
+                                <separator string="Qualifications"/>
+								<field name="qualification_document_ids">
+									<tree string="Qualification Documents" editable="bottom">
+										<field name="name"/> 
+									</tree>
+								</field>
+                                <separator string="CV(s)"/>
+								<field name="cv_ids">
+									<tree string="CVs" editable="bottom">
+										<field name="name"/> 
+									</tree>
+								</field>
+                                <separator string="Statement of results"/>
+								<field name="statement_of_result_ids">
+									<tree string="Statement of Result" editable="bottom">
+										<field name="name"/> 
+									</tree>
+								</field>
+                                <separator string="Additional Documents"/>
+								<field name="additional_document_ids">
+									<tree string="Additional Documents" editable="bottom">
+										<field name="name"/> 
+									</tree>
+								</field>
+                                <separator string="Identification documents"/>
+								<field name="id_document_ids">
+									<tree string="Identifications" editable="bottom">
+										<field name="name"/> 
+									</tree>
+								</field>
+                                
+							</page>
+                            <page name="page_programmes" string="Programmes Scope">
+                                <separator string="Unit standards"/>
+								<field name="unit_standard_ids" required="1">
+									<tree string="Unit standards" editable="bottom">
+                                        <field name="unit_standard_id" required="1" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+										<field name="assessment_date" required="1" />
+										
+									</tree>
+								</field>
+								<separator string="Programmes"/>
+                                <field name="qualification_ids" required="1" nolabel="1">
+									<tree string="Qualifications" editable="bottom">
+                                        <field name="qualification_id" required="1" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+										<field name="assessment_date" required="1" />
+										<!-- <field name="name" required="1" readonly="1"/>
+										<field name="saqa_id" required="0" readonly="1"/>
+										<field name="nqflevel_id" string="NQF Level" required="0" readonly="1"/>
+										<field name="credits" readonly="1"/>
+										<field name="elective_credits" readonly="1"/>
+										<field name="core_credits" required="1" readonly="1"/>
+										<field name="registration_start_date" readonly="1"/>
+										<field name="registration_end_date" required="1" readonly="1"/> -->
+									</tree>
+                                </field>
+								<field name="skill_programmes_ids" required="1">
+									<tree string="Programmes" editable="bottom" delete="true">
+                                        <field name="skill_programme_id" required="1" />
+										<field name="assessment_date" required="1" />
+										<!-- <field name="name" required="1" />
+										<field name="programme_type_id" required="1" />
+										<field name="qualification_id" required="1" />
+										<field name="nqflevel_id" required="1" />
+										<field name="credits" required="1" />
+										<field name="programme_unit_id" required="1" /> -->
+									</tree>
+								</field>
+                                <separator string="Learners Programmes"/>
+								<field name="learner_programmes_ids" required="1">
+									<tree string="Learnership" editable="bottom" delete="true">
+                                        <field name="learner_programme_id" required="1" />
+										<field name="assessment_date" required="1" />
+										<!-- <field name="name" required="1" readonly="1"/>
+										<field name="saqa_id" required="0" readonly="1"/>
+										<field name="nqflevel_id" string="NQF Level" required="0" readonly="1"/>
+										<field name="credits" readonly="1"/>
+										<field name="elective_credits" readonly="1"/>
+										<field name="core_credits" required="1" readonly="1"/>
+										<field name="registration_start_date" readonly="1"/>
+										<field name="registration_end_date" required="1" readonly="1"/> -->
+										<!-- <field name="name" required="1" />
+										<field name="programme_type_id" required="1" />
+										<field name="qualification_id" required="1" />
+										<field name="nqflevel_id" required="1" />
+										<field name="credits" required="1" />
+										<field name="programme_unit_id" required="1" /> -->
+									</tree>
+								</field>
+								<!-- <separator string="Qualification Programmes"/> -->
+								<!-- <field name="qualification_programmes_ids" required="1">
+									<tree string="Programmes" editable="bottom" delete="true">
+										<field name="name" required="1" />
+										<field name="programme_type_id" required="1" />
+										<field name="qualification_id" required="1" />
+										<field name="nqflevel_id" required="1" />
+										<field name="credits" required="1" />
+										<field name="programme_unit_id" required="1" />
+									</tree>
+								</field> -->
+							</page>
+							<page name="provider_moderator_page" string="Provider Moderator">
+								<separator string="Provider Moderator"/>
+									<field name="provider_moderator_ids" invisible="0" string="Provider Moderator" force_save="1" attrs="{'readonly': [('edit_mode', '=', False)]}">
+									<tree string="Provider Moderator" editable="bottom">
+										<field name="provider_id" required="1"/> 
+										<field name="moderator_id" invisible="1" readonly="0"/> 
+									</tree>
+								</field>
+							</page>
+                             
+                        </notebook>
+                    </sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_moderator_tree" model="ir.ui.view">
+			<field name="name">view.inseta.moderator.tree</field>
+			<field name="model">inseta.moderator</field>
+			<field name="arch" type="xml">
+				<tree string="Moderator" sample="1" multi_edit="1" create="0">
+                    <!-- <field name="name" string="Name"/> -->
+                    <field name="id_no" invisible="0" string="Identification Number"/>
+					<field name="first_name"/>
+					<field name="middle_name"/>
+					<field name="last_name"/>
+                    <field name="phone" class="o_force_ltr" optional="show"/>
+                    <field name="email" optional="show"/>
+                    <field name="physical_city_id" optional="show"/>
+                    <field name="physical_province_id" optional="hide" readonly="1"/>
+                    <field name="nationality_id" optional="show" readonly="1"/>
+					<field name="moderator_status"/>
+                </tree>
+			</field>
+		</record>
+
+		<record id="view_moderator_filter" model="ir.ui.view">
+			<field name="name">Inseta moderator search</field>
+			<field name="model">inseta.moderator</field>
+			<field name="arch" type="xml">
+				<search string="Search moderator"> 
+					<field name="name" />
+                    <field name="id_no"/>
+					<field name="email"/>
+					<field name="mobile"/> 
+					<field name="moderator_status"/>
+					<!-- <group expand="0" string="Group By">
+						<filter string="Status" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+						<filter string="Work Province" icon="terp-personal" domain="[]" context="{'group_by':'physical_province_id'}"/>
+						<filter string="Postal Province" icon="terp-personal" domain="[]" context="{'group_by':'postal_province_id'}"/>
+					</group> -->
+				</search>
+			</field>
+		</record>
+ 
+
+        <!-- SDP moderator. -->
+		<record id="action_moderator_view" model="ir.actions.act_window">
+			<field name="name">Moderator</field>
+			<field name="res_model">inseta.moderator</field>
+			<field name="view_mode">tree,kanban,form</field>
+             <!-- <field name="domain">[('contact_type','=','moderator')]</field> -->
+             <field name="context">{'default_contact_type': 'moderator'}</field>
+             <field name="search_view_id" ref="inseta_etqa.view_moderator_filter" />
+			<field name="view_id" eval="False" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					No moderator linked to you.
+				</p>
+			</field>
+		</record>
+        <menuitem id="moderator_menu_id" name="Moderators" sequence="6" 
+        parent="inseta_etqa.etqa_root_menu" action="action_moderator_view"
+		groups="inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_user,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_moderator_access_user,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin,base.group_system,inseta_etqa.group_etqa_verifiers,inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider"/>
+
+        <menuitem id="view_moderator_menu_id2" name="View Moderators" sequence="1" 
+        parent="inseta_etqa.moderator_menu_id" action="inseta_etqa.action_moderator_view" groups="inseta_etqa.group_provider_access_user,inseta_etqa.group_approved_provider,inseta_etqa.group_etqa_user,inseta_etqa.group_accessor_moderator_reg,inseta_etqa.group_etqa_verifiers,base.group_system,inseta_etqa.group_etqa_accreditation_specialist,inseta_etqa.group_etqa_evaluating_manager,inseta_etqa.group_etqa_evaluating_admin,inseta_etqa.group_etqa_evaluating_committee,inseta_etqa.group_etqa_verification_admin,inseta_etqa.group_etqa_assessment_admin,inseta_etqa.group_etqa_assessment_specialist,inseta_etqa.group_pmo_specialist,inseta_etqa.group_etqa_accreditation_admin"/>
+</odoo>

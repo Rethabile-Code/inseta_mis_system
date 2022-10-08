@@ -1,0 +1,13 @@
+za_id_number-0.0.6.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+za_id_number-0.0.6.dist-info/LICENSE,sha256=YXp8Qh0lRupfAnGyy3OuD4MWY8kGsWdxflLDPHzpQsw,1071
+za_id_number-0.0.6.dist-info/METADATA,sha256=g_Czplto2FXrZ7uU5uv6vCNw-28qSQ1h1uux9UWHJCs,4497
+za_id_number-0.0.6.dist-info/RECORD,,
+za_id_number-0.0.6.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+za_id_number-0.0.6.dist-info/WHEEL,sha256=OqRkF0eY5GHssMorFjlbTIq072vpHpF60fIQA6lS9xA,92
+za_id_number-0.0.6.dist-info/top_level.txt,sha256=HulaUV0XKZK6u5--4-jvBY7a5m5Ag2Brzf-3kxSzC6I,13
+za_id_number/__init__.py,sha256=QiiYsv0kcJaB8wCWyT-FnI2b6be87HA-CrrIUn8LQhg,22
+za_id_number/__pycache__/__init__.cpython-39.pyc,,
+za_id_number/__pycache__/constants.cpython-39.pyc,,
+za_id_number/__pycache__/za_id_number.cpython-39.pyc,,
+za_id_number/constants.py,sha256=wXtWUC9M3TBU5n1xtDgPByx9oP1ZNz9FGJk8tl9diL0,746
+za_id_number/za_id_number.py,sha256=MZzrY4JeOkKSITLtzZBlaqzT9WyzNI4thEUHdNjR3LY,5479

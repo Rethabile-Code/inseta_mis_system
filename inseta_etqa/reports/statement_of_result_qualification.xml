@@ -1,0 +1,183 @@
+<odoo>
+  <data>
+    <report 
+        id="programmes_qualification_learnership_statement_result_report"
+        model="inseta.qualification.learnership"
+        string="Qualification Statement of result"
+        report_type="qweb-pdf"
+        name="inseta_etqa.container_programmes_qualification_learnership_statement_template_id"
+        file="inseta_etqa.container_programmes_qualification_learnership_statement_template_id"
+        paperformat="inseta_etqa.paperformat_moderator_letter"
+        menu="True"
+        /> 
+
+    <template id="container_programmes_qualification_learnership_statement_template_id">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="details">
+                <t t-call="inseta_etqa.qualification_learnership_programmes_statement_result_template_id"/>
+            </t>
+        </t>
+    </template>
+ 
+    <!-- MAIN qualification LAYOUT -->
+    <template id="qualification_learnership_programmes_statement_result_template_id">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <style>
+                    body {
+                        line-height: 180%;
+                        font-size: 18px;
+                        font-family: 'EB Garamond';
+                    }
+
+                    page {
+                        margin-bottom: -30px;
+                    }
+
+                    p {
+                    text-align: justify;
+                        margin: 0;
+                    }
+
+                    .abc {
+                            margin-left: 40px;
+                            list-style-type: lower-alpha;
+                            }
+
+                    li {
+                    text-align: justify;
+                        padding-top: 2%;
+                        padding-bottom: 20px;
+                    }
+
+                    .signleft {
+                        text-align: left;
+                        margin-right: 10px;
+                    }
+
+                    .signright {
+                        text-align: right;
+                        margin-left: 10px;
+                        margin-top:-40px;
+                    }
+                    .signleft2 {
+                        text-align: left;
+                        margin-left: 200px;
+                    }
+
+                    .signright2 {
+                        text-align: right;
+                        margin-right: 200px;
+                        margin-top:-30px;
+                    }
+                </style>
+                 <img class="banner table-responsive" style="height: 80px; width: auto; margin-left: 10px;" src="/inseta_etqa/static/description/icon.png"/>
+                <hr/> 
+                
+                <br/>
+                <br/><br/><br/><br/>
+                <br/>
+                <h1 style="text-align: center; font-size: 25px;"><strong>STATEMENT OF RESULTS</strong></h1>
+                <div class="row">
+                    <!-- <div class="col-xs-3" style="font-size: 20px;">
+                            <strong>Learner :  </strong><span t-field="details.learner_id.name"/><br/>
+                            <strong>ID Number:  </strong><span t-field="details.learner_id.id_no"/><br/>
+
+                            <t t-if='details.qualification_id'>
+                                <strong>Title of Qualification : </strong> <span t-field="details.qualification_id.name"/><br/>
+                            </t>
+                            <strong>Date Issued : </strong><span t-raw="time.strftime('%Y-%m-%d')"/> 
+                    </div><br/> -->
+                    <table class="table"> 
+                        <tbody>
+                            <tr>
+                                <td><strong>Learner</strong></td> 
+                                <td>:</td> 
+                                <td><span t-field="details.learner_id.name"/></td>
+                            </tr>
+                            <br/><br/>
+                            <tr>
+                                <td><strong>ID Number</strong></td> 
+                                <td>:</td> 
+                                <td><span t-field="details.learner_id.id_no"/></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><strong>Title of Qualification</strong></td> 
+                                <td>:</td> 
+                                <td><span t-field="details.qualification_id.name"/></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><strong>Qualification Code</strong></td> 
+                                <td>:</td> 
+                                <td><span t-field="details.qualification_id.saqa_id"/></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><strong>NQF Level</strong></td> 
+                                <td>:</td> 
+                                <td><span t-field="details.qualification_id.nqflevel_id.name"/></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><strong>Date Issued</strong></td> 
+                                <td>:</td> 
+                                <td><span t-raw="time.strftime('%d %B %Y')"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <br/>
+                <div class="row">
+                    <p> <h3 style="text-align: left;font-family: 'Gabriola';font-size: 25px;"><strong>Unit standards</strong></h3> </p>
+                </div>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th><strong>UNIT CODE</strong></th>
+                            <th><strong>UNIT STANDARD TITLE</strong></th>
+                            <th><strong>NQF LEVEL</strong></th>
+                            <th><strong>CREDITS</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="details.qualification_assessment_ids" t-as="unitline">
+                            <td>
+                                <span t-esc="unitline.unit_standard_id.code" />
+                            </td>
+                            <td>
+                                <span t-esc="unitline.unit_standard_id.name" />
+                            </td>
+                            <td style="white-space: text-nowrap;">
+                                <span t-esc="unitline.unit_standard_id.nqflevel_id.name" />
+                            </td>
+                            <td style="white-space: text-nowrap;">
+                                <span t-esc="unitline.unit_standard_id.credits" />
+                            </td>
+                        </tr>
+                        <br/><br/>
+                        <!-- <t>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total Credits:</strong></td>
+                            <td><span t-esc="sum(tot.unit_standard_id.credits for tot in details.qualification_assessment_ids)"/></td>
+                        </t> -->
+                    </tbody>
+                </table>
+                <p/><p/><p/><p/>
+                <div>
+                    <div class="signleft">
+                        <img style="height: 70px; width: auto;" src="/inseta_etqa/static/img/etqa_manager.png"/><br/>
+                        _______________________<br/>
+                        ETQA Manager<br/>
+                    </div>
+                </div> 
+                <p/><p/>
+            </div>
+        </t>
+    </template>
+  </data>
+</odoo>
