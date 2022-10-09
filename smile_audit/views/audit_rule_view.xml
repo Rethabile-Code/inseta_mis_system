@@ -27,7 +27,7 @@
             <field name="model">audit.rule</field>
             <field name="type">search</field>
             <field name="arch" type="xml">
-                <search string="Audit Rules">
+                <search string="Audit Rule">
                     <filter name="active" string="Active Rules" domain="[('active','=',True)]"/>
                     <separator/>
                     <filter name="log_create" string="Log Creation" domain="[('log_create','=',True)]"/>
